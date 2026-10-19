@@ -21,10 +21,6 @@ window.SITE = {
     en: ["Hey", "don't", "blink", "→good", "things", "take", "a", "sec"],
     pt: ["Ei,", "não", "pisca", "→coisa", "boa", "leva", "um", "tempo"],
   },
-  greeting: {
-    en: ["Hi,", "Welcome", "Home"],
-    pt: ["Olá,", "Seja", "Bem-vindo"],
-  },
   services: {
     en: ["Brand identity", "Typography", "Posters & print", "Packaging", "Editorial design", "Art direction"],
     pt: ["Identidade de marca", "Tipografia", "Pôsteres e impressos", "Embalagem", "Design editorial", "Direção de arte"],
@@ -33,7 +29,7 @@ window.SITE = {
   // Interface labels
   ui: {
     en: {
-      work: "Work", services: "Services", letsTalk: "Let's talk", itsMe: "It's me —",
+      work: "Work", services: "Services", letsTalk: "Let's talk",
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
       client: "Client", year: "Year", scope: "Scope", role: "Role", live: "Live",
@@ -44,7 +40,7 @@ window.SITE = {
       description: "Bellintani — multidisciplinary designer and art director.",
     },
     pt: {
-      work: "Trabalhos", services: "Serviços", letsTalk: "Vamos conversar", itsMe: "Sou eu —",
+      work: "Trabalhos", services: "Serviços", letsTalk: "Vamos conversar",
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Visualização",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
       client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", live: "No ar",

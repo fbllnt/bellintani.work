@@ -129,7 +129,6 @@
   const stage = $("top"), corners = $("corners");
   $("loader").innerHTML = L(S.loader).map((w, i) => `<span style="--d:${(0.1 + i * 0.17).toFixed(2)}s">${esc(w)}</span>`).join("")
     + (S.loaderBig ? `<span class="big" style="--d:1.5s">${esc(L(S.loaderBig))}</span>` : "");
-  $("hi").innerHTML = L(S.greeting).map((w, i) => `<span style="--d:${(2.05 + i * 0.08).toFixed(2)}s">${esc(w)}</span>`).join("");
 
   // Name: every letter takes the same time but starts 80px further down, so they land as a wave
   const nameEl = $("name");
