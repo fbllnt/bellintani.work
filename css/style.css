@@ -33,11 +33,11 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loader{inset:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));padding:clamp(60px,10vw,120px) var(--side-r) clamp(60px,10vw,120px) var(--side-l)}
 .loader span{font:900 clamp(30px,6vw,92px)/.9 var(--sans);letter-spacing:-.05em;text-transform:uppercase;opacity:0;align-self:center;justify-self:center}
 .loader span.big{grid-column:1/-1;grid-row:3;font-size:clamp(60px,16vw,260px)}
-/* Second screen: the neon "We're open" sign, switching on with a flicker.
-   Wide screens fill edge to edge; tall screens show the whole sign on the photo's own dark tone. */
-.flood{inset:0;opacity:0;background:radial-gradient(ellipse at 50% 45%,#18232c 0%,#0a1016 55%,#03070b 100%)}
+/* Second screen: a full-bleed photo, hard cut like the rest of the intro.
+   Tall screens centre on the second frame of the film strip (the cyclist). */
+.flood{inset:0;opacity:0;background:var(--fg)}
 .flood img{width:100%;height:100%;object-fit:cover;display:block}
-@media (max-aspect-ratio:4/3){ .flood img{object-fit:contain} }
+@media (max-aspect-ratio:4/3){ .flood img{object-position:38% 50%} }
 .panel{inset:0;opacity:0}
 .head{left:var(--side-l);right:var(--side-r);top:clamp(64px,10vh,110px);display:flex;flex-direction:column;gap:clamp(32px,5vw,72px)}
 .name{display:flex;flex-wrap:wrap;align-items:flex-end;margin:0;font-size:var(--name-size,clamp(64px,17vw,330px));row-gap:.06em}
@@ -50,16 +50,15 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .skip{all:unset;position:absolute;cursor:pointer;right:var(--side-r);top:calc(18px + env(safe-area-inset-top,0px));z-index:3;font:300 13px/1 var(--mono);text-transform:uppercase}
 .skip:focus-visible{outline:1px solid currentColor}
 
-/* Timeline (seconds): loader 0–1.95 · neon sign 1.95–3.2 · panels 3.25–3.75 · name 3.75 · tagline 4.3 */
+/* Timeline (seconds): loader 0–1.95 · photo 1.95–3.2 · panels 3.25–3.75 · name 3.75 · tagline 4.3 */
 .play .loader span{animation:cut 0s linear forwards var(--d)}
 .play .loader{animation:out 0s linear forwards 1.95s}
-.play .flood{animation:neon .45s steps(1) forwards 1.95s, out 0s linear forwards 3.2s}
+.play .flood{animation:cut 0s linear forwards 1.95s, out 0s linear forwards 3.2s}
 .play .panel{animation:cut 0s linear forwards var(--d), out 0s linear forwards 3.75s}
 .play .name .word > span{animation:rise .6s var(--over) forwards 3.75s}
 .play .tag{animation:fade .5s ease forwards 4.3s}
 .play .skip{animation:out 0s linear forwards 3.75s}
 @keyframes cut{to{opacity:1}}
-@keyframes neon{0%{opacity:0}12%{opacity:1}22%{opacity:.15}34%{opacity:1}46%{opacity:.4}58%,100%{opacity:1}}
 @keyframes out{to{opacity:0;visibility:hidden}}
 @keyframes fade{to{opacity:1}}
 @keyframes land{to{opacity:1;transform:none}}
