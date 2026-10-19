@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Bellintani</title>
+<meta name="description" content="Bellintani — multidisciplinary designer and art director.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="corners" id="corners" aria-label="Main">
+  <a class="c-tl swap" href="#top"><span data-bind="nameYear"></span><span data-bind="copyright"></span></a>
+  <div class="c-tr"><a class="swap" href="#work"><span data-i18n="work"></span><span data-bind="workCount"></span></a><button class="lang swap" id="lang" type="button"><span data-i18n="langSwitch"></span><span data-i18n="langSwitch"></span></button></div>
+  <div class="c-bl" id="social-corner"></div>
+  <a class="c-br talk swap" href="#contact"><span data-i18n="letsTalk"></span><span><span class="ar">→</span> <span data-i18n="letsTalk"></span> <span class="ar">←</span></span></a>
+</nav>
+
+<div class="home">
+<header class="stage" id="top">
+  <div class="loader" id="loader" aria-hidden="true"></div>
+  <div class="flood"></div>
+  <div class="hi" id="hi" aria-hidden="true"></div>
+  <div class="me" aria-hidden="true"><span style="--d:2.6s" data-i18n="itsMe"></span><span style="--d:2.68s" data-bind="name"></span></div>
+  <div class="panel" style="--d:3.25s;background:var(--fg)"></div>
+  <div class="panel" style="--d:3.4s;background:var(--blue)"></div>
+  <div class="panel" style="--d:3.55s;background:var(--panel)"></div>
+  <div class="panel" style="--d:3.7s;background:var(--bg)"></div>
+  <div class="head">
+    <h1 class="name" id="name"></h1>
+    <div class="tag mono"><b data-bind="tagline"></b><span id="subline"></span></div>
+  </div>
+  <button class="skip mono" id="skip" type="button" data-i18n="skip"></button>
+</header>
+<section class="flow" id="flow" data-i18n-label="selectedWork"></section>
+</div>
+
+<main class="gut">
+  <section class="sec works" id="work">
+    <div class="sec-head">
+      <h2 class="h2"><span data-i18n="work"></span><sup data-bind="workCount"></sup></h2>
+      <div class="seg mono" role="group" data-i18n-label="view">
+        <button type="button" id="view-index" aria-pressed="true" data-i18n="index"></button>
+        <button type="button" id="view-grid" aria-pressed="false" data-i18n="grid"></button>
+      </div>
+    </div>
+    <ul class="index" id="index"></ul>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="sec" id="services">
+    <div class="sec-head">
+      <h2 class="h2" data-i18n="services"></h2>
+      <button class="replay mono swap" id="replay" type="button"><span data-i18n="replay"></span><span data-i18n="replay"></span></button>
+    </div>
+    <ul class="services mono" id="services-list"></ul>
+  </section>
+
+  <footer class="foot" id="contact">
+    <span class="mono muted" data-i18n="gotProject"></span><br>
+    <a class="big" id="mail-big" href="#contact"><span data-i18n="letsTalk"></span><span class="arr">↗</span></a>
+    <div class="social mono">
+      <span data-bind="email"></span>
+      <span id="social-foot"></span>
+      <span class="muted" data-bind="copyright"></span>
+    </div>
+  </footer>
+</main>
+
+<article class="case gut" id="case" aria-live="polite"></article>
+<div class="wipe" id="wipe" aria-hidden="true"></div>
+
+<script src="js/content.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
