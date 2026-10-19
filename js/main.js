@@ -243,14 +243,46 @@
       dlg.querySelector(".lv-meta").textContent = [l.year, L(l.tag)].filter(Boolean).join(" — ");
       dlg.querySelector(".lv-note").textContent = L(l.note) || "";
     };
-    const step = d => { const list = shown(); show(list[(list.indexOf(cur) + d + list.length) % list.length]); };
+    // The view grows out of the clicked tile and the logo flies from its tile to the middle; closing reverses it
+    const tileOf = k => wall.querySelector(`.logo[data-k="${k}"]`);
+    const clip = r => `inset(${r.top}px ${innerWidth - r.right}px ${innerHeight - r.bottom}px ${r.left}px)`;
+    const fly = out => {
+      const tile = tileOf(cur), m0 = tile.querySelector(".mark").getBoundingClientRect();
+      const mEl = dlg.querySelector(".lv-mark > *"), m1 = mEl.getBoundingClientRect();
+      const there = `translate(${m0.left + m0.width / 2 - m1.left - m1.width / 2}px, ${m0.top + m0.height / 2 - m1.top - m1.height / 2}px) scale(${Math.min(m0.width / m1.width, m0.height / m1.height)})`;
+      const o = { duration: out ? 420 : 620, easing: "cubic-bezier(.11,.82,.39,.92)", fill: "both" };
+      const fade = [{ opacity: 0 }, { opacity: 1 }];
+      const anims = [
+        dlg.animate(out ? [{ clipPath: "inset(0px)" }, { clipPath: clip(tile.getBoundingClientRect()) }] : [{ clipPath: clip(tile.getBoundingClientRect()) }, { clipPath: "inset(0px)" }], o),
+        mEl.animate(out ? [{ transform: "none" }, { transform: there }] : [{ transform: there }, { transform: "none" }], o),
+        ...[...dlg.querySelectorAll(".lv-top, .lv-info, .lv-nav")].map(el => el.animate(out ? fade.slice().reverse() : fade, { ...o, duration: out ? 160 : 400, delay: out ? 0 : 260 })),
+      ];
+      return Promise.all(anims.map(a => a.finished)).then(() => anims);
+    };
+    const open = k => {
+      show(k);
+      dlg.showModal ? dlg.showModal() : dlg.setAttribute("open", "");
+      if (!reduced) fly(false).then(anims => anims.forEach(a => a.cancel()));
+    };
+    let closing = false;
+    const shut = () => {
+      if (closing) return;
+      if (reduced) { dlg.close(); return; }
+      closing = true;
+      tileOf(cur).scrollIntoView({ block: "nearest", behavior: "instant" });
+      fly(true).then(anims => { dlg.close(); anims.forEach(a => a.cancel()); closing = false; });
+    };
+    // Stepping slides the next logo in from the side it comes from
+    const step = d => {
+      const list = shown(); show(list[(list.indexOf(cur) + d + list.length) % list.length]);
+      if (!reduced) dlg.querySelector(".lv-mark > *").animate([{ transform: `translateX(${d * 60}px)`, opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 420, easing: "cubic-bezier(.11,.82,.39,.92)" });
+    };
     wall.addEventListener("click", e => {
       const b = e.target.closest(".logo");
-      if (!b) return;
-      show(+b.dataset.k);
-      dlg.showModal ? dlg.showModal() : dlg.setAttribute("open", "");
+      if (b) open(+b.dataset.k);
     });
-    dlg.querySelector(".lv-close").addEventListener("click", () => dlg.close());
+    dlg.querySelector(".lv-close").addEventListener("click", shut);
+    dlg.addEventListener("cancel", e => { e.preventDefault(); shut(); });
     dlg.querySelector(".lv-prev").addEventListener("click", () => step(-1));
     dlg.querySelector(".lv-next").addEventListener("click", () => step(1));
     dlg.addEventListener("keydown", e => {
@@ -258,7 +290,7 @@
       if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
     });
     // Back on the wall, focus returns to the tile of the last logo seen
-    dlg.addEventListener("close", () => wall.querySelector(`.logo[data-k="${cur}"]`).focus({ preventScroll: false }));
+    dlg.addEventListener("close", () => tileOf(cur).focus({ preventScroll: true }));
     let x0 = null;
     dlg.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") x0 = e.clientX; });
     dlg.addEventListener("pointerup", e => { if (x0 !== null && Math.abs(e.clientX - x0) > 50) step(e.clientX < x0 ? 1 : -1); x0 = null; });

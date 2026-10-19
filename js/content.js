@@ -166,13 +166,17 @@ window.SITE = {
       //   color: optional full-colour file for the close-up, bg: brand colour, ink: mark colour on bg, note: { en, pt } }.
       // Sector filters appear when two or more tags are used.
       layout: "logos",
-      logos: Array.from({ length: 30 }, (_, k) => ({
-        name: `Logo ${String(k + 1).padStart(2, "0")}`,
+      logos: [
+        { name: "REUD Co.", src: "images/logos/reud-co.png", bg: "#e9e3d5", ink: "#000" },
+        { name: "HOU", src: "images/logos/hou.png", bg: "#ff4f1a", ink: "#000" },
+        { name: "mokoko.", src: "images/logos/mokoko.png", bg: "#1a2bff", ink: "#fff" },
+      ].concat(Array.from({ length: 27 }, (_, k) => ({
+        name: `Logo ${String(k + 4).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
         tag: [{ en: "Food", pt: "Comida" }, { en: "Tech", pt: "Tecnologia" }, { en: "Culture", pt: "Cultura" }, { en: "Fashion", pt: "Moda" }, { en: "Sport", pt: "Esporte" }][k % 5],
         bg: `hsl(${(k * 47) % 360} ${k % 4 ? 85 : 10}% ${[52, 40, 62, 16][k % 4]}%)`,
         ink: [0, 3].includes(k % 4) ? "#fff" : "#0a0a0a",
-      })),
+      }))),
     },
     { title: { en: "Type Specimen", pt: "Espécime Tipográfico" }, scope: { en: "Custom Typography", pt: "Tipografia Customizada" }, year: "2025", hue: [0, 0, 15], placeholder: true },
     { title: { en: "Campaign", pt: "Campanha" }, scope: { en: "Advertising // Art Direction", pt: "Publicidade // Direção de Arte" }, year: "2024", hue: [150, 55, 40], placeholder: true },

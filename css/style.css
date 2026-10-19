@@ -246,6 +246,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .logo .n{position:absolute;top:10px;left:12px;font-size:11px;opacity:.5}
 .logo .info{position:absolute;left:12px;right:12px;bottom:10px;display:flex;justify-content:space-between;gap:8px;font-size:11px;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .4s var(--ease)}
 .logo:hover .info,.logo:focus-visible .info{opacity:1;transform:none}
+.logos.in .logo:hover .mark{transform:scale(1.06);transition:transform .6s var(--spring),color .3s}
 /* Tiles rise in a quick stagger the first time the wall is on screen */
 .logos li > .logo > *{transition-property:color,opacity,transform}
 .logos .mark{opacity:0;transform:translateY(14px)}
@@ -253,9 +254,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 
 /* Close-up: the logo full screen on its own colour */
 .logo-view{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;padding:16px max(16px,3vw);background:var(--lb);color:var(--li);display:none;grid-template-rows:auto 1fr auto auto;gap:16px;touch-action:pan-y}
-.logo-view[open]{display:grid;animation:lvIn .4s var(--ease)}
+.logo-view[open]{display:grid}
 .logo-view::backdrop{background:transparent}
-@keyframes lvIn{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0)}}
 .logo-view button{all:unset;cursor:pointer}
 .logo-view button:focus-visible{outline:1px solid currentColor;outline-offset:4px}
 .lv-top,.lv-nav{display:flex;justify-content:space-between}
@@ -275,5 +275,5 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 }
 @media (prefers-reduced-motion:reduce){
   .logos .mark{opacity:1;transform:none}
-  .logo::before,.logo-view[open]{transition:none;animation:none}
+  .logo::before{transition:none}
 }
