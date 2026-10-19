@@ -192,6 +192,15 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Loose gallery: 12-column grid, each item places itself; rows follow content */
 .loose{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(12px,1.6vw,24px);row-gap:clamp(48px,7vw,110px);align-items:start}
 .loose > *{grid-column:var(--col) / span var(--span);margin-top:var(--shift);will-change:translate}
+/* Overlap: a negative shift pulls an item up over the one before it. Later items sit on top;
+   captions sit above each image as a label and video controls move to the top, so the covered
+   (lower) part of an image never hides them. Hover or focus brings an item to the front. */
+.loose > *{position:relative;z-index:var(--z,1);transition:z-index 0s}
+.loose > .fig:hover,.loose > .fig:focus-within{z-index:30}
+.loose .fig{display:flex;flex-direction:column}
+.loose .fig figcaption{order:-1;align-self:flex-start;margin:0 0 6px;padding:3px 8px 3px 0;background:var(--bg)}
+.loose .vctl{top:10px;bottom:auto}
+.loose .spin-ui{top:12px;bottom:auto}
 .ltext{margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .case-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;padding-block:clamp(60px,9vw,140px)}
 .body{font:400 clamp(15px,1.25vw,18px)/1.6 var(--mono);letter-spacing:-.01em;max-width:62ch;margin:0}
@@ -212,6 +221,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .row-half{grid-template-columns:1fr}
   .loose{row-gap:40px}
   .loose > *{grid-column:var(--mcol) / span var(--mspan);margin-top:0}
+  .loose .fig figcaption{order:0;margin:8px 0 0;padding:0}
   .row-third,.row-quarter{grid-template-columns:1fr 1fr}
   .index a{grid-template-columns:2.2em minmax(0,1fr)}
   .index .k{display:none}
