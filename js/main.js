@@ -204,7 +204,72 @@
     }</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
   }
 
+  // Logo wall: every mark sits black on white so thirty clients read as one body of work.
+  // One-colour files are used as masks, so the same file turns black, white or the brand colour.
+  // Hover floods a tile with the brand colour; a click opens the logo full screen, with arrows, swipe and Esc.
+  const pad = n => String(n).padStart(2, "0");
+  const mark = l => l.src
+    ? `<span class="mark" role="img" aria-label="${esc(l.name)}" style="-webkit-mask-image:url('${esc(l.src)}');mask-image:url('${esc(l.src)}')"></span>`
+    : `<span class="mark type" aria-hidden="true">${esc(l.name)}</span>`;
+  function logoWall(p) {
+    const tags = [...new Set(p.logos.map(l => L(l.tag)).filter(Boolean))];
+    const filter = tags.length > 1 ? `<div class="seg mono logo-filter" role="group" aria-label="${esc(T("filter"))}">${["", ...tags].map(t =>
+      `<button type="button" data-tag="${esc(t)}" aria-pressed="${!t}">${esc(t || T("all"))}</button>`).join("")}</div>` : "";
+    return `${filter}<ul class="logos">${p.logos.map((l, k) => `<li data-tag="${esc(L(l.tag) || "")}" style="--k:${k};--lb:${esc(l.bg || "var(--fg)")};--li:${esc(l.ink || "#fff")}">
+      <button type="button" class="logo" data-k="${k}" aria-label="${esc(l.name)}${l.year ? `, ${esc(l.year)}` : ""}">
+        <span class="n mono">${pad(k + 1)}</span>${mark(l)}
+        <span class="info mono"><span>${esc(l.name)}</span><span>${esc(l.year || "")}</span></span>
+      </button></li>`).join("")}</ul>
+      <dialog class="logo-view" aria-label="${esc(L(p.title))}">
+        <div class="lv-top mono"><span class="lv-count"></span><button type="button" class="lv-close">${esc(T("close"))} ✕</button></div>
+        <div class="lv-mark"></div>
+        <div class="lv-info"><p class="lv-name"></p><p class="mono lv-meta"></p><p class="mono lv-note"></p></div>
+        <div class="lv-nav mono"><button type="button" class="lv-prev">← ${esc(T("prev"))}</button><button type="button" class="lv-next">${esc(T("nextItem"))} →</button></div>
+      </dialog>`;
+  }
+  function setupLogos(p) {
+    const wall = caseEl.querySelector(".logos");
+    if (!wall) return;
+    const items = [...wall.children], dlg = caseEl.querySelector(".logo-view");
+    const shown = () => items.filter(li => !li.hidden).map(li => +li.querySelector(".logo").dataset.k);
+    let cur = 0;
+    const show = k => {
+      cur = k;
+      const l = p.logos[k], list = shown();
+      dlg.style.setProperty("--lb", l.bg || "var(--fg)"); dlg.style.setProperty("--li", l.ink || "#fff");
+      dlg.querySelector(".lv-mark").innerHTML = l.color ? `<img src="${esc(l.color)}" alt="${esc(l.name)}">` : mark(l);
+      dlg.querySelector(".lv-count").textContent = `${pad(list.indexOf(k) + 1)} / ${pad(list.length)}`;
+      dlg.querySelector(".lv-name").textContent = l.name;
+      dlg.querySelector(".lv-meta").textContent = [l.year, L(l.tag)].filter(Boolean).join(" — ");
+      dlg.querySelector(".lv-note").textContent = L(l.note) || "";
+    };
+    const step = d => { const list = shown(); show(list[(list.indexOf(cur) + d + list.length) % list.length]); };
+    wall.addEventListener("click", e => {
+      const b = e.target.closest(".logo");
+      if (!b) return;
+      show(+b.dataset.k);
+      dlg.showModal ? dlg.showModal() : dlg.setAttribute("open", "");
+    });
+    dlg.querySelector(".lv-close").addEventListener("click", () => dlg.close());
+    dlg.querySelector(".lv-prev").addEventListener("click", () => step(-1));
+    dlg.querySelector(".lv-next").addEventListener("click", () => step(1));
+    dlg.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+    });
+    // Back on the wall, focus returns to the tile of the last logo seen
+    dlg.addEventListener("close", () => wall.querySelector(`.logo[data-k="${cur}"]`).focus({ preventScroll: false }));
+    let x0 = null;
+    dlg.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") x0 = e.clientX; });
+    dlg.addEventListener("pointerup", e => { if (x0 !== null && Math.abs(e.clientX - x0) > 50) step(e.clientX < x0 ? 1 : -1); x0 = null; });
+    caseEl.querySelectorAll(".logo-filter button").forEach(b => b.addEventListener("click", () => {
+      caseEl.querySelectorAll(".logo-filter button").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+      items.forEach(li => { li.hidden = !!b.dataset.tag && li.dataset.tag !== b.dataset.tag; });
+    }));
+  }
+
   function gallery(i, p) {
+    if (p.layout === "logos" && p.logos) return logoWall(p);
     if (p.layout === "loose" && p.gallery && p.gallery.length) return looseGallery(p);
     // Real images: p.gallery = [{ src, size: "full" | "half" | "third" | "quarter", ar: "16/9", caption }].
     // Consecutive halves, thirds or quarters sit side by side in one row.
@@ -235,7 +300,7 @@
       <h1 class="case-title" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
       <dl class="case-meta mono">${meta.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}${
         p.link ? `<div class="live"><dt>${esc(T("live"))}</dt><dd><a class="swap" href="${esc(p.link.url)}" target="_blank" rel="noopener"><span>${esc(p.link.label)} ↗</span><span>${esc(p.link.label)} ↗</span></a></dd></div>` : ""}</dl>
-      <figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}</div></figure>
+      ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}</div></figure>`}
       <section class="case-about">
         <span class="mono muted">${esc(T("about"))}</span>
         <p class="body">${esc(L(p.summary) || T("placeholderText"))}${tagFor(p)}</p>
@@ -251,6 +316,7 @@
     setupVideos();
     setupDrift();
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
+    setupLogos(p);
   }
 
   // 360° viewer: frames drawn on a canvas. Drag (mouse or touch) or arrow keys to turn; a flick keeps it spinning
@@ -343,7 +409,7 @@
   const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
   }), { rootMargin: "0px 0px -10% 0px" }) : null;
-  const observe = () => caseEl.querySelectorAll(".fig").forEach(f => io ? io.observe(f) : f.classList.add("in"));
+  const observe = () => caseEl.querySelectorAll(".fig, .logos").forEach(f => io ? io.observe(f) : f.classList.add("in"));
 
   // Films play muted while on screen and pause when they leave. Every film has Play/Pause and Sound;
   // sound is one film at a time. Pausing by hand keeps it paused until the visitor plays it again.

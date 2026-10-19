@@ -9,8 +9,8 @@ window.SITE = {
     { label: "LinkedIn", url: "https://www.linkedin.com/in/fbellintani/" },
   ],
   tagline: {
-    en: "Multidisciplinary designer, art director, and a few other things",
-    pt: "Designer multidisciplinar, diretor de arte e mais algumas coisas",
+    en: "Multidisciplinary designer, art director, and who knows what else",
+    pt: "Designer multidisciplinar, diretor de arte e sabe-se lá o que mais",
   },
   subline: {
     en: ["Branding, Identity, Advertising, Digital, Social and Multimedia"],
@@ -33,7 +33,7 @@ window.SITE = {
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
       client: "Client", year: "Year", scope: "Scope", role: "Role", live: "Live",
-      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen",
+      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next",
       placeholder: "Placeholder", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
       langSwitch: "PT", langLabel: "Ver em português",
@@ -44,7 +44,7 @@ window.SITE = {
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Visualização",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
       client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", live: "No ar",
-      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia",
+      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo",
       placeholder: "Provisório", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Substitua pela história do projeto: o briefing, a ideia e o que foi feito.",
       langSwitch: "EN", langLabel: "View in English",
@@ -151,6 +151,28 @@ window.SITE = {
         { src: "images/scriva/deck-what.jpg", ar: "16/9", col: 6, span: 7, shift: "-46vw", speed: .02, caption: { en: "What we do", pt: "O que fazemos" } },
         { src: "images/scriva/deck-sense.jpg", ar: "16/9", col: 3, span: 8, shift: "6vh", speed: -.02, caption: { en: "Does it make sense to you?", pt: "Faz sentido pra você?" } },
       ],
+    },
+    {
+      title: "Logos",
+      scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca" },
+      summary: {
+        en: "Thirty marks, from full identities to a single sign. Hover to see each one in its own colours; open one to look closer.",
+        pt: "Trinta marcas, de identidades completas a uma única placa. Passe o mouse para ver cada uma nas suas cores; abra para ver de perto.",
+      },
+      hue: [230, 90, 55],
+      placeholder: true,
+      // The wall: one tile per logo, black on white; hover floods the tile with the brand colour.
+      // Each logo: { name, year, tag: { en, pt }, src: one-colour SVG or PNG on transparent (the site colours it),
+      //   color: optional full-colour file for the close-up, bg: brand colour, ink: mark colour on bg, note: { en, pt } }.
+      // Sector filters appear when two or more tags are used.
+      layout: "logos",
+      logos: Array.from({ length: 30 }, (_, k) => ({
+        name: `Logo ${String(k + 1).padStart(2, "0")}`,
+        year: String(2026 - (k % 9)),
+        tag: [{ en: "Food", pt: "Comida" }, { en: "Tech", pt: "Tecnologia" }, { en: "Culture", pt: "Cultura" }, { en: "Fashion", pt: "Moda" }, { en: "Sport", pt: "Esporte" }][k % 5],
+        bg: `hsl(${(k * 47) % 360} ${k % 4 ? 85 : 10}% ${[52, 40, 62, 16][k % 4]}%)`,
+        ink: [0, 3].includes(k % 4) ? "#fff" : "#0a0a0a",
+      })),
     },
     { title: { en: "Type Specimen", pt: "Espécime Tipográfico" }, scope: { en: "Custom Typography", pt: "Tipografia Customizada" }, year: "2025", hue: [0, 0, 15], placeholder: true },
     { title: { en: "Campaign", pt: "Campanha" }, scope: { en: "Advertising // Art Direction", pt: "Publicidade // Direção de Arte" }, year: "2024", hue: [150, 55, 40], placeholder: true },

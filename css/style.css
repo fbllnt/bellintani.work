@@ -228,3 +228,52 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   html{scroll-behavior:auto}
   .corners{opacity:1}
 }
+
+/* ---------- Logo wall ---------- */
+/* Square tiles on hairline rules; marks are one-colour files used as masks, so CSS sets their colour */
+.logo-filter{flex-wrap:wrap;margin-bottom:22px}
+.logos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.logos li{background:var(--bg)}
+.logos li[hidden]{display:none}
+.logo{all:unset;box-sizing:border-box;position:relative;display:grid;place-items:center;width:100%;aspect-ratio:1;cursor:pointer;overflow:hidden;color:var(--fg)}
+.logo::before{content:"";position:absolute;inset:0;background:var(--lb);clip-path:inset(100% 0 0 0);transition:clip-path .45s var(--ease)}
+.logo:hover::before,.logo:focus-visible::before{clip-path:inset(0)}
+.logo:hover,.logo:focus-visible{color:var(--li)}
+.logo:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.logo > *{position:relative;transition:color .3s var(--ease)}
+.mark{display:block;width:62%;height:42%;background:currentColor;-webkit-mask:no-repeat center / contain;mask:no-repeat center / contain}
+.mark.type{background:none;width:auto;height:auto;font:800 clamp(18px,2.2vw,30px)/1 var(--sans);letter-spacing:-.04em;text-align:center}
+.logo .n{position:absolute;top:10px;left:12px;font-size:11px;opacity:.5}
+.logo .info{position:absolute;left:12px;right:12px;bottom:10px;display:flex;justify-content:space-between;gap:8px;font-size:11px;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .4s var(--ease)}
+.logo:hover .info,.logo:focus-visible .info{opacity:1;transform:none}
+/* Tiles rise in a quick stagger the first time the wall is on screen */
+.logos li > .logo > *{transition-property:color,opacity,transform}
+.logos .mark{opacity:0;transform:translateY(14px)}
+.logos.in .mark{opacity:1;transform:none;transition:opacity .5s calc(var(--k) * 25ms),transform .7s var(--ease) calc(var(--k) * 25ms),color .3s}
+
+/* Close-up: the logo full screen on its own colour */
+.logo-view{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;padding:16px max(16px,3vw);background:var(--lb);color:var(--li);display:none;grid-template-rows:auto 1fr auto auto;gap:16px;touch-action:pan-y}
+.logo-view[open]{display:grid;animation:lvIn .4s var(--ease)}
+.logo-view::backdrop{background:transparent}
+@keyframes lvIn{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0)}}
+.logo-view button{all:unset;cursor:pointer}
+.logo-view button:focus-visible{outline:1px solid currentColor;outline-offset:4px}
+.lv-top,.lv-nav{display:flex;justify-content:space-between}
+.lv-mark{display:grid;place-items:center;min-height:0}
+.lv-mark .mark{width:min(64vw,720px);height:min(40vh,420px)}
+.lv-mark .mark.type{width:auto;height:auto;font-size:clamp(48px,10vw,160px)}
+.lv-mark img{max-width:min(64vw,720px);max-height:50vh;object-fit:contain}
+.lv-info p{margin:0}
+.lv-name{font:800 clamp(28px,4vw,56px)/1 var(--sans);letter-spacing:-.04em}
+.lv-meta{margin-top:8px!important}
+.lv-note{margin-top:8px!important;text-transform:none;max-width:52ch}
+@media (max-width:1000px){ .logos{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:560px){
+  .logos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .logo .info{opacity:1;transform:none}
+  .lv-mark .mark{width:80vw}
+}
+@media (prefers-reduced-motion:reduce){
+  .logos .mark{opacity:1;transform:none}
+  .logo::before,.logo-view[open]{transition:none;animation:none}
+}
