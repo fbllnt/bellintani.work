@@ -197,7 +197,9 @@
     return `<figure class="fig ${it.size || "full"}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${style}"${speed}><div class="ph">${
       it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
           <source src="${esc(it.video)}" type="video/mp4">${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}</video>
-        <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button></div>`
+        <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button></div>
+        <button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 6V1h5M10 1h5v5M15 10v5h-5M6 15H1v-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>`
       : it.src ? `<img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy">` : cover(it.art, p)
     }</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
   }
@@ -355,7 +357,7 @@
     };
     const vio = "IntersectionObserver" in window && !reduced ? new IntersectionObserver(es => es.forEach(e => {
       const v = e.target;
-      if (e.isIntersecting) { if (!v.dataset.held) v.play().catch(() => {}); } else v.pause();
+      if (e.isIntersecting) { if (!v.dataset.held) v.play().catch(() => {}); } else if (fsEl() !== v) v.pause();
     }), { threshold: .4 }) : null;
     vids.forEach(v => {
       const pp = v.parentElement.querySelector(".playpause");
@@ -372,9 +374,23 @@
         vids.forEach(o => setSound(o, false));
         if (turnOn) { setSound(v, true); delete v.dataset.held; v.play().catch(() => {}); }
       });
+      // Full screen: plays with sound and the browser's own controls; back on the page it returns to how it was
+      v.parentElement.querySelector(".fsbtn").addEventListener("click", () => {
+        v.dataset.fsSound = v.muted ? "" : "1";
+        vids.forEach(o => { if (o !== v) setSound(o, false); });
+        setSound(v, true); delete v.dataset.held; v.play().catch(() => {});
+        if (v.requestFullscreen) v.requestFullscreen().catch(() => {});
+        else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();
+        else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen(); // iPhone
+      });
+      const leave = () => { v.controls = false; if (!v.dataset.fsSound) setSound(v, false); };
+      v.addEventListener("webkitendfullscreen", leave);
+      v.addEventListener("fullscreenchange", () => { if (fsEl() === v) v.controls = true; else leave(); });
+      v.addEventListener("webkitfullscreenchange", () => { if (fsEl() === v) v.controls = true; else leave(); });
       if (vio) vio.observe(v);
     });
   }
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
 
   // Blue cut between pages, same language as the intro
   const cutTo = fn => {

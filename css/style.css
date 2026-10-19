@@ -175,6 +175,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .vctl button:hover{background:var(--blue)}
 .vctl .sound[aria-pressed="true"]{background:var(--blue)}
 .vctl button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.fsbtn{all:unset;position:absolute;top:10px;right:10px;z-index:1;cursor:pointer;width:30px;height:30px;display:grid;place-items:center;background:var(--fg);color:var(--bg)}
+.fsbtn:hover{background:var(--blue)}
+.fsbtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .fig figcaption{margin-top:8px}
 .fig .ph{aspect-ratio:var(--ar);max-width:100%}
 .fig.full{--ar:16/9}
