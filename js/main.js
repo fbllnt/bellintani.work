@@ -158,8 +158,8 @@
   const play = () => {
     clear(); corners.classList.remove("on");
     stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play");
-    timers.push(setTimeout(() => corners.classList.add("on"), 3900));
-    timers.push(setTimeout(finish, 5200));
+    timers.push(setTimeout(() => corners.classList.add("on"), 2650));
+    timers.push(setTimeout(finish, 3950));
   };
   $("skip").onclick = finish;
   $("replay").onclick = () => { scrollTo({ top: 0 }); play(); };
