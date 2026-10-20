@@ -5,12 +5,9 @@ Netlify to https://bellintani.work about a minute after each push.
 
 ## Publishing workflow (agreed with Felipe)
 
-- Work locally during a session: edit, test in the browser (desktop and phone widths), show a preview.
-  Commit each meaningful step locally, but **do not push** while working.
-- **Push to `main` only** at the end of a session, after a significant update, or when Felipe says "publish".
-  After pushing, confirm the live site serves the new version.
-- Before a session ends with unpushed commits, ask: "Publish to the site?" The container is temporary;
-  anything not pushed is lost.
+- Felipe asked (Oct 2026) for publishing without asking first: once a change is finished and tested in the
+  browser (desktop and phone widths), commit it and push to `main`. Don't push half-done work.
+- After pushing, confirm the live site serves the new version and update the prototype artifact.
 
 ## Content
 
