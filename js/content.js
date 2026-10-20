@@ -89,7 +89,7 @@ window.SITE = {
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
       client: "Client", year: "Year", scope: "Scope", role: "Role", live: "Live",
-      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓", aboutNav: "About", aboutTitle: "About", skipCredits: "Skip credits →",
+      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓", aboutNav: "About", overview: "Overview", camera: "Camera", film: "Film", aboutTitle: "About", skipCredits: "Skip credits →",
       placeholder: "Placeholder", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
       langSwitch: "PT", langLabel: "Ver em português",
@@ -100,7 +100,7 @@ window.SITE = {
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Visualização",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
       client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", live: "No ar",
-      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓", aboutNav: "Sobre", aboutTitle: "Sobre", skipCredits: "Pular créditos →",
+      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓", aboutNav: "Sobre", overview: "Visão geral", camera: "Câmera", film: "Filme", aboutTitle: "Sobre", skipCredits: "Pular créditos →",
       placeholder: "Provisório", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Substitua pela história do projeto: o briefing, a ideia e o que foi feito.",
       langSwitch: "EN", langLabel: "View in English",
@@ -240,11 +240,30 @@ window.SITE = {
       gallery: [],
     },
     {
+      title: "Lomography",
+      scope: { en: "Analogue photography", pt: "Fotografia analógica" },
+      image: "images/lomography/fisheye-05.jpg",
+      summary: {
+        en: "Film photography shot on three Lomography cameras: the LC-A, the Fisheye and the Super Sampler. Flares, double exposures and whatever the street gives.",
+        pt: "Fotografia em filme feita com três câmeras Lomography: a LC-A, a Fisheye e a Super Sampler. Flares, dupla exposição e o que a rua oferecer.",
+      },
+      // Photo library: justified mosaic. Each photo: { src, ar: "w/h", camera: "LC-A" | "Fisheye" | "Super Sampler", film, caption }.
+      layout: "lomo",
+      photos: [
+        { src: "images/lomography/fisheye-01.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-02.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-03.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-04.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-05.jpg", ar: "2000/1326", camera: "Fisheye" },
+      ],
+    },
+    // Logofolio stays the last project.
+    {
       title: "Logofolio",
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca" },
       summary: {
-        en: "Thirty marks, from full identities to a single sign, in a new order on every visit. Open any of them to look closer.",
-        pt: "Trinta marcas, de identidades completas a uma única placa, numa ordem nova a cada visita. Abra qualquer uma para ver de perto.",
+        en: "A wall of marks, from full identities to a single sign, in a new order on every visit. Open any of them to look closer.",
+        pt: "Um mural de marcas, de identidades completas a uma única placa, numa ordem nova a cada visita. Abra qualquer uma para ver de perto.",
       },
       hue: [230, 90, 55],
       // The wall: one tile per logo, black on white; hover and the close-up flood in the site blue with the mark in white.
@@ -281,7 +300,7 @@ window.SITE = {
         { name: "Heritage Premium Olive Oil", src: "images/logos/heritage.png" },
         { name: "Bora Malhar", src: "images/logos/bora-malhar.png" },
         { name: "Domingo Maior", src: "images/logos/domingo-maior.png", scale: .95 },
-      ].concat(Array.from({ length: 3 }, (_, k) => ({
+      ].concat(Array.from({ length: 23 }, (_, k) => ({
         name: `Logo ${String(k + 28).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
       }))),

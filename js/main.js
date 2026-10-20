@@ -334,7 +334,63 @@
     }));
   }
 
+  // Photo library (Lomography): a justified mosaic, rows of equal height filling the width, like a contact wall.
+  // Each photo: { src, ar: "w/h", camera, film, caption: { en, pt } }. Camera filters appear once two cameras are used.
+  // A click opens the photo on white with Previous / Overview / Next and its details; arrows, swipe and Esc work.
+  function lomoGallery(p) {
+    const cams = [...new Set(p.photos.map(ph => ph.camera).filter(Boolean))];
+    const filter = cams.length > 1 ? `<div class="seg mono lomo-filter" role="group" aria-label="${esc(T("camera"))}">${["", ...cams].map(c =>
+      `<button type="button" data-cam="${esc(c)}" aria-pressed="${!c}">${esc(c || T("all"))}</button>`).join("")}</div>` : "";
+    return `${filter}<div class="mosaic">${p.photos.map((ph, k) => { const [w, h] = String(ph.ar || "3/2").split("/").map(Number), ar = w / h;
+      return `<button type="button" class="ph-tile" data-k="${k}" data-cam="${esc(ph.camera || "")}" style="--ar:${ar.toFixed(4)}" aria-label="${esc(L(ph.caption) || L(p.title))}${ph.camera ? ` — ${esc(ph.camera)}` : ""}">
+        <img src="${esc(ph.src)}" alt="" loading="lazy"><span class="mono">${esc(ph.camera || "")}</span></button>`; }).join("")}</div>
+      <dialog class="photo-view" aria-label="${esc(L(p.title))}">
+        <nav class="pv-nav mono"><button type="button" class="pv-prev">${esc(T("prev"))}</button><button type="button" class="pv-close" autofocus>${esc(T("overview"))}</button><button type="button" class="pv-next">${esc(T("nextItem"))}</button></nav>
+        <div class="pv-img"></div>
+        <div class="pv-info"><p class="pv-cap"></p><p class="mono pv-meta"></p></div>
+      </dialog>`;
+  }
+  function setupLomo(p) {
+    const wall = caseEl.querySelector(".mosaic");
+    if (!wall) return;
+    const tiles = [...wall.children], dlg = caseEl.querySelector(".photo-view");
+    const shown = () => tiles.filter(t => !t.hidden).map(t => +t.dataset.k);
+    let cur = 0;
+    const show = (k, d = 0) => {
+      cur = k;
+      const ph = p.photos[k], list = shown();
+      dlg.querySelector(".pv-img").innerHTML = `<img src="${esc(ph.src)}" alt="${esc(L(ph.caption) || L(p.title))}">`;
+      dlg.querySelector(".pv-cap").textContent = L(ph.caption) || `${L(p.title)} ${pad(list.indexOf(k) + 1)} / ${pad(list.length)}`;
+      dlg.querySelector(".pv-meta").innerHTML = [[T("camera"), ph.camera], [T("film"), L(ph.film)]].filter(([, v]) => v).map(([a, b]) => `<b>${esc(a)}:</b> ${esc(b)}`).join("");
+      if (d && !reduced) dlg.querySelector(".pv-img img").animate([{ transform: `translateX(${d * 40}px)`, opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 380, easing: "cubic-bezier(.11,.82,.39,.92)" });
+    };
+    const step = d => { const list = shown(); show(list[(list.indexOf(cur) + d + list.length) % list.length], d); };
+    wall.addEventListener("click", e => {
+      const t = e.target.closest(".ph-tile");
+      if (!t) return;
+      show(+t.dataset.k);
+      dlg.showModal ? dlg.showModal() : dlg.setAttribute("open", "");
+      cursorTo(dlg, false);
+    });
+    dlg.querySelector(".pv-close").addEventListener("click", () => dlg.close());
+    dlg.querySelector(".pv-prev").addEventListener("click", () => step(-1));
+    dlg.querySelector(".pv-next").addEventListener("click", () => step(1));
+    dlg.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+    });
+    dlg.addEventListener("close", () => { cursorTo(document.body); wall.querySelector(`.ph-tile[data-k="${cur}"]`).focus({ preventScroll: true }); });
+    let x0 = null;
+    dlg.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") x0 = e.clientX; });
+    dlg.addEventListener("pointerup", e => { if (x0 !== null && Math.abs(e.clientX - x0) > 50) step(e.clientX < x0 ? 1 : -1); x0 = null; });
+    caseEl.querySelectorAll(".lomo-filter button").forEach(b => b.addEventListener("click", () => {
+      caseEl.querySelectorAll(".lomo-filter button").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
+      tiles.forEach(t => { t.hidden = !!b.dataset.cam && t.dataset.cam !== b.dataset.cam; });
+    }));
+  }
+
   function gallery(i, p) {
+    if (p.layout === "lomo" && p.photos) return lomoGallery(p);
     if (p.layout === "logos" && p.logos) return logoWall(p);
     if (p.layout === "loose" && p.gallery && p.gallery.length) return looseGallery(p);
     // Real images: p.gallery = [{ src, size: "full" | "half" | "third" | "quarter", ar: "16/9", caption }].
@@ -385,6 +441,7 @@
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
     setupLogos(p);
     setupScrub();
+    setupLomo(p);
   }
 
   // 360° viewer: frames drawn on a canvas. Drag (mouse or touch) or arrow keys to turn; a flick keeps it spinning
@@ -585,7 +642,7 @@
   const ball = document.createElement("div"), trail = document.createElement("canvas");
   const cursorOn = matchMedia("(hover: hover) and (pointer: fine)").matches && !reduced;
   let onBlue = false;
-  const cursorTo = host => { if (cursorOn) { host.append(trail, ball); onBlue = host !== document.body; } };
+  const cursorTo = (host, light = host !== document.body) => { if (cursorOn) { host.append(trail, ball); onBlue = light; } };
   if (cursorOn) {
     ball.className = "ball"; trail.className = "trail";
     ball.setAttribute("aria-hidden", "true"); trail.setAttribute("aria-hidden", "true");
