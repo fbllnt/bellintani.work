@@ -301,3 +301,26 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .ball.big{scale:2.2}
 .ball.press{scale:.7}
 .ball.big.press{scale:1.8}
+
+/* ---------- About, run as end credits ---------- */
+/* A black band edge to edge; roles right-aligned against names, like a film's closing titles */
+.credits{background:var(--fg);color:var(--bg);margin:clamp(80px,12vw,180px) calc(var(--side-r) * -1) 0 calc(var(--side-l) * -1);padding:clamp(48px,7vw,96px) var(--side-r) clamp(80px,12vw,160px) var(--side-l)}
+.credits .sec-head a{color:var(--bg)}
+.credits-intro{font:500 clamp(22px,2.6vw,38px)/1.15 var(--sans);letter-spacing:-.03em;max-width:28ch;margin:clamp(24px,4vw,48px) 0 clamp(80px,14vw,200px)}
+.roll{display:grid;gap:clamp(56px,9vw,120px);text-align:center}
+.cblock h3{margin:0 0 18px;color:#8e8e8e;font-size:12px}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,40px);align-items:baseline;margin:0 0 8px}
+.crow > span{text-align:right;color:#bdbdbd}
+.crow > b{text-align:left;font:700 clamp(20px,2.4vw,34px)/1.1 var(--sans);letter-spacing:-.03em}
+.crow.solo{display:block;font:700 clamp(20px,2.4vw,34px)/1.1 var(--sans);letter-spacing:-.03em}
+.crow a{text-decoration:none}
+.cblock .placeholder{color:#bdbdbd}
+.cend{display:grid;gap:14px;justify-items:center;padding-top:clamp(40px,8vw,120px)}
+.cend b{font:900 clamp(56px,11vw,180px)/.84 var(--sans);letter-spacing:-.05em;text-transform:uppercase}
+.cend sup{font-size:.25em;vertical-align:top}
+.credits .muted{color:#8e8e8e}
+@media (max-width:560px){
+  .crow{grid-template-columns:1fr;gap:2px;margin-bottom:16px}
+  .crow > span{text-align:center}
+  .crow > b{text-align:center}
+}

@@ -26,6 +26,41 @@ window.SITE = {
     pt: ["Identidade de marca", "Tipografia", "Pôsteres e impressos", "Embalagem", "Design editorial", "Direção de arte"],
   },
 
+  // About, run as film end credits. Each block: { head, rows: [[role, name, url?]] }; a row with one cell is centred.
+  // `placeholder: true` marks blocks still waiting for real content.
+  about: {
+    intro: {
+      en: "Felipe Bellintani is a multidisciplinary designer and art director, working across branding, identity, advertising, digital, social and multimedia.",
+      pt: "Felipe Bellintani é designer multidisciplinar e diretor de arte, atuando em branding, identidade, publicidade, digital, social e multimídia.",
+    },
+    credits: [
+      { head: { en: "Starring", pt: "Estrelando" }, rows: [
+        [{ en: "Designer", pt: "Designer" }, "Felipe Bellintani"],
+        [{ en: "Art director", pt: "Diretor de arte" }, "Felipe Bellintani"],
+        [{ en: "And who knows what else", pt: "E sabe-se lá o que mais" }, "Felipe Bellintani"],
+      ] },
+      { head: { en: "Experience", pt: "Experiência" }, placeholder: true, rows: [
+        [{ en: "Role", pt: "Função" }, { en: "Company — 20XX–now", pt: "Empresa — 20XX–hoje" }],
+        [{ en: "Role", pt: "Função" }, { en: "Company — 20XX–20XX", pt: "Empresa — 20XX–20XX" }],
+        [{ en: "Role", pt: "Função" }, { en: "Company — 20XX–20XX", pt: "Empresa — 20XX–20XX" }],
+      ] },
+      { head: { en: "Selected clients", pt: "Clientes selecionados" }, rows: [["Adidas"], ["ANTI Creative Finance"], ["SCRV.ag"], ["TV Globo"]] },
+      { head: { en: "Disciplines", pt: "Disciplinas" }, rows: [
+        [{ en: "Branding", pt: "Branding" }], [{ en: "Identity", pt: "Identidade" }], [{ en: "Advertising", pt: "Publicidade" }],
+        [{ en: "Digital", pt: "Digital" }], [{ en: "Social", pt: "Social" }], [{ en: "Multimedia", pt: "Multimídia" }],
+      ] },
+      { head: { en: "Education", pt: "Formação" }, placeholder: true, rows: [
+        [{ en: "Course", pt: "Curso" }, { en: "School — 20XX", pt: "Instituição — 20XX" }],
+      ] },
+      { head: { en: "Contact", pt: "Contato" }, rows: [
+        ["Email", "felipe@bellintani.work", "mailto:felipe@bellintani.work"],
+        ["Instagram", "@fbllnt", "https://www.instagram.com/fbllnt/"],
+        ["LinkedIn", "in/fbellintani", "https://www.linkedin.com/in/fbellintani/"],
+      ] },
+    ],
+    end: { en: "No pixels were harmed in the making of this portfolio.", pt: "Nenhum pixel foi ferido na produção deste portfólio." },
+  },
+
   // Interface labels
   ui: {
     en: {
@@ -33,7 +68,7 @@ window.SITE = {
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
       client: "Client", year: "Year", scope: "Scope", role: "Role", live: "Live",
-      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓",
+      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓", aboutNav: "About", aboutTitle: "About", skipCredits: "Skip credits →",
       placeholder: "Placeholder", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
       langSwitch: "PT", langLabel: "Ver em português",
@@ -44,7 +79,7 @@ window.SITE = {
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Visualização",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
       client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", live: "No ar",
-      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓",
+      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓", aboutNav: "Sobre", aboutTitle: "Sobre", skipCredits: "Pular créditos →",
       placeholder: "Provisório", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Substitua pela história do projeto: o briefing, a ideia e o que foi feito.",
       langSwitch: "EN", langLabel: "View in English",

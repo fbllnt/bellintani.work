@@ -15,7 +15,7 @@
 
 <nav class="corners" id="corners" aria-label="Main">
   <a class="c-tl swap" href="#top"><span data-bind="nameYear"></span><span data-bind="copyright"></span></a>
-  <div class="c-tr"><a class="swap" href="#work"><span data-i18n="work"></span><span data-bind="workCount"></span></a><button class="lang swap" id="lang" type="button"><span data-i18n="langSwitch"></span><span data-i18n="langSwitch"></span></button></div>
+  <div class="c-tr"><a class="swap" href="#work"><span data-i18n="work"></span><span data-bind="workCount"></span></a><a class="swap" href="#about"><span data-i18n="aboutNav"></span><span data-i18n="aboutNav"></span></a><button class="lang swap" id="lang" type="button"><span data-i18n="langSwitch"></span><span data-i18n="langSwitch"></span></button></div>
   <div class="c-bl" id="social-corner"></div>
   <a class="c-br talk swap" href="#contact"><span data-i18n="letsTalk"></span><span><span class="ar">→</span> <span data-i18n="letsTalk"></span> <span class="ar">←</span></span></a>
 </nav>
@@ -55,6 +55,16 @@
       <button class="replay mono swap" id="replay" type="button"><span data-i18n="replay"></span><span data-i18n="replay"></span></button>
     </div>
     <ul class="services mono" id="services-list"></ul>
+  </section>
+
+  <!-- About, run as end credits -->
+  <section class="sec credits" id="about">
+    <div class="sec-head">
+      <h2 class="h2" data-i18n="aboutTitle"></h2>
+      <a class="mono swap" href="#contact"><span data-i18n="skipCredits"></span><span data-i18n="skipCredits"></span></a>
+    </div>
+    <p class="credits-intro" id="credits-intro"></p>
+    <div class="roll" id="credits"></div>
   </section>
 
   <footer class="foot" id="contact">
