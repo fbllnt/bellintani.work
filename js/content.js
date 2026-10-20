@@ -240,7 +240,7 @@ window.SITE = {
       gallery: [],
     },
     {
-      title: "Logos",
+      title: "Logofolio",
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca" },
       summary: {
         en: "Thirty marks, from full identities to a single sign, in a new order on every visit. Open any of them to look closer.",
@@ -284,7 +284,6 @@ window.SITE = {
       ].concat(Array.from({ length: 3 }, (_, k) => ({
         name: `Logo ${String(k + 28).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
-        tag: [{ en: "Food", pt: "Comida" }, { en: "Tech", pt: "Tecnologia" }, { en: "Culture", pt: "Cultura" }, { en: "Fashion", pt: "Moda" }, { en: "Sport", pt: "Esporte" }][k % 5],
       }))),
     },
   ],
