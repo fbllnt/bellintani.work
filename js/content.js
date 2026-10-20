@@ -16,10 +16,10 @@ window.SITE = {
     en: ["Branding, Identity, Advertising, Digital, Social and Multimedia"],
     pt: ["Branding, Identidade, Publicidade, Digital, Social e Multimídia"],
   },
-  // Intro loader: each word cuts on in turn. Add loaderBig: { en, pt } to end on one big word.
+  // Intro loader: each word cuts on in turn; a word starting with * shows in blue. Add loaderBig: { en, pt } to end on one big word.
   loader: {
-    en: ["Hey", "don't", "blink", "→good", "things", "take", "a", "sec"],
-    pt: ["Ei,", "não", "pisca", "→coisa", "boa", "leva", "um", "tempo"],
+    en: ["Hey", "don't", "blink", "*good", "*things", "take", "a", "sec"],
+    pt: ["Ei,", "não", "pisca", "*coisa", "*boa", "leva", "um", "tempo"],
   },
   services: {
     en: ["Brand identity", "Typography", "Posters & print", "Packaging", "Editorial design", "Art direction"],

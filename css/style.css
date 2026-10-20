@@ -32,6 +32,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .stage > *{position:absolute}
 .loader{inset:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));padding:clamp(60px,10vw,120px) var(--side-r) clamp(60px,10vw,120px) var(--side-l)}
 .loader span{font:900 clamp(30px,6vw,92px)/.9 var(--sans);letter-spacing:-.05em;text-transform:uppercase;opacity:0;align-self:center;justify-self:center}
+.loader span.blue{color:var(--blue)}
 .loader span.big{grid-column:1/-1;grid-row:3;font-size:clamp(60px,16vw,260px)}
 .panel{inset:0;opacity:0}
 .head{left:var(--side-l);right:var(--side-r);top:clamp(64px,10vh,110px);display:flex;flex-direction:column;gap:clamp(32px,5vw,72px)}
