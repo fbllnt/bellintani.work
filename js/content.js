@@ -223,24 +223,24 @@ window.SITE = {
       title: "Logos",
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca" },
       summary: {
-        en: "Thirty marks, from full identities to a single sign. Hover to see each one in its own colours; open one to look closer.",
-        pt: "Trinta marcas, de identidades completas a uma única placa. Passe o mouse para ver cada uma nas suas cores; abra para ver de perto.",
+        en: "Thirty marks, from full identities to a single sign, in a new order on every visit. Open any of them to look closer.",
+        pt: "Trinta marcas, de identidades completas a uma única placa, numa ordem nova a cada visita. Abra qualquer uma para ver de perto.",
       },
       hue: [230, 90, 55],
-      placeholder: true,
       // The wall: one tile per logo, black on white; hover and the close-up flood in the site blue with the mark in white.
       // Each logo: { name (screen readers only), year, tag: { en, pt }, src: one-colour SVG or PNG on transparent (the site colours it),
+      //   scale: optical size correction (1 = automatic; >1 for thin or detailed marks, <1 for heavy ones),
       //   color: optional full-colour file for the close-up, bg / ink: optional, to override the site blue and white, note: { en, pt } — the short description shown in the close-up }.
       // Sector filters appear when two or more tags are used.
       layout: "logos",
       logos: [
         { name: "REUD Co.", src: "images/logos/reud-co.png" },
-        { name: "HOU", src: "images/logos/hou.png" },
+        { name: "HOU", src: "images/logos/hou.png", scale: 1.2 },
         { name: "mokoko.", src: "images/logos/mokoko.png" },
         { name: "mr.", src: "images/logos/mr.png" },
-        { name: "Descubra o Brasil", src: "images/logos/descubra-o-brasil.png" },
+        { name: "Descubra o Brasil", src: "images/logos/descubra-o-brasil.png", scale: 1.4 },
         { name: "ink", src: "images/logos/ink.png" },
-        { name: "Join", src: "images/logos/join.png" },
+        { name: "Join", src: "images/logos/join.png", scale: 1.12 },
       ].concat(Array.from({ length: 23 }, (_, k) => ({
         name: `Logo ${String(k + 8).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),

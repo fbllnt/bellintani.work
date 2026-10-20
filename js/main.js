@@ -226,17 +226,25 @@
   // Logo wall: every mark sits black on white so thirty clients read as one body of work.
   // One-colour files are used as masks, so the same file turns black, white or the brand colour.
   // Hover floods a tile with the brand colour; a click opens the logo full screen, with arrows, swipe and Esc.
+  // Visual balance: each mark's width (as a share of its tile) comes from its proportions, so wide wordmarks
+  // get more width and compact marks less; `scale` in content.js corrects by eye (thin lines up, heavy shapes down).
+  const markWidth = l => { const w = Math.min(.74, .4 * l._ar ** .4) * (l.scale || 1); return Math.min(w, .5 * l._ar, .8); };
+  const markSize = l => l._ar ? `--mw:${markWidth(l).toFixed(3)};--ar:${l._ar.toFixed(3)};` : "";
   const mark = l => l.src
-    ? `<span class="mark" role="img" aria-label="${esc(l.name)}" style="-webkit-mask-image:url('${esc(l.src)}');mask-image:url('${esc(l.src)}')"></span>`
+    ? `<span class="mark" role="img" aria-label="${esc(l.name)}" style="${markSize(l)}-webkit-mask-image:url('${esc(l.src)}');mask-image:url('${esc(l.src)}')"></span>`
     : `<span class="mark type" aria-hidden="true">${esc(l.name)}</span>`;
+  // Real logos come in a fresh order on every visit; placeholders stay at the end
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   function logoWall(p) {
     const tags = [...new Set(p.logos.map(l => L(l.tag)).filter(Boolean))];
     const filter = tags.length > 1 ? `<div class="seg mono logo-filter" role="group" aria-label="${esc(T("filter"))}">${["", ...tags].map(t =>
       `<button type="button" data-tag="${esc(t)}" aria-pressed="${!t}">${esc(t || T("all"))}</button>`).join("")}</div>` : "";
-    return `${filter}<ul class="logos">${p.logos.map((l, k) => `<li data-tag="${esc(L(l.tag) || "")}" style="--k:${k};--lb:${esc(l.bg || "var(--blue)")};--li:${esc(l.ink || "#fff")}">
+    const idx = p.logos.map((_, k) => k);
+    const order = shuffle(idx.filter(k => p.logos[k].src)).concat(idx.filter(k => !p.logos[k].src));
+    return `${filter}<ul class="logos">${order.map((k, n) => { const l = p.logos[k]; return `<li data-tag="${esc(L(l.tag) || "")}" style="--k:${n};--lb:${esc(l.bg || "var(--blue)")};--li:${esc(l.ink || "#fff")}">
       <button type="button" class="logo" data-k="${k}" aria-label="${esc(l.name)}${l.year ? `, ${esc(l.year)}` : ""}">
-        <span class="n mono">${pad(k + 1)}</span>${mark(l)}
-      </button></li>`).join("")}</ul>
+        <span class="n mono">${pad(n + 1)}</span>${mark(l)}
+      </button></li>`; }).join("")}</ul>
       <dialog class="logo-view" aria-label="${esc(L(p.title))}">
         <div class="lv-top mono"><span class="lv-count"></span><button type="button" class="lv-close">${esc(T("close"))} ✕</button></div>
         <div class="lv-mark"></div>
@@ -250,6 +258,15 @@
     const items = [...wall.children], dlg = caseEl.querySelector(".logo-view");
     const shown = () => items.filter(li => !li.hidden).map(li => +li.querySelector(".logo").dataset.k);
     let cur = 0;
+    // Read each file's proportions once, then size its tile
+    p.logos.forEach((l, k) => {
+      if (!l.src) return;
+      const apply = () => { const m = wall.querySelector(`.logo[data-k="${k}"] .mark`); m.style.setProperty("--mw", markWidth(l).toFixed(3)); m.style.setProperty("--ar", l._ar.toFixed(3)); };
+      if (l._ar) return apply();
+      const im = new Image();
+      im.onload = () => { l._ar = im.naturalWidth / im.naturalHeight; apply(); };
+      im.src = l.src;
+    });
     const show = k => {
       cur = k;
       const l = p.logos[k], list = shown();
