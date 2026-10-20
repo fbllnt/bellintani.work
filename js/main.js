@@ -215,7 +215,7 @@
     const tags = [...new Set(p.logos.map(l => L(l.tag)).filter(Boolean))];
     const filter = tags.length > 1 ? `<div class="seg mono logo-filter" role="group" aria-label="${esc(T("filter"))}">${["", ...tags].map(t =>
       `<button type="button" data-tag="${esc(t)}" aria-pressed="${!t}">${esc(t || T("all"))}</button>`).join("")}</div>` : "";
-    return `${filter}<ul class="logos">${p.logos.map((l, k) => `<li data-tag="${esc(L(l.tag) || "")}" style="--k:${k};--lb:${esc(l.bg || "var(--fg)")};--li:${esc(l.ink || "#fff")}">
+    return `${filter}<ul class="logos">${p.logos.map((l, k) => `<li data-tag="${esc(L(l.tag) || "")}" style="--k:${k};--lb:${esc(l.bg || "var(--blue)")};--li:${esc(l.ink || "#fff")}">
       <button type="button" class="logo" data-k="${k}" aria-label="${esc(l.name)}${l.year ? `, ${esc(l.year)}` : ""}">
         <span class="n mono">${pad(k + 1)}</span>${mark(l)}
         <span class="info mono"><span>${esc(l.name)}</span><span>${esc(l.year || "")}</span></span>
@@ -236,7 +236,7 @@
     const show = k => {
       cur = k;
       const l = p.logos[k], list = shown();
-      dlg.style.setProperty("--lb", l.bg || "var(--fg)"); dlg.style.setProperty("--li", l.ink || "#fff");
+      dlg.style.setProperty("--lb", l.bg || "var(--blue)"); dlg.style.setProperty("--li", l.ink || "#fff");
       dlg.querySelector(".lv-mark").innerHTML = l.color ? `<img src="${esc(l.color)}" alt="${esc(l.name)}">` : mark(l);
       dlg.querySelector(".lv-count").textContent = `${pad(list.indexOf(k) + 1)} / ${pad(list.length)}`;
       dlg.querySelector(".lv-name").textContent = l.name;

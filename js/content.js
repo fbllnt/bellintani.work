@@ -161,21 +161,19 @@ window.SITE = {
       },
       hue: [230, 90, 55],
       placeholder: true,
-      // The wall: one tile per logo, black on white; hover floods the tile with the brand colour.
+      // The wall: one tile per logo, black on white; hover and the close-up flood in the site blue with the mark in white.
       // Each logo: { name, year, tag: { en, pt }, src: one-colour SVG or PNG on transparent (the site colours it),
-      //   color: optional full-colour file for the close-up, bg: brand colour, ink: mark colour on bg, note: { en, pt } }.
+      //   color: optional full-colour file for the close-up, bg / ink: optional, to override the site blue and white, note: { en, pt } }.
       // Sector filters appear when two or more tags are used.
       layout: "logos",
       logos: [
-        { name: "REUD Co.", src: "images/logos/reud-co.png", bg: "#e9e3d5", ink: "#000" },
-        { name: "HOU", src: "images/logos/hou.png", bg: "#ff4f1a", ink: "#000" },
-        { name: "mokoko.", src: "images/logos/mokoko.png", bg: "#1a2bff", ink: "#fff" },
+        { name: "REUD Co.", src: "images/logos/reud-co.png" },
+        { name: "HOU", src: "images/logos/hou.png" },
+        { name: "mokoko.", src: "images/logos/mokoko.png" },
       ].concat(Array.from({ length: 27 }, (_, k) => ({
         name: `Logo ${String(k + 4).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
         tag: [{ en: "Food", pt: "Comida" }, { en: "Tech", pt: "Tecnologia" }, { en: "Culture", pt: "Cultura" }, { en: "Fashion", pt: "Moda" }, { en: "Sport", pt: "Esporte" }][k % 5],
-        bg: `hsl(${(k * 47) % 360} ${k % 4 ? 85 : 10}% ${[52, 40, 62, 16][k % 4]}%)`,
-        ink: [0, 3].includes(k % 4) ? "#fff" : "#0a0a0a",
       }))),
     },
     { title: { en: "Type Specimen", pt: "Espécime Tipográfico" }, scope: { en: "Custom Typography", pt: "Tipografia Customizada" }, year: "2025", hue: [0, 0, 15], placeholder: true },
