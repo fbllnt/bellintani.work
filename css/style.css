@@ -295,3 +295,13 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .loose .scrub-stick figcaption{order:0;margin:0 0 6px}
   .scrub-ui span:last-child{display:none}
 }
+
+/* ---------- Cursor ---------- */
+/* Blue ball in place of the pointer, with a fading trail drawn on a canvas behind it (mouse only) */
+.has-ball,.has-ball *{cursor:none!important}
+.trail{position:fixed;inset:0;width:100vw;height:100vh;z-index:80;pointer-events:none}
+.ball{position:fixed;left:0;top:0;z-index:81;pointer-events:none;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 1.5px #fff;opacity:0;transition:opacity .2s,scale .35s var(--spring)}
+.ball.on{opacity:1}
+.ball.big{scale:2.6}
+.ball.press{scale:.7}
+.ball.big.press{scale:2.1}

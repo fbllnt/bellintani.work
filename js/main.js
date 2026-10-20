@@ -271,6 +271,7 @@
     const open = k => {
       show(k);
       dlg.showModal ? dlg.showModal() : dlg.setAttribute("open", "");
+      cursorTo(dlg);
       if (!reduced) fly(false).then(anims => anims.forEach(a => a.cancel()));
     };
     let closing = false;
@@ -299,7 +300,7 @@
       if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
     });
     // Back on the wall, focus returns to the tile of the last logo seen
-    dlg.addEventListener("close", () => tileOf(cur).focus({ preventScroll: true }));
+    dlg.addEventListener("close", () => { cursorTo(document.body); tileOf(cur).focus({ preventScroll: true }); });
     let x0 = null;
     dlg.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") x0 = e.clientX; });
     dlg.addEventListener("pointerup", e => { if (x0 !== null && Math.abs(e.clientX - x0) > 50) step(e.clientX < x0 ? 1 : -1); x0 = null; });
@@ -550,6 +551,51 @@
     if (i >= 0) openCase(i);
     else if (document.body.classList.contains("in-case")) closeCase(location.hash.slice(1));
   });
+
+  // ---------- Cursor: a blue ball that leaves a fading trail ----------
+  // Mouse and trackpad only; touch screens and reduced motion keep the normal pointer.
+  // Over links and buttons the ball grows. Inside the logo close-up it moves into the dialog (top layer).
+  const ball = document.createElement("div"), trail = document.createElement("canvas");
+  const cursorOn = matchMedia("(hover: hover) and (pointer: fine)").matches && !reduced;
+  let ink = "";
+  // On the blue close-up the trail turns white so it stays visible
+  const cursorTo = host => { if (cursorOn) { host.append(trail, ball); ink = host === document.body ? "" : "#fff"; } };
+  if (cursorOn) {
+    ball.className = "ball"; trail.className = "trail";
+    ball.setAttribute("aria-hidden", "true"); trail.setAttribute("aria-hidden", "true");
+    document.documentElement.classList.add("has-ball");
+    cursorTo(document.body);
+    const ctx = trail.getContext("2d"), pts = [], LIFE = 420;
+    let raf = 0, dpr = 1;
+    const size = () => { dpr = Math.min(2, devicePixelRatio || 1); trail.width = innerWidth * dpr; trail.height = innerHeight * dpr; };
+    size(); addEventListener("resize", size);
+    const blue = getComputedStyle(document.documentElement).getPropertyValue("--blue").trim() || "#1a2bff";
+    const draw = () => {
+      const now = performance.now();
+      while (pts.length && now - pts[0].t > LIFE) pts.shift();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      ctx.lineCap = "butt"; ctx.strokeStyle = ink || blue;
+      // Each segment thins and fades with age, so the tail tapers off behind the ball
+      for (let i = 1; i < pts.length; i++) {
+        const a = 1 - (now - pts[i].t) / LIFE;
+        ctx.globalAlpha = a * .9; ctx.lineWidth = 1 + a * 9;
+        ctx.beginPath(); ctx.moveTo(pts[i - 1].x, pts[i - 1].y); ctx.lineTo(pts[i].x, pts[i].y); ctx.stroke();
+      }
+      raf = pts.length ? requestAnimationFrame(draw) : 0;
+    };
+    addEventListener("pointermove", e => {
+      if (e.pointerType !== "mouse") return;
+      ball.style.translate = `${e.clientX}px ${e.clientY}px`;
+      ball.classList.add("on");
+      pts.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+      ball.classList.toggle("big", !!e.target.closest("a, button, [role=slider], .drop, video"));
+      if (!raf) raf = requestAnimationFrame(draw);
+    }, { passive: true });
+    document.addEventListener("pointerleave", () => ball.classList.remove("on"));
+    addEventListener("pointerdown", () => ball.classList.add("press"));
+    addEventListener("pointerup", () => ball.classList.remove("press"));
+  }
 
   const first = projectFromHash();
   if (first >= 0) { finish(); openCase(first, false); }
