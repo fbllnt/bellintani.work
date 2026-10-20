@@ -120,7 +120,7 @@ window.SITE = {
       ],
     },
     {
-      title: "Scriva",
+      title: "SCRV*",
       client: "SCRV.ag",
       year: "2025",
       scope: { en: "Rebranding // Positioning // Brand content", pt: "Rebranding // Posicionamento // Conteúdo de marca" },
