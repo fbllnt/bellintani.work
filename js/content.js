@@ -163,6 +163,7 @@ window.SITE = {
       },
       layout: "loose",
       gallery: [
+        { video: "images/cinema-especial/opening.mp4", webm: "images/cinema-especial/opening.webm", poster: "images/cinema-especial/opening-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Opening — 7s preview", pt: "Abertura — prévia de 7s" } },
         { scrub: { frames: "images/cinema-especial/frame-##.jpg", count: 10 }, ar: "16/9", col: 1, span: 12, caption: { en: "Style frames — the opening, frame by frame", pt: "Style frames — a abertura, quadro a quadro" } },
       ],
     },
