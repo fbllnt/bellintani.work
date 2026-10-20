@@ -263,8 +263,5 @@ window.SITE = {
         tag: [{ en: "Food", pt: "Comida" }, { en: "Tech", pt: "Tecnologia" }, { en: "Culture", pt: "Cultura" }, { en: "Fashion", pt: "Moda" }, { en: "Sport", pt: "Esporte" }][k % 5],
       }))),
     },
-    { title: { en: "Type Specimen", pt: "Espécime Tipográfico" }, scope: { en: "Custom Typography", pt: "Tipografia Customizada" }, year: "2025", hue: [0, 0, 15], placeholder: true },
-    { title: { en: "Campaign", pt: "Campanha" }, scope: { en: "Advertising // Art Direction", pt: "Publicidade // Direção de Arte" }, year: "2024", hue: [150, 55, 40], placeholder: true },
-    { title: { en: "Editorial", pt: "Editorial" }, scope: { en: "Layout // Publication", pt: "Layout // Publicação" }, year: "2024", hue: [18, 85, 55], placeholder: true },
   ],
 };
