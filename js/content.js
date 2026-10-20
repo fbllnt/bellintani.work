@@ -58,7 +58,17 @@ window.SITE = {
       ] },
       { head: { en: "Education", pt: "Formação" }, rows: [
         { role: { en: "MBA, Data-Driven Marketing and AI", pt: "MBA, Marketing Orientado a Dados e IA" }, name: "USP / Esalq", years: "2026 — 2027" },
+        { role: { en: "Master's, Branding", pt: "Mestrado, Branding" }, name: "ESPM", years: "2022 — 2024" },
+        { role: { en: "UX/UI Design", pt: "UX/UI Design" }, name: "EBAC", years: "2020 — 2022" },
         { role: { en: "Master's, Design and Applied Arts", pt: "Mestrado, Design e Artes Aplicadas" }, name: "IDEP Barcelona", years: "2005 — 2006" },
+        { role: { en: "Bachelor's, Advertising and Marketing", pt: "Bacharelado, Propaganda e Marketing" }, name: "FAAP", years: "1998 — 2002" },
+      ] },
+      { head: { en: "Languages", pt: "Idiomas" }, rows: [
+        { role: { en: "Native or bilingual", pt: "Nativo ou bilíngue" }, name: { en: "Portuguese", pt: "Português" } },
+        { role: { en: "Native or bilingual", pt: "Nativo ou bilíngue" }, name: { en: "English", pt: "Inglês" } },
+        { role: { en: "Native or bilingual", pt: "Nativo ou bilíngue" }, name: { en: "Spanish", pt: "Espanhol" } },
+        { role: { en: "Limited working", pt: "Proficiência limitada" }, name: { en: "Italian", pt: "Italiano" } },
+        { role: { en: "Limited working", pt: "Proficiência limitada" }, name: { en: "Catalan", pt: "Catalão" } },
       ] },
       { head: { en: "Filmed on location", pt: "Filmado em" }, flow: true, rows: [
         { en: "Latin America", pt: "América Latina" }, { en: "Europe", pt: "Europa" }, { en: "North America", pt: "América do Norte" },
