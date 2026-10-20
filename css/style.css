@@ -60,10 +60,10 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Rest state: after the intro, on skip, and with reduced motion */
 /* Scroll cue: appears after the tagline, chevrons pulse downward one after the other */
 .cue{left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:3;padding:8px;color:var(--fg);opacity:0;transition:opacity .4s}
-.cue svg{display:block;width:30px;height:32px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:square;overflow:visible}
+.cue svg{display:block;width:34px;height:36px;fill:none;stroke:currentColor;stroke-width:4.5;stroke-linecap:square;overflow:visible}
 .cue path{animation:cueDrop 1.6s var(--ease) infinite}
 .cue path + path{animation-delay:.18s}
-@keyframes cueDrop{0%{opacity:.3;transform:translateY(-3px)}45%{opacity:1}100%{opacity:.3;transform:translateY(4px)}}
+@keyframes cueDrop{0%{opacity:.45;transform:translateY(-3px)}45%{opacity:1}100%{opacity:.45;transform:translateY(4px)}}
 .play .cue{animation:fade .5s ease forwards 3.5s}
 .done .cue{opacity:1}
 .cue.gone{opacity:0!important;pointer-events:none}

@@ -239,24 +239,6 @@ window.SITE = {
       layout: "loose",
       gallery: [],
     },
-    {
-      title: "Lomography",
-      scope: { en: "Analogue photography", pt: "Fotografia analógica" },
-      image: "images/lomography/fisheye-05.jpg",
-      summary: {
-        en: "Film photography shot on three Lomography cameras: the LC-A, the Fisheye and the Super Sampler. Flares, double exposures and whatever the street gives.",
-        pt: "Fotografia em filme feita com três câmeras Lomography: a LC-A, a Fisheye e a Super Sampler. Flares, dupla exposição e o que a rua oferecer.",
-      },
-      // Photo library: justified mosaic. Each photo: { src, ar: "w/h", camera: "LC-A" | "Fisheye" | "Super Sampler", film, caption }.
-      layout: "lomo",
-      photos: [
-        { src: "images/lomography/fisheye-01.jpg", ar: "2000/1326", camera: "Fisheye" },
-        { src: "images/lomography/fisheye-02.jpg", ar: "2000/1326", camera: "Fisheye" },
-        { src: "images/lomography/fisheye-03.jpg", ar: "2000/1326", camera: "Fisheye" },
-        { src: "images/lomography/fisheye-04.jpg", ar: "2000/1326", camera: "Fisheye" },
-        { src: "images/lomography/fisheye-05.jpg", ar: "2000/1326", camera: "Fisheye" },
-      ],
-    },
     // Logofolio stays the last project.
     {
       title: "Logofolio",
@@ -304,6 +286,28 @@ window.SITE = {
         name: `Logo ${String(k + 28).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
       }))),
+    },
+  ],
+
+  // Hidden for now — move an entry back into `projects` (before Logofolio) to publish it again.
+  drafts: [
+    {
+      title: "Lomography",
+      scope: { en: "Analogue photography", pt: "Fotografia analógica" },
+      image: "images/lomography/fisheye-05.jpg",
+      summary: {
+        en: "Film photography shot on three Lomography cameras: the LC-A, the Fisheye and the Super Sampler. Flares, double exposures and whatever the street gives.",
+        pt: "Fotografia em filme feita com três câmeras Lomography: a LC-A, a Fisheye e a Super Sampler. Flares, dupla exposição e o que a rua oferecer.",
+      },
+      // Photo library: justified mosaic. Each photo: { src, ar: "w/h", camera: "LC-A" | "Fisheye" | "Super Sampler", film, caption }.
+      layout: "lomo",
+      photos: [
+        { src: "images/lomography/fisheye-01.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-02.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-03.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-04.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-05.jpg", ar: "2000/1326", camera: "Fisheye" },
+      ],
     },
   ],
 };
