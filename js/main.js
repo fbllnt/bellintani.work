@@ -447,6 +447,7 @@
     setupLogos(p);
     setupScrub();
     setupLomo(p);
+    setupFade(p);
   }
 
   // 360° viewer: frames drawn on a canvas. Drag (mouse or touch) or arrow keys to turn; a flick keeps it spinning
@@ -534,6 +535,57 @@
   addEventListener("scroll", queueDrift, { passive: true });
   addEventListener("resize", queueDrift);
   function setupDrift() { driftEls = [...caseEl.querySelectorAll("[data-speed]")]; queueDrift(); }
+
+  // Scroll colour fade: each image lends the page a soft tint of its own colours. As an image reaches the
+  // middle of the screen the background eases to its tint; above the first image it stays white.
+  // Photos also drift a little inside their frames (parallax). Set `fade: false` on a project to turn it off.
+  let fadeFigs = [], fadeRaf = 0;
+  const tintOf = img => {
+    try {
+      const c = document.createElement("canvas"); c.width = c.height = 16;
+      const x = c.getContext("2d", { willReadFrequently: true }); x.drawImage(img, 0, 0, 16, 16);
+      const d = x.getImageData(0, 0, 16, 16).data;
+      // Weight vivid pixels more, so a red poster reads red rather than grey
+      let r = 0, g = 0, b = 0, wsum = 0;
+      for (let i = 0; i < d.length; i += 4) {
+        const mx = Math.max(d[i], d[i + 1], d[i + 2]), mn = Math.min(d[i], d[i + 1], d[i + 2]), w = 1 + 4 * (mx - mn) / 255;
+        r += d[i] * w; g += d[i + 1] * w; b += d[i + 2] * w; wsum += w;
+      }
+      r /= wsum * 255; g /= wsum * 255; b /= wsum * 255;
+      const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, dd = mx - mn;
+      let h = 0; const sat = dd ? dd / (1 - Math.abs(2 * l - 1)) : 0;
+      if (dd) h = mx === r ? ((g - b) / dd) % 6 : mx === g ? (b - r) / dd + 2 : (r - g) / dd + 4;
+      return `hsl(${Math.round((h * 60 + 360) % 360)} ${Math.round(Math.min(sat, .75) * 100)}% 84%)`;
+    } catch (e) { return ""; }
+  };
+  const fade = () => {
+    fadeRaf = 0;
+    const mid = innerHeight / 2;
+    let best = null, bestD = innerHeight * .45;
+    fadeFigs.forEach(f => {
+      const r = f.getBoundingClientRect(), dist = r.top > mid ? r.top - mid : r.bottom < mid ? mid - r.bottom : 0;
+      if (dist < bestD) { bestD = dist; best = f; }
+      // Parallax: the photo slides up to ±5% inside its frame as the frame crosses the screen
+      const img = f.querySelector(".ph > img");
+      if (img && r.bottom > 0 && r.top < innerHeight) img.style.translate = `0 ${((r.top + r.height / 2 - mid) / innerHeight * -5).toFixed(2)}%`;
+    });
+    caseEl.style.setProperty("--tint", best && best.dataset.tint ? best.dataset.tint : "var(--bg)");
+  };
+  const queueFade = () => { if (fadeFigs.length && !fadeRaf) fadeRaf = requestAnimationFrame(fade); };
+  addEventListener("scroll", queueFade, { passive: true });
+  addEventListener("resize", queueFade);
+  function setupFade(p) {
+    caseEl.style.removeProperty("--tint");
+    caseEl.classList.toggle("fade", !reduced && p.fade !== false);
+    fadeFigs = reduced || p.fade === false ? [] : [...caseEl.querySelectorAll(".case-gallery .fig")];
+    fadeFigs.forEach(f => {
+      const img = f.querySelector(".ph > img"), poster = f.querySelector("video")?.getAttribute("poster");
+      const read = el => { const t = tintOf(el); if (t) { f.dataset.tint = t; queueFade(); } };
+      if (img) img.complete && img.naturalWidth ? read(img) : img.addEventListener("load", () => read(img), { once: true });
+      else if (poster) { const im = new Image(); im.onload = () => read(im); im.src = poster; }
+    });
+    queueFade();
+  }
 
   // Scroll-played sequences: progress through the tall figure picks the frame
   let scrubEls = [], scrubRaf = 0;
@@ -627,7 +679,7 @@
   };
   const closeCase = target => cutTo(() => {
     document.body.classList.remove("in-case");
-    caseEl.innerHTML = ""; document.title = S.name;
+    caseEl.innerHTML = ""; document.title = S.name; fadeFigs = []; caseEl.style.removeProperty("--tint");
     const el = $(target) || $("work");
     el.scrollIntoView({ behavior: "instant" });
   });

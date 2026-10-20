@@ -157,7 +157,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .social #social-foot{display:flex;gap:16px}
 
 /* ---------- Project page ---------- */
-.case{display:none;background:var(--bg)}
+.case{display:none;background:var(--tint,var(--bg));transition:background-color 1.1s var(--ease)}
 .in-case .home,.in-case main{display:none}
 .in-case .case{display:block}
 .in-case .corners{opacity:1}
@@ -206,7 +206,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loose > *{position:relative;z-index:var(--z,1);transition:z-index 0s}
 .loose > .fig:hover,.loose > .fig:focus-within{z-index:30}
 .loose .fig{display:flex;flex-direction:column}
-.loose .fig figcaption{order:-1;align-self:flex-start;margin:0 0 6px;padding:3px 8px 3px 0;background:var(--bg)}
+.loose .fig figcaption{order:-1;align-self:flex-start;margin:0 0 6px;padding:3px 8px 3px 0;background:var(--tint,var(--bg));transition:background-color 1.1s var(--ease)}
 .loose .vctl{top:10px;bottom:auto}
 .loose .spin-ui{top:12px;bottom:auto}
 .ltext{margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
@@ -368,3 +368,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .pv-cap{font:500 15px/1.3 var(--sans)}
 .pv-meta b{font-weight:500;margin-right:4px}
 @media (prefers-reduced-motion:reduce){ .photo-view[open]{animation:none} .ph-tile img{transition:none} }
+
+/* Scroll colour fade: room for the photos to drift inside their frames */
+.case.fade .case-gallery .fig .ph > img{scale:1.1;will-change:translate}
