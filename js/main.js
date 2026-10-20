@@ -66,8 +66,10 @@
   const A = S.about;
   $("credits-intro").textContent = L(A.intro);
   const cell = (v, url) => url ? `<a class="swap" href="${esc(url)}"${/^https?:/.test(url) ? ` target="_blank" rel="noopener"` : ""}><span>${esc(L(v))}</span><span>${esc(L(v))}</span></a>` : esc(L(v));
-  $("credits").innerHTML = A.credits.map(b => `<div class="cblock"><h3 class="mono">${esc(L(b.head))}${tagFor(b)}</h3>${b.rows.map(([role, name, url]) =>
-    name === undefined ? `<p class="crow solo">${cell(role)}</p>` : `<p class="crow"><span class="mono">${esc(L(role))}</span><b>${cell(name, url)}</b></p>`).join("")}</div>`).join("")
+  const isRow = r => r && typeof r === "object" && "name" in r;
+  $("credits").innerHTML = A.credits.map(b => `<div class="cblock${b.flow ? " wrap" : ""}"><h3 class="mono">${esc(L(b.head))}${tagFor(b)}</h3>${b.rows.map(r =>
+    isRow(r) ? `<p class="crow"><span class="mono">${esc(L(r.role))}${r.years ? `<i>${esc(L(r.years))}</i>` : ""}</span><b>${cell(r.name, r.url)}</b></p>`
+      : `<p class="crow solo">${cell(r)}</p>`).join("")}</div>`).join("")
     + `<div class="cend"><b>${esc(S.name)}<sup>®</sup></b><span class="mono">${esc(L(A.end))}</span><span class="mono muted">©Copyright 20${esc(S.year)}</span></div>`;
   // Slugs come from the English title so links stay the same in both languages
   S.projects.forEach(p => { p.slug = p.slug || String(p.title.en || p.title).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); });

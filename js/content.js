@@ -26,36 +26,53 @@ window.SITE = {
     pt: ["Identidade de marca", "Tipografia", "Pôsteres e impressos", "Embalagem", "Design editorial", "Direção de arte"],
   },
 
-  // About, run as film end credits. Each block: { head, rows: [[role, name, url?]] }; a row with one cell is centred.
-  // `placeholder: true` marks blocks still waiting for real content.
+  // About, run as film end credits (content from LinkedIn).
+  // Each block: { head, rows }. A row is { role, name, years, url } (role left, name right) or a single
+  // value, which is centred. `flow: true` sets single values side by side. `placeholder: true` marks unfinished blocks.
   about: {
     intro: {
-      en: "Felipe Bellintani is a multidisciplinary designer and art director, working across branding, identity, advertising, digital, social and multimedia.",
-      pt: "Felipe Bellintani é designer multidisciplinar e diretor de arte, atuando em branding, identidade, publicidade, digital, social e multimídia.",
+      en: "I build brands, design systems and creative operations that scale. For over 20 years I've led branding, design and creative work across Latin America, Europe and North America.",
+      pt: "Construo marcas, sistemas de design e operações criativas que escalam. Há mais de 20 anos lidero branding, design e criação na América Latina, Europa e América do Norte.",
     },
     credits: [
       { head: { en: "Starring", pt: "Estrelando" }, rows: [
-        [{ en: "Designer", pt: "Designer" }, "Felipe Bellintani"],
-        [{ en: "Art director", pt: "Diretor de arte" }, "Felipe Bellintani"],
-        [{ en: "And who knows what else", pt: "E sabe-se lá o que mais" }, "Felipe Bellintani"],
+        { role: { en: "Designer", pt: "Designer" }, name: "Felipe Bellintani" },
+        { role: { en: "Art director", pt: "Diretor de arte" }, name: "Felipe Bellintani" },
+        { role: "Adobe Insider", name: "Felipe Bellintani" },
+        { role: { en: "And who knows what else", pt: "E sabe-se lá o que mais" }, name: "Felipe Bellintani" },
       ] },
-      { head: { en: "Experience", pt: "Experiência" }, placeholder: true, rows: [
-        [{ en: "Role", pt: "Função" }, { en: "Company — 20XX–now", pt: "Empresa — 20XX–hoje" }],
-        [{ en: "Role", pt: "Função" }, { en: "Company — 20XX–20XX", pt: "Empresa — 20XX–20XX" }],
-        [{ en: "Role", pt: "Função" }, { en: "Company — 20XX–20XX", pt: "Empresa — 20XX–20XX" }],
+      { head: { en: "Experience", pt: "Experiência" }, rows: [
+        { role: "Senior Visual Designer", name: "Housecall Pro", years: { en: "2026 — now", pt: "2026 — hoje" } },
+        { role: "Creative Director", name: "500 Designs", years: "2026" },
+        { role: "Owner / Design Director", name: "Haute Rift", years: "2018 — 2025" },
+        { role: "Brand Design Specialist", name: "JBS", years: "2021 — 2023" },
+        { role: "Senior Art Director", name: "VML", years: "2020 — 2022" },
+        { role: "Lead Designer", name: "Globo", years: "2014 — 2018" },
+        { role: "Senior Art Director", name: "Lew'Lara\\TBWA", years: "2012 — 2014" },
+        { role: "Head of Art", name: "Havas (EuroRSCG 4D)", years: "2010 — 2011" },
+        { role: "Interactive Art Director / Team Lead", name: "AgênciaClick", years: "2008 — 2010" },
+        { role: "Interactive Art Director / Team Lead", name: "Wunderman Thompson", years: "2006 — 2008" },
       ] },
-      { head: { en: "Selected clients", pt: "Clientes selecionados" }, rows: [["Adidas"], ["ANTI Creative Finance"], ["SCRV.ag"], ["TV Globo"]] },
-      { head: { en: "Disciplines", pt: "Disciplinas" }, rows: [
-        [{ en: "Branding", pt: "Branding" }], [{ en: "Identity", pt: "Identidade" }], [{ en: "Advertising", pt: "Publicidade" }],
-        [{ en: "Digital", pt: "Digital" }], [{ en: "Social", pt: "Social" }], [{ en: "Multimedia", pt: "Multimídia" }],
+      { head: { en: "Special thanks", pt: "Agradecimentos especiais" }, flow: true, rows: [
+        "Adidas", "Globo", "Meta", "Pernod Ricard", "Diageo", "Absolut", "Gatorade", "Nissan", "Land Rover", "Nokia", "Philips",
+        "FIAT", "TIM", "Banco do Brasil", "Velo / Vuse", "Qiddiya", "JBS", "Housecall Pro", "ANTI Creative Finance", "SCRV.ag",
       ] },
-      { head: { en: "Education", pt: "Formação" }, placeholder: true, rows: [
-        [{ en: "Course", pt: "Curso" }, { en: "School — 20XX", pt: "Instituição — 20XX" }],
+      { head: { en: "Disciplines", pt: "Disciplinas" }, flow: true, rows: [
+        { en: "Brand design", pt: "Design de marca" }, { en: "Logo design", pt: "Logotipos" }, { en: "Graphic design", pt: "Design gráfico" },
+        { en: "Advertising", pt: "Publicidade" }, { en: "Brand consulting", pt: "Consultoria de marca" }, { en: "Content strategy", pt: "Estratégia de conteúdo" },
+        { en: "Social media", pt: "Redes sociais" }, { en: "Interaction design", pt: "Design de interação" }, { en: "Video production", pt: "Produção de vídeo" },
+      ] },
+      { head: { en: "Education", pt: "Formação" }, rows: [
+        { role: { en: "MBA, Data-Driven Marketing and AI", pt: "MBA, Marketing Orientado a Dados e IA" }, name: "USP / Esalq", years: "2026 — 2027" },
+        { role: { en: "Master's, Design and Applied Arts", pt: "Mestrado, Design e Artes Aplicadas" }, name: "IDEP Barcelona", years: "2005 — 2006" },
+      ] },
+      { head: { en: "Filmed on location", pt: "Filmado em" }, flow: true, rows: [
+        { en: "Latin America", pt: "América Latina" }, { en: "Europe", pt: "Europa" }, { en: "North America", pt: "América do Norte" },
       ] },
       { head: { en: "Contact", pt: "Contato" }, rows: [
-        ["Email", "felipe@bellintani.work", "mailto:felipe@bellintani.work"],
-        ["Instagram", "@fbllnt", "https://www.instagram.com/fbllnt/"],
-        ["LinkedIn", "in/fbellintani", "https://www.linkedin.com/in/fbellintani/"],
+        { role: "Email", name: "felipe@bellintani.work", url: "mailto:felipe@bellintani.work" },
+        { role: "Instagram", name: "@fbllnt", url: "https://www.instagram.com/fbllnt/" },
+        { role: "LinkedIn", name: "in/fbellintani", url: "https://www.linkedin.com/in/fbellintani/" },
       ] },
     ],
     end: { en: "No pixels were harmed in the making of this portfolio.", pt: "Nenhum pixel foi ferido na produção deste portfólio." },

@@ -324,3 +324,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .crow > span{text-align:center}
   .crow > b{text-align:center}
 }
+.crow > span i{display:block;font-style:normal;color:#8e8e8e;margin-top:4px}
+/* Long lists (thanks, disciplines) run side by side and wrap, centred */
+.cblock.wrap{max-width:1000px;justify-self:center}
+.cblock.wrap .crow.solo{display:inline-block;margin:0 clamp(8px,1vw,14px) 6px}
