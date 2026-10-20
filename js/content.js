@@ -261,8 +261,13 @@ window.SITE = {
         { name: "Descubra o Brasil", src: "images/logos/descubra-o-brasil.png", scale: 1.4 },
         { name: "ink", src: "images/logos/ink.png" },
         { name: "Join", src: "images/logos/join.png", scale: 1.12 },
-      ].concat(Array.from({ length: 23 }, (_, k) => ({
-        name: `Logo ${String(k + 8).padStart(2, "0")}`,
+        { name: "life's good", src: "images/logos/lifes-good.png" },
+        { name: "Las Movidas de Puta Madre", src: "images/logos/las-movidas.png", scale: 1.12 },
+        { name: "Leo Mafra", src: "images/logos/leo-mafra.png", scale: 1.05 },
+        { name: "Space Lab", src: "images/logos/space-lab.png", scale: .9 },
+        { name: "SavageBrit", src: "images/logos/savage-brit.png" },
+      ].concat(Array.from({ length: 18 }, (_, k) => ({
+        name: `Logo ${String(k + 13).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
         tag: [{ en: "Food", pt: "Comida" }, { en: "Tech", pt: "Tecnologia" }, { en: "Culture", pt: "Cultura" }, { en: "Fashion", pt: "Moda" }, { en: "Sport", pt: "Esporte" }][k % 5],
       }))),
