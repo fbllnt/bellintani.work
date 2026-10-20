@@ -177,8 +177,8 @@ window.SITE = {
       hue: [230, 90, 55],
       placeholder: true,
       // The wall: one tile per logo, black on white; hover and the close-up flood in the site blue with the mark in white.
-      // Each logo: { name, year, tag: { en, pt }, src: one-colour SVG or PNG on transparent (the site colours it),
-      //   color: optional full-colour file for the close-up, bg / ink: optional, to override the site blue and white, note: { en, pt } }.
+      // Each logo: { name (screen readers only), year, tag: { en, pt }, src: one-colour SVG or PNG on transparent (the site colours it),
+      //   color: optional full-colour file for the close-up, bg / ink: optional, to override the site blue and white, note: { en, pt } — the short description shown in the close-up }.
       // Sector filters appear when two or more tags are used.
       layout: "logos",
       logos: [

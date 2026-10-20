@@ -227,12 +227,11 @@
     return `${filter}<ul class="logos">${p.logos.map((l, k) => `<li data-tag="${esc(L(l.tag) || "")}" style="--k:${k};--lb:${esc(l.bg || "var(--blue)")};--li:${esc(l.ink || "#fff")}">
       <button type="button" class="logo" data-k="${k}" aria-label="${esc(l.name)}${l.year ? `, ${esc(l.year)}` : ""}">
         <span class="n mono">${pad(k + 1)}</span>${mark(l)}
-        <span class="info mono"><span>${esc(l.name)}</span><span>${esc(l.year || "")}</span></span>
       </button></li>`).join("")}</ul>
       <dialog class="logo-view" aria-label="${esc(L(p.title))}">
         <div class="lv-top mono"><span class="lv-count"></span><button type="button" class="lv-close">${esc(T("close"))} ✕</button></div>
         <div class="lv-mark"></div>
-        <div class="lv-info"><p class="lv-name"></p><p class="mono lv-meta"></p><p class="mono lv-note"></p></div>
+        <div class="lv-info"><p class="mono lv-meta"></p><p class="lv-note"></p></div>
         <div class="lv-nav mono"><button type="button" class="lv-prev">← ${esc(T("prev"))}</button><button type="button" class="lv-next">${esc(T("nextItem"))} →</button></div>
       </dialog>`;
   }
@@ -248,7 +247,6 @@
       dlg.style.setProperty("--lb", l.bg || "var(--blue)"); dlg.style.setProperty("--li", l.ink || "#fff");
       dlg.querySelector(".lv-mark").innerHTML = l.color ? `<img src="${esc(l.color)}" alt="${esc(l.name)}">` : mark(l);
       dlg.querySelector(".lv-count").textContent = `${pad(list.indexOf(k) + 1)} / ${pad(list.length)}`;
-      dlg.querySelector(".lv-name").textContent = l.name;
       dlg.querySelector(".lv-meta").textContent = [l.year, L(l.tag)].filter(Boolean).join(" — ");
       dlg.querySelector(".lv-note").textContent = L(l.note) || "";
     };
@@ -552,47 +550,53 @@
     else if (document.body.classList.contains("in-case")) closeCase(location.hash.slice(1));
   });
 
-  // ---------- Cursor: a blue ball that leaves a fading trail ----------
+  // ---------- Cursor: a blue ball that drags a thick, flat trail ----------
+  // A chain of points, each easing toward the one ahead, drawn as one solid band as wide as the ball.
+  // It stretches behind fast moves and pulls back into the ball when the mouse stops.
   // Mouse and trackpad only; touch screens and reduced motion keep the normal pointer.
-  // Over links and buttons the ball grows. Inside the logo close-up it moves into the dialog (top layer).
+  // Over links and buttons the ball grows; on blue (logo tiles, the close-up) it turns white.
   const ball = document.createElement("div"), trail = document.createElement("canvas");
   const cursorOn = matchMedia("(hover: hover) and (pointer: fine)").matches && !reduced;
-  let ink = "";
-  // On the blue close-up the trail turns white so it stays visible
-  const cursorTo = host => { if (cursorOn) { host.append(trail, ball); ink = host === document.body ? "" : "#fff"; } };
+  let onBlue = false;
+  const cursorTo = host => { if (cursorOn) { host.append(trail, ball); onBlue = host !== document.body; } };
   if (cursorOn) {
     ball.className = "ball"; trail.className = "trail";
     ball.setAttribute("aria-hidden", "true"); trail.setAttribute("aria-hidden", "true");
     document.documentElement.classList.add("has-ball");
     cursorTo(document.body);
-    const ctx = trail.getContext("2d"), pts = [], LIFE = 420;
-    let raf = 0, dpr = 1;
+    const ctx = trail.getContext("2d"), N = 40, EASE = .72, W = 18;
+    const ptr = { x: -100, y: -100 }, chain = Array.from({ length: N }, () => ({ x: -100, y: -100 }));
+    let raf = 0, dpr = 1, white = false;
     const size = () => { dpr = Math.min(2, devicePixelRatio || 1); trail.width = innerWidth * dpr; trail.height = innerHeight * dpr; };
     size(); addEventListener("resize", size);
     const blue = getComputedStyle(document.documentElement).getPropertyValue("--blue").trim() || "#1a2bff";
     const draw = () => {
-      const now = performance.now();
-      while (pts.length && now - pts[0].t > LIFE) pts.shift();
+      let moving = false;
+      chain.forEach((p, i) => {
+        const t = i ? chain[i - 1] : ptr;
+        p.x += (t.x - p.x) * EASE; p.y += (t.y - p.y) * EASE;
+        if (Math.abs(t.x - p.x) + Math.abs(t.y - p.y) > .3) moving = true;
+      });
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, innerWidth, innerHeight);
-      ctx.lineCap = "butt"; ctx.strokeStyle = ink || blue;
-      // Each segment thins and fades with age, so the tail tapers off behind the ball
-      for (let i = 1; i < pts.length; i++) {
-        const a = 1 - (now - pts[i].t) / LIFE;
-        ctx.globalAlpha = a * .9; ctx.lineWidth = 1 + a * 9;
-        ctx.beginPath(); ctx.moveTo(pts[i - 1].x, pts[i - 1].y); ctx.lineTo(pts[i].x, pts[i].y); ctx.stroke();
-      }
-      raf = pts.length ? requestAnimationFrame(draw) : 0;
+      ctx.lineCap = ctx.lineJoin = "round"; ctx.lineWidth = W; ctx.strokeStyle = white ? "#fff" : blue;
+      ctx.beginPath(); ctx.moveTo(ptr.x, ptr.y);
+      chain.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.stroke();
+      raf = moving ? requestAnimationFrame(draw) : 0;
     };
     addEventListener("pointermove", e => {
       if (e.pointerType !== "mouse") return;
-      ball.style.translate = `${e.clientX}px ${e.clientY}px`;
+      if (!ball.classList.contains("on")) chain.forEach(p => { p.x = e.clientX; p.y = e.clientY; });
+      ptr.x = e.clientX; ptr.y = e.clientY;
+      ball.style.translate = `${ptr.x}px ${ptr.y}px`;
       ball.classList.add("on");
-      pts.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+      white = onBlue || !!e.target.closest(".logo");
+      ball.classList.toggle("white", white);
       ball.classList.toggle("big", !!e.target.closest("a, button, [role=slider], .drop, video"));
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
-    document.addEventListener("pointerleave", () => ball.classList.remove("on"));
+    document.addEventListener("pointerleave", () => { ball.classList.remove("on"); ctx.clearRect(0, 0, innerWidth, innerHeight); });
     addEventListener("pointerdown", () => ball.classList.add("press"));
     addEventListener("pointerup", () => ball.classList.remove("press"));
   }
