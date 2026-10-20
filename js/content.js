@@ -33,7 +33,7 @@ window.SITE = {
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
       client: "Client", year: "Year", scope: "Scope", role: "Role", live: "Live",
-      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next",
+      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓",
       placeholder: "Placeholder", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
       langSwitch: "PT", langLabel: "Ver em português",
@@ -44,7 +44,7 @@ window.SITE = {
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Visualização",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
       client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", live: "No ar",
-      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo",
+      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓",
       placeholder: "Provisório", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Substitua pela história do projeto: o briefing, a ideia e o que foi feito.",
       langSwitch: "EN", langLabel: "View in English",
@@ -150,6 +150,20 @@ window.SITE = {
         { src: "images/scriva/deck-hands.jpg", ar: "16/9", col: 6, span: 7, shift: "6vh", speed: -.03, caption: { en: "Agency deck", pt: "Deck da agência" } },
         { src: "images/scriva/deck-what.jpg", ar: "16/9", col: 6, span: 7, shift: "-46vw", speed: .02, caption: { en: "What we do", pt: "O que fazemos" } },
         { src: "images/scriva/deck-sense.jpg", ar: "16/9", col: 3, span: 8, shift: "6vh", speed: -.02, caption: { en: "Does it make sense to you?", pt: "Faz sentido pra você?" } },
+      ],
+    },
+    {
+      title: "Cinema Especial",
+      client: "TV Globo",
+      scope: { en: "TV opening // Style frames // Motion", pt: "Abertura de TV // Style frames // Motion" },
+      image: "images/cinema-especial/frame-07.jpg",
+      summary: {
+        en: "Opening for Cinema Especial, Globo's movie slot. Ink spreads over old film stock, the featured film's hero surfaces from the stains, and the title lands before the Globo mark closes. Style frames shown with The Amazing Spider-Man as the featured film.",
+        pt: "Abertura do Cinema Especial, a faixa de filmes da Globo. A tinta se espalha sobre película antiga, o herói do filme da noite surge das manchas e o título entra antes da marca Globo fechar. Style frames com O Espetacular Homem-Aranha como filme em destaque.",
+      },
+      layout: "loose",
+      gallery: [
+        { scrub: { frames: "images/cinema-especial/frame-##.jpg", count: 10 }, ar: "16/9", col: 1, span: 12, caption: { en: "Style frames — the opening, frame by frame", pt: "Style frames — a abertura, quadro a quadro" } },
       ],
     },
     {

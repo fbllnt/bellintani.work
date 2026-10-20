@@ -60,6 +60,7 @@
     ];
     return `<div class="art" style="background:${looks[i % looks.length]}"></div>`;
   }
+  const pad = n => String(n).padStart(2, "0");
   const tagFor = p => p.placeholder ? `<span class="placeholder">${esc(T("placeholder"))}</span>` : "";
   // Slugs come from the English title so links stay the same in both languages
   S.projects.forEach(p => { p.slug = p.slug || String(p.title.en || p.title).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); });
@@ -189,6 +190,15 @@
   }
 
   function fig(it, p, style = "", speed = "") {
+    // Scroll-played sequence: the frame sticks on screen and steps through the frames as the page scrolls
+    if (it.scrub) {
+      const n = +it.scrub.count, src = k => esc(it.scrub.frames.replace(/#+/, m => String(k + 1).padStart(m.length, "0")));
+      return `<figure class="fig scrub" style="--n:${n};${it.ar ? `--ar:${esc(it.ar)};` : ""}${style}"><div class="scrub-stick">
+        ${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}
+        <div class="ph">${Array.from({ length: n }, (_, k) => `<img src="${src(k)}" alt="${esc(L(it.caption) || L(p.title))} — ${k + 1}/${n}"${k ? ` loading="lazy"` : ""}${k ? "" : ` class="on"`}>`).join("")}</div>
+        <div class="scrub-ui mono"><span class="scrub-count">01 / ${pad(n)}</span><span class="scrub-bar"><i></i></span><span>${esc(T("scrollToPlay"))}</span></div>
+      </div></figure>`;
+    }
     if (it.spin) return `<figure class="fig spin" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${style}"${speed}><div class="ph">
         <canvas width="${it.spin.w || 960}" height="${it.spin.h || 540}" tabindex="0" role="slider" data-frames="${esc(it.spin.frames)}" data-count="${+it.spin.count}"
           aria-label="${esc(L(it.caption) || L(p.title))}" aria-valuemin="0" aria-valuemax="359" aria-valuenow="0" aria-valuetext="0°"></canvas>
@@ -207,7 +217,6 @@
   // Logo wall: every mark sits black on white so thirty clients read as one body of work.
   // One-colour files are used as masks, so the same file turns black, white or the brand colour.
   // Hover floods a tile with the brand colour; a click opens the logo full screen, with arrows, swipe and Esc.
-  const pad = n => String(n).padStart(2, "0");
   const mark = l => l.src
     ? `<span class="mark" role="img" aria-label="${esc(l.name)}" style="-webkit-mask-image:url('${esc(l.src)}');mask-image:url('${esc(l.src)}')"></span>`
     : `<span class="mark type" aria-hidden="true">${esc(l.name)}</span>`;
@@ -349,6 +358,7 @@
     setupDrift();
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
     setupLogos(p);
+    setupScrub();
   }
 
   // 360° viewer: frames drawn on a canvas. Drag (mouse or touch) or arrow keys to turn; a flick keeps it spinning
@@ -436,6 +446,27 @@
   addEventListener("scroll", queueDrift, { passive: true });
   addEventListener("resize", queueDrift);
   function setupDrift() { driftEls = [...caseEl.querySelectorAll("[data-speed]")]; queueDrift(); }
+
+  // Scroll-played sequences: progress through the tall figure picks the frame
+  let scrubEls = [], scrubRaf = 0;
+  const scrub = () => {
+    scrubRaf = 0;
+    scrubEls.forEach(f => {
+      const r = f.getBoundingClientRect(), stick = f.firstElementChild, imgs = f.querySelectorAll(".ph img");
+      // 0 when the frame starts sticking, 1 when it lets go
+      const prog = Math.min(1, Math.max(0, (parseFloat(getComputedStyle(stick).top) - r.top) / Math.max(1, r.height - stick.offsetHeight)));
+      const k = Math.min(imgs.length - 1, Math.floor(prog * imgs.length));
+      if (+f.dataset.k === k) { f.style.setProperty("--p", prog); return; }
+      f.dataset.k = k;
+      imgs.forEach((im, j) => im.classList.toggle("on", j === k));
+      f.querySelector(".scrub-count").textContent = `${pad(k + 1)} / ${pad(imgs.length)}`;
+      f.style.setProperty("--p", prog);
+    });
+  };
+  const queueScrub = () => { if (scrubEls.length && !scrubRaf) scrubRaf = requestAnimationFrame(scrub); };
+  addEventListener("scroll", queueScrub, { passive: true });
+  addEventListener("resize", queueScrub);
+  function setupScrub() { scrubEls = [...caseEl.querySelectorAll(".scrub")]; queueScrub(); }
 
   // Images settle from a slight zoom as they scroll into view (always visible, never hidden)
   const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
