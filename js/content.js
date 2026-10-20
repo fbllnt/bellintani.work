@@ -286,8 +286,13 @@ window.SITE = {
         { name: "Heritage Premium Olive Oil", src: "images/logos/heritage.png" },
         { name: "Bora Malhar", src: "images/logos/bora-malhar.png" },
         { name: "Domingo Maior", src: "images/logos/domingo-maior.png", scale: .95 },
-      ].concat(Array.from({ length: 23 }, (_, k) => ({
-        name: `Logo ${String(k + 28).padStart(2, "0")}`,
+        { name: "Wings", src: "images/logos/wings.png" },
+        { name: "D", src: "images/logos/d-mark.png", scale: .85 },
+        { name: "Veeludo", src: "images/logos/veeludo.png" },
+        { name: "coore.hi", src: "images/logos/coore-hi.png" },
+        { name: "JBS Sem Fronteiras", src: "images/logos/jbs-sem-fronteiras.png" },
+      ].concat(Array.from({ length: 18 }, (_, k) => ({
+        name: `Logo ${String(k + 33).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
       }))),
     },
