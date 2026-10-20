@@ -185,8 +185,12 @@ window.SITE = {
         { name: "REUD Co.", src: "images/logos/reud-co.png" },
         { name: "HOU", src: "images/logos/hou.png" },
         { name: "mokoko.", src: "images/logos/mokoko.png" },
-      ].concat(Array.from({ length: 27 }, (_, k) => ({
-        name: `Logo ${String(k + 4).padStart(2, "0")}`,
+        { name: "mr.", src: "images/logos/mr.png" },
+        { name: "Descubra o Brasil", src: "images/logos/descubra-o-brasil.png" },
+        { name: "ink", src: "images/logos/ink.png" },
+        { name: "Join", src: "images/logos/join.png" },
+      ].concat(Array.from({ length: 23 }, (_, k) => ({
+        name: `Logo ${String(k + 8).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
         tag: [{ en: "Food", pt: "Comida" }, { en: "Tech", pt: "Tecnologia" }, { en: "Culture", pt: "Cultura" }, { en: "Fashion", pt: "Moda" }, { en: "Sport", pt: "Esporte" }][k % 5],
       }))),
