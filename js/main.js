@@ -172,6 +172,11 @@
     timers.push(setTimeout(finish, 3950));
   };
   $("skip").onclick = finish;
+  // Scroll cue: jumps to the work and hides once the visitor has started scrolling
+  const cue = $("cue");
+  cue.addEventListener("click", e => { e.preventDefault(); $("flow").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
+  const cueCheck = () => cue.classList.toggle("gone", scrollY > 40);
+  addEventListener("scroll", cueCheck, { passive: true }); cueCheck();
   $("replay").onclick = () => { scrollTo({ top: 0 }); play(); };
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
