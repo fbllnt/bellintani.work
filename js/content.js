@@ -156,7 +156,7 @@ window.SITE = {
       title: "Cinema Especial",
       client: "TV Globo",
       scope: { en: "TV opening // Style frames // Motion", pt: "Abertura de TV // Style frames // Motion" },
-      image: "images/cinema-especial/frame-07.jpg",
+      image: "images/cinema-especial/cover.jpg",
       summary: {
         en: "Opening for Cinema Especial, Globo's movie slot. Ink spreads over old film stock, the featured film's hero surfaces from the stains, and the title lands before the Globo mark closes. Style frames shown with The Amazing Spider-Man as the featured film.",
         pt: "Abertura do Cinema Especial, a faixa de filmes da Globo. A tinta se espalha sobre película antiga, o herói do filme da noite surge das manchas e o título entra antes da marca Globo fechar. Style frames com O Espetacular Homem-Aranha como filme em destaque.",
