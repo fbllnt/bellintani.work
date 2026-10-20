@@ -340,6 +340,7 @@
     // Real images: p.gallery = [{ src, size: "full" | "half" | "third" | "quarter", ar: "16/9", caption }].
     // Consecutive halves, thirds or quarters sit side by side in one row.
     const PER_ROW = { half: 2, third: 3, quarter: 4 };
+    if (Array.isArray(p.gallery) && !p.gallery.length) return ""; // real project still waiting for material
     const items = p.gallery && p.gallery.length ? p.gallery
       : ["full", "half", "half", "full", "half", "half"].map((size, k) => ({ size, art: i + k + 1 }));
     const cell = it => fig(it, p);

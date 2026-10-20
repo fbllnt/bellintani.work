@@ -220,6 +220,22 @@ window.SITE = {
       ],
     },
     {
+      title: "Globo",
+      client: "Globo",
+      year: "2014 — 2018",
+      role: "Lead Designer",
+      scope: { en: "Branding // Rebrand // Motion", pt: "Branding // Rebranding // Motion" },
+      image: "images/globo/cover.jpg",
+      hero: "bleed",
+      heroAr: "2000/1052",
+      summary: {
+        en: "Four years as lead designer at Globo, Brazil's largest broadcaster: branding and identity for entertainment, journalism and sports, at home and abroad. A key role in the network's rebrand, from the new design system, brand volume rules, colours and gradients to the new type family, plus on-air studies, show identities, title sequences and institutional vignettes.",
+        pt: "Quatro anos como lead designer na Globo, a maior emissora do Brasil: branding e identidade para entretenimento, jornalismo e esporte, no Brasil e fora. Papel central no rebranding da emissora, do novo sistema de design, regras de volume da marca, cores e degradês à nova família tipográfica, além de estudos on-air, identidades de programas, aberturas e vinhetas institucionais.",
+      },
+      layout: "loose",
+      gallery: [],
+    },
+    {
       title: "Logos",
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca" },
       summary: {
