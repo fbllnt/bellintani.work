@@ -35,12 +35,6 @@ window.SITE = {
       pt: "Construo marcas, sistemas de design e operações criativas que escalam. Há mais de 20 anos lidero branding, design e criação na América Latina, Europa e América do Norte.",
     },
     credits: [
-      { head: { en: "Starring", pt: "Estrelando" }, rows: [
-        { role: { en: "Designer", pt: "Designer" }, name: "Felipe Bellintani" },
-        { role: { en: "Art director", pt: "Diretor de arte" }, name: "Felipe Bellintani" },
-        { role: "Adobe Insider", name: "Felipe Bellintani" },
-        { role: { en: "And who knows what else", pt: "E sabe-se lá o que mais" }, name: "Felipe Bellintani" },
-      ] },
       { head: { en: "Experience", pt: "Experiência" }, rows: [
         { role: "Senior Visual Designer", name: "Housecall Pro", years: { en: "2026 — now", pt: "2026 — hoje" } },
         { role: "Creative Director", name: "500 Designs", years: "2026" },
