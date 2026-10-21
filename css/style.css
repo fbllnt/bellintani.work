@@ -402,3 +402,4 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* The large image and its thumbnails fit on one screen together */
 .loose > .flip{width:min(100%,calc((100svh - 150px) / .7));justify-self:center}
 .strip .vctl{flex-direction:column;align-items:flex-start}
+.case.motion .case-gallery .scrub .ph > img{scale:1;translate:none!important}

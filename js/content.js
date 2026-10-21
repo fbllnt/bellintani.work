@@ -322,6 +322,8 @@ window.SITE = {
         { src: "images/xp/volei-02.jpg", ar: "16/9", col: 7, span: 6, shift: "1.6em" },
         { src: "images/xp/volei-03.jpg", ar: "16/9", col: 1, span: 6, tight: true },
         { src: "images/xp/volei-04.jpg", ar: "16/9", col: 7, span: 6, tight: true },
+        { text: { en: "Turning a Brazilian into the first swimmer in history to win an Olympic medal at 32: XP invests.", pt: "Se transforma um brasileiro no 1º nadador da história a conquistar medalha olímpica aos 32 anos, a XP investe." }, col: 1, span: 10 },
+        { scrub: { frames: "images/xp/natacao-##.jpg", count: 5 }, ar: "16/9", col: 1, span: 12, caption: { en: "Story frames, played by scroll", pt: "Quadros da história, no scroll" } },
       ],
     },
     {
