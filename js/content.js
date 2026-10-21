@@ -153,6 +153,12 @@ window.SITE = {
             { src: "images/anti/poster-anti.jpg", ar: "1411/2000" },
           ], col: 1, span: 12, shift: "4vh" },
         { src: "images/anti/street-posters.jpg", ar: "2000/1121", col: 1, span: 12, speed: .02, caption: { en: "Lambe-lambe posters on the street, São Paulo", pt: "Lambe-lambes na rua, São Paulo" } },
+        { src: "images/anti/poster-grid.jpg", ar: "1500/1304", col: 2, span: 10, tight: true },
+        { strip: [
+            { src: "images/anti/poster-tunnel.jpg", ar: "1500/2000" },
+            { src: "images/anti/poster-red.jpg", ar: "1121/2000" },
+            { src: "images/anti/poster-alley.jpg", ar: "2000/2000" },
+          ], col: 1, span: 12, tight: true },
         { text: "Não espere uma vida para receber.", col: 1, span: 9 },
         { src: "images/anti/site-espere.jpg", ar: "2000/1079", col: 1, span: 12 },
         { src: "images/anti/web-pagamentos.jpg", ar: "16/10", col: 1, span: 8, speed: .02 },
