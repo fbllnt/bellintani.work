@@ -149,6 +149,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .big{max-width:100%;overflow-wrap:anywhere;display:inline-block}
 .big > span:first-child{display:inline;text-wrap:balance}
 .big .arr{display:inline-block;vertical-align:top;margin-left:.08em}
+/* A single black rule closes the page under Let's talk */
+.foot::after{content:"";display:block;height:1px;background:var(--fg);margin-top:40px}
 @media (max-width:560px){ .foot .big{font-size:13.5vw} }
 .big .arr{font-size:.4em;transition:transform .6s var(--ease)}
 .big:hover{color:var(--blue)}
