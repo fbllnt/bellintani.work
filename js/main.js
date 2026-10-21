@@ -188,7 +188,8 @@
 
   // Loose layout: each item sets its own place on a 12-column grid.
   // { col: 1-12, span: 1-12, shift: "8vh" (push down) or "-14vh" (pull up and overlap the item before),
-  //   nudge: "-4vw" (slide sideways to overlap a neighbour in the same row), speed: -0.1…0.1 (scroll drift),
+  //   nudge: "-4vw" (slide sideways to overlap a neighbour in the same row), tight: true (sit close to the row
+  //   above, for a set of the same kind of content), speed: -0.1…0.1 (scroll drift),
   //   z: stacking order (default: later items on top) }.
   // Text lines can sit between images: { text: { en, pt }, col, span }.
   // On phones items keep their order and alternate left/right in wider spans.
@@ -198,7 +199,7 @@
       const span = Math.min(12, it.span || 12), col = Math.min(13 - span, it.col || 1);
       const mspan = it.text ? 12 : span >= 9 ? 12 : span >= 6 ? 11 : 9;
       const mcol = mspan === 12 ? 1 : (side++ % 2 ? 13 - mspan : 1);
-      const style = `--col:${col};--span:${span};--mcol:${mcol};--mspan:${mspan};--shift:${it.shift || "0px"};--nudge:${it.nudge || "0px"};--z:${it.z || (++zi)}`;
+      const style = `--col:${col};--span:${span};--mcol:${mcol};--mspan:${mspan};--shift:${it.shift || "0px"};--nudge:${it.nudge || "0px"};--tight:${it.tight ? 1 : 0};--z:${it.z || (++zi)}`;
       const speed = !reduced && it.speed ? ` data-speed="${+it.speed}"` : "";
       if (it.text) return `<p class="ltext" style="${style}"${speed}>${esc(L(it.text))}</p>`;
       return fig(it, p, style, speed);
