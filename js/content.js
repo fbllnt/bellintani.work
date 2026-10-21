@@ -140,10 +140,12 @@ window.SITE = {
       // Loose layout: benches float as a staggered collage, the campaign line sits big between them and the films
       layout: "loose",
       gallery: [
-        { src: "images/anti/bench-influencer.jpg", ar: "9/5", col: 1, span: 7, speed: .04, caption: { en: "Bench 01 — Influencer", pt: "Banco 01 — Influencer" } },
-        { src: "images/anti/bench-produtor.jpg", ar: "9/5", col: 7, span: 5, shift: "-34vh", speed: -.05, caption: { en: "Bench 02 — Producer", pt: "Banco 02 — Produtor" } },
-        { src: "images/anti/bench-creator.jpg", ar: "9/5", col: 2, span: 5, shift: "-22vh", speed: .06, caption: { en: "Bench 03 — Creator", pt: "Banco 03 — Creator" } },
-        { src: "images/anti/bench-criativo.jpg", ar: "9/5", col: 6, span: 6, shift: "-30vh", speed: -.03, caption: { en: "Bench 04 — Creative", pt: "Banco 04 — Criativo" } },
+{ flip: [
+            { src: "images/anti/bench-influencer.jpg", ar: "9/5", caption: { en: "Bench 01 — Influencer", pt: "Banco 01 — Influencer" } },
+            { src: "images/anti/bench-produtor.jpg", ar: "9/5", caption: { en: "Bench 02 — Producer", pt: "Banco 02 — Produtor" } },
+            { src: "images/anti/bench-creator.jpg", ar: "9/5", caption: { en: "Bench 03 — Creator", pt: "Banco 03 — Creator" } },
+            { src: "images/anti/bench-criativo.jpg", ar: "9/5", caption: { en: "Bench 04 — Creative", pt: "Banco 04 — Criativo" } },
+          ], col: 1, span: 12 },
         { strip: [
             { video: "images/anti/film-ccsp.mp4", webm: "images/anti/film-ccsp.webm", poster: "images/anti/film-ccsp-poster.jpg", ar: "720/1280" },
             { src: "images/anti/poster-freela.jpg", ar: "1411/2000" },

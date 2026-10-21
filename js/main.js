@@ -201,6 +201,11 @@
       const style = `--col:${col};--span:${span};--mcol:${mcol};--mspan:${mspan};--shift:${it.shift || "0px"};--nudge:${it.nudge || "0px"};--tight:${it.tight ? 1 : 0};--z:${it.z || (++zi)}`;
       const speed = !reduced && it.speed ? ` data-speed="${+it.speed}"` : "";
       if (it.text) return `<p class="ltext" style="${style}"${speed}>${esc(L(it.text))}</p>`;
+      // Flip: one item large with the whole set as thumbnails below; a thumbnail, the large image or the arrow keys turn the page
+      if (it.flip) { const f = it.flip[0];
+        return `<div class="flip" style="${style}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
+          <p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
+          <div class="flip-thumbs" role="group">${it.flip.map((t, k) => `<button type="button" aria-pressed="${!k}" data-k="${k}" aria-label="${esc(L(t.caption) || "")}"><img src="${esc(t.src)}" alt="" loading="lazy"></button>`).join("")}</div></div>`; }
       // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
       if (it.strip) return `<div class="strip" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
         return fig(s, p, `--sar:${(w / (h || 1)).toFixed(4)}`); }).join("")}</div>`;
@@ -360,6 +365,29 @@
         <div class="pv-info"><p class="pv-cap"></p><p class="mono pv-meta"></p></div>
       </dialog>`;
   }
+  function setupFlips(p) {
+    let i = 0;
+    p.gallery.forEach(it => { if (!it.flip) return;
+      const box = caseEl.querySelectorAll(".flip")[i++], img = box.querySelector(".fig .ph > img"), cap = box.querySelector(".flip-cap"), btns = [...box.querySelectorAll(".flip-thumbs button")];
+      let cur = 0;
+      const go = k => {
+        k = (k + it.flip.length) % it.flip.length; if (k === cur) return;
+        const d = k > cur ? 1 : -1; cur = k;
+        const set = () => { img.src = it.flip[k].src; img.alt = L(it.flip[k].caption) || ""; cap.textContent = L(it.flip[k].caption) || ""; };
+        btns.forEach((b, j) => b.setAttribute("aria-pressed", String(j === k)));
+        if (reduced) { set(); return; }
+        // Page turn: the current image slides out, the next slides in from the side it comes from
+        img.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: `translateX(${-d * 6}%)` }], { duration: 220, easing: "ease-in" }).finished.then(() => {
+          set(); img.animate([{ opacity: 0, transform: `translateX(${d * 6}%)` }, { opacity: 1, transform: "none" }], { duration: 480, easing: "cubic-bezier(.11,.82,.39,.92)" });
+        });
+      };
+      btns.forEach((b, j) => b.addEventListener("click", () => go(j)));
+      const main = box.querySelector(".fig .ph");
+      main.addEventListener("click", () => go(cur + 1));
+      box.addEventListener("keydown", e => { if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1); } if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1); } });
+      it.flip.slice(1).forEach(t => { const im = new Image(); im.src = t.src; });
+    });
+  }
   function setupLomo(p) {
     const wall = caseEl.querySelector(".mosaic");
     if (!wall) return;
@@ -452,6 +480,7 @@
     setupLogos(p);
     setupScrub();
     setupLomo(p);
+    if (p.gallery) setupFlips(p);
     setupMotion(p);
   }
 

@@ -384,3 +384,19 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .strip > .fig{flex:var(--sar) 1 calc(var(--sar) * 120px);min-width:0}
 .strip > .fig .ph{aspect-ratio:var(--ar)}
 @media (max-width:760px){ .strip > .fig{flex-basis:calc(var(--sar) * 220px)} }
+
+/* Flip: a large image with the set as thumbnails below, turned like magazine pages */
+.flip .fig .ph{cursor:pointer}
+.flip .fig .ph > img{transition:none}
+.flip-cap{margin:10px 0 0;min-height:1.25em}
+.flip-thumbs{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:var(--cg,12px);margin-top:10px}
+.flip-thumbs button{all:unset;cursor:pointer;aspect-ratio:9/5;overflow:hidden;opacity:.45;transition:opacity .3s;outline-offset:2px}
+.flip-thumbs button:hover,.flip-thumbs button[aria-pressed="true"]{opacity:1}
+.flip-thumbs button{position:relative}
+.flip-thumbs button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.flip-thumbs button[aria-pressed="true"]::after{transform:none}
+.flip-thumbs button:focus-visible{outline:2px solid var(--blue)}
+.flip-thumbs img{width:100%;height:100%;object-fit:cover}
+/* The large image and its thumbnails fit on one screen together */
+.loose > .flip{width:min(100%,calc((100svh - 150px) / .7));justify-self:center}
+.strip .vctl{flex-direction:column;align-items:flex-start}
