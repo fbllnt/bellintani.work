@@ -84,17 +84,17 @@
   // ---------- Floating cards over the sticky name ----------
   // Positions cycle through a loose collage: width, left offset, aspect ratio, vertical overlap (desktop / phone).
   const SPOTS = [
-    { w: 44, x: 2,  ar: "16/9",  mt: "0vh",   wm: 88, xm: 0 },
-    { w: 28, x: 50, ar: "3/2",   mt: "-10vh", wm: 70, xm: 30 },
-    { w: 24, x: 74, ar: "4/3",   mt: "-30vh", wm: 74, xm: 6 },
-    { w: 32, x: 10, ar: "16/10", mt: "6vh",   wm: 72, xm: 28 },
-    { w: 40, x: 54, ar: "16/9",  mt: "-22vh", wm: 86, xm: 0 },
-    { w: 30, x: 28, ar: "3/2",   mt: "8vh",   wm: 66, xm: 18 },
+    { w: 56, x: 0,  ar: "16/9",  mt: "0vh",   wm: 92, xm: 0,  sp: .10 },
+    { w: 42, x: 57, ar: "3/2",   mt: "-6vh",  wm: 80, xm: 20, sp: -.08 },
+    { w: 48, x: 6,  ar: "16/10", mt: "-2vh",  wm: 86, xm: 0,  sp: .07 },
+    { w: 44, x: 55, ar: "16/9",  mt: "-4vh",  wm: 82, xm: 18, sp: -.10 },
+    { w: 58, x: 0,  ar: "16/9",  mt: "0vh",   wm: 92, xm: 4,  sp: .08 },
+    { w: 40, x: 60, ar: "4/3",   mt: "-8vh",  wm: 78, xm: 22, sp: -.06 },
   ];
   const flow = $("flow");
   flow.innerHTML = S.projects.map((p, i) => {
     const s = SPOTS[i % SPOTS.length];
-    return `<a class="drop" href="${href(p)}" draggable="false" style="--w:${s.w}%;--x:${s.x}%;--ar:${s.ar};--mt:${i ? s.mt : "0vh"};--wm:${s.wm}%;--xm:${s.xm}%">
+    return `<a class="drop" href="${href(p)}" draggable="false" style="--w:${s.w}%;--x:${s.x}%;--ar:${s.ar};--mt:${i ? s.mt : "0vh"};--wm:${s.wm}%;--xm:${s.xm}%" data-sp="${s.sp}">
       <div class="pop"><div class="ph">${cover(i, p)}</div>
       <div class="cap mono"><span>(${String(i + 1).padStart(2, "0")}) ${esc(L(p.title))}</span><span class="muted">${esc(p.year || "")}</span></div></div></a>`;
   }).join("");
@@ -104,6 +104,24 @@
     if (e.isIntersecting) { e.target.classList.add("in"); popIO.unobserve(e.target); }
   }), { rootMargin: "0px 0px -8% 0px" }) : null;
   flow.querySelectorAll(".drop").forEach(d => popIO ? popIO.observe(d) : d.classList.add("in"));
+
+  // Cards drift at their own speed while the page scrolls, tilt a little, and the photo moves inside its frame
+  const drops = [...flow.querySelectorAll(".drop")], mq = matchMedia("(max-width:760px)");
+  let dropRaf = 0;
+  const dropMove = () => {
+    dropRaf = 0;
+    const H = innerHeight, mid = H / 2, k = mq.matches ? .5 : 1;
+    drops.forEach((d, i) => {
+      const r = d.getBoundingClientRect();
+      if (r.bottom < -H * .5 || r.top > H * 1.5) return;
+      const off = (r.top + r.height / 2 - mid) / H, pop = d.firstElementChild, img = d.querySelector(".ph > img");
+      pop.style.translate = `0 ${(off * +d.dataset.sp * H * k).toFixed(1)}px`;
+      pop.style.rotate = `${(off * (i % 2 ? -2.5 : 2.5) * k).toFixed(2)}deg`;
+      if (img) img.style.translate = `0 ${(off * -7).toFixed(2)}%`;
+    });
+  };
+  const queueDrop = () => { if (!dropRaf) dropRaf = requestAnimationFrame(dropMove); };
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { addEventListener("scroll", queueDrop, { passive: true }); addEventListener("resize", queueDrop); queueDrop(); }
 
   // Drag with the mouse; a drag never counts as a click. Touch keeps normal scrolling.
   let zTop = 1;
