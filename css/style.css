@@ -253,7 +253,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .logos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
 .logos li{background:var(--bg)}
 .logos li[hidden]{display:none}
-.logo{all:unset;box-sizing:border-box;position:relative;display:grid;place-items:center;width:100%;aspect-ratio:1;cursor:pointer;overflow:hidden;color:var(--fg)}
+.logo{all:unset;box-sizing:border-box;position:relative;display:grid;place-items:center;width:100%;aspect-ratio:1;cursor:pointer;overflow:hidden;color:#000;background:#fff}
 .logo::before{content:"";position:absolute;inset:0;background:var(--lb);clip-path:inset(100% 0 0 0);transition:clip-path .45s var(--ease)}
 .logo:hover::before,.logo:focus-visible::before{clip-path:inset(0)}
 .logo:hover,.logo:focus-visible{color:var(--li)}

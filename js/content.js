@@ -373,8 +373,13 @@ window.SITE = {
         { name: "Veeludo", src: "images/logos/veeludo.png" },
         { name: "coore.hi", src: "images/logos/coore-hi.png" },
         { name: "JBS Sem Fronteiras", src: "images/logos/jbs-sem-fronteiras.png" },
-      ].concat(Array.from({ length: 18 }, (_, k) => ({
-        name: `Logo ${String(k + 33).padStart(2, "0")}`,
+        { name: "Autoesporte", src: "images/logos/autoesporte.png" },
+        { name: "Educação", src: "images/logos/educacao.png", scale: 1.1 },
+        { name: "NoCarbon", src: "images/logos/nocarbon.png" },
+        { name: "Palavra Animada", src: "images/logos/palavra-animada.png" },
+        { name: "Digital Marketing Academy by JBS", src: "images/logos/dma.png", scale: .95 },
+      ].concat(Array.from({ length: 13 }, (_, k) => ({
+        name: `Logo ${String(k + 38).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
       }))),
     },
