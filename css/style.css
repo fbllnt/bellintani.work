@@ -199,7 +199,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .cover-fig.bleed{margin-left:calc(-1 * var(--side-l));margin-right:calc(-1 * var(--side-r))}
 /* Loose gallery: 12-column grid, each item places itself; rows follow content */
 .loose{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(12px,1.6vw,24px);row-gap:clamp(48px,7vw,110px);align-items:start}
-.loose > *{grid-column:var(--col) / span var(--span);margin-top:var(--shift);will-change:translate}
+.loose > *{grid-column:var(--col) / span var(--span);margin-top:var(--shift);left:var(--nudge,0px);will-change:translate}
 /* Overlap: a negative shift pulls an item up over the one before it. Later items sit on top;
    captions sit above each image as a label and video controls move to the top, so the covered
    (lower) part of an image never hides them. Hover or focus brings an item to the front. */
@@ -228,7 +228,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .case-about{grid-template-columns:1fr}
   .row-half{grid-template-columns:1fr}
   .loose{row-gap:40px}
-  .loose > *{grid-column:var(--mcol) / span var(--mspan);margin-top:0}
+  .loose > *{grid-column:var(--mcol) / span var(--mspan);margin-top:0;left:0}
   .loose .fig figcaption{order:0;margin:8px 0 0;padding:0}
   .row-third,.row-quarter{grid-template-columns:1fr 1fr}
   .index a{grid-template-columns:2.2em minmax(0,1fr)}
