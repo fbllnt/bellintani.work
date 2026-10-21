@@ -39,10 +39,8 @@
   document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = binds[el.dataset.bind] ?? ""; });
   $("subline").innerHTML = L(S.subline).map(esc).join("<br>");
   $("mail-big").href = `mailto:${S.email}`;
-  $("contacts").innerHTML = S.contacts.map(c => `<li><span class="mono muted">${esc(L(c.label))}</span><a class="swap" href="${esc(c.url)}"${/^https?:/.test(c.url) ? ` target="_blank" rel="noopener"` : ""}><span>${esc(c.value)} ↗</span><span>${esc(c.value)} ↗</span></a></li>`).join("");
   const socialLinks = S.social.map(s => `<a class="swap" href="${esc(s.url)}" target="_blank" rel="noopener"><span>${esc(s.label)}</span><span>${esc(s.label)}</span></a>`).join("");
   $("social-corner").innerHTML = socialLinks;
-  $("social-foot").innerHTML = socialLinks;
   $("services-list").innerHTML = L(S.services).map((s, i) => `<li><span>/ ${esc(s)}</span><span>${String(i + 1).padStart(2, "0")}</span></li>`).join("");
 
   // ---------- Project covers ----------

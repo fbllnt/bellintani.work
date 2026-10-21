@@ -153,12 +153,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .big .arr{font-size:.4em;transition:transform .6s var(--ease)}
 .big:hover{color:var(--blue)}
 .big:hover .arr{transform:rotate(45deg)}
-/* Contacts under Let's talk: small label, large clickable value */
-.contacts{list-style:none;margin:40px 0 0;padding:0;border-top:1px solid var(--fg)}
-.contacts li{display:grid;grid-template-columns:minmax(90px,1fr) 3fr;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
-.contacts a{font:700 clamp(22px,3.2vw,48px)/1.05 var(--sans);letter-spacing:-.03em;text-decoration:none;justify-self:start;height:1.05em}
-@media (max-width:560px){ .contacts li{grid-template-columns:1fr;gap:6px} }
-.social{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:24px}
+.social{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:40px;padding-top:16px;border-top:1px solid var(--line)}
 .social a{text-decoration:none}
 .social #social-foot{display:flex;gap:16px}
 
