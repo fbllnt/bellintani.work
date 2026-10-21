@@ -306,7 +306,7 @@ window.SITE = {
       title: "XP",
       client: "XP Investimentos",
       scope: { en: "Sponsorship identity // Campaign", pt: "Identidade de patrocínio // Campanha" },
-      image: "images/xp/stadium.jpg",
+      image: "images/xp/lockup.jpg",
       hero: "bleed",
       heroAr: "16/9",
       summary: {
@@ -315,8 +315,6 @@ window.SITE = {
       },
       layout: "loose",
       gallery: [
-        { src: "images/xp/lockup.jpg", ar: "16/9", col: 1, span: 12 },
-        { src: "images/xp/lockups-pair.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Lockups: Brazilian Olympic Committee and Brazilian sport", pt: "Assinaturas: Comitê Olímpico Brasileiro e esporte brasileiro" } },
         { text: { en: "Turning a volleyball player into the voice of the LGBTQIA+ community in sport: XP invests.", pt: "Se transforma um jogador de vôlei na voz da comunidade LGBTQIA+ no esporte, a XP investe." }, col: 1, span: 10 },
         { src: "images/xp/volei-01.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Story frames", pt: "Quadros da história" } },
         { src: "images/xp/volei-02.jpg", ar: "16/9", col: 7, span: 6, shift: "1.6em" },
@@ -324,6 +322,7 @@ window.SITE = {
         { src: "images/xp/volei-04.jpg", ar: "16/9", col: 7, span: 6, tight: true },
         { text: { en: "Turning a Brazilian into the first swimmer in history to win an Olympic medal at 32: XP invests.", pt: "Se transforma um brasileiro no 1º nadador da história a conquistar medalha olímpica aos 32 anos, a XP investe." }, col: 1, span: 10 },
         { scrub: { frames: "images/xp/natacao-##.jpg", count: 5 }, ar: "16/9", col: 1, span: 12, caption: { en: "Story frames, played by scroll", pt: "Quadros da história, no scroll" } },
+        { src: "images/xp/stadium.jpg", ar: "16/9", col: 1, span: 12 },
       ],
     },
     {
