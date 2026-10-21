@@ -4,6 +4,11 @@ window.SITE = {
   name: "Bellintani",
   year: "26",
   email: "felipe@bellintani.work",
+  // Contacts listed under "Let's talk"
+  contacts: [
+    { label: "Email", value: "felipe@bellintani.work", url: "mailto:felipe@bellintani.work" },
+    { label: "WhatsApp", value: "+55 11 91255-2508", url: "https://wa.me/5511912552508" },
+  ],
   social: [
     { label: "Instagram", url: "https://www.instagram.com/fbllnt/" },
     { label: "LinkedIn", url: "https://www.linkedin.com/in/fbellintani/" },
@@ -75,6 +80,7 @@ window.SITE = {
       ] },
       { head: { en: "Contact", pt: "Contato" }, rows: [
         { role: "Email", name: "felipe@bellintani.work", url: "mailto:felipe@bellintani.work" },
+        { role: "WhatsApp", name: "+55 11 91255-2508", url: "https://wa.me/5511912552508" },
         { role: "Instagram", name: "@fbllnt", url: "https://www.instagram.com/fbllnt/" },
         { role: "LinkedIn", name: "in/fbellintani", url: "https://www.linkedin.com/in/fbellintani/" },
       ] },
