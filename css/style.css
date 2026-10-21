@@ -378,3 +378,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case.motion .case-gallery .fig .ph{transform-origin:50% 100%;will-change:transform,opacity}
 .case.motion .ltext{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform 1.2s var(--ease)}
 .case.motion .ltext.in{opacity:1;transform:none}
+
+/* Strip: items share one height, widths follow their aspect ratios; on phones it wraps two per row */
+.strip{display:flex;flex-wrap:wrap;gap:var(--cg,16px);align-items:flex-start}
+.strip > .fig{flex:var(--sar) 1 calc(var(--sar) * 120px);min-width:0}
+.strip > .fig .ph{aspect-ratio:var(--ar)}
+@media (max-width:760px){ .strip > .fig{flex-basis:calc(var(--sar) * 220px)} }

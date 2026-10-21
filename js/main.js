@@ -190,6 +190,7 @@
   //   above, for a set of the same kind of content), speed: -0.1…0.1 (scroll drift),
   //   z: stacking order (default: later items on top) }.
   // Text lines can sit between images: { text: { en, pt }, col, span }.
+  // A row of same-height items (posters, vertical films): { strip: [{ src | video…, ar }, …], col, span }.
   // On phones items keep their order and alternate left/right in wider spans.
   function looseGallery(p) {
     let side = 0, zi = 0;
@@ -200,6 +201,9 @@
       const style = `--col:${col};--span:${span};--mcol:${mcol};--mspan:${mspan};--shift:${it.shift || "0px"};--nudge:${it.nudge || "0px"};--tight:${it.tight ? 1 : 0};--z:${it.z || (++zi)}`;
       const speed = !reduced && it.speed ? ` data-speed="${+it.speed}"` : "";
       if (it.text) return `<p class="ltext" style="${style}"${speed}>${esc(L(it.text))}</p>`;
+      // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
+      if (it.strip) return `<div class="strip" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
+        return fig(s, p, `--sar:${(w / (h || 1)).toFixed(4)}`); }).join("")}</div>`;
       return fig(it, p, style, speed);
     }).join("")}</div>`;
   }
