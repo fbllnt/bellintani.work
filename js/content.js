@@ -317,6 +317,11 @@ window.SITE = {
       gallery: [
         { src: "images/xp/lockup.jpg", ar: "16/9", col: 1, span: 12 },
         { src: "images/xp/lockups-pair.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Lockups: Brazilian Olympic Committee and Brazilian sport", pt: "Assinaturas: Comitê Olímpico Brasileiro e esporte brasileiro" } },
+        { text: { en: "Turning a volleyball player into the voice of the LGBTQIA+ community in sport: XP invests.", pt: "Se transforma um jogador de vôlei na voz da comunidade LGBTQIA+ no esporte, a XP investe." }, col: 1, span: 10 },
+        { src: "images/xp/volei-01.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Story frames", pt: "Quadros da história" } },
+        { src: "images/xp/volei-02.jpg", ar: "16/9", col: 7, span: 6, shift: "1.6em" },
+        { src: "images/xp/volei-03.jpg", ar: "16/9", col: 1, span: 6, tight: true },
+        { src: "images/xp/volei-04.jpg", ar: "16/9", col: 7, span: 6, tight: true },
       ],
     },
     {
