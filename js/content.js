@@ -303,6 +303,23 @@ window.SITE = {
       ],
     },
     {
+      title: "XP",
+      client: "XP Investimentos",
+      scope: { en: "Sponsorship identity // Campaign", pt: "Identidade de patrocínio // Campanha" },
+      image: "images/xp/stadium.jpg",
+      hero: "bleed",
+      heroAr: "16/9",
+      summary: {
+        en: "XP doesn't sponsor Brazilian sport, it invests in it. One crossed-out word turns a sponsorship tag into a statement: “Investidora oficial do esporte brasileiro”, a lockup that works for the Brazilian Olympic Committee and for sport as a whole.",
+        pt: "A XP não patrocina o esporte brasileiro, ela investe nele. Uma palavra riscada transforma a assinatura de patrocínio numa afirmação: “Investidora oficial do esporte brasileiro”, uma assinatura que funciona para o Comitê Olímpico Brasileiro e para o esporte como um todo.",
+      },
+      layout: "loose",
+      gallery: [
+        { src: "images/xp/lockup.jpg", ar: "16/9", col: 1, span: 12 },
+        { src: "images/xp/lockups-pair.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Lockups: Brazilian Olympic Committee and Brazilian sport", pt: "Assinaturas: Comitê Olímpico Brasileiro e esporte brasileiro" } },
+      ],
+    },
+    {
       title: "Logofolio",
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca" },
       summary: {
