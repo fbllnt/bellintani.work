@@ -151,6 +151,9 @@
   // Text lines can sit between images: { text: { en, pt }, col, span }.
   // A chapter opens a part of the story: { chapter: { en, pt } ("01 · Intro"), kicker, head, text, col, span }.
   // A row of same-height items (posters, vertical films): { strip: [{ src | video…, ar }, …], col, span }.
+  // Chapter extras: *words* in head show in the accent colour; pills: ["Naming", "*Growth"] lists the scope (* = highlighted).
+  // Before → after (a rename): { swap: { before, after } }. A word set large with its dictionary entry: { word: { glyph, lang, head, note } }.
+  // A sliding row of pieces (a social carousel): { marquee: [{ src, ar }, …], caption }.
   // On phones items keep their order and alternate left/right in wider spans.
   function looseGallery(p) {
     let side = 0, zi = 0;
@@ -162,7 +165,15 @@
       const speed = !reduced && it.speed ? ` data-speed="${+it.speed}"` : "";
       if (it.chapter) return `<section class="chap" style="${style}">
         <p class="chap-k mono"><span>${esc(L(it.chapter))}</span>${it.kicker ? `<span class="muted">${esc(L(it.kicker))}</span>` : ""}</p>
-        <h2 class="chap-h">${esc(L(it.head))}</h2>${it.text ? `<p class="body">${esc(L(it.text))}</p>` : ""}</section>`;
+        <h2 class="chap-h">${esc(L(it.head)).replace(/\*(.+?)\*/g, "<em>$1</em>")}</h2>${it.text ? `<p class="body">${esc(L(it.text))}</p>` : ""}${
+          it.pills ? `<ul class="pills mono">${it.pills.map(x => { const t = L(x); return `<li${t[0] === "*" ? ` class="on"` : ""}>${esc(t.replace(/^\*/, ""))}</li>`; }).join("")}</ul>` : ""}</section>`;
+      if (it.swap) return `<div class="swap-ba" style="${style}">${[["before", "old"], ["after", "new"]].map(([k, c]) =>
+        `<p><span class="mono muted">${esc(T(k))}</span><b class="${c}">${esc(L(it.swap[k]))}</b></p>`).join("")}</div>`;
+      if (it.word) return `<div class="word-def" style="${style}"><p class="word-big"${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""} aria-hidden="true">${esc(it.word.glyph)}</p>
+        <p class="word-entry"><b${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""}>${esc(L(it.word.head))}</b><span class="mono">${esc(L(it.word.note))}</span></p></div>`;
+      if (it.marquee) { const imgs = it.marquee.map(m => { const [w, h] = String(m.ar || "1").split("/").map(Number); return `<img src="${esc(m.src)}" width="${w}" height="${h || 1}" alt="" loading="lazy">`; }).join("");
+        return `<figure class="fig marquee-fig" style="${style}">${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}
+          <div class="marquee" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"><div class="marquee-track">${imgs}${imgs}</div></div></figure>`; }
       if (it.text) return `<p class="ltext" style="${style}"${speed}>${esc(L(it.text))}</p>`;
       // Flip: one item large with the whole set as thumbnails below; a thumbnail, the large image or the arrow keys turn the page
       if (it.flip) { const f = it.flip[0];
@@ -416,9 +427,18 @@
     return html;
   }
 
+  // A project can bring its own colours: theme: { bg, fg, mute, line, panel, accent }. White page otherwise.
+  const THEME_VARS = { bg: "--bg", fg: "--fg", mute: "--mute", line: "--line", panel: "--panel", accent: "--blue" };
+  function applyTheme(t) {
+    const root = document.documentElement;
+    Object.entries(THEME_VARS).forEach(([k, v]) => t && t[k] ? root.style.setProperty(v, t[k]) : root.style.removeProperty(v));
+    root.classList.toggle("themed", !!t);
+  }
+
   function renderCase(i) {
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length];
-    const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)]].filter(([, v]) => v);
+    applyTheme(p.theme);
+    const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("before"), L(p.before)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)]].filter(([, v]) => v);
     let n = 0;
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
@@ -660,6 +680,7 @@
     document.body.classList.remove("in-case");
     fit();
     caseEl.innerHTML = ""; document.title = S.name; motionFigs = [];
+    applyTheme(null);
     const el = $(target) || $("work");
     el.scrollIntoView({ behavior: "instant" });
   });

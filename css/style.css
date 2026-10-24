@@ -152,6 +152,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .in-case .home,.in-case main{display:none}
 .in-case .case{display:block}
 .in-case .corners{opacity:1}
+/* Themed project page (own colours): corners take the page ink instead of the white/difference blend */
+.themed .corners{mix-blend-mode:normal}
+.themed .corners > *{color:var(--fg)}
 .case-top{display:flex;justify-content:space-between;gap:16px;padding-top:calc(clamp(70px,9vw,110px) + env(safe-area-inset-top,0px))}
 .case-title{margin:clamp(24px,4vw,48px) 0 0;font:900 clamp(52px,12.5vw,240px)/.86 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere}
 .case-title .letters{display:flex;flex-wrap:wrap}
@@ -210,6 +213,28 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .chap-k{grid-column:1;grid-row:1 / span 2;margin:0;display:flex;flex-direction:column;gap:4px}
 .chap-h{grid-column:2;margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .chap .body{grid-column:2}
+.chap-h em{font-style:normal;color:var(--blue)}
+.pills{grid-column:2;list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.pills li{padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--mute)}
+.pills li.on{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:400}
+/* Before → after (a rename): the old name struck through, the new one in the accent colour */
+.swap-ba{display:grid;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
+.swap-ba p{margin:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;align-items:baseline}
+.swap-ba b{font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;overflow-wrap:anywhere}
+.swap-ba .old{opacity:.45;text-decoration:line-through;text-decoration-thickness:.08em}
+.swap-ba .new{color:var(--blue)}
+/* A word set large with a dictionary-style entry */
+.word-def{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;align-items:end}
+.word-big{margin:0;font:400 clamp(72px,15vw,250px)/.9 "Didot","Bodoni 72",Georgia,serif;overflow-wrap:anywhere}
+.word-entry{margin:0;display:grid;gap:6px;padding-top:12px;border-top:1px solid var(--line);font:400 clamp(15px,1.25vw,18px)/1.5 var(--mono)}
+.word-entry .mono{color:var(--blue)}
+/* Marquee: a row of pieces sliding sideways at their own proportions (never cropped); pauses on hover */
+.marquee{overflow:hidden;max-width:100%;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.marquee-track{--g:var(--cg,16px);display:flex;gap:var(--g);width:max-content;animation:slide 40s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track img{display:block;flex:none;height:clamp(240px,30vw,420px);width:auto}
+@keyframes slide{to{transform:translateX(calc(-50% - var(--g) / 2))}}
+@media (prefers-reduced-motion:reduce){ .marquee{overflow-x:auto} .marquee-track{animation:none} }
 .ltext{margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .case-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;padding-block:clamp(60px,9vw,140px)}
 .body{font:400 clamp(15px,1.25vw,18px)/1.6 var(--mono);letter-spacing:-.01em;max-width:62ch;margin:0}
@@ -228,7 +253,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @media (max-width:760px){
   .case-about{grid-template-columns:1fr}
   .loose > .chap{grid-template-columns:1fr;margin-top:24px}
-  .chap-k,.chap-h,.chap .body{grid-column:1;grid-row:auto}
+  .chap-k,.chap-h,.chap .body,.pills{grid-column:1;grid-row:auto}
+  .word-def,.swap-ba p{grid-template-columns:1fr;gap:6px}
   .row-half{grid-template-columns:1fr}
   .loose{--rg:32px;--cg:12px;--pull:-20px}
   .loose > *{grid-column:var(--mcol) / span var(--mspan);margin-top:calc(var(--tight,0) * var(--pull));left:0}

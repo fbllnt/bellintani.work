@@ -30,6 +30,17 @@ Netlify to https://bellintani.work about a minute after each push.
 - Exception: the cover at the top of each project page runs edge to edge (full width, no side margin), with its
   height following the image's own proportion, so it is not cut either.
 
+## Project page template (agreed with Felipe, Oct 24 2026)
+
+Project pages follow the THURA case (SCRV.ag format, reference artifact https://claude.ai/artifact/KSPS6ZoiADyGuixJDJoSt6):
+`tags` (hashtags), meta with `before` (if a rebrand) / `sector` / `deliverables`, edge-to-edge cover, then numbered
+chapters (`01 · Intro`, `Desafio`, `Naming`, `Posicionamento`, `Estratégia`, `Identidade aplicada`), each a `chapter`
+item with kicker, big headline (`*words*` in the accent colour), short text, optional `pills`, followed by captioned
+images that prove the text. Extra blocks: `swap` (before → after names), `word` (big word + dictionary entry),
+`strip` (same-height row, e.g. posts), `marquee` (sliding social carousel). A project may set `theme`
+({ bg, fg, mute, line, panel, accent }) to use its brand colours instead of the white page, when it makes sense.
+Never invent facts for the text: ask Felipe.
+
 ## Domain
 
 DNS at Namecheap: A `@` → 75.2.60.5, CNAME `www` → fbllnt.netlify.app.
