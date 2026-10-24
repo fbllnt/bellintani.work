@@ -272,7 +272,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .logo-view button{all:unset;cursor:pointer}
 .logo-view button:focus-visible{outline:1px solid currentColor;outline-offset:4px}
 .lv-top,.lv-nav{display:flex;justify-content:space-between}
-.lv-mark{display:grid;place-items:center;min-height:0}
+.lv-nav{align-items:center;gap:8px 16px}
+.lv-hint{opacity:.6;text-align:center}
+.lv-mark{display:grid;place-items:center;min-height:0;cursor:zoom-out}
 .lv-mark .mark{width:calc(var(--mw,.62) * min(110vw,125vh))}
 .lv-mark .mark.type{width:auto;height:auto;font-size:clamp(48px,10vw,160px)}
 .lv-mark img{max-width:min(64vw,720px);max-height:50vh;object-fit:contain}
@@ -281,6 +283,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @media (max-width:1000px){ .logos{grid-template-columns:repeat(3,minmax(0,1fr))} }
 @media (max-width:560px){
   .logos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lv-nav{flex-wrap:wrap}
+  .lv-hint{order:-1;width:100%}
 }
 @media (prefers-reduced-motion:reduce){
   .logos .mark{opacity:1;translate:none}

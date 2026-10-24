@@ -223,7 +223,7 @@
         <div class="lv-top mono"><span class="lv-count"></span><button type="button" class="lv-close">${esc(T("close"))} ✕</button></div>
         <div class="lv-mark"></div>
         <div class="lv-info"><p class="mono lv-meta"></p><p class="lv-note"></p></div>
-        <div class="lv-nav mono"><button type="button" class="lv-prev">← ${esc(T("prev"))}</button><button type="button" class="lv-next">${esc(T("nextItem"))} →</button></div>
+        <div class="lv-nav mono"><button type="button" class="lv-prev">← ${esc(T("prev"))}</button><span class="lv-hint">${esc(T(matchMedia("(hover: hover) and (pointer: fine)").matches ? "logoHint" : "logoHintTouch"))}</span><button type="button" class="lv-next">${esc(T("nextItem"))} →</button></div>
       </dialog>`;
   }
   function setupLogos(p) {
@@ -299,9 +299,11 @@
     });
     // Back on the wall, focus returns to the tile of the last logo seen
     dlg.addEventListener("close", () => { cursorTo(document.body); tileOf(cur).focus({ preventScroll: true }); });
-    let x0 = null;
-    dlg.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") x0 = e.clientX; });
-    dlg.addEventListener("pointerup", e => { if (x0 !== null && Math.abs(e.clientX - x0) > 50) step(e.clientX < x0 ? 1 : -1); x0 = null; });
+    let x0 = null, swiped = false;
+    dlg.addEventListener("pointerdown", e => { swiped = false; if (e.pointerType !== "mouse") x0 = e.clientX; });
+    dlg.addEventListener("pointerup", e => { if (x0 !== null && Math.abs(e.clientX - x0) > 50) { swiped = true; step(e.clientX < x0 ? 1 : -1); } x0 = null; });
+    // A second click on the big logo (anywhere in the middle band) sends it back to its tile; a swipe doesn't count
+    dlg.querySelector(".lv-mark").addEventListener("click", () => { if (!swiped) shut(); });
     caseEl.querySelectorAll(".logo-filter button").forEach(b => b.addEventListener("click", () => {
       caseEl.querySelectorAll(".logo-filter button").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
       items.forEach(li => { li.hidden = !!b.dataset.tag && li.dataset.tag !== b.dataset.tag; });
