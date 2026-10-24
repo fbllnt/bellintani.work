@@ -27,6 +27,18 @@
   let resumeY = null;
   try { resumeY = sessionStorage.getItem("resume"); sessionStorage.removeItem("resume"); } catch (e) {}
 
+  // ---------- Projects hidden on the public site (Felipe, Oct 2026) ----------
+  // bellintani.work shows no projects for now. Felipe sees the full site on any Netlify preview link,
+  // or on the public address after opening it once with ?full (saved in this browser; ?public undoes it).
+  const q = new URLSearchParams(location.search);
+  if (q.has("full")) store("full", "1");
+  if (q.has("public")) store("full");
+  const publicHost = /(^|\.)bellintani\.work$/.test(location.hostname) || location.hostname === "fbllnt.netlify.app";
+  if (publicHost && read("full") !== "1") {
+    S.projects = [];
+    document.documentElement.classList.add("no-work");
+  }
+
   // ---------- Bind copy ----------
   const binds = {
     name: S.name,
@@ -132,7 +144,7 @@
   $("skip").onclick = finish;
   // Scroll cue: jumps to the work list and hides once the visitor has started scrolling
   const cue = $("cue");
-  cue.addEventListener("click", e => { e.preventDefault(); $("work").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
+  cue.addEventListener("click", e => { e.preventDefault(); $(S.projects.length ? "work" : "services").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
   const cueCheck = () => cue.classList.toggle("gone", scrollY > 40);
   addEventListener("scroll", cueCheck, { passive: true }); cueCheck();
   $("replay").onclick = () => { scrollTo({ top: 0 }); play(); };

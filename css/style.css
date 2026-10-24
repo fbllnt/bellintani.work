@@ -76,6 +76,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* ---------- Corner navigation ---------- */
 .corners{position:fixed;z-index:30;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}
 .corners.on{opacity:1}
+.no-work #work,.no-work .c-tr a[href="#work"]{display:none}
 .corners:not(.on) > *{pointer-events:none}
 /* White + difference blend: reads black on white, white on dark images */
 .corners{mix-blend-mode:difference;color:#fff}
