@@ -8,6 +8,9 @@ Netlify to https://bellintani.work about a minute after each push.
 - Felipe asked (Oct 2026) for publishing without asking first: once a change is finished and tested in the
   browser (desktop and phone widths), commit it and push to `main`. Don't push half-done work.
 - After pushing, confirm the live site serves the new version and update the prototype artifact.
+- Preview before going live (Felipe, Oct 24 2026): when Felipe wants to see a change first, push it to a branch and
+  open a pull request instead of pushing to `main`. Netlify builds a deploy preview at
+  `https://deploy-preview-<PR number>--fbllnt.netlify.app`; send him that link. Merge to `main` only when he approves.
 - Before each push that changes CSS or JS, bump the `?v=` stamp on the three asset links in `index.html`
   (e.g. `v=$(date +%Y%m%d%H%M)`) so browsers fetch the new files instead of a cached copy.
 
