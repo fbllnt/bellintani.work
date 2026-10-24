@@ -712,30 +712,24 @@
     else if (document.body.classList.contains("in-case")) closeCase(location.hash.slice(1));
   });
 
-  // ---------- Work list motion (on test, Oct 2026) ----------
-  // Four effects for the home Work list, each with its own switch so Felipe can compare them on the preview:
-  // cascade (titles rise from behind a mask, one after another), hover (title slides, number and tags follow),
-  // open (the row's blue bar grows to fill the screen and turns into the project's background colour)
-  // and morph (Index ↔ Grid: each title flies to its new place). Reduced motion turns them all off.
-  const FX = { cascade: "Cascata", hover: "Hover", open: "Clique", morph: "Index ↔ Grid" };
-  const fxOn = {};
-  Object.keys(FX).forEach(k => { fxOn[k] = !reduced && read(`fx-${k}`) !== "0"; works.classList.toggle(`fx-${k}`, fxOn[k]); });
+  // ---------- Work list motion (chosen by Felipe, Oct 2026) ----------
+  // Cascade (titles rise from behind a mask, one after another), hover (title slides, number and tags follow;
+  // the blue bar itself appears flat, with no animation), open (the row's bar grows to fill the screen while
+  // turning into the project's background colour) and morph (Index <-> Grid: each title flies to its new place).
+  // Reduced motion turns them all off.
+  const fxOn = !reduced;
+  if (fxOn) works.classList.add("fx-cascade", "fx-hover", "fx-open", "fx-morph");
 
   // 1. Cascade: runs once the list comes into view
   const rows = [...index.children];
   rows.forEach((li, i) => li.style.setProperty("--i", i));
-  const cascade = () => {
-    if (!fxOn.cascade) return;
-    index.classList.remove("in"); void index.offsetWidth;
-    requestAnimationFrame(() => index.classList.add("in"));
-  };
-  if ("IntersectionObserver" in window && fxOn.cascade) {
+  if ("IntersectionObserver" in window && fxOn) {
     const cio = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { index.classList.add("in"); cio.disconnect(); } }, { threshold: .12 });
     cio.observe(index);
   } else index.classList.add("in");
 
-  // 3. Open: a blue panel grows from the clicked row (or card) to the whole screen, takes the project's
-  // background colour, the page renders underneath, and the panel fades away
+  // 3. Open: a blue panel grows from the clicked row (or card) to the whole screen, turning into the project's
+  // background colour as it grows; the page renders underneath and the panel fades away
   let grown = false;
   const grow = (from, i) => {
     const p = S.projects[i], r = from.getBoundingClientRect(), W = innerWidth, H = innerHeight;
@@ -744,8 +738,9 @@
     document.body.append(veil);
     const ease = "cubic-bezier(.7,0,.2,1)";
     const clip = `inset(${Math.max(0, r.top)}px ${Math.max(0, W - r.right)}px ${Math.max(0, H - r.bottom)}px ${Math.max(0, r.left)}px)`;
-    const a = veil.animate([{ clipPath: clip }, { clipPath: "inset(0px 0px 0px 0px)" }], { duration: 620, easing: ease, fill: "forwards" });
-    a.finished.then(() => veil.animate([{ background: getComputedStyle(veil).backgroundColor }, { background: (p.theme && p.theme.bg) || "#fff" }], { duration: 260, easing: "ease-out", fill: "forwards" }).finished)
+    const bg = (p.theme && p.theme.bg) || "#fff";
+    const a = veil.animate([{ clipPath: clip, background: getComputedStyle(veil).backgroundColor }, { clipPath: "inset(0px 0px 0px 0px)", background: bg }], { duration: 700, easing: ease, fill: "forwards" });
+    a.finished
       .then(() => {
         grown = true;
         location.hash = href(p);
@@ -755,7 +750,7 @@
   };
   works.addEventListener("click", e => {
     const a = e.target.closest(".index a, .card");
-    if (!a || !fxOn.open || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    if (!a || !fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
     const i = S.projects.findIndex(p => a.getAttribute("href") === href(p));
     if (i < 0) return;
     e.preventDefault();
@@ -765,7 +760,7 @@
   // 4. Morph: measure every title, switch the view, then play each one from where it was
   const viewSwitch = setView;
   const morph = asGrid => {
-    if (!fxOn.morph || works.classList.contains("as-grid") === asGrid || !works.getBoundingClientRect().height) return viewSwitch(asGrid);
+    if (!fxOn || works.classList.contains("as-grid") === asGrid || !works.getBoundingClientRect().height) return viewSwitch(asGrid);
     const titles = () => [...(works.classList.contains("as-grid") ? grid.querySelectorAll(".row b") : index.querySelectorAll(".ti"))];
     const before = titles().map(t => t.getBoundingClientRect());
     viewSwitch(asGrid);
@@ -783,25 +778,6 @@
     if (!asGrid) index.querySelectorAll("li").forEach((li, j) => li.animate([{ borderColor: "transparent" }, { borderColor: "transparent", offset: .4 }, {}], { duration: 900 }));
   };
   vIndex.onclick = () => morph(false); vGrid.onclick = () => morph(true);
-
-  // Test panel: only on preview links (never on bellintani.work), one switch per effect
-  if (!publicHost && !reduced && S.projects.length) {
-    const lab = document.createElement("div");
-    lab.className = "fx-lab mono";
-    lab.innerHTML = `<b>Animações</b>${Object.entries(FX).map(([k, label], n) => `<button type="button" data-fx="${k}" aria-pressed="${fxOn[k]}">${n + 1} ${label}</button>`).join("")}<button type="button" data-replay>↻ Rever cascata</button>`;
-    document.body.append(lab);
-    lab.addEventListener("click", e => {
-      const b = e.target.closest("button");
-      if (!b) return;
-      if (b.dataset.replay !== undefined) { $("work").scrollIntoView({ behavior: "instant" }); setView(false); cascade(); return; }
-      const k = b.dataset.fx;
-      fxOn[k] = !fxOn[k];
-      b.setAttribute("aria-pressed", fxOn[k]);
-      works.classList.toggle(`fx-${k}`, fxOn[k]);
-      store(`fx-${k}`, fxOn[k] ? undefined : "0");
-      if (k === "cascade" && fxOn[k]) cascade();
-    });
-  }
 
   // ---------- Cursor: a blue ball that drags a thick, flat trail ----------
   // A chain of points, each easing toward the one ahead, drawn as one solid band as wide as the ball.

@@ -127,7 +127,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .index a:hover .bar,.index a:focus-visible .bar{clip-path:inset(0)}
   .index a:hover :is(.t,.k,.mono),.index a:focus-visible :is(.t,.k,.mono){color:#fff}
 }
-/* ---------- Work list motion (on test; each effect has a class on .works, switched in the preview panel) ---------- */
+/* ---------- Work list motion (classes on .works, off with reduced motion) ---------- */
 .index .ti{display:inline-block}
 /* 1. Cascade: each title rises from behind its own mask, one row after the other */
 .fx-cascade .index .t{clip-path:inset(-1em -2em -.08em -2em)}
@@ -139,8 +139,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fx-cascade .index.in a{background-size:100% 1px}
 /* 2. Hover: the title slides further on a spring, the number and the tags follow a beat later */
 @media (hover:hover) and (pointer:fine){
-  .fx-hover .index .t{transition:color .3s,transform .7s var(--spring)}
-  .fx-hover .index a > .mono,.fx-hover .index .k{transition:transform .6s var(--spring) .06s,color .3s,opacity .6s}
+  .fx-hover .index .t{transition:transform .7s var(--spring)}
+  .fx-hover .index a > .mono,.fx-hover .index .k{transition:transform .6s var(--spring) .06s,opacity .6s}
+  .fx-hover .index .bar{transition:none}
   .fx-hover .index a:hover .t,.fx-hover .index a:focus-visible .t{transform:translateX(.42em)}
   .fx-hover .index a:hover > .mono,.fx-hover .index a:focus-visible > .mono{transform:translateX(10px)}
   .fx-hover .index a:hover .k,.fx-hover .index a:focus-visible .k{transform:translateX(-10px)}
@@ -148,15 +149,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 }
 /* 3. Open: the panel that grows from the row to the whole screen */
 .veil{position:fixed;inset:0;z-index:70;background:var(--blue);pointer-events:none}
-/* Test panel (preview links only) */
-.fx-lab{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:80;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;align-items:center;max-width:calc(100vw - 32px);padding:8px 10px;background:var(--fg);color:var(--bg);font-size:11px;border-radius:4px}
-.fx-lab b{font-weight:500;margin-right:4px}
-.fx-lab button{all:unset;cursor:pointer;padding:4px 7px;border:1px solid rgba(255,255,255,.35);border-radius:3px;opacity:.55}
-.fx-lab button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);opacity:1}
-.fx-lab button[data-replay]{opacity:1}
-.fx-lab button:focus-visible{outline:1px solid #fff}
-.in-case .fx-lab{display:none}
-@media (max-width:600px){ .fx-lab{gap:4px;padding:6px;font-size:10px} .fx-lab b{display:none} }
 
 .grid{display:none;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:40px 16px}
 .works.as-grid .grid{display:grid}
