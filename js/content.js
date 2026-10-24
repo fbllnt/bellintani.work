@@ -135,15 +135,15 @@ window.SITE = {
       type: "campaign",
       client: "ANTI Creative Finance",
       year: "2026",
-      role: "?",
+      role: { en: "Lead Designer / Art Director / AI Creator / UX/UI", pt: "Lead Designer / Diretor de Arte / AI Creator / UX/UI" },
       scope: { en: "Campaign // Activation // Digital", pt: "Campanha // Ativação // Digital" },
       sector: { en: "Finance for creatives", pt: "Finanças para criativos" },
       deliverables: { en: "Activation, films, street posters, social and landing page", pt: "Ativação, filmes, lambe-lambes, redes sociais e landing page" },
       tags: { en: ["Campaign", "Activation", "OOH", "Digital"], pt: ["Campanha", "Ativação", "OOH", "Digital"] },
       // Black page, white type, ANTI lime accent
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#d7f205" },
-      tools: "?",
-      ai: "?",
+      tools: "Adobe CC (Illustrator, Photoshop, Premiere), Flora.AI, Claude Code",
+      ai: { en: "Yes · Flora.AI, Claude Code", pt: "Sim · Flora.AI, Claude Code" },
       image: "images/anti/skeletons.jpg",
       link: { label: "naoespere.sejaanti.com.br", url: "https://naoespere.sejaanti.com.br" },
       summary: {
