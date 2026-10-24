@@ -26,7 +26,7 @@ Netlify to https://bellintani.work about a minute after each push.
 - Never cut any part of an image, anywhere on the site (galleries, home cards, sequences, photo tiles,
   thumbnails, full screen; desktop and phone). Use `object-fit: contain`, never `cover`, and no zoom-in
   (`scale` > 1) or parallax shift of an image inside its frame.
-- Gallery images get breathing room: they sit inside their frame with the `--breathe` margin on the grey panel.
+- Gallery images get breathing room: they sit inside their frame with the `--breathe` margin of white page around them (no grey frames: Felipe said "sem cinza").
 - Exception: the cover at the top of each project page runs edge to edge (full width, no side margin), with its
   height following the image's own proportion, so it is not cut either.
 
