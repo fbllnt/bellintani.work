@@ -81,67 +81,6 @@
   grid.innerHTML = S.projects.map((p, i) => `<a class="card" href="${href(p)}"><div class="ph">${cover(i, p)}</div>
     <div class="row"><b>${esc(L(p.title))}</b><span class="mono">(${i + 1})</span></div>
     <span class="mono muted">${esc(L(p.scope))}${p.year ? ` — ${esc(p.year)}` : ""}${tagFor(p)}</span></a>`).join("");
-  // ---------- Floating cards over the sticky name ----------
-  // Positions cycle through a loose collage: width, left offset, aspect ratio, vertical overlap (desktop / phone).
-  const SPOTS = [
-    { w: 56, x: 0,  ar: "16/9",  mt: "0vh",   wm: 92, xm: 0,  sp: .10 },
-    { w: 42, x: 57, ar: "3/2",   mt: "-6vh",  wm: 80, xm: 20, sp: -.08 },
-    { w: 48, x: 6,  ar: "16/10", mt: "-2vh",  wm: 86, xm: 0,  sp: .07 },
-    { w: 44, x: 55, ar: "16/9",  mt: "-4vh",  wm: 82, xm: 18, sp: -.10 },
-    { w: 58, x: 0,  ar: "16/9",  mt: "0vh",   wm: 92, xm: 4,  sp: .08 },
-    { w: 40, x: 60, ar: "4/3",   mt: "-8vh",  wm: 78, xm: 22, sp: -.06 },
-  ];
-  const flow = $("flow");
-  flow.innerHTML = S.projects.map((p, i) => {
-    const s = SPOTS[i % SPOTS.length];
-    return `<a class="drop" href="${href(p)}" draggable="false" style="--w:${s.w}%;--x:${s.x}%;--ar:${s.ar};--mt:${i ? s.mt : "0vh"};--wm:${s.wm}%;--xm:${s.xm}%" data-sp="${s.sp}">
-      <div class="pop"><div class="ph">${cover(i, p)}</div>
-      <div class="cap mono"><span>(${String(i + 1).padStart(2, "0")}) ${esc(L(p.title))}</span><span class="muted">${esc(p.year || "")}</span></div></div></a>`;
-  }).join("");
-
-  // Pop in when they reach the viewport
-  const popIO = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add("in"); popIO.unobserve(e.target); }
-  }), { rootMargin: "0px 0px -8% 0px" }) : null;
-  flow.querySelectorAll(".drop").forEach(d => popIO ? popIO.observe(d) : d.classList.add("in"));
-
-  // Cards drift at their own speed while the page scrolls, tilt a little, and the photo moves inside its frame
-  const drops = [...flow.querySelectorAll(".drop")], mq = matchMedia("(max-width:760px)");
-  let dropRaf = 0;
-  const dropMove = () => {
-    dropRaf = 0;
-    const H = innerHeight, mid = H / 2, k = mq.matches ? .5 : 1;
-    drops.forEach((d, i) => {
-      const r = d.getBoundingClientRect();
-      if (r.bottom < -H * .5 || r.top > H * 1.5) return;
-      const off = (r.top + r.height / 2 - mid) / H, pop = d.firstElementChild, img = d.querySelector(".ph > img");
-      pop.style.translate = `0 ${(off * +d.dataset.sp * H * k).toFixed(1)}px`;
-      pop.style.rotate = `${(off * (i % 2 ? -2.5 : 2.5) * k).toFixed(2)}deg`;
-      if (img) img.style.translate = `0 ${(off * -7).toFixed(2)}%`;
-    });
-  };
-  const queueDrop = () => { if (!dropRaf) dropRaf = requestAnimationFrame(dropMove); };
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { addEventListener("scroll", queueDrop, { passive: true }); addEventListener("resize", queueDrop); queueDrop(); }
-
-  // Drag with the mouse; a drag never counts as a click. Touch keeps normal scrolling.
-  let zTop = 1;
-  flow.querySelectorAll(".drop").forEach(el => {
-    let down = false, moved = false, sx = 0, sy = 0, ox = 0, oy = 0, bx = 0, by = 0;
-    el.addEventListener("pointerdown", e => {
-      if (e.pointerType !== "mouse" || e.button !== 0) return;
-      down = true; moved = false; sx = e.clientX; sy = e.clientY; bx = ox; by = oy;
-      el.style.zIndex = ++zTop; el.setPointerCapture(e.pointerId); e.preventDefault();
-    });
-    el.addEventListener("pointermove", e => {
-      if (!down) return;
-      const dx = e.clientX - sx, dy = e.clientY - sy;
-      if (!moved && Math.hypot(dx, dy) > 4) { moved = true; el.classList.add("dragging"); }
-      if (moved) { ox = bx + dx; oy = by + dy; el.style.translate = `${ox}px ${oy}px`; }
-    });
-    const up = () => { down = false; el.classList.remove("dragging"); };
-    el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up);
-    el.addEventListener("click", e => { if (moved) { e.preventDefault(); moved = false; } });
-  });
 
   const works = document.querySelector(".works"), vIndex = $("view-index"), vGrid = $("view-grid");
   const setView = asGrid => {
@@ -167,8 +106,10 @@
     + (wi === words.length - 1 ? `<span class="reg" style="--y:${80 * ++n}px">®</span>` : "")
   }</span>`).join(`<span class="sp" aria-hidden="true"></span>`);
 
-  // Fit the name to the stage width (or the longest word, if it has to wrap)
+  // Fit the name to the stage width (or the longest word, if it has to wrap).
+  // Skipped while the home is hidden behind a project page (nothing to measure); refitted on the way back.
   const fit = () => {
+    if (!nameEl.offsetParent) return;
     nameEl.style.setProperty("--name-size", "100px");
     const kids = [...nameEl.children];
     const total = kids.reduce((s, k) => s + k.offsetWidth, 0), avail = nameEl.clientWidth;
@@ -189,9 +130,9 @@
     timers.push(setTimeout(finish, 3950));
   };
   $("skip").onclick = finish;
-  // Scroll cue: jumps to the work and hides once the visitor has started scrolling
+  // Scroll cue: jumps to the work list and hides once the visitor has started scrolling
   const cue = $("cue");
-  cue.addEventListener("click", e => { e.preventDefault(); $("flow").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
+  cue.addEventListener("click", e => { e.preventDefault(); $("work").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
   const cueCheck = () => cue.classList.toggle("gone", scrollY > 40);
   addEventListener("scroll", cueCheck, { passive: true }); cueCheck();
   $("replay").onclick = () => { scrollTo({ top: 0 }); play(); };
@@ -712,6 +653,7 @@
   };
   const closeCase = target => cutTo(() => {
     document.body.classList.remove("in-case");
+    fit();
     caseEl.innerHTML = ""; document.title = S.name; motionFigs = [];
     const el = $(target) || $("work");
     el.scrollIntoView({ behavior: "instant" });
@@ -767,7 +709,7 @@
       ball.classList.add("on");
       white = onBlue || !!e.target.closest(".logo");
       ball.classList.toggle("white", white);
-      ball.classList.toggle("big", !!e.target.closest("a, button, [role=slider], .drop, video"));
+      ball.classList.toggle("big", !!e.target.closest("a, button, [role=slider], video"));
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
     document.addEventListener("pointerleave", () => { ball.classList.remove("on"); ctx.clearRect(0, 0, innerWidth, innerHeight); });

@@ -73,21 +73,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .done .loader,.done .panel,.done .skip{display:none}
 .done .name .word > span,.done .tag{opacity:1;transform:none;animation:none}
 
-/* ---------- Floating work cards ---------- */
-.flow{position:relative;z-index:2;display:flex;flex-direction:column;gap:clamp(24px,4vw,64px);padding:4svh var(--side-r) 24svh var(--side-l);pointer-events:none}
-.drop{position:relative;display:block;width:var(--w);margin-left:var(--x);margin-top:var(--mt);pointer-events:auto;text-decoration:none;cursor:grab;user-select:none;-webkit-user-select:none}
-.drop.dragging{cursor:grabbing}
-.drop .pop{transform:translateY(81px) scale(0);transition:transform .7s var(--spring)}
-.drop.in .pop{transform:none}
-.drop .ph{aspect-ratio:var(--ar);max-width:100%;position:relative;overflow:hidden;background:var(--panel)}
-.drop .ph > *{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
-.drop .ph > img{scale:1.14}
-.drop .pop{will-change:translate,rotate}
-.drop .cap{display:flex;justify-content:space-between;gap:10px;margin-top:10px;padding:2px 0}
-.drop:hover .cap,.drop:focus-visible .cap{color:var(--blue)}
-@media (max-width:760px){ .drop{width:var(--wm);margin-left:var(--xm);margin-top:calc(var(--mt) * .25 + 3vh)} }
-@media (prefers-reduced-motion:reduce){ .drop .pop{transform:none} }
-
 /* ---------- Corner navigation ---------- */
 .corners{position:fixed;z-index:30;inset:0;pointer-events:none;opacity:0;transition:opacity .4s}
 .corners.on{opacity:1}
