@@ -13,8 +13,8 @@ window.SITE = {
     pt: "Designer multidisciplinar, diretor de arte e sabe-se lá o que mais",
   },
   subline: {
-    en: ["Branding, Identity, Advertising, Digital, Social and Multimedia"],
-    pt: ["Branding, Identidade, Publicidade, Digital, Social e Multimídia"],
+    en: ["Branding, Identity, Advertising, Digital, Social, Multimedia, Vibe Coding and AI Workflows"],
+    pt: ["Branding, Identidade, Publicidade, Digital, Social, Multimídia, Vibe Coding e Workflows com IA"],
   },
   // Intro loader: each word cuts on in turn; a word starting with * shows in blue. Add loaderBig: { en, pt } to end on one big word.
   loader: {
