@@ -248,9 +248,6 @@ window.SITE = {
         { chapter: { en: "04 · Process", pt: "04 · Processo" }, kicker: { en: "Storyboard", pt: "Storyboard" },
           head: { en: "Six scenes, from Pelé to the *end card.*", pt: "Seis cenas, de Pelé ao *end card.*" } },
         { src: "images/warriors/storyboard.jpg", ar: "2000/1116", col: 1, span: 12, caption: { en: "Storyboard", pt: "Storyboard" } },
-        { chapter: { en: "Results", pt: "Resultados" }, kicker: { en: "Numbers · awards · press", pt: "Números · prêmios · imprensa" },
-          head: { en: "What it delivered", pt: "O que gerou" } },
-        { todo: { en: "results: reach, numbers, awards or press, if any", pt: "resultados: alcance, números, prêmios ou imprensa, se houver" }, col: 1, span: 12 },
       ],
     },
     {
