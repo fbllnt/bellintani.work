@@ -228,13 +228,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .word-big{margin:0;font:400 clamp(72px,15vw,250px)/.9 "Didot","Bodoni 72",Georgia,serif;overflow-wrap:anywhere}
 .word-entry{margin:0;display:grid;gap:6px;padding-top:12px;border-top:1px solid var(--line);font:400 clamp(15px,1.25vw,18px)/1.5 var(--mono)}
 .word-entry .mono{color:var(--blue)}
-/* Marquee: a row of pieces sliding sideways at their own proportions (never cropped); pauses on hover */
-.marquee{overflow:hidden;max-width:100%;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-.marquee-track{--g:var(--cg,16px);display:flex;gap:var(--g);width:max-content;animation:slide 40s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee-track img{display:block;flex:none;height:clamp(240px,30vw,420px);width:auto}
-@keyframes slide{to{transform:translateX(calc(-50% - var(--g) / 2))}}
-@media (prefers-reduced-motion:reduce){ .marquee{overflow-x:auto} .marquee-track{animation:none} }
+/* Marquee (social carousel): the pieces stand still in a wrapping grid, each one whole at its own proportion */
+.marquee-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:var(--cg,16px)}
+.marquee-track img{display:block;width:100%;height:auto}
 .ltext{margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .case-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;padding-block:clamp(60px,9vw,140px)}
 .body{font:400 clamp(15px,1.25vw,18px)/1.6 var(--mono);letter-spacing:-.01em;max-width:62ch;margin:0}
