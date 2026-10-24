@@ -210,7 +210,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fig.cover-fig .ph > img{position:static;display:block;width:100%;height:auto;transform:none}
 /* Loose gallery: 12-column grid, each item places itself; rows follow content */
 /* Rows sit --rg apart; items marked `tight` (same content as the row above, e.g. a set of films) sit --cg apart */
-.loose{--cg:clamp(12px,1.6vw,24px);--rg:clamp(20px,2.4vw,36px);--pull:calc(var(--cg) - var(--rg));display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--cg);row-gap:var(--rg);align-items:start}
+.loose{--cg:clamp(12px,1.6vw,24px);--rg:clamp(12px,1.6vw,24px);--pull:calc(var(--cg) - var(--rg));display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--cg);row-gap:var(--rg);align-items:start}
 .loose > *{grid-column:var(--col) / span var(--span);margin-top:calc(var(--shift) + var(--tight,0) * var(--pull));left:var(--nudge,0px);will-change:translate}
 /* Overlap: a negative shift pulls an item up over the one before it. Later items sit on top;
    captions sit above each image as a label and video controls move to the top, so the covered
@@ -222,10 +222,15 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loose .vctl{top:10px;bottom:auto}
 .loose .spin-ui{top:12px;bottom:auto}
 /* Chapter: numbered opener for a part of the story (label line, headline, short text) */
-.chap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px 20px;padding-top:12px;border-top:1px solid var(--fg);margin-top:calc(var(--shift) + clamp(20px,4vw,72px))}
+.chap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px 20px;padding-top:14px;border-top:2px solid var(--fg);margin-top:calc(var(--shift) + clamp(48px,7vw,120px));margin-bottom:clamp(4px,1vw,16px)}
 .chap-k{grid-column:1;grid-row:1 / span 2;margin:0;display:flex;flex-direction:column;gap:4px}
 .chap-h{grid-column:2;margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .chap .body{grid-column:2}
+/* Missing material: dashed box (or chip in the meta) that Felipe fills in later */
+.todo{display:grid;place-items:center;min-height:clamp(90px,10vw,150px);aspect-ratio:var(--ar,auto);border:1.5px dashed var(--mute);padding:16px;text-align:center;color:var(--mute)}
+.todo p{margin:0;max-width:48ch}
+.todo b,.todo-chip{color:var(--blue);font-weight:400}
+.todo-chip{display:inline-block;padding:2px 8px;border:1.5px dashed currentColor}
 .chap-h em{font-style:normal;color:var(--blue)}
 .pills{grid-column:2;list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .pills li{padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--mute)}
@@ -238,14 +243,14 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .swap-ba .new{color:var(--blue)}
 /* A word set large with a dictionary-style entry */
 .word-def{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;align-items:end}
-.word-big{margin:0;font:400 clamp(72px,15vw,250px)/.9 "Didot","Bodoni 72",Georgia,serif;overflow-wrap:anywhere}
+.word-big{margin:0;font:400 min(clamp(72px,15vw,250px),calc(64vw / var(--n,4)))/.9 "Didot","Bodoni 72",Georgia,serif;overflow-wrap:anywhere}
 .word-entry{margin:0;display:grid;gap:6px;padding-top:12px;border-top:1px solid var(--line);font:400 clamp(15px,1.25vw,18px)/1.5 var(--mono)}
 .word-entry .mono{color:var(--blue)}
 /* Marquee (social carousel): the pieces stand still in a wrapping grid, each one whole at its own proportion */
 .marquee-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:var(--cg,16px)}
 .marquee-track img{display:block;width:100%;height:auto}
 .ltext{margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
-.case-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;padding-block:clamp(60px,9vw,140px)}
+.case-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;padding-block:clamp(36px,5vw,80px)}
 .body{font:400 clamp(15px,1.25vw,18px)/1.6 var(--mono);letter-spacing:-.01em;max-width:62ch;margin:0}
 .case-gallery{display:grid;gap:clamp(12px,1.6vw,20px)}
 [class^="row-"]{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:clamp(12px,1.6vw,20px);align-items:start}
@@ -261,11 +266,12 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 
 @media (max-width:760px){
   .case-about{grid-template-columns:1fr}
-  .loose > .chap{grid-template-columns:1fr;margin-top:24px}
+  .loose > .chap{grid-template-columns:1fr;margin-top:48px}
   .chap-k,.chap-h,.chap .body,.pills{grid-column:1;grid-row:auto}
   .word-def,.swap-ba p{grid-template-columns:1fr;gap:6px}
+  .word-big{font-size:min(28vw,calc(150vw / var(--n,4)))}
   .row-half{grid-template-columns:1fr}
-  .loose{--rg:20px;--cg:10px;--pull:-10px}
+  .loose{--rg:10px;--cg:10px;--pull:0px}
   .loose > *{grid-column:var(--mcol) / span var(--mspan);margin-top:calc(var(--tight,0) * var(--pull));left:0}
   .loose .fig figcaption{order:0;margin:8px 0 0;padding:0}
   .row-third,.row-quarter{grid-template-columns:1fr 1fr}

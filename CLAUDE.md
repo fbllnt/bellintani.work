@@ -43,6 +43,18 @@ images that prove the text. Extra blocks: `swap` (before → after names), `word
 ({ bg, fg, mute, line, panel, accent }) to use its brand colours instead of the white page, when it makes sense.
 Never invent facts for the text: ask Felipe.
 
+Each project sets `type` (see `types` in content.js) and follows that kind's chapter pattern:
+- branding: 01 Intro · Desafio · Naming/Símbolo · Sistema (cor, tipo) · Posicionamento/Estratégia · Identidade aplicada
+- campaign (campanha/publicidade): 01 Ideia · Ativação/Key visual · Peças (rua, digital, social) · Filmes · Resultados
+- motion (filme/TV): 01 Ideia · Filme · Frames · Processo
+Spacing: images inside a section sit close together (`--rg` = `--cg`); chapters open with a big gap and a 2px rule,
+so sections read as clearly separate blocks.
+
+Missing material (Felipe, Oct 24 2026): when a project lacks something its pattern calls for (an image, a fact, a
+section), put a visible placeholder instead of skipping it: a gallery item `{ todo: { en, pt }, ar?, col, span }`
+(dashed box "Falta …") or `"?"` as a meta value (year, role…). Felipe finds and sends the material. If something
+in a project doesn't fit, flag it to him so you decide together; never remove it silently.
+
 ## Domain
 
 DNS at Namecheap: A `@` → 75.2.60.5, CNAME `www` → fbllnt.netlify.app.
