@@ -305,7 +305,7 @@ window.SITE = {
       ],
     },
     {
-      title: "XP",
+      title: "XP Investments",
       client: "XP Investimentos",
       scope: { en: "Sponsorship identity // Campaign", pt: "Identidade de patrocínio // Campanha" },
       image: "images/xp/lockup.jpg",
@@ -317,6 +317,9 @@ window.SITE = {
       },
       layout: "loose",
       gallery: [
+        { src: "images/xp/design-01.jpg", ar: "16/9", col: 1, span: 12 },
+        { src: "images/xp/design-02.jpg", ar: "16/9", col: 1, span: 12 },
+        { src: "images/xp/design-03.jpg", ar: "16/9", col: 1, span: 12 },
         { text: { en: "Turning a volleyball player into the voice of the LGBTQIA+ community in sport: XP invests.", pt: "Se transforma um jogador de vôlei na voz da comunidade LGBTQIA+ no esporte, a XP investe." }, col: 1, span: 10 },
         { src: "images/xp/volei-01.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Story frames", pt: "Quadros da história" } },
         { src: "images/xp/volei-02.jpg", ar: "16/9", col: 7, span: 6, shift: "1.6em" },
