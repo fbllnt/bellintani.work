@@ -21,6 +21,15 @@ Netlify to https://bellintani.work about a minute after each push.
   (PNG or SVG, trimmed). Check each upload and correct off-blacks such as #231F20 before adding it.
 - Typefaces: Figtree (display) and JetBrains Mono (small copy / body). White page, black type, blue accents.
 
+## Images: never crop (Felipe, Oct 24 2026)
+
+- Never cut any part of an image, anywhere on the site (galleries, home cards, sequences, photo tiles,
+  thumbnails, full screen; desktop and phone). Use `object-fit: contain`, never `cover`, and no zoom-in
+  (`scale` > 1) or parallax shift of an image inside its frame.
+- Gallery images get breathing room: they sit inside their frame with the `--breathe` margin on the grey panel.
+- Exception: the cover at the top of each project page runs edge to edge (full width, no side margin), with its
+  height following the image's own proportion, so it is not cut either.
+
 ## Domain
 
 DNS at Namecheap: A `@` → 75.2.60.5, CNAME `www` → fbllnt.netlify.app.

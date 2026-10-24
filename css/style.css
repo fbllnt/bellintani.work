@@ -1,7 +1,7 @@
 /* Bellintani portfolio
    White page, black type, blue interventions. Intro sequence, then corner navigation over a minimal index. */
 :root{
-  --bg:#fff; --fg:#0a0a0a; --mute:#8e8e8e; --line:#e2e2e2; --panel:#e9e9e9; --blue:#1a2bff;
+  --bg:#fff; --fg:#0a0a0a; --mute:#8e8e8e; --line:#e2e2e2; --panel:#e9e9e9; --breathe:clamp(10px,2.2vw,32px); --blue:#1a2bff;
   --sans:"Figtree","Helvetica Neue",Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   --ease:cubic-bezier(.11,.82,.39,.92);
@@ -122,7 +122,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .works.as-grid .index{display:none}
 .card{display:grid;gap:10px;text-decoration:none;min-width:0}
 .card .ph{aspect-ratio:4/3;max-width:100%;position:relative;overflow:hidden;background:var(--panel)}
-.card .ph > *{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.2s var(--ease)}
+.card .ph > *{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain;transform:scale(.96);transition:transform 1.2s var(--ease)}
+.card .ph > .art{inset:0;width:100%;height:100%}
 .card:hover .ph > *{transform:scale(1)}
 .card .row{display:flex;justify-content:space-between;gap:10px}
 .card .row b{font:900 26px/.9 var(--sans);letter-spacing:-.045em;text-transform:uppercase}
@@ -166,10 +167,11 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-meta dd{margin:0;font-weight:400}
 .fig{margin:0}
 .fig .ph{position:relative;overflow:hidden;background:var(--panel)}
-.fig .ph > :is(img,video,.art){position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.1);transition:transform 1.4s var(--ease)}
+.fig .ph > :is(img,video,.art){position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain;transform:scale(.97);transition:transform 1.4s var(--ease)}
+.fig .ph > .art{inset:0;width:100%;height:100%}
 .fig.in .ph > :is(img,video,.art){transform:none}
 .fig video{cursor:pointer;background:var(--fg)}
-.fig .ph > canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;cursor:grab;touch-action:pan-y}
+.fig .ph > canvas{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain;background:#000;cursor:grab;touch-action:pan-y}
 .fig .ph > canvas.grabbing{cursor:grabbing}
 .spin-ui{position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-between;gap:12px;color:#fff;pointer-events:none;font:400 11px/1 var(--mono);text-transform:uppercase}
 .spin-deg{font-variant-numeric:tabular-nums}
@@ -186,8 +188,10 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fig.full{--ar:16/9}
 .fig.half{--ar:4/5}
 .fig.third,.fig.quarter{--ar:3/4}
-.cover-fig{margin-top:clamp(20px,3vw,36px)}
-.cover-fig.bleed{margin-left:calc(-1 * var(--side-l));margin-right:calc(-1 * var(--side-r))}
+/* Project cover: edge to edge, height follows the image, nothing cut */
+.cover-fig{margin-top:clamp(20px,3vw,36px);margin-left:calc(-1 * var(--side-l));margin-right:calc(-1 * var(--side-r))}
+.cover-fig .ph:has(> img){aspect-ratio:auto;background:none}
+.fig.cover-fig .ph > img{position:static;display:block;width:100%;height:auto;transform:none}
 /* Loose gallery: 12-column grid, each item places itself; rows follow content */
 /* Rows sit --rg apart; items marked `tight` (same content as the row above, e.g. a set of films) sit --cg apart */
 .loose{--cg:clamp(12px,1.6vw,24px);--rg:clamp(36px,5vw,80px);--pull:calc(var(--cg) - var(--rg));display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--cg);row-gap:var(--rg);align-items:start}
@@ -304,7 +308,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .scrub-stick{position:sticky;top:64px;display:flex;flex-direction:column;width:min(100%,calc((100svh - 220px) * 16 / 9));margin:0 auto}
 .loose .scrub-stick figcaption{align-self:flex-start;margin:0 0 6px;padding:3px 8px 3px 0;background:var(--bg)}
 .scrub .ph{aspect-ratio:var(--ar,16/9);position:relative;overflow:hidden;background:#111}
-.scrub .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .25s}
+.scrub .ph img{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain;opacity:0;transition:opacity .25s}
 .scrub .ph img.on{opacity:1}
 .scrub-ui{display:flex;align-items:center;gap:14px;margin-top:10px}
 .scrub-bar{flex:1;height:1px;background:var(--line);position:relative}
@@ -361,8 +365,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .mosaic::after{content:"";flex:999 1 0}
 .ph-tile{all:unset;box-sizing:border-box;position:relative;flex:var(--ar) 1 calc(var(--ar) * clamp(110px,17vw,250px));aspect-ratio:var(--ar);overflow:hidden;cursor:pointer;background:var(--panel)}
 .ph-tile[hidden]{display:none}
-.ph-tile img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
-.ph-tile:hover img,.ph-tile:focus-visible img{transform:scale(1.04)}
+.ph-tile img{width:100%;height:100%;object-fit:contain;transition:transform .8s var(--ease)}
+.ph-tile:hover img,.ph-tile:focus-visible img{transform:scale(.97)}
 .ph-tile span{position:absolute;left:8px;bottom:8px;padding:3px 6px;background:var(--bg);font-size:11px;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .35s var(--ease)}
 .ph-tile:hover span,.ph-tile:focus-visible span{opacity:1;transform:none}
 .ph-tile:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
@@ -384,7 +388,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @media (prefers-reduced-motion:reduce){ .photo-view[open]{animation:none} .ph-tile img{transition:none} }
 
 /* Content motion: frames rise tilted in 3D and flatten as they enter (scroll-linked), photos drift inside them, text lines rise */
-.case.motion .case-gallery .fig .ph > img{scale:1.1;will-change:translate}
 .case.motion .case-gallery .fig .ph{transform-origin:50% 100%;will-change:transform,opacity}
 .case.motion .ltext{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform 1.2s var(--ease)}
 .case.motion .ltext.in{opacity:1;transform:none}
@@ -408,7 +411,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .flip-thumbs button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
 .flip-thumbs button[aria-pressed="true"]::after{transform:none}
 .flip-thumbs button:focus-visible{outline:2px solid var(--blue)}
-.flip-thumbs img{width:100%;height:100%;object-fit:cover}
+.flip-thumbs img{width:100%;height:100%;object-fit:contain}
 /* The large image and its thumbnails fit on one screen together */
 .loose > .flip{width:min(100%,calc((100svh - 150px) / .7));justify-self:center}
 .strip .vctl{flex-direction:column;align-items:flex-start}

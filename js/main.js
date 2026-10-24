@@ -538,11 +538,11 @@
 
   // Content motion (after unifiersofjapan.framer.website): as a frame comes up from the bottom of the screen
   // it rises tilted back in 3D and flattens into place, tied to the scroll (it reverses going back up).
-  // Photos then drift a little inside their frames (parallax). Set `motion: false` on a project to turn it off.
+  // Images stay whole inside their frames (never scaled up or shifted). Set `motion: false` on a project to turn it off.
   let motionFigs = [], motionRaf = 0;
   const motion = () => {
     motionRaf = 0;
-    const H = innerHeight, mid = H / 2;
+    const H = innerHeight;
     motionFigs.forEach((f, i) => {
       const r = f.getBoundingClientRect();
       if (r.bottom < -50 || r.top > H + 50) return;
@@ -553,8 +553,6 @@
         ph.style.transform = k > .001 ? `perspective(1200px) translateY(${(k * 160).toFixed(1)}px) rotateX(${(k * 24).toFixed(2)}deg) rotate(${(k * 4 * side).toFixed(2)}deg) scale(${(1 - k * .08).toFixed(3)})` : "";
         ph.style.opacity = (.25 + .75 * e).toFixed(3);
       }
-      const img = f.querySelector(".ph > img");
-      if (img) img.style.translate = `0 ${((r.top + r.height / 2 - mid) / H * -5).toFixed(2)}%`;
     });
   };
   const queueMotion = () => { if (motionFigs.length && !motionRaf) motionRaf = requestAnimationFrame(motion); };
