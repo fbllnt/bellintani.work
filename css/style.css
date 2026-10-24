@@ -249,7 +249,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Missing material: dashed box (or chip in the meta) that Felipe fills in later */
 .todo{display:grid;place-items:center;min-height:clamp(90px,10vw,150px);aspect-ratio:var(--ar,auto);border:1.5px dashed var(--mute);padding:16px;text-align:center;color:var(--mute)}
 .todo p{margin:0;max-width:48ch}
-.todo b,.todo-chip{color:var(--blue);font-weight:400}
+.todo b,.ai-tool{color:var(--blue)}
+.ai-tool sup{font-size:.7em;margin-left:2px;vertical-align:super}
+.todo-chip{color:var(--blue);font-weight:400}
 .todo-chip{display:inline-block;padding:2px 8px;border:1.5px dashed currentColor}
 .chap-h em{font-style:normal;color:var(--blue)}
 .pills{grid-column:2;list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}

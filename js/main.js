@@ -453,14 +453,15 @@
   function renderCase(i) {
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length];
     applyTheme(p.theme);
-    const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("type"), p.type && S.types ? L(S.types[p.type]) : ""], [T("before"), L(p.before)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)], [T("tools"), L(p.tools)], [T("ai"), L(p.ai)]].filter(([, v]) => v);
+    const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("type"), p.type && S.types ? L(S.types[p.type]) : ""], [T("before"), L(p.before)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)], [T("tools"), Array.isArray(p.tools) ? p.tools : L(p.tools)]].filter(([, v]) => v);
     let n = 0;
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
       <div class="case-top mono"><a class="swap" href="#work"><span>${esc(T("allWork"))}</span><span>${esc(T("allWork"))}</span></a><span>(${String(i + 1).padStart(2, "0")} / ${String(S.projects.length).padStart(2, "0")})</span></div>
       <h1 class="case-title" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
       ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
-      <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>` : esc(v)}</dd></div>`).join("")}${
+      <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>`
+        : Array.isArray(v) ? v.map(t => t[0] === "*" ? `<span class="ai-tool">${esc(t.slice(1))}<sup>${esc(T("aiMark"))}</sup></span>` : esc(t)).join(", ") : esc(v)}</dd></div>`).join("")}${
         p.link ? `<div class="live"><dt>${esc(T("live"))}</dt><dd><a class="swap" href="${esc(p.link.url)}" target="_blank" rel="noopener"><span>${esc(p.link.label)} ↗</span><span>${esc(p.link.label)} ↗</span></a></dd></div>` : ""}</dl>
       ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}</div></figure>`}
       <section class="case-about">
