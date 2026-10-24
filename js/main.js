@@ -77,7 +77,7 @@
   // ---------- Work: index + grid ----------
   const index = $("index"), grid = $("grid");
   index.innerHTML = S.projects.map((p, i) => `<li><a href="${href(p)}" data-i="${i}">
-    <span class="bar" aria-hidden="true"${p.barFocus ? ` style="--fp:${esc(p.barFocus)}"` : ""}>${p.barImage ? `<img src="${esc(p.barImage)}" alt="" loading="lazy">` : cover(i, p)}</span><span class="mono">(${i + 1})</span><span class="t">${esc(L(p.title))}</span><span class="k mono">${esc(L(p.scope))}${p.year ? ` — ${esc(p.year)}` : ""}${tagFor(p)}</span></a></li>`).join("");
+    <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t">${esc(L(p.title))}</span><span class="k mono">${esc(L(p.scope))}${p.year ? ` — ${esc(p.year)}` : ""}${tagFor(p)}</span></a></li>`).join("");
   grid.innerHTML = S.projects.map((p, i) => `<a class="card" href="${href(p)}"><div class="ph">${cover(i, p)}</div>
     <div class="row"><b>${esc(L(p.title))}</b><span class="mono">(${i + 1})</span></div>
     <span class="mono muted">${esc(L(p.scope))}${p.year ? ` — ${esc(p.year)}` : ""}${tagFor(p)}</span></a>`).join("");
