@@ -239,19 +239,31 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .logos li{background:var(--bg)}
 .logos li[hidden]{display:none}
 .logo{all:unset;box-sizing:border-box;position:relative;display:grid;place-items:center;width:100%;aspect-ratio:1;cursor:pointer;overflow:hidden;color:#000;background:#fff}
-.logo::before{content:"";position:absolute;inset:0;background:var(--lb);clip-path:inset(100% 0 0 0);transition:clip-path .45s var(--ease)}
-.logo:hover::before,.logo:focus-visible::before{clip-path:inset(0)}
-.logo:hover,.logo:focus-visible{color:var(--li)}
+/* Hover: --f (0 to 1) floods the tile from the bottom with the brand colour and --s zooms the mark.
+   The mark's ink is split at the flood line, black above and the brand ink below, so it never turns
+   grey, or white on white, mid-way. The cursor reads --f too. */
+@property --f{syntax:"<number>";inherits:true;initial-value:0}
+@property --s{syntax:"<number>";inherits:true;initial-value:1}
+.logo{--f:0;--s:1;transition:--f .45s var(--ease),--s .5s var(--ease)}
+.logo:focus-visible{--f:1;color:var(--li)}
+/* Mouse only, so a tapped tile on a phone doesn't stay flooded after the close-up shuts */
+@media (hover:hover){
+  .logo:hover{--f:1;color:var(--li)}
+  .logos.in .logo:hover{--s:1.06;transition:--f .45s var(--ease),--s .6s var(--spring)}
+}
+.logo::before{content:"";position:absolute;inset:0;background:var(--lb);clip-path:inset(calc((1 - var(--f)) * 100%) 0 0 0)}
 .logo:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
 .logo > *{position:relative;transition:color .3s var(--ease)}
 .mark{display:block;width:calc(var(--mw,.62) * 100%);aspect-ratio:var(--ar,1.6);background:currentColor;-webkit-mask:no-repeat center / contain;mask:no-repeat center / contain}
+.logos .mark:not(.type){--h:calc(var(--mw,.62) / var(--ar,1.6) * var(--s));--cut:calc(50% + (.5 - var(--f)) / var(--h) * 100%);background:linear-gradient(#000 var(--cut),var(--li) var(--cut));scale:var(--s)}
 .mark.type{background:none;width:auto;aspect-ratio:auto;font:800 clamp(18px,2.2vw,30px)/1 var(--sans);letter-spacing:-.04em;text-align:center}
 .logo .n{position:absolute;top:10px;left:12px;font-size:11px;opacity:.5}
-.logos.in .logo:hover .mark{transform:scale(1.06);transition:transform .6s var(--spring),color .3s}
-/* Tiles rise in a quick stagger the first time the wall is on screen */
-.logos li > .logo > *{transition-property:color,opacity,transform}
-.logos .mark{opacity:0;transform:translateY(14px)}
-.logos.in .mark{opacity:1;transform:none;transition:opacity .5s calc(var(--k) * 25ms),transform .7s var(--ease) calc(var(--k) * 25ms),color .3s}
+/* Tiles rise in a quick stagger the first time the wall is on screen (translate, delayed per tile);
+   the hover zoom runs on --s with no delay, so leaving a tile never waits on the entrance stagger */
+.logos li > .logo > *{transition-property:color,opacity,translate}
+.logos .mark{opacity:0;translate:0 14px}
+.logos.in .mark{opacity:1;translate:none;transition:opacity .5s calc(var(--k) * 25ms),translate .7s var(--ease) calc(var(--k) * 25ms),color .3s}
+.logos.in .mark.type{scale:var(--s)}
 
 /* Close-up: the logo full screen on its own colour */
 .logo-view{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;padding:16px max(16px,3vw);background:var(--lb);color:var(--li);display:none;grid-template-rows:auto 1fr auto auto;gap:16px;touch-action:pan-y}
@@ -271,8 +283,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .logos{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (prefers-reduced-motion:reduce){
-  .logos .mark{opacity:1;transform:none}
-  .logo::before{transition:none}
+  .logos .mark{opacity:1;translate:none}
 }
 
 /* ---------- Scroll-played sequence ---------- */

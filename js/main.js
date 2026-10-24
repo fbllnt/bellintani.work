@@ -670,7 +670,9 @@
   // A chain of points, each easing toward the one ahead, drawn as one solid band as wide as the ball.
   // It stretches behind fast moves and pulls back into the ball when the mouse stops.
   // Mouse and trackpad only; touch screens and reduced motion keep the normal pointer.
-  // Over links and buttons the ball grows; on blue (logo tiles, the close-up) it turns white.
+  // Over links and buttons the ball grows; on blue (the close-up, or the part of a logo tile the flood has
+  // covered) it turns white. On a tile the trail is painted white only inside the flooded part, so neither
+  // the ball nor the trail turns white over white while the flood is still rising or falling.
   const ball = document.createElement("div"), trail = document.createElement("canvas");
   const cursorOn = matchMedia("(hover: hover) and (pointer: fine)").matches && !reduced;
   let onBlue = false;
@@ -682,10 +684,22 @@
     cursorTo(document.body);
     const ctx = trail.getContext("2d"), N = 40, EASE = .72, W = 18;
     const ptr = { x: -100, y: -100 }, chain = Array.from({ length: N }, () => ({ x: -100, y: -100 }));
-    let raf = 0, dpr = 1, white = false;
+    let raf = 0, dpr = 1, tiles = [], hover = null;
     const size = () => { dpr = Math.min(2, devicePixelRatio || 1); trail.width = innerWidth * dpr; trail.height = innerHeight * dpr; };
     size(); addEventListener("resize", size);
     const blue = getComputedStyle(document.documentElement).getPropertyValue("--blue").trim() || "#1a2bff";
+    // The flooded part of a logo tile, from its --f (0 bare to 1 full, mid-transition too); null when bare
+    const flood = tile => {
+      const f = Math.min(1, parseFloat(getComputedStyle(tile).getPropertyValue("--f")) || 0);
+      if (f <= 0 || !tile.isConnected) return null;
+      const r = tile.getBoundingClientRect();
+      return { x: r.left, y: r.bottom - r.height * f, w: r.width, h: r.height * f, done: f === 1 };
+    };
+    const stroke = color => {
+      ctx.strokeStyle = color; ctx.beginPath(); ctx.moveTo(ptr.x, ptr.y);
+      chain.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.stroke();
+    };
     const draw = () => {
       let moving = false;
       chain.forEach((p, i) => {
@@ -695,11 +709,16 @@
       });
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, innerWidth, innerHeight);
-      ctx.lineCap = ctx.lineJoin = "round"; ctx.lineWidth = W; ctx.strokeStyle = white ? "#fff" : blue;
-      ctx.beginPath(); ctx.moveTo(ptr.x, ptr.y);
-      chain.forEach(p => ctx.lineTo(p.x, p.y));
-      ctx.stroke();
-      raf = moving ? requestAnimationFrame(draw) : 0;
+      ctx.lineCap = ctx.lineJoin = "round"; ctx.lineWidth = W;
+      const floods = tiles.map(flood), hf = floods[tiles.indexOf(hover)];
+      tiles = tiles.filter((t, i) => t === hover || floods[i]);
+      const zones = onBlue ? [{ x: 0, y: 0, w: innerWidth, h: innerHeight, done: true }] : floods.filter(Boolean);
+      stroke(blue);
+      zones.forEach(z => { ctx.save(); ctx.beginPath(); ctx.rect(z.x, z.y, z.w, z.h); ctx.clip(); stroke("#fff"); ctx.restore(); });
+      ball.classList.toggle("white", zones.some(z => ptr.x >= z.x && ptr.x <= z.x + z.w && ptr.y >= z.y && ptr.y <= z.y + z.h));
+      // Keep drawing while a flood is still moving, even when the mouse is still
+      const settling = !onBlue && (zones.some(z => !z.done) || !!hover && !(hf && hf.done));
+      raf = moving || settling ? requestAnimationFrame(draw) : 0;
     };
     addEventListener("pointermove", e => {
       if (e.pointerType !== "mouse") return;
@@ -707,8 +726,8 @@
       ptr.x = e.clientX; ptr.y = e.clientY;
       ball.style.translate = `${ptr.x}px ${ptr.y}px`;
       ball.classList.add("on");
-      white = onBlue || !!e.target.closest(".logo");
-      ball.classList.toggle("white", white);
+      hover = onBlue ? null : e.target.closest(".logo");
+      if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       ball.classList.toggle("big", !!e.target.closest("a, button, [role=slider], video"));
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
