@@ -159,7 +159,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-title .sp{width:.22em}
 .case-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:16px 20px;margin:clamp(28px,4vw,56px) 0 0;padding-top:14px;border-top:1px solid var(--fg)}
 .case-meta div{min-width:0}
-.case-meta .live{grid-column:span 2}
+.case-meta .live,.case-meta .wide{grid-column:span 2}
+.case-tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:clamp(20px,2.4vw,32px) 0 0;padding:0;color:var(--blue)}
 .case-meta .live .swap{max-width:100%}
 .case-meta dt{color:var(--mute);margin-bottom:6px}
 .case-meta dd{margin:0;font-weight:400}
@@ -200,6 +201,11 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loose .fig figcaption{order:-1;align-self:flex-start;margin:0 0 6px;padding:3px 8px 3px 0;background:var(--bg)}
 .loose .vctl{top:10px;bottom:auto}
 .loose .spin-ui{top:12px;bottom:auto}
+/* Chapter: numbered opener for a part of the story (label line, headline, short text) */
+.chap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px 20px;padding-top:12px;border-top:1px solid var(--fg);margin-top:calc(var(--shift) + clamp(20px,4vw,72px))}
+.chap-k{grid-column:1;grid-row:1 / span 2;margin:0;display:flex;flex-direction:column;gap:4px}
+.chap-h{grid-column:2;margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
+.chap .body{grid-column:2}
 .ltext{margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .case-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;padding-block:clamp(60px,9vw,140px)}
 .body{font:400 clamp(15px,1.25vw,18px)/1.6 var(--mono);letter-spacing:-.01em;max-width:62ch;margin:0}
@@ -217,6 +223,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 
 @media (max-width:760px){
   .case-about{grid-template-columns:1fr}
+  .loose > .chap{grid-template-columns:1fr;margin-top:24px}
+  .chap-k,.chap-h,.chap .body{grid-column:1;grid-row:auto}
   .row-half{grid-template-columns:1fr}
   .loose{--rg:32px;--cg:12px;--pull:-20px}
   .loose > *{grid-column:var(--mcol) / span var(--mspan);margin-top:calc(var(--tight,0) * var(--pull));left:0}
@@ -380,6 +388,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case.motion .case-gallery .fig .ph{transform-origin:50% 100%;will-change:transform,opacity}
 .case.motion .ltext{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform 1.2s var(--ease)}
 .case.motion .ltext.in{opacity:1;transform:none}
+.case.motion .chap{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform 1.2s var(--ease)}
+.case.motion .chap.in{opacity:1;transform:none}
 
 /* Strip: items share one height, widths follow their aspect ratios; on phones it wraps two per row */
 .strip{display:flex;flex-wrap:wrap;gap:var(--cg,16px);align-items:flex-start}
