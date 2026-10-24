@@ -113,6 +113,8 @@ window.SITE = {
 
   // Projects. `placeholder: true` marks example entries until real work replaces them.
   // Add `image: "images/file.jpg"` to use a real cover instead of the generated one.
+  // `barFocus` (CSS object-position, e.g. "50% 20%") picks the slice of it shown in the home list on hover;
+  // `barImage` swaps in another image there when the cover is mostly type.
   // Project page fields (all optional):
   //   client, role, summary: { en, pt }, stats: [["4", { en, pt }]],
   //   gallery: [{ src: "images/x.jpg", size: "full" }, { video: "x.mp4", webm: "x.webm", poster: "x.jpg", size: "half" }, …]
@@ -288,6 +290,7 @@ window.SITE = {
       // White page; the core red is the only accent
       theme: { accent: "#ea1e2a" },
       image: "images/corehi/tote.jpg",
+      barFocus: "50% 82%",
       hero: "bleed",
       heroAr: "16/9",
       summary: {
@@ -345,6 +348,7 @@ window.SITE = {
       // The page wears THURA's own colours: night green, cream type, mint accent
       theme: { bg: "#0c3829", fg: "#f3e6c4", mute: "#a3b5a5", line: "#2c5b48", panel: "#114634", accent: "#09d189" },
       image: "images/thura/cover.jpg",
+      barFocus: "50% 16%",
       hero: "bleed",
       heroAr: "2400/1350",
       summary: {
@@ -415,6 +419,7 @@ window.SITE = {
       tags: { en: ["TVOpening", "StyleFrames", "Motion"], pt: ["AberturaDeTV", "StyleFrames", "Motion"] },
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#ffffff" },
       image: "images/cinema-especial/cover.jpg",
+      barFocus: "50% 68%",
       summary: {
         en: "Opening for Cinema Especial, Globo's movie slot. Ink spreads over old film stock, the featured film's hero surfaces from the stains, and the title lands before the Globo mark closes. Style frames shown with The Amazing Spider-Man as the featured film.",
         pt: "Abertura do Cinema Especial, a faixa de filmes da Globo. A tinta se espalha sobre película antiga, o herói do filme da noite surge das manchas e o título entra antes da marca Globo fechar. Style frames com O Espetacular Homem-Aranha como filme em destaque.",
@@ -513,6 +518,8 @@ window.SITE = {
       // Black page, white type, XP yellow accent
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#fec142" },
       image: "images/xp/lockup.jpg",
+      barImage: "images/xp/stadium.jpg",
+      barFocus: "50% 16%",
       hero: "bleed",
       heroAr: "16/9",
       summary: {
