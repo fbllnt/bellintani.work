@@ -536,25 +536,29 @@
     });
   }
 
-  // Scroll drift: items with data-speed move a little relative to the page, centred on the viewport
-  let driftEls = [], driftRaf = 0;
-  const phone = matchMedia("(max-width: 760px)");
-  const drift = () => {
-    driftRaf = 0;
-    // Phones get a clean single column: no drift, so nothing slides over a caption
-    if (phone.matches) { driftEls.forEach(el => { el.style.translate = ""; }); return; }
-    const vh = innerHeight;
-    driftEls.forEach(el => {
-      const r = el.getBoundingClientRect();
-      if (r.bottom < -200 || r.top > vh + 200) return;
-      const off = (r.top + r.height / 2 - vh / 2) * +el.dataset.speed;
-      el.style.translate = `0 ${off.toFixed(1)}px`;
+  // No overlaps: nothing may hide part of an image, so items no longer drift on scroll, and an item that a
+  // negative shift pulls over an earlier one is pushed down until it clears it (a column gap apart).
+  let unstackRaf = 0;
+  const unstack = () => {
+    unstackRaf = 0;
+    caseEl.querySelectorAll(".loose").forEach(g => {
+      const items = [...g.children], gap = parseFloat(getComputedStyle(g).columnGap) || 12;
+      items.forEach(el => { el.style.marginTop = ""; });
+      items.forEach((el, i) => {
+        const r = el.getBoundingClientRect();
+        if (!r.height) return;
+        let push = 0;
+        for (let j = 0; j < i; j++) {
+          const o = items[j].getBoundingClientRect();
+          if (o.height && Math.min(r.right, o.right) - Math.max(r.left, o.left) > 1 && r.bottom > o.top) push = Math.max(push, o.bottom + gap - r.top);
+        }
+        if (push > .5) el.style.marginTop = `${(parseFloat(getComputedStyle(el).marginTop) + push).toFixed(1)}px`;
+      });
     });
   };
-  const queueDrift = () => { if (!driftRaf) driftRaf = requestAnimationFrame(drift); };
-  addEventListener("scroll", queueDrift, { passive: true });
-  addEventListener("resize", queueDrift);
-  function setupDrift() { driftEls = [...caseEl.querySelectorAll("[data-speed]")]; queueDrift(); }
+  const queueUnstack = () => { if (!unstackRaf) unstackRaf = requestAnimationFrame(unstack); };
+  addEventListener("resize", queueUnstack);
+  function setupDrift() { queueUnstack(); document.fonts && document.fonts.ready.then(queueUnstack); }
 
   // Content motion (after unifiersofjapan.framer.website): as a frame comes up from the bottom of the screen
   // it rises tilted back in 3D and flattens into place, tied to the scroll (it reverses going back up).
