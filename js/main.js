@@ -82,6 +82,24 @@
     <div class="row"><b>${esc(L(p.title))}</b><span class="mono">(${i + 1})</span></div>
     <span class="mono muted">${esc(L(p.scope))}${p.year ? ` — ${esc(p.year)}` : ""}${tagFor(p)}</span></a>`).join("");
 
+  // Spotlight: on devices with a mouse, hovering a project in the list fills the screen with its cover
+  // and the list, heading and corner menu turn white with a difference blend so they invert over it.
+  if (matchMedia("(hover:hover) and (pointer:fine)").matches) {
+    const spot = document.createElement("div");
+    spot.className = "spot"; spot.setAttribute("aria-hidden", "true");
+    spot.innerHTML = S.projects.map((p, i) => cover(i, p)).join("");
+    $("work").prepend(spot);
+    const layers = [...spot.children];
+    const light = i => { layers.forEach((l, j) => l.classList.toggle("on", j === i)); document.body.classList.toggle("spotlit", i >= 0); };
+    index.querySelectorAll("a").forEach(a => {
+      a.addEventListener("mouseenter", () => light(+a.dataset.i));
+      a.addEventListener("focus", () => light(+a.dataset.i));
+      a.addEventListener("click", () => light(-1));
+    });
+    index.addEventListener("mouseleave", () => light(-1));
+    index.addEventListener("focusout", e => { if (!index.contains(e.relatedTarget)) light(-1); });
+  }
+
   const works = document.querySelector(".works"), vIndex = $("view-index"), vGrid = $("view-grid");
   const setView = asGrid => {
     works.classList.toggle("as-grid", asGrid);
