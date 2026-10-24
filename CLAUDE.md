@@ -35,7 +35,7 @@ Netlify to https://bellintani.work about a minute after each push.
 ## Project page template (agreed with Felipe, Oct 24 2026)
 
 Project pages follow the THURA case (SCRV.ag format, reference artifact https://claude.ai/artifact/KSPS6ZoiADyGuixJDJoSt6):
-`tags` (hashtags), meta with `before` (if a rebrand) / `sector` / `deliverables`, edge-to-edge cover, then numbered
+`tags` (hashtags), meta with `before` (if a rebrand) / `sector` / `deliverables` / `tools` (Ferramentas) / `ai` (IA no processo: whether and where AI was used), edge-to-edge cover, then numbered
 chapters (`01 · Intro`, `Desafio`, `Naming`, `Posicionamento`, `Estratégia`, `Identidade aplicada`), each a `chapter`
 item with kicker, big headline (`*words*` in the accent colour), short text, optional `pills`, followed by captioned
 images that prove the text. Extra blocks: `swap` (before → after names), `word` (big word + dictionary entry),

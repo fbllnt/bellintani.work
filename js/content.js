@@ -89,7 +89,7 @@ window.SITE = {
       work: "Work", services: "Services", letsTalk: "Let's talk",
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
-      client: "Client", year: "Year", scope: "Scope", role: "Role", type: "Type", before: "Before", after: "After", sector: "Sector", deliverables: "Deliverables", live: "Live",
+      client: "Client", year: "Year", scope: "Scope", role: "Role", type: "Type", before: "Before", after: "After", sector: "Sector", deliverables: "Deliverables", tools: "Tools", ai: "AI in the workflow", live: "Live",
       dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓", aboutNav: "About", scrollDown: "Scroll down to see the work", overview: "Overview", camera: "Camera", film: "Film", aboutTitle: "About", skipCredits: "Skip credits →",
       logoHint: "Click the logo to close · ← → to browse", logoHintTouch: "Tap the logo to close · Swipe to browse",
       placeholder: "Placeholder", missing: "Missing", selectedWork: "Selected work",
@@ -101,7 +101,7 @@ window.SITE = {
       work: "Trabalhos", services: "Serviços", letsTalk: "Vamos conversar",
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Visualização",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
-      client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", type: "Tipo", before: "Antes", after: "Depois", sector: "Setor", deliverables: "Entregas", live: "No ar",
+      client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", type: "Tipo", before: "Antes", after: "Depois", sector: "Setor", deliverables: "Entregas", tools: "Ferramentas", ai: "IA no processo", live: "No ar",
       dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓", aboutNav: "Sobre", scrollDown: "Role para ver os trabalhos", overview: "Visão geral", camera: "Câmera", film: "Filme", aboutTitle: "Sobre", skipCredits: "Pular créditos →",
       logoHint: "Clique no logo para fechar · ← → para navegar", logoHintTouch: "Toque no logo para fechar · Deslize para navegar",
       placeholder: "Provisório", missing: "Falta", selectedWork: "Trabalhos selecionados",
@@ -142,6 +142,8 @@ window.SITE = {
       tags: { en: ["Campaign", "Activation", "OOH", "Digital"], pt: ["Campanha", "Ativação", "OOH", "Digital"] },
       // Black page, white type, ANTI lime accent
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#d7f205" },
+      tools: "?",
+      ai: "?",
       image: "images/anti/skeletons.jpg",
       link: { label: "naoespere.sejaanti.com.br", url: "https://naoespere.sejaanti.com.br" },
       summary: {
@@ -225,6 +227,8 @@ window.SITE = {
       deliverables: { en: "Key visuals, short film and storyboard", pt: "Key visuals, filme curto e storyboard" },
       tags: { en: ["KeyVisual", "Film", "Football"], pt: ["KeyVisual", "Filme", "Futebol"] },
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#ffffff" },
+      tools: "?",
+      ai: "?",
       image: "images/warriors/key-visual.jpg",
       summary: {
         en: "Legends from different eras meet on the same rain-soaked pitch. A key visual and a short film for Adidas, built on the grit of the game: mud, rain and the slide tackle.",
@@ -262,6 +266,8 @@ window.SITE = {
       tags: { en: ["Rebranding", "Positioning", "BrandContent"], pt: ["Rebranding", "Posicionamento", "ConteúdoDeMarca"] },
       // SCRV's own code: Deep Black page, Hey Grey type, Red Fuse accent
       theme: { bg: "#000000", fg: "#c2cec9", mute: "#7f8a86", line: "#2a2e2c", panel: "#111111", accent: "#f61009" },
+      tools: "?",
+      ai: "?",
       image: "images/scriva/cover.jpg",
       summary: {
         en: "Rebranding for SCRV.ag, a branding and brand-content agency that only posts when it makes sense. Three verbs became three marks: think (+), create (×), position (✱). Together they make the asterisk, from the Greek for “little star”. Red Fuse, Deep Black and Hey Grey, set in Mango Grotesque and Space Mono, carried through seals, stickers, street posters, social and the agency deck.",
@@ -312,6 +318,8 @@ window.SITE = {
       tags: { en: ["BrandIdentity", "Logo", "Brandbook"], pt: ["IdentidadeDeMarca", "Logo", "Brandbook"] },
       // White page; the core red is the only accent
       theme: { accent: "#ea1e2a" },
+      tools: "?",
+      ai: "?",
       image: "images/corehi/tote.jpg",
       hero: "bleed",
       heroAr: "16/9",
@@ -374,6 +382,8 @@ window.SITE = {
       tags: { en: ["Naming", "BrandStrategy", "Rebranding", "Founder-LedGrowth"], pt: ["Naming", "BrandStrategy", "Rebranding", "Founder-LedGrowth"] },
       // The page wears THURA's own colours: night green, cream type, mint accent
       theme: { bg: "#0c3829", fg: "#f3e6c4", mute: "#a3b5a5", line: "#2c5b48", panel: "#114634", accent: "#09d189" },
+      tools: "?",
+      ai: "?",
       image: "images/thura/cover.jpg",
       hero: "bleed",
       heroAr: "2400/1350",
@@ -447,6 +457,8 @@ window.SITE = {
       deliverables: { en: "Opening, style frames and motion", pt: "Abertura, style frames e motion" },
       tags: { en: ["TVOpening", "StyleFrames", "Motion"], pt: ["AberturaDeTV", "StyleFrames", "Motion"] },
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#ffffff" },
+      tools: "?",
+      ai: "?",
       image: "images/cinema-especial/cover.jpg",
       summary: {
         en: "Opening for Cinema Especial, Globo's movie slot. Ink spreads over old film stock, the featured film's hero surfaces from the stains, and the title lands before the Globo mark closes. Style frames shown with The Amazing Spider-Man as the featured film.",
@@ -476,6 +488,8 @@ window.SITE = {
       sector: { en: "TV broadcaster", pt: "Emissora de TV" },
       deliverables: { en: "Design system, colours and gradients, type family, show identities, openings and vignettes", pt: "Sistema de design, cores e degradês, família tipográfica, identidades de programas, aberturas e vinhetas" },
       tags: { en: ["Branding", "Rebrand", "Motion"], pt: ["Branding", "Rebranding", "Motion"] },
+      tools: "?",
+      ai: "?",
       image: "images/globo/cover.jpg",
       hero: "bleed",
       heroAr: "2000/1052",
@@ -510,6 +524,8 @@ window.SITE = {
       sector: { en: "Corporate education", pt: "Educação corporativa" },
       deliverables: { en: "Monogram, palette, pattern, brandbook, launch campaign, stationery and merchandise", pt: "Monograma, paleta, padrão, brandbook, campanha de lançamento, papelaria e brindes" },
       tags: { en: ["Branding", "VisualSystem", "Brandbook", "Launch"], pt: ["Branding", "SistemaVisual", "Brandbook", "Lançamento"] },
+      tools: "?",
+      ai: "?",
       image: "images/dma/cover.jpg",
       hero: "bleed",
       heroAr: "2436/1069",
@@ -569,6 +585,8 @@ window.SITE = {
       tags: { en: ["SponsorshipIdentity", "Campaign", "Sport"], pt: ["IdentidadeDePatrocínio", "Campanha", "Esporte"] },
       // Black page, white type, XP yellow accent
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#fec142" },
+      tools: "?",
+      ai: "?",
       image: "images/xp/lockup.jpg",
       hero: "bleed",
       heroAr: "16/9",

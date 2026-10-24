@@ -441,7 +441,7 @@
   function renderCase(i) {
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length];
     applyTheme(p.theme);
-    const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("type"), p.type && S.types ? L(S.types[p.type]) : ""], [T("before"), L(p.before)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)]].filter(([, v]) => v);
+    const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("type"), p.type && S.types ? L(S.types[p.type]) : ""], [T("before"), L(p.before)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)], [T("tools"), L(p.tools)], [T("ai"), L(p.ai)]].filter(([, v]) => v);
     let n = 0;
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
