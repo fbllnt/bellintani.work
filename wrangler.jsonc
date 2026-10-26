@@ -1,0 +1,9 @@
+// Cloudflare Workers static site: serves the repository root as plain files (no build, no server code).
+{
+  "name": "bellintani-work",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": ".",
+    "not_found_handling": "none"
+  }
+}

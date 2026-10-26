@@ -1,9 +1,10 @@
 # Bellintani portfolio — working rules
 
 Static site (HTML/CSS/JS, no build). `main` on GitHub (fbllnt/bellintani.work) is deployed automatically by
-Cloudflare Pages (free plan; moved from Netlify on Oct 26 2026 after Netlify paused the site for deploy credits)
-to https://bellintani.work about a minute after each push. Build command: none. Output directory: `/`.
-Cloudflare Pages limits: 25 MB per file, 20,000 files, 500 builds a month. Still batch pushes.
+a Cloudflare Worker named `bellintani-work` serving static assets (free plan; moved from Netlify on Oct 26 2026
+after Netlify paused the site for deploy credits) to https://bellintani.work about a minute after each push.
+Config: `wrangler.jsonc` (assets = repo root) and `.assetsignore` (files never served). Deploy command `npx wrangler deploy`.
+Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still batch pushes.
 
 ## Publishing workflow (agreed with Felipe)
 
@@ -11,16 +12,16 @@ Cloudflare Pages limits: 25 MB per file, 20,000 files, 500 builds a month. Still
   browser (desktop and phone widths), commit it and push to `main`. Don't push half-done work.
 - After pushing, confirm the live site serves the new version and update the prototype artifact.
 - Preview before going live (Felipe, Oct 24 2026): when Felipe wants to see a change first, push it to a branch and
-  open a pull request instead of pushing to `main`. Cloudflare Pages builds a preview for the branch at
-  `https://<branch>.<project>.pages.dev` (the exact link appears as a comment/check on the PR); send him that link. Merge to `main` only when he approves.
+  open a pull request instead of pushing to `main`. Cloudflare builds a preview for the branch at
+  `https://<branch>-bellintani-work.<account>.workers.dev` (the exact link appears as a check on the PR); send him that link. Merge to `main` only when he approves.
 - Before each push that changes CSS or JS, bump the `?v=` stamp on the three asset links in `index.html`
   (e.g. `v=$(date +%Y%m%d%H%M)`) so browsers fetch the new files instead of a cached copy.
 
 ## Projects hidden on the public site (Felipe, Oct 24 2026)
 
-- bellintani.work (and the production `<project>.pages.dev` / fbllnt.netlify.app) shows no projects: `main.js` empties `S.projects` and the `no-work` class
+- bellintani.work (and the production `bellintani-work.<account>.workers.dev`) shows no projects: `main.js` empties `S.projects` and the `no-work` class
   hides the Work section and the Work link in the corner menu. Everything else stays.
-- Felipe sees the full site on any preview link (`<branch or id>.<project>.pages.dev`), or at https://bellintani.work/?full (remembered in that
+- Felipe sees the full site on any preview link (`<branch or id>-bellintani-work.<account>.workers.dev`), or at https://bellintani.work/?full (remembered in that
   browser; `?public` switches back). Undo by removing the block "Projects hidden on the public site" in main.js.
 
 ## Content
@@ -69,6 +70,6 @@ in a project doesn't fit, flag it to him so you decide together; never remove it
 
 ## Domain
 
-Registrar: Namecheap. Hosting: Cloudflare Pages (custom domains bellintani.work and www.bellintani.work).
+Registrar: Namecheap. Hosting: Cloudflare Worker `bellintani-work` (custom domains bellintani.work and www.bellintani.work).
 Old Netlify DNS was A `@` → 75.2.60.5, CNAME `www` → fbllnt.netlify.app.
 Keep the iCloud mail records (MX, TXT, `sig1._domainkey`) exactly as they are wherever DNS lives.
