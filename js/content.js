@@ -18,10 +18,8 @@ window.SITE = {
   },
   // Intro loader: each word cuts on in turn; a word starting with * shows in blue. Add loaderBig: { en, pt } to end on one big word.
   // loaderDot: a blue full stop after the last word that grows to fill the screen as the transition.
-  loader: {
-    en: ["Hey", "don't", "blink", "*good", "*things", "may", "take", "some", "time"],
-    pt: ["Ei", "não", "pisca", "*coisas", "*boas", "podem", "levar", "um", "tempo"],
-  },
+  // English only, in both languages (Felipe).
+  loader: ["Hey", "don't", "blink", "*good", "*things", "may", "take", "some", "time"],
   loaderDot: true,
   services: {
     en: ["Brand identity", "Typography", "Posters & print", "Packaging", "Editorial design", "Art direction"],
