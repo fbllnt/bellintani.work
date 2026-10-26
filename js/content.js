@@ -139,7 +139,7 @@ window.SITE = {
         { role: { en: "Agency", pt: "Agência" }, name: "Fair Creativity Shop", url: "https://fair.com.ag/" },
         { role: "COO", name: "Mauricio Prado" },
         { role: "CCO / Copywriter", name: "Juliano Ribas" },
-        { role: { en: "Production", pt: "Produção" }, name: "Casaas", url: "https://casaas.com.br/" },
+        { role: { en: "Production", pt: "Produção" }, name: "CASAAS", url: "https://casaas.com.br/" },
       ],
       year: "2026",
       role: { en: "Lead Designer / Art Director / AI Creator / UX/UI", pt: "Lead Designer / Diretor de Arte / AI Creator / UX/UI" },
