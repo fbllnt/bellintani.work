@@ -207,7 +207,7 @@ window.SITE = {
       ],
     },
     {
-      title: "Warriors of the Turf",
+      title: "Adidas Pitch Fighters",
       type: "motion",
       client: "Adidas",
       year: "?",
