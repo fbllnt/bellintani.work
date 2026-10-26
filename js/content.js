@@ -179,15 +179,9 @@ window.SITE = {
         { src: "images/anti/poster-skeleton.jpg", ar: "1411/2000", mfull: true, col: 1, span: 6 },
         { src: "images/anti/poster-anti.jpg", ar: "1411/2000", mfull: true, col: 7, span: 6 },
         { src: "images/anti/street-posters.jpg", ar: "2000/1121", col: 1, span: 12, caption: { en: "Lambe-lambe posters on the street, São Paulo", pt: "Lambe-lambes na rua, São Paulo" } },
-        { src: "images/anti/poster-grid.jpg", ar: "1500/1304", col: 2, span: 10, tight: true },
-        { strip: [
-            { src: "images/anti/poster-tunnel.jpg", ar: "1500/2000" },
-            { src: "images/anti/poster-red.jpg", ar: "1121/2000" },
-            { src: "images/anti/poster-alley.jpg", ar: "2000/2000" },
-          ], col: 1, span: 12, tight: true },
         { chapter: { en: "04 · Digital", pt: "04 · Digital" }, kicker: { en: "naoespere.sejaanti.com.br", pt: "naoespere.sejaanti.com.br" },
           head: { en: "A landing page that counts the *wait.*", pt: "Uma landing page que conta a *espera.*" } },
-        { embed: { url: "https://naoespere.sejaanti.com.br", src: "embeds/anti/index.html?skip", w: 1440, h: 900 }, poster: "images/anti/site-espere.jpg", col: 1, span: 12, caption: { en: "Landing page, live — click to open the site", pt: "Landing page no ar — clique para abrir o site" } },
+        { embed: { url: "https://naoespere.sejaanti.com.br", src: "embeds/anti/index.html", w: 1440, h: 900 }, poster: "images/anti/site-espere.jpg", col: 1, span: 12, caption: { en: "Landing page, live — click to open the site", pt: "Landing page no ar — clique para abrir o site" } },
         { chapter: { en: "05 · Films", pt: "05 · Filmes" }, kicker: { en: "4 films", pt: "4 filmes" },
           head: { en: "The same wait, *in motion.*", pt: "A mesma espera, *em movimento.*" } },
         // 2×2, yellow and red on the diagonal; each film starts at a different point so the four never look in sync

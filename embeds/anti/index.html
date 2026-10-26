@@ -157,6 +157,7 @@ body:not(.locked) .grain{animation:none} /* fora da tela de espera o grão fica 
 #skip:hover{color:var(--branco);border-color:var(--branco)}
 #skip .arr{transition:transform .15s steps(2)}#skip:hover .arr{transform:translateX(5px)}
 .skip small{font-family:var(--f-mono);font-size:12px;opacity:.6}
+#wait .w-smile{position:absolute;z-index:1;right:calc(clamp(60px,7vw,130px) * -1);bottom:3%;width:clamp(220px,26vw,440px);transform:rotate(10deg);pointer-events:none}
 #wait .corner{position:absolute;z-index:2;font-family:var(--f-mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;opacity:.55}
 #wait .corner.bl{bottom:22px;left:var(--gutter);opacity:1}
 #wait .corner.bl img{width:30px;height:auto;background:var(--lima);border-radius:6px;padding:4px;display:block}
@@ -494,6 +495,7 @@ html.lay-smiley [data-smile],html.lay-smiley [data-smile] *{visibility:visible!i
 <!-- ============ 00 · TELA DE ESPERA ============ -->
 <div id="wait" role="dialog" aria-label="Tela de espera">
   <div class="art" aria-hidden="true"><canvas class="skel" width="1800" height="1389"></canvas></div>
+  <div class="smile w-smile" data-smile aria-hidden="true"></div>
   <div class="glband" aria-hidden="true"></div>
   <span class="corner bl" aria-hidden="true"><img src="img/logo/anti-icone-preto.svg" alt=""></span>
   <span class="corner br mono" aria-hidden="true">FLT ANTI-003 · ETD 18:15</span>
