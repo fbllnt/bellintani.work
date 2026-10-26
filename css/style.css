@@ -355,7 +355,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .lv-nav{align-items:center;gap:8px 16px}
 .lv-hint{opacity:.6;text-align:center}
 .lv-mark{display:grid;place-items:center;min-height:0;cursor:zoom-out}
-.lv-mark .mark{width:calc(var(--mw,.62) * min(110vw,125vh))}
+.lv-mark .mark{width:min(calc(var(--mw,.62) * min(110vw,125vh)),calc(55vh * var(--ar,1.6)),88vw)}
 .lv-mark .mark.type{width:auto;height:auto;font-size:clamp(48px,10vw,160px)}
 .lv-mark img{max-width:min(64vw,720px);max-height:50vh;object-fit:contain}
 .lv-info p{margin:0}

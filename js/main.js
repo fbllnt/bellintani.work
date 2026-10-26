@@ -265,9 +265,36 @@
   // Logo wall: every mark sits black on white so thirty clients read as one body of work.
   // One-colour files are used as masks, so the same file turns black, white or the brand colour.
   // Hover floods a tile with the brand colour; a click opens the logo full screen, with arrows, swipe and Esc.
-  // Visual balance: each mark's width (as a share of its tile) comes from its proportions, so wide wordmarks
-  // get more width and compact marks less; `scale` in content.js corrects by eye (thin lines up, heavy shapes down).
-  const markWidth = l => { const w = Math.min(.74, .4 * l._ar ** .4) * (l.scale || 1); return Math.min(w, .5 * l._ar, .8); };
+  // Optical balance: each file is measured once (the box its ink actually fills, and how dense that ink is).
+  // Every mark gets about the same ink box area, larger for light, open marks and smaller for heavy ones, so a
+  // wide wordmark, a square badge and a thin script read at a similar weight. Wide marks stop at 80% of the
+  // tile, tall ones at 62%. `scale` in content.js is a last correction by eye.
+  const LOGO = { area: .24, dense: .35, weight: .45, compact: .3, maxW: .8, maxH: .64 };
+  const markWidth = l => {
+    const ia = l._ia || l._ar, d = Math.max(.08, l._d || LOGO.dense);
+    // Square and round marks (badges, seals, symbols) leave their box's corners empty, so they get a bit more
+    const compact = 1 + LOGO.compact * Math.min(ia, 1 / ia);
+    let iw = Math.sqrt(LOGO.area * compact * (LOGO.dense / d) ** LOGO.weight * ia);
+    iw = Math.min(iw, LOGO.maxW, LOGO.maxH * ia) * (l.scale || 1);
+    return iw / (l._fx || 1);
+  };
+  const measureLogo = (l, im) => {
+    const k = Math.min(1, 256 / Math.max(im.naturalWidth, im.naturalHeight)), w = Math.max(1, Math.round(im.naturalWidth * k)), h = Math.max(1, Math.round(im.naturalHeight * k));
+    l._ar = im.naturalWidth / im.naturalHeight;
+    try {
+      const c = document.createElement("canvas"); c.width = w; c.height = h;
+      const g = c.getContext("2d", { willReadFrequently: true }); g.drawImage(im, 0, 0, w, h);
+      const a = g.getImageData(0, 0, w, h).data;
+      let x0 = w, y0 = h, x1 = -1, y1 = -1, sum = 0;
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        const v = a[(y * w + x) * 4 + 3];
+        if (v > 8) { sum += v; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+      }
+      if (x1 < 0) return;
+      const bw = x1 - x0 + 1, bh = y1 - y0 + 1;
+      l._fx = bw / w; l._ia = bw / bh * (im.naturalWidth / w) / (im.naturalHeight / h); l._d = sum / 255 / (bw * bh);
+    } catch (e) { /* unreadable pixels: fall back to the file's own proportions */ }
+  };
   const markSize = l => l._ar ? `--mw:${markWidth(l).toFixed(3)};--ar:${l._ar.toFixed(3)};` : "";
   const mark = l => l.src
     ? `<span class="mark" role="img" aria-label="${esc(l.name)}" style="${markSize(l)}-webkit-mask-image:url('${esc(l.src)}');mask-image:url('${esc(l.src)}')"></span>`
@@ -297,13 +324,13 @@
     const items = [...wall.children], dlg = caseEl.querySelector(".logo-view");
     const shown = () => items.filter(li => !li.hidden).map(li => +li.querySelector(".logo").dataset.k);
     let cur = 0;
-    // Read each file's proportions once, then size its tile
+    // Measure each file once, then size its mark
     p.logos.forEach((l, k) => {
       if (!l.src) return;
       const apply = () => { const m = wall.querySelector(`.logo[data-k="${k}"] .mark`); m.style.setProperty("--mw", markWidth(l).toFixed(3)); m.style.setProperty("--ar", l._ar.toFixed(3)); };
       if (l._ar) return apply();
       const im = new Image();
-      im.onload = () => { l._ar = im.naturalWidth / im.naturalHeight; apply(); };
+      im.onload = () => { measureLogo(l, im); apply(); };
       im.src = l.src;
     });
     const show = k => {
