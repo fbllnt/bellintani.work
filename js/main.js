@@ -171,12 +171,12 @@
   // Before → after (a rename): { swap: { before, after } }. A word set large with its dictionary entry: { word: { glyph, lang, head, note } }.
   // A row of pieces (a social carousel): { marquee: [{ src, ar }, …], caption }. It stands still and wraps,
   // so every piece is seen whole (never cropped at the edges).
-  // On phones items keep their order and alternate left/right in wider spans.
+  // On phones items keep their order and alternate left/right in wider spans (`mfull: true` keeps one full width).
   function looseGallery(p) {
     let side = 0, zi = 0;
     return `<div class="loose">${p.gallery.map(it => {
       const span = Math.min(12, it.span || 12), col = Math.min(13 - span, it.col || 1);
-      const mspan = it.text || it.chapter ? 12 : span >= 9 ? 12 : span >= 6 ? 11 : 9;
+      const mspan = it.text || it.chapter || it.mfull ? 12 : span >= 9 ? 12 : span >= 6 ? 11 : 9;
       const mcol = mspan === 12 ? 1 : (side++ % 2 ? 13 - mspan : 1);
       const style = `--col:${col};--span:${span};--mcol:${mcol};--mspan:${mspan};--shift:${it.shift || "0px"};--nudge:${it.nudge || "0px"};--tight:${it.tight ? 1 : 0};--z:${it.z || (++zi)}`;
       const speed = !reduced && it.speed ? ` data-speed="${+it.speed}"` : "";
@@ -229,7 +229,7 @@
         <div class="spin-ui mono"><span>${esc(T("dragToRotate"))}</span><span class="spin-deg">0°</span></div>
       </div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
     return `<figure class="fig ${it.size || "full"}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${style}"${speed}><div class="ph">${
-      it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
+      it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""}${it.offset ? ` data-offset="${+it.offset}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
           <source src="${esc(it.video)}" type="video/mp4">${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}</video>
         <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button></div>
         <button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
@@ -699,6 +699,11 @@
       v.addEventListener("webkitendfullscreen", leave);
       v.addEventListener("fullscreenchange", () => { if (fsEl() === v) v.controls = true; else leave(); });
       v.addEventListener("webkitfullscreenchange", () => { if (fsEl() === v) v.controls = true; else leave(); });
+      // `offset`: start this loop that many seconds in, so films side by side never run in step
+      if (v.dataset.offset) {
+        const seek = () => { if (v.dataset.offsetDone || !(v.duration > 0)) return; v.dataset.offsetDone = "1"; v.currentTime = +v.dataset.offset % v.duration; };
+        v.addEventListener("loadedmetadata", seek); v.addEventListener("playing", seek); seek();
+      }
       if (vio) vio.observe(v);
     });
   }
