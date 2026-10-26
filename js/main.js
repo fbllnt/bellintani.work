@@ -144,6 +144,7 @@
   $("skip").onclick = finish;
   // Scroll cue: jumps to the work list and hides once the visitor has started scrolling
   const cue = $("cue");
+  if (!S.projects.length) { cue.href = "#services"; cue.setAttribute("aria-label", T("services")); }
   cue.addEventListener("click", e => { e.preventDefault(); $(S.projects.length ? "work" : "services").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
   const cueCheck = () => cue.classList.toggle("gone", scrollY > 40);
   addEventListener("scroll", cueCheck, { passive: true }); cueCheck();
