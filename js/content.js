@@ -654,6 +654,7 @@ window.SITE = {
         { name: "hyclean from JBS", src: "images/logos/hyclean.png" },
         { name: "Camarote Lew’Lara", src: "images/logos/camarote-lewlara.png", scale: 1.1 },
         { name: "House Party Orloff", src: "images/logos/houseparty.png" },
+        { name: "House Party Orloff, 3D", src: "images/logos/houseparty-3d.png" },
       ].concat(Array.from({ length: 13 }, (_, k) => ({
         name: `Logo ${String(k + 38).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
