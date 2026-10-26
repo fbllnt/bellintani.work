@@ -182,6 +182,13 @@
           it.pills ? `<ul class="pills mono">${it.pills.map(x => { const t = L(x); return `<li${t[0] === "*" ? ` class="on"` : ""}>${esc(t.replace(/^\*/, ""))}</li>`; }).join("")}</ul>` : ""}</section>`;
       // Something the story still needs (an image, a fact, a section): a dashed box saying what is missing
       if (it.todo) return `<div class="todo" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
+      // A live page running inside the case, at desktop size scaled to fit; the print sits underneath while it loads,
+      // and a click anywhere opens the page itself: { embed: { url, w, h }, poster, caption }
+      if (it.embed) { const { url, w = 1440, h = 900 } = it.embed;
+        return `<figure class="fig embed" style="--ar:${w}/${h};${style}">${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}<div class="ph">
+          ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
+          <iframe src="${esc(url)}" width="${w}" height="${h}" loading="lazy" tabindex="-1" aria-hidden="true" style="--w:${w}"></iframe>
+          <a class="fig-link" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(T("openSite"))}: ${esc(url)}"><span class="fig-open mono">${esc(T("openSite"))} ↗</span></a></div></figure>`; }
       if (it.swap) return `<div class="swap-ba" style="${style}">${[["before", "old"], ["after", "new"]].map(([k, c]) =>
         `<p><span class="mono muted">${esc(T(k))}</span><b class="${c}">${esc(L(it.swap[k]))}</b></p>`).join("")}</div>`;
       if (it.word) return `<div class="word-def" style="${style}"><p class="word-big" style="--n:${[...it.word.glyph].length}"${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""} aria-hidden="true">${esc(it.word.glyph)}</p>
@@ -223,6 +230,8 @@
         <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button></div>
         <button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
           <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 6V1h5M10 1h5v5M15 10v5h-5M6 15H1v-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>`
+      // `href`: the image is a print of a live page; clicking opens that page in a new tab
+      : it.src && it.href ? `<a class="fig-link" href="${esc(it.href)}" target="_blank" rel="noopener"><img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy"><span class="fig-open mono">${esc(T("openSite"))} ↗</span></a>`
       : it.src ? `<img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy">` : cover(it.art, p)
     }</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
   }
@@ -477,6 +486,7 @@
     document.title = `${L(p.title)} — ${S.name}`;
     observe();
     setupVideos();
+    setupEmbeds();
     setupDrift();
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
     setupLogos(p);
@@ -635,6 +645,16 @@
 
   // Films play muted while on screen and pause when they leave. Every film has Play/Pause and Sound;
   // sound is one film at a time. Pausing by hand keeps it paused until the visitor plays it again.
+  // Live embeds: scale the desktop-size frame to the width of its box
+  let embedRO = null;
+  function setupEmbeds() {
+    if (embedRO) embedRO.disconnect();
+    const frames = caseEl.querySelectorAll(".embed iframe");
+    if (!frames.length || !window.ResizeObserver) return;
+    embedRO = new ResizeObserver(es => es.forEach(e => { const f = e.target.querySelector("iframe"); f.style.setProperty("--s", e.contentRect.width / f.width); }));
+    frames.forEach(f => embedRO.observe(f.parentElement));
+  }
+
   function setupVideos() {
     const vids = [...caseEl.querySelectorAll("video")];
     if (!vids.length) return;
