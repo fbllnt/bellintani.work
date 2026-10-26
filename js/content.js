@@ -187,7 +187,7 @@ window.SITE = {
         { src: "images/anti/poster-anti.jpg", ar: "1411/2000", mfull: true, col: 7, span: 6 },
         { src: "images/anti/street-posters.jpg", ar: "2000/1121", col: 1, span: 12, caption: { en: "Lambe-lambe posters on the street, São Paulo", pt: "Lambe-lambes na rua, São Paulo" } },
         { src: "images/anti/street-wall-night.jpg", ar: "2000/1121", col: 1, span: 12 },
-        { src: "images/anti/street-wall-yellow.jpg", ar: "2500/1402", col: 1, span: 12 },
+        // Yellow poster wall (street-wall-yellow.jpg) removed by Felipe, Oct 26 2026; file kept
         { chapter: { en: "04 · Digital", pt: "04 · Digital" }, kicker: { en: "naoespere.sejaanti.com.br", pt: "naoespere.sejaanti.com.br" },
           head: { en: "A landing page that counts the *wait.*", pt: "Uma landing page que conta a *espera.*" } },
         { embed: { url: "https://naoespere.sejaanti.com.br", src: "embeds/anti/index.html", w: 1440, h: 900 }, poster: "images/anti/site-espere.jpg", col: 1, span: 12, caption: { en: "Landing page, live — click to open the site", pt: "Landing page no ar — clique para abrir o site" } },
