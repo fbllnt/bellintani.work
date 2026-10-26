@@ -242,6 +242,8 @@ window.SITE = {
         { src: "images/warriors/storyboard.jpg", ar: "2000/1116", col: 1, span: 12, caption: { en: "Storyboard", pt: "Storyboard" } },
         { src: "images/warriors/portrait-01.jpg", ar: "1376/768", col: 1, span: 6 },
         { src: "images/warriors/portrait-02.jpg", ar: "1920/1024", col: 7, span: 6 },
+        { src: "images/warriors/frame-01.jpg", ar: "1920/1024", col: 1, span: 6 },
+        { src: "images/warriors/frame-02.jpg", ar: "1920/1024", col: 7, span: 6 },
       ],
     },
     {
