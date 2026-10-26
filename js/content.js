@@ -145,7 +145,7 @@ window.SITE = {
       role: { en: "Lead Designer / Art Director / AI Creator / UX/UI", pt: "Lead Designer / Diretor de Arte / AI Creator / UX/UI" },
       scope: { en: "Campaign // Activation // Digital", pt: "Campanha // Ativação // Digital" },
       sector: { en: "Finance for creatives", pt: "Finanças para criativos" },
-      deliverables: { en: "Activation, films, street posters, social and landing page", pt: "Ativação, filmes, lambe-lambes, redes sociais e landing page" },
+      deliverables: { en: "Activation, films, posters, social content and landing page", pt: "Ativação, filmes, pôsteres, conteúdo para redes sociais e landing page" },
       tags: { en: ["Campaign", "Activation", "OOH", "Digital"], pt: ["Campanha", "Ativação", "OOH", "Digital"] },
       // Black page, white type, ANTI lime accent
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#d7f205" },
