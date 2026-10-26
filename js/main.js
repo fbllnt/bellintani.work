@@ -497,7 +497,7 @@
       ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
       <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>`
         : Array.isArray(v) ? v.map(t => t[0] === "*" ? `<span class="ai-tool">${esc(t.slice(1))}<sup>${esc(T("aiMark"))}</sup></span>` : esc(t)).join(", ") : esc(v)}</dd></div>`).join("")}${
-        (p.credits || []).map(c => `<div><dt>${esc(L(c.role))}</dt><dd>${c.url ? `<a class="credit-link" href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)} ↗</a>` : esc(c.name)}</dd></div>`).join("")}${
+        (p.credits || []).map(c => `<div><dt>${esc(L(c.role))}</dt><dd>${c.url ? `<a class="swap" href="${esc(c.url)}" target="_blank" rel="noopener"><span>${esc(c.name)} ↗</span><span>${esc(c.name)} ↗</span></a>` : esc(c.name)}</dd></div>`).join("")}${
         p.link ? `<div class="live"><dt>${esc(T("live"))}</dt><dd><a class="swap" href="${esc(p.link.url)}" target="_blank" rel="noopener"><span>${esc(p.link.label)} ↗</span><span>${esc(p.link.label)} ↗</span></a></dd></div>` : ""}</dl>
       ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}</div></figure>`}
       <section class="case-about">
