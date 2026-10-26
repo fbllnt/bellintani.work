@@ -58,7 +58,7 @@ Never invent facts for the text: ask Felipe.
 
 Each project sets `type` (see `types` in content.js) and follows that kind's chapter pattern:
 - branding: 01 Intro · Desafio · Naming/Símbolo · Sistema (cor, tipo) · Posicionamento/Estratégia · Identidade aplicada
-- campaign (campanha/publicidade): 01 Ideia · Ativação/Key visual · Peças (rua, digital, social) · Filmes · Resultados
+- campaign (campanha/publicidade): 01 Ideia · Ativação/Key visual · Peças (rua, digital, social) · Filmes (no Resultados chapter: Felipe removed it Oct 26 2026)
 - motion (filme/TV): 01 Ideia · Filme · Frames · Processo
 Spacing: images inside a section sit close together (`--rg` = `--cg`); chapters open with a big gap and a 2px rule,
 so sections read as clearly separate blocks.

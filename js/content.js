@@ -198,9 +198,6 @@ window.SITE = {
         { video: "images/anti/film-payday.mp4", webm: "images/anti/film-payday.webm", poster: "images/anti/film-payday-poster.jpg", ar: "16/9", mfull: true, offset: 5, col: 1, span: 6, tight: true, caption: { en: "Film 004 — Payday", pt: "Filme 004 — Payday" } },
         { video: "images/anti/film-jab.mp4", webm: "images/anti/film-jab.webm", poster: "images/anti/film-jab-poster.jpg", ar: "16/9", mfull: true, offset: 7.5, col: 7, span: 6, tight: true, caption: { en: "Film 002 — Jab", pt: "Filme 002 — Jab" } },
         { spin: { frames: "images/anti/spin/###.jpg", count: 120 }, ar: "16/9", col: 1, span: 12, caption: { en: "The waiting skeleton, in 360°", pt: "O esqueleto que espera, em 360°" } },
-        { chapter: { en: "Results", pt: "Resultados" }, kicker: { en: "Numbers · awards · press", pt: "Números · prêmios · imprensa" },
-          head: { en: "What it delivered", pt: "O que gerou" } },
-        { todo: { en: "results: reach, numbers, awards or press, if any", pt: "resultados: alcance, números, prêmios ou imprensa, se houver" }, col: 1, span: 12 },
       ],
     },
     {
@@ -595,9 +592,6 @@ window.SITE = {
         { chapter: { en: "04 · Swimming", pt: "04 · Natação" }, kicker: { en: "Athlete stories", pt: "Histórias de atletas" },
           head: { en: "Turning a Brazilian into the first swimmer in history to win an Olympic medal at 32: *XP invests.*", pt: "Se transforma um brasileiro no 1º nadador da história a conquistar medalha olímpica aos 32 anos, *a XP investe.*" } },
         { scrub: { frames: "images/xp/natacao-##.jpg", count: 5 }, ar: "16/9", col: 1, span: 12, caption: { en: "Story frames, played by scroll", pt: "Quadros da história, no scroll" } },
-        { chapter: { en: "Results", pt: "Resultados" }, kicker: { en: "Numbers · awards · press", pt: "Números · prêmios · imprensa" },
-          head: { en: "What it delivered", pt: "O que gerou" } },
-        { todo: { en: "results: reach, numbers, awards or press, if any", pt: "resultados: alcance, números, prêmios ou imprensa, se houver" }, col: 1, span: 12 },
       ],
     },
     {
