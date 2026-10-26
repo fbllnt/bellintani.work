@@ -268,14 +268,15 @@
   // Optical balance: each file is measured once (the box its ink actually fills, and how dense that ink is).
   // Every mark gets about the same ink box area, larger for light, open marks and smaller for heavy ones, so a
   // wide wordmark, a square badge and a thin script read at a similar weight. Wide marks stop at 80% of the
-  // tile, tall ones at 62%. `scale` in content.js is a last correction by eye.
-  const LOGO = { area: .24, dense: .35, weight: .45, compact: .3, maxW: .8, maxH: .64 };
+  // tile, tall ones at 64%, then `size` shrinks them all alike (Felipe: 15% smaller overall). `scale` in
+  // content.js is a last correction by eye.
+  const LOGO = { area: .24, dense: .35, weight: .45, compact: .3, maxW: .8, maxH: .64, size: .85 };
   const markWidth = l => {
     const ia = l._ia || l._ar, d = Math.max(.08, l._d || LOGO.dense);
     // Square and round marks (badges, seals, symbols) leave their box's corners empty, so they get a bit more
     const compact = 1 + LOGO.compact * Math.min(ia, 1 / ia);
     let iw = Math.sqrt(LOGO.area * compact * (LOGO.dense / d) ** LOGO.weight * ia);
-    iw = Math.min(iw, LOGO.maxW, LOGO.maxH * ia) * (l.scale || 1);
+    iw = Math.min(iw, LOGO.maxW, LOGO.maxH * ia) * LOGO.size * (l.scale || 1);
     return iw / (l._fx || 1);
   };
   const measureLogo = (l, im) => {
