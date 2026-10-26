@@ -121,7 +121,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .index{list-style:none;margin:0;padding:0;border-top:1px solid var(--fg)}
 .index a{display:grid;grid-template-columns:3em minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:12px 0 8px;border-bottom:1px solid var(--line);text-decoration:none}
 .index .t{font:900 clamp(34px,6vw,96px)/.9 var(--sans);letter-spacing:-.045em;text-transform:uppercase;transition:color .3s,transform .6s var(--ease);overflow-wrap:anywhere}
-.index:hover .t{color:#cfcfcf}
 .index a:hover .t,.index a:focus-visible .t{color:var(--blue);transform:translateX(.18em)}
 .index .k{text-align:right;color:var(--mute)}
 /* Hover: only the title moves and turns blue; no bar (Felipe, Oct 26 2026). The .bar span stays hidden. */
@@ -141,7 +140,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @media (hover:hover) and (pointer:fine){
   .fx-hover .index .t{transition:transform .7s var(--spring)}
   .fx-hover .index a:hover .t,.fx-hover .index a:focus-visible .t{transform:translateX(.42em)}
-  .fx-hover .index:hover a:not(:hover) .t{transform:translateX(-.06em)}
 }
 /* 3. Open: the panel that grows from the row to the whole screen */
 .veil{position:fixed;inset:0;z-index:70;background:var(--blue);pointer-events:none}
