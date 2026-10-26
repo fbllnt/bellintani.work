@@ -395,9 +395,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .ball{position:fixed;left:0;top:0;z-index:81;pointer-events:none;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--blue);opacity:0;transition:opacity .2s,scale .35s var(--spring)}
 .ball.white{background:#fff}
 .ball.on{opacity:1}
-.ball.big{scale:1.5}
 .ball.press{scale:.7}
-.ball.big.press{scale:1.25}
 
 /* ---------- About, run as end credits ---------- */
 /* A black band edge to edge; roles right-aligned against names, like a film's closing titles */

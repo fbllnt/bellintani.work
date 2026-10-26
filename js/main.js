@@ -806,9 +806,10 @@
   // A chain of points, each easing toward the one ahead, drawn as one solid band as wide as the ball.
   // It stretches behind fast moves and pulls back into the ball when the mouse stops.
   // Mouse and trackpad only; touch screens and reduced motion keep the normal pointer.
-  // Over links and buttons the ball grows; on blue (the close-up, the part of a logo tile the flood has covered,
-  // or the open part of a home row's bar) it turns white. The trail is always drawn in the ball's own colour,
-  // read from the ball, so it also follows a project's accent colour.
+  // The ball stays the trail's width everywhere, also over links (the hover motions on the page give the
+  // feedback). On blue (the close-up, the part of a logo tile the flood has covered, or the open part of a
+  // home row's bar) it turns white. The trail is always drawn in the ball's own colour, read from the ball,
+  // so it also follows a project's accent colour.
   const ball = document.createElement("div"), trail = document.createElement("canvas");
   const cursorOn = matchMedia("(hover: hover) and (pointer: fine)").matches && !reduced;
   let onBlue = false;
@@ -870,7 +871,6 @@
       hover = onBlue ? null : e.target.closest(".logo");
       row = onBlue ? null : e.target.closest(".index a");
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
-      ball.classList.toggle("big", !!e.target.closest("a, button, [role=slider], video"));
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
     document.addEventListener("pointerleave", () => { ball.classList.remove("on"); ctx.clearRect(0, 0, innerWidth, innerHeight); });
