@@ -299,6 +299,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .index a{grid-template-columns:2.2em minmax(0,1fr)}
   .index .k{display:none}
   .c-bl{display:none}
+  /* Scroll cue sits bottom left on phones, so it never runs into the Let's talk corner (longer in PT) */
+  .cue{left:var(--side-l);translate:0 0;padding-left:0}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
