@@ -651,6 +651,9 @@ window.SITE = {
         { name: "NoCarbon", src: "images/logos/nocarbon.png" },
         { name: "Palavra Animada", src: "images/logos/palavra-animada.png" },
         { name: "Digital Marketing Academy by JBS", src: "images/logos/dma.png", scale: .95 },
+        { name: "hyclean from JBS", src: "images/logos/hyclean.png" },
+        { name: "Camarote Lew’Lara", src: "images/logos/camarote-lewlara.png", scale: 1.1 },
+        { name: "House Party Orloff", src: "images/logos/houseparty.png" },
       ].concat(Array.from({ length: 13 }, (_, k) => ({
         name: `Logo ${String(k + 38).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
