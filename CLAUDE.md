@@ -50,7 +50,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 ## Project page template (agreed with Felipe, Oct 24 2026)
 
 Project pages follow the THURA case (SCRV.ag format, reference artifact https://claude.ai/artifact/KSPS6ZoiADyGuixJDJoSt6):
-`tags` (hashtags), meta with `before` (if a rebrand) / `sector` / `deliverables` / `tools` (Ferramentas & IA: a list in use order, AI tools prefixed with `*` and marked "IA"; Adobe is just "Adobe CC", never the individual apps — Felipe, Oct 26 2026), edge-to-edge cover, then numbered
+`tags` (hashtags), meta with `before` (if a rebrand) / `sector` / `deliverables` / `tools` (Ferramentas & IA: a list in use order, AI tools prefixed with `*` and marked "IA", always in a contrast colour: the project accent, or the site blue when the project has no colour or a black/white accent; Adobe is just "Adobe CC", never the individual apps — Felipe, Oct 26 2026), edge-to-edge cover, then numbered
 chapters (`01 · Intro`, `Desafio`, `Naming`, `Posicionamento`, `Estratégia`, `Identidade aplicada`), each a `chapter`
 item with kicker, big headline (`*words*` in the accent colour), short text, optional `pills`, followed by captioned
 images that prove the text. Extra blocks: `swap` (before → after names), `word` (big word + dictionary entry),

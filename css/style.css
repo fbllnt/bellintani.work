@@ -244,7 +244,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Missing material: dashed box (or chip in the meta) that Felipe fills in later */
 .todo{display:grid;place-items:center;min-height:clamp(90px,10vw,150px);aspect-ratio:var(--ar,auto);border:1.5px dashed var(--mute);padding:16px;text-align:center;color:var(--mute)}
 .todo p{margin:0;max-width:48ch}
-.todo b,.ai-tool{color:var(--blue)}
+.todo b{color:var(--blue)}.ai-tool{color:var(--ai,var(--blue))}
 .ai-tool sup{font-size:.7em;margin-left:2px;vertical-align:super}
 /* Live embed: full desktop page scaled into the frame (no side breathing, it is a screen) */
 .embed .ph{aspect-ratio:var(--ar);border:1px solid var(--line)}

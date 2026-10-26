@@ -180,13 +180,13 @@
   // On phones a row of landscape pieces stacks one per line; a row of portraits stays side by side.
   function looseGallery(p) {
     const ratio = ar => { const [w, h] = String(ar || "16/9").split("/").map(Number); return w / (h || 1); };
-    const isMedia = it => (it.src || it.video) && !it.scrub && !it.spin;
+    const isMedia = it => ((it.src || it.video) && !it.scrub && !it.spin) || (it.todo && it.span < 12);
     let html = "", row = [], used = 0;
     const flush = () => {
       if (!row.length) return;
       const sum = row.reduce((a, it) => a + ratio(it.ar), 0);
       html += `<div class="jrow${row.length > 1 && sum > 2.2 ? " stack-m" : ""}" style="--sum:${sum.toFixed(4)};--n:${row.length}">${
-        row.map(it => fig(it, p, `--r:${ratio(it.ar).toFixed(4)}`)).join("")}</div>`;
+        row.map(it => it.todo ? block(it, p, `--r:${ratio(it.ar).toFixed(4)}`) : fig(it, p, `--r:${ratio(it.ar).toFixed(4)}`)).join("")}</div>`;
       row = []; used = 0;
     };
     p.gallery.forEach(it => {
@@ -202,14 +202,14 @@
 
   // A full-width block in the loose gallery: chapter, text, rename, word, marquee, flip, strip, embed, placeholder,
   // or a scroll sequence / 360° viewer
-  function block(it, p) {
-    const style = "", speed = "";
+  function block(it, p, style = "") {
+    const speed = "";
     if (it.chapter) return `<section class="chap" style="${style}">
       <p class="chap-k mono"><span>${esc(L(it.chapter))}</span>${it.kicker ? `<span class="muted">${esc(L(it.kicker))}</span>` : ""}</p>
       <h2 class="chap-h">${esc(L(it.head)).replace(/\*(.+?)\*/g, "<em>$1</em>")}</h2>${it.text ? `<p class="body">${esc(L(it.text))}</p>` : ""}${
         it.pills ? `<ul class="pills mono">${it.pills.map(x => { const t = L(x); return `<li${t[0] === "*" ? ` class="on"` : ""}>${esc(t.replace(/^\*/, ""))}</li>`; }).join("")}</ul>` : ""}</section>`;
     // Something the story still needs (an image, a fact, a section): a dashed box saying what is missing
-    if (it.todo) return `<div class="todo" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
+    if (it.todo) return `<div class="todo${style ? " fig" : ""}" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
     // A live page running inside the case, at desktop size scaled to fit; the print sits underneath while it loads,
     // and a click anywhere opens the page itself: { embed: { url, w, h }, poster, caption }
     if (it.embed) { const { url, src = url, w = 1440, h = 900 } = it.embed;
@@ -482,6 +482,9 @@
   function applyTheme(t) {
     const root = document.documentElement;
     Object.entries(THEME_VARS).forEach(([k, v]) => t && t[k] ? root.style.setProperty(v, t[k]) : root.style.removeProperty(v));
+    // AI tools always stand out: a black or white accent falls back to the site blue (Felipe, Oct 26 2026)
+    const plain = t && /^#(fff(fff)?|000(000)?)$/i.test(t.accent || "");
+    plain ? root.style.setProperty("--ai", "#1a2bff") : root.style.removeProperty("--ai");
     root.classList.toggle("themed", !!t);
   }
 
