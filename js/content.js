@@ -240,6 +240,8 @@ window.SITE = {
         { chapter: { en: "04 · Process", pt: "04 · Processo" }, kicker: { en: "Storyboard", pt: "Storyboard" },
           head: { en: "Six scenes, from Pelé to the *end card.*", pt: "Seis cenas, de Pelé ao *end card.*" } },
         { src: "images/warriors/storyboard.jpg", ar: "2000/1116", col: 1, span: 12, caption: { en: "Storyboard", pt: "Storyboard" } },
+        { src: "images/warriors/portrait-01.jpg", ar: "1376/768", col: 1, span: 6 },
+        { src: "images/warriors/portrait-02.jpg", ar: "1920/1024", col: 7, span: 6 },
       ],
     },
     {
