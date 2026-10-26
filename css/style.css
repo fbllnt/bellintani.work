@@ -35,7 +35,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loader{inset:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));padding:clamp(60px,10vw,120px) var(--side-r) clamp(60px,10vw,120px) var(--side-l)}
 .loader span{font:900 clamp(30px,6vw,92px)/.9 var(--sans);letter-spacing:-.05em;text-transform:uppercase;opacity:0;align-self:center;justify-self:center}
 .loader span.blue{color:var(--blue)}
-.loader span.dot{width:.42em;height:.42em;border-radius:50%;background:var(--blue)}
+.loader .dot{display:inline-block;width:.2em;height:.2em;margin-left:.06em;border-radius:50%;background:var(--blue);opacity:0}
 .loader span.big{grid-column:1/-1;grid-row:3;font-size:clamp(60px,16vw,260px)}
 .panel{inset:0;opacity:0}
 .head{left:var(--side-l);right:var(--side-r);top:clamp(64px,10vh,110px);display:flex;flex-direction:column;gap:clamp(32px,5vw,72px)}
@@ -52,9 +52,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Timeline (seconds): loader 0–2 (dot grows to fill the screen 1.62–2) · panels 2–2.5 · name 2.5 · tagline 3.05 */
 .play .loader span{animation:cut 0s linear forwards var(--d)}
 .play .loader{animation:out 0s linear forwards 2s}
-.play .loader span.dot{animation:cut 0s linear forwards var(--d), grow .38s cubic-bezier(.7,0,.84,0) forwards 1.62s}
+.play .loader .dot{animation:cut 0s linear forwards var(--d), grow .38s cubic-bezier(.7,0,.84,0) forwards 1.62s}
 @keyframes grow{to{transform:scale(160)}}
-@media (prefers-reduced-motion:reduce){ .play .loader span.dot{animation:cut 0s linear forwards var(--d)} }
+@media (prefers-reduced-motion:reduce){ .play .loader .dot{animation:cut 0s linear forwards var(--d)} }
 .play .panel{animation:cut 0s linear forwards var(--d), out 0s linear forwards 2.5s}
 .play .name .word > span{animation:rise .6s var(--over) forwards 2.5s}
 .play .tag{animation:fade .5s ease forwards 3.05s}

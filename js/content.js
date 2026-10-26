@@ -17,10 +17,10 @@ window.SITE = {
     pt: ["Branding & Identidade, Publicidade, Digital, Social, Vibe Coding e Workflows com IA"],
   },
   // Intro loader: each word cuts on in turn; a word starting with * shows in blue. Add loaderBig: { en, pt } to end on one big word.
-  // loaderDot: a blue dot after the last word that grows to fill the screen as the transition.
+  // loaderDot: a blue full stop after the last word that grows to fill the screen as the transition.
   loader: {
-    en: ["Hey", "don't", "blink", "*good", "*things", "take", "some", "time"],
-    pt: ["Ei,", "não", "pisca", "*coisa", "*boa", "leva", "um", "tempo"],
+    en: ["Hey", "don't", "blink", "*good", "*things", "may", "take", "some", "time"],
+    pt: ["Ei", "não", "pisca", "*coisas", "*boas", "podem", "levar", "um", "tempo"],
   },
   loaderDot: true,
   services: {
