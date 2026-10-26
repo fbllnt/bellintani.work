@@ -202,7 +202,7 @@ window.SITE = {
       ],
     },
     {
-      title: "Adidas Trionda",
+      title: "Adidas 60",
       type: "motion",
       client: "Adidas",
       year: "2026",
@@ -228,7 +228,7 @@ window.SITE = {
         { chapter: { en: "02 · Film", pt: "02 · Filme" }, kicker: { en: "Messi · Beckenbauer · Higuita · Yamal", pt: "Messi · Beckenbauer · Higuita · Yamal" },
           head: { en: "Adidas, official FIFA World Cup ball supplier *since 1970.*", pt: "Adidas, fornecedora oficial da bola da Copa do Mundo FIFA *desde 1970.*" } },
         // Film 02 (The breakaway) removed (Felipe, Oct 26 2026); files kept in images/warriors/
-        { video: "images/warriors/film.mp4", webm: "images/warriors/film.webm", poster: "images/warriors/film-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Film 01 — Messi vs Beckenbauer", pt: "Filme 01 — Messi vs Beckenbauer" } },
+        { video: "images/warriors/film.mp4?v=2", webm: "images/warriors/film.webm?v=2", poster: "images/warriors/film-poster.jpg?v=2", ar: "16/9", col: 1, span: 12, caption: { en: "Film 01 — Messi vs Beckenbauer", pt: "Filme 01 — Messi vs Beckenbauer" } },
         { video: "images/warriors/film-03.mp4", webm: "images/warriors/film-03.webm", poster: "images/warriors/film-03-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Film 03 — Finale: Yamal scores", pt: "Filme 03 — Final: Yamal marca" } },
         { todo: { en: "frame / concept 1", pt: "frame / concept 1" }, ar: "16/9", col: 1, span: 6 },
         { todo: { en: "frame / concept 2", pt: "frame / concept 2" }, ar: "16/9", col: 7, span: 6 },
