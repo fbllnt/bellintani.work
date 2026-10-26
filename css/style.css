@@ -118,14 +118,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .index:hover .t{color:#cfcfcf}
 .index a:hover .t,.index a:focus-visible .t{color:var(--blue);transform:translateX(.18em)}
 .index .k{text-align:right;color:var(--mute)}
-/* Hover: the row's bar opens in flat blue and the type turns white over it. */
+/* Hover: only the title moves and turns blue; no bar (Felipe, Oct 26 2026). The .bar span stays hidden. */
 .index .bar{display:none}
-@media (hover:hover) and (pointer:fine){
-  .index a{position:relative;isolation:isolate;transition:padding .5s var(--ease)}
-  .index .bar{display:block;position:absolute;inset:-1px 0 0;z-index:-1;background:var(--blue);clip-path:inset(50% 0 50% 0);transition:clip-path .55s var(--ease)}
-  .index a:hover,.index a:focus-visible{padding-left:14px;padding-right:14px}
-  .index a:hover .bar,.index a:focus-visible .bar{clip-path:inset(0)}
-  .index a:hover :is(.t,.k,.mono),.index a:focus-visible :is(.t,.k,.mono){color:#fff}
 }
 /* ---------- Work list motion (classes on .works, off with reduced motion) ---------- */
 .index .ti{display:inline-block}
@@ -137,14 +131,10 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fx-cascade .index.in .ti{transform:none}
 .fx-cascade .index.in a > .mono,.fx-cascade .index.in .k{opacity:1}
 .fx-cascade .index.in a{background-size:100% 1px}
-/* 2. Hover: the title slides further on a spring, the number and the tags follow a beat later */
+/* 2. Hover: the title slides further on a spring; number and tags stay put */
 @media (hover:hover) and (pointer:fine){
   .fx-hover .index .t{transition:transform .7s var(--spring)}
-  .fx-hover .index a > .mono,.fx-hover .index .k{transition:transform .6s var(--spring) .06s,opacity .6s}
-  .fx-hover .index .bar{transition:none}
   .fx-hover .index a:hover .t,.fx-hover .index a:focus-visible .t{transform:translateX(.42em)}
-  .fx-hover .index a:hover > .mono,.fx-hover .index a:focus-visible > .mono{transform:translateX(10px)}
-  .fx-hover .index a:hover .k,.fx-hover .index a:focus-visible .k{transform:translateX(-10px)}
   .fx-hover .index:hover a:not(:hover) .t{transform:translateX(-.06em)}
 }
 /* 3. Open: the panel that grows from the row to the whole screen */
