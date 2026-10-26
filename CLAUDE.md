@@ -63,6 +63,17 @@ Each project sets `type` (see `types` in content.js) and follows that kind's cha
 Spacing: images inside a section sit close together (`--rg` = `--cg`); chapters open with a big gap and a 2px rule,
 so sections read as clearly separate blocks.
 
+## Grid and gaps (Felipe, Oct 26 2026)
+
+- Content always fills the width between the page margins (16px), unlike the cover, which touches the edges.
+- One gap for everything, `--gap` (8px on a phone up to 16px on a wide screen): between pieces in a row, between rows,
+  grid columns, strips, marquees. No `--breathe` inset inside gallery frames.
+- Loose galleries are justified rows: consecutive images/films share one height and fill the width (width in
+  proportion to each ratio), so nothing is cropped and gaps are equal. `col: 1`, `span` 9+ or spans passing 12 start a
+  new row; `shift`, `nudge`, `tight`, `speed` no longer do anything. A row taller than 115% of the screen narrows and centres.
+  On phones, rows of landscape pieces stack; portrait pairs stay side by side. Captions sit 6px below each piece.
+- Video buttons (play, sound, full screen) sit inside the film as one tag hanging from the top edge, `--tag-x` in from the left.
+
 Missing material (Felipe, Oct 24 2026): when a project lacks something its pattern calls for (an image, a fact, a
 section), put a visible placeholder instead of skipping it: a gallery item `{ todo: { en, pt }, ar?, col, span }`
 (dashed box "Falta …") or `"?"` as a meta value (year, role…). Felipe finds and sends the material. If something

@@ -171,46 +171,67 @@
   // Before → after (a rename): { swap: { before, after } }. A word set large with its dictionary entry: { word: { glyph, lang, head, note } }.
   // A row of pieces (a social carousel): { marquee: [{ src, ar }, …], caption }. It stands still and wraps,
   // so every piece is seen whole (never cropped at the edges).
-  // On phones items keep their order and alternate left/right in wider spans (`mfull: true` keeps one full width).
+  // Layout rule (Felipe, Oct 26 2026): content always fills the width, with one gap (--gap) between everything.
+  // Consecutive images and films become justified rows: each takes width in proportion to its own ratio, so a row
+  // shares one height, runs margin to margin and nothing is cropped. A new row starts at `col: 1`, at `span` 9+ or
+  // when the spans pass 12; `shift`, `nudge` and `tight` are ignored. Every other block runs full width.
+  // On phones a row of landscape pieces stacks one per line; a row of portraits stays side by side.
   function looseGallery(p) {
-    let side = 0, zi = 0;
-    return `<div class="loose">${p.gallery.map(it => {
-      const span = Math.min(12, it.span || 12), col = Math.min(13 - span, it.col || 1);
-      const mspan = it.text || it.chapter || it.mfull ? 12 : span >= 9 ? 12 : span >= 6 ? 11 : 9;
-      const mcol = mspan === 12 ? 1 : (side++ % 2 ? 13 - mspan : 1);
-      const style = `--col:${col};--span:${span};--mcol:${mcol};--mspan:${mspan};--shift:${it.shift || "0px"};--nudge:${it.nudge || "0px"};--tight:${it.tight ? 1 : 0};--z:${it.z || (++zi)}`;
-      const speed = !reduced && it.speed ? ` data-speed="${+it.speed}"` : "";
-      if (it.chapter) return `<section class="chap" style="${style}">
-        <p class="chap-k mono"><span>${esc(L(it.chapter))}</span>${it.kicker ? `<span class="muted">${esc(L(it.kicker))}</span>` : ""}</p>
-        <h2 class="chap-h">${esc(L(it.head)).replace(/\*(.+?)\*/g, "<em>$1</em>")}</h2>${it.text ? `<p class="body">${esc(L(it.text))}</p>` : ""}${
-          it.pills ? `<ul class="pills mono">${it.pills.map(x => { const t = L(x); return `<li${t[0] === "*" ? ` class="on"` : ""}>${esc(t.replace(/^\*/, ""))}</li>`; }).join("")}</ul>` : ""}</section>`;
-      // Something the story still needs (an image, a fact, a section): a dashed box saying what is missing
-      if (it.todo) return `<div class="todo" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
-      // A live page running inside the case, at desktop size scaled to fit; the print sits underneath while it loads,
-      // and a click anywhere opens the page itself: { embed: { url, w, h }, poster, caption }
-      if (it.embed) { const { url, src = url, w = 1440, h = 900 } = it.embed;
-        return `<figure class="fig embed" style="--ar:${w}/${h};${style}">${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}<div class="ph">
-          ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
-          <iframe src="${esc(src)}" width="${w}" height="${h}" loading="lazy" tabindex="-1" aria-hidden="true" style="--w:${w}"></iframe>
-          <a class="fig-link" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(T("openSite"))}: ${esc(url)}"><span class="fig-open mono">${esc(T("openSite"))} ↗</span></a></div></figure>`; }
-      if (it.swap) return `<div class="swap-ba" style="${style}">${[["before", "old"], ["after", "new"]].map(([k, c]) =>
-        `<p><span class="mono muted">${esc(T(k))}</span><b class="${c}">${esc(L(it.swap[k]))}</b></p>`).join("")}</div>`;
-      if (it.word) return `<div class="word-def" style="${style}"><p class="word-big" style="--n:${[...it.word.glyph].length}"${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""} aria-hidden="true">${esc(it.word.glyph)}</p>
-        <p class="word-entry"><b${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""}>${esc(L(it.word.head))}</b><span class="mono">${esc(L(it.word.note))}</span></p></div>`;
-      if (it.marquee) { const imgs = it.marquee.map(m => { const [w, h] = String(m.ar || "1").split("/").map(Number); return `<img src="${esc(m.src)}" width="${w}" height="${h || 1}" alt="" loading="lazy">`; }).join("");
-        return `<figure class="fig marquee-fig" style="${style}">${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}
-          <div class="marquee" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"><div class="marquee-track">${imgs}</div></div></figure>`; }
-      if (it.text) return `<p class="ltext" style="${style}"${speed}>${esc(L(it.text))}</p>`;
-      // Flip: one item large with the whole set as thumbnails below; a thumbnail, the large image or the arrow keys turn the page
-      if (it.flip) { const f = it.flip[0];
-        return `<div class="flip" style="${style}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
-          <p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
-          <div class="flip-thumbs" role="group">${it.flip.map((t, k) => `<button type="button" aria-pressed="${!k}" data-k="${k}" aria-label="${esc(L(t.caption) || "")}"><img src="${esc(t.src)}" alt="" loading="lazy"></button>`).join("")}</div></div>`; }
-      // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
-      if (it.strip) return `<div class="strip" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
-        return fig(s, p, `--sar:${(w / (h || 1)).toFixed(4)}`); }).join("")}</div>`;
-      return fig(it, p, style, speed);
-    }).join("")}</div>`;
+    const ratio = ar => { const [w, h] = String(ar || "16/9").split("/").map(Number); return w / (h || 1); };
+    const isMedia = it => (it.src || it.video) && !it.scrub && !it.spin;
+    let html = "", row = [], used = 0;
+    const flush = () => {
+      if (!row.length) return;
+      const sum = row.reduce((a, it) => a + ratio(it.ar), 0);
+      html += `<div class="jrow${row.length > 1 && sum > 2.2 ? " stack-m" : ""}" style="--sum:${sum.toFixed(4)};--n:${row.length}">${
+        row.map(it => fig(it, p, `--r:${ratio(it.ar).toFixed(4)}`)).join("")}</div>`;
+      row = []; used = 0;
+    };
+    p.gallery.forEach(it => {
+      if (!isMedia(it)) { flush(); html += block(it, p); return; }
+      const span = Math.min(12, it.span || 12);
+      if (row.length && (it.col === 1 || span >= 9 || used + span > 12)) flush();
+      row.push(it); used += span;
+      if (span >= 9) flush();
+    });
+    flush();
+    return `<div class="loose">${html}</div>`;
+  }
+
+  // A full-width block in the loose gallery: chapter, text, rename, word, marquee, flip, strip, embed, placeholder,
+  // or a scroll sequence / 360° viewer
+  function block(it, p) {
+    const style = "", speed = "";
+    if (it.chapter) return `<section class="chap" style="${style}">
+      <p class="chap-k mono"><span>${esc(L(it.chapter))}</span>${it.kicker ? `<span class="muted">${esc(L(it.kicker))}</span>` : ""}</p>
+      <h2 class="chap-h">${esc(L(it.head)).replace(/\*(.+?)\*/g, "<em>$1</em>")}</h2>${it.text ? `<p class="body">${esc(L(it.text))}</p>` : ""}${
+        it.pills ? `<ul class="pills mono">${it.pills.map(x => { const t = L(x); return `<li${t[0] === "*" ? ` class="on"` : ""}>${esc(t.replace(/^\*/, ""))}</li>`; }).join("")}</ul>` : ""}</section>`;
+    // Something the story still needs (an image, a fact, a section): a dashed box saying what is missing
+    if (it.todo) return `<div class="todo" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
+    // A live page running inside the case, at desktop size scaled to fit; the print sits underneath while it loads,
+    // and a click anywhere opens the page itself: { embed: { url, w, h }, poster, caption }
+    if (it.embed) { const { url, src = url, w = 1440, h = 900 } = it.embed;
+      return `<figure class="fig embed" style="--ar:${w}/${h};${style}">${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}<div class="ph">
+        ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
+        <iframe src="${esc(src)}" width="${w}" height="${h}" loading="lazy" tabindex="-1" aria-hidden="true" style="--w:${w}"></iframe>
+        <a class="fig-link" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(T("openSite"))}: ${esc(url)}"><span class="fig-open mono">${esc(T("openSite"))} ↗</span></a></div></figure>`; }
+    if (it.swap) return `<div class="swap-ba" style="${style}">${[["before", "old"], ["after", "new"]].map(([k, c]) =>
+      `<p><span class="mono muted">${esc(T(k))}</span><b class="${c}">${esc(L(it.swap[k]))}</b></p>`).join("")}</div>`;
+    if (it.word) return `<div class="word-def" style="${style}"><p class="word-big" style="--n:${[...it.word.glyph].length}"${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""} aria-hidden="true">${esc(it.word.glyph)}</p>
+      <p class="word-entry"><b${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""}>${esc(L(it.word.head))}</b><span class="mono">${esc(L(it.word.note))}</span></p></div>`;
+    if (it.marquee) { const imgs = it.marquee.map(m => { const [w, h] = String(m.ar || "1").split("/").map(Number); return `<img src="${esc(m.src)}" width="${w}" height="${h || 1}" alt="" loading="lazy">`; }).join("");
+      return `<figure class="fig marquee-fig" style="${style}">${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}
+        <div class="marquee" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"><div class="marquee-track">${imgs}</div></div></figure>`; }
+    if (it.text) return `<p class="ltext" style="${style}"${speed}>${esc(L(it.text))}</p>`;
+    // Flip: one item large with the whole set as thumbnails below; a thumbnail, the large image or the arrow keys turn the page
+    if (it.flip) { const f = it.flip[0];
+      return `<div class="flip" style="${style}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
+        <p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
+        <div class="flip-thumbs" role="group">${it.flip.map((t, k) => `<button type="button" aria-pressed="${!k}" data-k="${k}" aria-label="${esc(L(t.caption) || "")}"><img src="${esc(t.src)}" alt="" loading="lazy"></button>`).join("")}</div></div>`; }
+    // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
+    if (it.strip) return `<div class="strip" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
+      return fig(s, p, `--sar:${(w / (h || 1)).toFixed(4)}`); }).join("")}</div>`;
+    return fig(it, p);
   }
 
   function fig(it, p, style = "", speed = "") {
@@ -231,9 +252,8 @@
     return `<figure class="fig ${it.size || "full"}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${style}"${speed}><div class="ph">${
       it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""}${it.offset ? ` data-offset="${+it.offset}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
           <source src="${esc(it.video)}" type="video/mp4">${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}</video>
-        <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button></div>
-        <button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
-          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 6V1h5M10 1h5v5M15 10v5h-5M6 15H1v-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>`
+        <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button><button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M1 6V1h5M10 1h5v5M15 10v5h-5M6 15H1v-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button></div>`
       // `href`: the image is a print of a live page; clicking opens that page in a new tab
       : it.src && it.href ? `<a class="fig-link" href="${esc(it.href)}" target="_blank" rel="noopener"><img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy"><span class="fig-open mono">${esc(T("openSite"))} ↗</span></a>`
       : it.src ? `<img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy">` : cover(it.art, p)

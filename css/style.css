@@ -2,6 +2,8 @@
    White page, black type, blue interventions. Intro sequence, then corner navigation over a minimal index. */
 :root{
   --bg:#fff; --fg:#0a0a0a; --mute:#8e8e8e; --line:#e2e2e2; --panel:#e9e9e9; --breathe:clamp(4px,.7vw,10px); --blue:#1a2bff;
+  /* One gap for the whole site (Felipe, Oct 26 2026): between pieces, rows and grid columns; 8px on a phone, 16px on a wide screen */
+  --gap:clamp(8px,1vw,16px); --tag-x:10px;
   --sans:"Figtree","Helvetica Neue",Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   --ease:cubic-bezier(.11,.82,.39,.92);
@@ -144,7 +146,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* 3. Open: the panel that grows from the row to the whole screen */
 .veil{position:fixed;inset:0;z-index:70;background:var(--blue);pointer-events:none}
 
-.grid{display:none;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:40px 16px}
+.grid{display:none;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:40px var(--gap)}
 .works.as-grid .grid{display:grid}
 .works.as-grid .index{display:none}
 .card{display:grid;gap:10px;text-decoration:none;min-width:0}
@@ -205,12 +207,13 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fig .ph > canvas.grabbing{cursor:grabbing}
 .spin-ui{position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-between;gap:12px;color:#fff;pointer-events:none;font:400 11px/1 var(--mono);text-transform:uppercase}
 .spin-deg{font-variant-numeric:tabular-nums}
-.vctl{position:absolute;left:10px;bottom:10px;z-index:1;display:flex;gap:4px}
+/* Video buttons hang from the top edge of the film like a tag, a little in from the left */
+.vctl{position:absolute;left:var(--tag-x);top:0;z-index:1;display:flex;gap:2px}
 .vctl button{all:unset;cursor:pointer;padding:6px 9px;background:var(--fg);color:var(--bg);font:400 11px/1 var(--mono);text-transform:uppercase}
 .vctl button:hover{background:var(--blue)}
 .vctl .sound[aria-pressed="true"]{background:var(--blue)}
 .vctl button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.fsbtn{all:unset;position:absolute;top:10px;right:10px;z-index:1;cursor:pointer;width:30px;height:30px;display:grid;place-items:center;background:var(--fg);color:var(--bg)}
+.vctl .fsbtn{display:grid;place-items:center;padding:0 8px}
 .fsbtn:hover{background:var(--blue)}
 .fsbtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .fig figcaption{margin-top:8px}
@@ -224,19 +227,19 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fig.cover-fig .ph > img{position:static;display:block;width:100%;height:auto;transform:none}
 /* Loose gallery: 12-column grid, each item places itself; rows follow content */
 /* Rows sit --rg apart; items marked `tight` (same content as the row above, e.g. a set of films) sit --cg apart */
-.loose{--cg:clamp(12px,1.6vw,24px);--rg:clamp(12px,1.6vw,24px);--pull:calc(var(--cg) - var(--rg));display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--cg);row-gap:var(--rg);align-items:start}
-.loose > *{grid-column:var(--col) / span var(--span);margin-top:calc(var(--shift) + var(--tight,0) * var(--pull));left:var(--nudge,0px);will-change:translate}
+.loose{--cg:var(--gap);--breathe:0px;display:flex;flex-direction:column;gap:var(--gap)}
+.loose > *{min-width:0}
+/* Justified row: pieces share one height and fill the width; a row too tall for the screen narrows and centres */
+.jrow{display:flex;gap:var(--gap);align-items:flex-start;width:min(100%,calc(var(--sum) * 115svh + (var(--n) - 1) * var(--gap)));align-self:center}
+.jrow > .fig{flex:var(--r) 1 0;min-width:0}
 /* Overlap: a negative shift pulls an item up over the one before it. Later items sit on top;
    captions sit above each image as a label and video controls move to the top, so the covered
    (lower) part of an image never hides them. Hover or focus brings an item to the front. */
-.loose > *{position:relative;z-index:var(--z,1);transition:z-index 0s}
-.loose > .fig:hover,.loose > .fig:focus-within{z-index:30}
 .loose .fig{display:flex;flex-direction:column}
-.loose .fig figcaption{order:-1;align-self:flex-start;margin:0 0 6px;padding:3px 8px 3px 0;background:var(--bg)}
-.loose .vctl{top:10px;bottom:auto}
-.loose .spin-ui{top:12px;bottom:auto}
+.loose .fig figcaption{margin:6px 0 0}
+.loose .spin-ui{top:10px;bottom:auto;left:var(--tag-x)}
 /* Chapter: numbered opener for a part of the story (label line, headline, short text) */
-.chap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px 20px;padding-top:14px;border-top:2px solid var(--fg);margin-top:calc(var(--shift) + clamp(48px,7vw,120px));margin-bottom:clamp(4px,1vw,16px)}
+.chap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px 20px;padding-top:14px;border-top:2px solid var(--fg);margin-top:clamp(40px,6vw,104px);margin-bottom:var(--gap)}
 .chap-k{grid-column:1;grid-row:1 / span 2;margin:0;display:flex;flex-direction:column;gap:4px}
 .chap-h{grid-column:2;margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .chap .body{grid-column:2}
@@ -272,13 +275,13 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .word-entry{margin:0;display:grid;gap:6px;padding-top:12px;border-top:1px solid var(--line);font:400 clamp(15px,1.25vw,18px)/1.5 var(--mono)}
 .word-entry .mono{color:var(--blue)}
 /* Marquee (social carousel): the pieces stand still in a wrapping grid, each one whole at its own proportion */
-.marquee-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:var(--cg,16px)}
+.marquee-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:var(--gap)}
 .marquee-track img{display:block;width:100%;height:auto}
 .ltext{margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .case-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;padding-block:clamp(36px,5vw,80px)}
 .body{font:400 clamp(15px,1.25vw,18px)/1.6 var(--mono);letter-spacing:-.01em;max-width:62ch;margin:0}
-.case-gallery{display:grid;gap:clamp(12px,1.6vw,20px)}
-[class^="row-"]{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:clamp(12px,1.6vw,20px);align-items:start}
+.case-gallery{display:grid;gap:var(--gap)}
+[class^="row-"]{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:var(--gap);align-items:start}
 .case-stats{list-style:none;margin:0 0 clamp(60px,8vw,120px);padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:24px 20px;border-top:1px solid var(--fg)}
 .case-stats li{display:grid;gap:6px;padding-top:12px}
 .case-stats b{font:900 clamp(48px,6vw,104px)/.85 var(--sans);letter-spacing:-.05em}
@@ -296,9 +299,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .word-def,.swap-ba p{grid-template-columns:1fr;gap:6px}
   .word-big{font-size:min(28vw,calc(150vw / var(--n,4)))}
   .row-half{grid-template-columns:1fr}
-  .loose{--rg:10px;--cg:10px;--pull:0px}
-  .loose > *{grid-column:var(--mcol) / span var(--mspan);margin-top:calc(var(--tight,0) * var(--pull));left:0}
-  .loose .fig figcaption{order:0;margin:8px 0 0;padding:0}
+    .jrow.stack-m{flex-direction:column;align-items:center;width:100%}
+  .jrow.stack-m > .fig{flex:none;width:min(100%,calc(var(--r) * 115svh))}
   .row-third,.row-quarter{grid-template-columns:1fr 1fr}
   .index a{grid-template-columns:2.2em minmax(0,1fr)}
   .index .k{display:none}
@@ -374,7 +376,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* The figure is tall; its frame sticks and steps through the frames as the page scrolls past */
 .scrub{height:calc(var(--n) * 38vh + 100vh)}
 .scrub-stick{position:sticky;top:64px;display:flex;flex-direction:column;width:min(100%,calc((100svh - 220px) * 16 / 9));margin:0 auto}
-.loose .scrub-stick figcaption{align-self:flex-start;margin:0 0 6px;padding:3px 8px 3px 0;background:var(--bg)}
+.loose .scrub-stick figcaption{align-self:flex-start;margin:0 0 6px}
 .scrub .ph{aspect-ratio:var(--ar,16/9);position:relative;overflow:hidden}
 .scrub .ph img{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain;opacity:0;transition:opacity .25s}
 .scrub .ph img.on{opacity:1}
@@ -461,7 +463,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case.motion .chap.in{opacity:1;transform:none}
 
 /* Strip: items share one height, widths follow their aspect ratios; on phones it wraps two per row */
-.strip{display:flex;flex-wrap:wrap;gap:var(--cg,16px);align-items:flex-start}
+.strip{display:flex;flex-wrap:wrap;gap:var(--gap);align-items:flex-start}
 .strip > .fig{flex:var(--sar) 1 calc(var(--sar) * 120px);min-width:0}
 .strip > .fig .ph{aspect-ratio:var(--ar)}
 @media (max-width:760px){ .strip > .fig{flex-basis:calc(var(--sar) * 220px)} }
@@ -470,7 +472,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .flip .fig .ph{cursor:pointer}
 .flip .fig .ph > img{transition:none}
 .flip-cap{margin:10px 0 0;min-height:1.25em}
-.flip-thumbs{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:var(--cg,12px);margin-top:10px}
+.flip-thumbs{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:var(--gap);margin-top:10px}
 .flip-thumbs button{all:unset;cursor:pointer;aspect-ratio:9/5;overflow:hidden;opacity:.45;transition:opacity .3s;outline-offset:2px}
 .flip-thumbs button:hover,.flip-thumbs button[aria-pressed="true"]{opacity:1}
 .flip-thumbs button{position:relative}
@@ -479,6 +481,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .flip-thumbs button:focus-visible{outline:2px solid var(--blue)}
 .flip-thumbs img{width:100%;height:100%;object-fit:contain}
 /* The large image and its thumbnails fit on one screen together */
-.loose > .flip{width:min(100%,calc((100svh - 150px) / .7));justify-self:center}
+.loose > .flip{width:min(100%,calc((100svh - 150px) / .7));align-self:center}
 .strip .vctl{flex-direction:column;align-items:flex-start}
 .case.motion .case-gallery .scrub .ph > img{scale:1;translate:none!important}
