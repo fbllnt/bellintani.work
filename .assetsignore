@@ -5,3 +5,5 @@ wrangler.jsonc
 CLAUDE.md
 README.md
 .DS_Store
+.github
+.wrangler

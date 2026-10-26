@@ -1,0 +1,31 @@
+# Publishes the site to the Cloudflare Worker "bellintani-work" on every push to main.
+# Needs the repository secret CLOUDFLARE_API_TOKEN (Cloudflare token from the "Edit Cloudflare Workers" template).
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: c216143adc87c8c0a6cfaed0a4ba990c
+    steps:
+      - uses: actions/checkout@v4
+      - name: Missing token
+        if: env.CLOUDFLARE_API_TOKEN == ''
+        run: echo "::warning::Add the CLOUDFLARE_API_TOKEN secret to deploy from GitHub."
+      - uses: actions/setup-node@v4
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        with:
+          node-version: 22
+      - name: Deploy
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        run: npx -y wrangler@4 deploy

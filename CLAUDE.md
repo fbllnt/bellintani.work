@@ -4,6 +4,8 @@ Static site (HTML/CSS/JS, no build). `main` on GitHub (fbllnt/bellintani.work) i
 a Cloudflare Worker named `bellintani-work` serving static assets (free plan; moved from Netlify on Oct 26 2026
 after Netlify paused the site for deploy credits) to https://bellintani.work about a minute after each push.
 Config: `wrangler.jsonc` (assets = repo root) and `.assetsignore` (files never served). Deploy command `npx wrangler deploy`.
+Deploys run from GitHub Actions (`.github/workflows/deploy.yml`, secret `CLOUDFLARE_API_TOKEN`) because Cloudflare's own
+Workers Builds started skipping builds on Oct 26 2026. Check a deploy with `gh run list --workflow deploy.yml`.
 Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still batch pushes.
 
 ## Publishing workflow (agreed with Felipe)
