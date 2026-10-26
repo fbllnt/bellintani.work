@@ -188,7 +188,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-title .w{display:inline-flex;white-space:nowrap}
 .case-title .w > span{display:inline-block;animation:rise .6s var(--over) both .12s}
 .case-title .sp{width:.22em}
-.case-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:16px 20px;margin:clamp(28px,4vw,56px) 0 0;padding-top:14px;border-top:1px solid var(--fg)}
+.case-meta{font-size:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:16px 20px;margin:clamp(28px,4vw,56px) 0 0;padding-top:14px;border-top:1px solid var(--fg)}
 .case-meta div{min-width:0}
 .case-meta .live,.case-meta .wide{grid-column:span 2}
 .case-tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:clamp(20px,2.4vw,32px) 0 0;padding:0;color:var(--blue)}
@@ -482,3 +482,4 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loose > .flip{width:min(100%,calc((100svh - 150px) / .7));align-self:center}
 .strip .vctl{flex-direction:column;align-items:flex-start}
 .case.motion .case-gallery .scrub .ph > img{scale:1;translate:none!important}
+.case-meta .credit-link{color:inherit;text-decoration:none;border-bottom:1px solid currentColor}.case-meta .credit-link:hover{color:var(--accent,inherit)}

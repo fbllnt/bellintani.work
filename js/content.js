@@ -134,6 +134,13 @@ window.SITE = {
       title: "Seja ANTI",
       type: "campaign",
       client: "ANTI Creative Finance",
+      // Credits (ficha técnica): shown in the meta after Tools; url makes the name a link
+      credits: [
+        { role: { en: "Agency", pt: "Agência" }, name: "Fair Creativity Shop", url: "https://fair.com.ag/" },
+        { role: "COO", name: "Mauricio Prado" },
+        { role: "CCO / Copywriter", name: "Juliano Ribas" },
+        { role: { en: "Production", pt: "Produção" }, name: "Casaas", url: "https://casaas.com.br/" },
+      ],
       year: "2026",
       role: { en: "Lead Designer / Art Director / AI Creator / UX/UI", pt: "Lead Designer / Diretor de Arte / AI Creator / UX/UI" },
       scope: { en: "Campaign // Activation // Digital", pt: "Campanha // Ativação // Digital" },
