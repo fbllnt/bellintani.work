@@ -150,7 +150,7 @@ window.SITE = {
       // Black page, white type, ANTI lime accent
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#d7f205" },
       // Tools in use order; a leading * marks an AI tool
-      tools: ["Adobe CC (Illustrator, Photoshop, Premiere)", "*Flora.AI", "*Claude Code"],
+      tools: ["Adobe CC (Illustrator, Photoshop, Premiere)", "*Midjourney", "*Flora.AI", "*Claude Code"],
       image: "images/anti/skeletons.jpg",
       link: { label: "naoespere.sejaanti.com.br", url: "https://naoespere.sejaanti.com.br" },
       summary: {
