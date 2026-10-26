@@ -188,10 +188,10 @@
       if (it.todo) return `<div class="todo" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
       // A live page running inside the case, at desktop size scaled to fit; the print sits underneath while it loads,
       // and a click anywhere opens the page itself: { embed: { url, w, h }, poster, caption }
-      if (it.embed) { const { url, w = 1440, h = 900 } = it.embed;
+      if (it.embed) { const { url, src = url, w = 1440, h = 900 } = it.embed;
         return `<figure class="fig embed" style="--ar:${w}/${h};${style}">${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}<div class="ph">
           ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
-          <iframe src="${esc(url)}" width="${w}" height="${h}" loading="lazy" tabindex="-1" aria-hidden="true" style="--w:${w}"></iframe>
+          <iframe src="${esc(src)}" width="${w}" height="${h}" loading="lazy" tabindex="-1" aria-hidden="true" style="--w:${w}"></iframe>
           <a class="fig-link" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(T("openSite"))}: ${esc(url)}"><span class="fig-open mono">${esc(T("openSite"))} ↗</span></a></div></figure>`; }
       if (it.swap) return `<div class="swap-ba" style="${style}">${[["before", "old"], ["after", "new"]].map(([k, c]) =>
         `<p><span class="mono muted">${esc(T(k))}</span><b class="${c}">${esc(L(it.swap[k]))}</b></p>`).join("")}</div>`;
