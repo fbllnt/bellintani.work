@@ -177,12 +177,9 @@ window.SITE = {
           ], col: 1, span: 12 },
         { chapter: { en: "03 · Street", pt: "03 · Rua" }, kicker: { en: "Lambe-lambes · São Paulo", pt: "Lambe-lambes · São Paulo" },
           head: { en: "From the festival to the *street.*", pt: "Do festival para a *rua.*" } },
-        { strip: [
-            { video: "images/anti/film-ccsp.mp4", webm: "images/anti/film-ccsp.webm", poster: "images/anti/film-ccsp-poster.jpg", ar: "720/1280" },
-            { src: "images/anti/poster-freela.jpg", ar: "1411/2000" },
-            { src: "images/anti/poster-skeleton.jpg", ar: "1411/2000" },
-            { src: "images/anti/poster-anti.jpg", ar: "1411/2000" },
-          ], col: 1, span: 12 },
+        // Backstage film (film-ccsp) and the Free my freela poster removed for now (Felipe, Oct 26 2026); files kept
+        { src: "images/anti/poster-skeleton.jpg", ar: "1411/2000", mfull: true, col: 1, span: 6 },
+        { src: "images/anti/poster-anti.jpg", ar: "1411/2000", mfull: true, col: 7, span: 6 },
         { src: "images/anti/street-posters.jpg", ar: "2000/1121", col: 1, span: 12, caption: { en: "Lambe-lambe posters on the street, São Paulo", pt: "Lambe-lambes na rua, São Paulo" } },
         { src: "images/anti/poster-grid.jpg", ar: "1500/1304", col: 2, span: 10, tight: true },
         { strip: [
