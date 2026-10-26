@@ -205,7 +205,7 @@ window.SITE = {
       title: "Adidas Trionda",
       type: "motion",
       client: "Adidas",
-      year: "?",
+      year: "2026",
       role: { en: "Creative Director / Art Director / Motion Designer / AI Creator", pt: "Diretor de Criação / Diretor de Arte / Motion Designer / AI Creator" },
       scope: { en: "Key Visual // Film", pt: "Key Visual // Filme" },
       sector: { en: "Sportswear · Football", pt: "Esporte · Futebol" },
