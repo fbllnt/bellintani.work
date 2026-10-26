@@ -229,6 +229,7 @@ window.SITE = {
           head: { en: "Adidas, official FIFA World Cup ball supplier *since 1970.*", pt: "Adidas, fornecedora oficial da bola da Copa do Mundo FIFA *desde 1970.*" } },
         // Film 02 (The breakaway) removed (Felipe, Oct 26 2026); files kept in images/warriors/
         { video: "images/warriors/film.mp4?v=2", webm: "images/warriors/film.webm?v=2", poster: "images/warriors/film-poster.jpg?v=2", ar: "16/9", col: 1, span: 12, caption: { en: "Film 01 — Messi vs Beckenbauer", pt: "Filme 01 — Messi vs Beckenbauer" } },
+        { video: "images/warriors/film-04.mp4", webm: "images/warriors/film-04.webm", poster: "images/warriors/film-04-poster.jpg", ar: "1280/714", col: 1, span: 12, caption: { en: "Film 02 — Maradona vs Pelé", pt: "Filme 02 — Maradona vs Pelé" } },
         { video: "images/warriors/film-03.mp4", webm: "images/warriors/film-03.webm", poster: "images/warriors/film-03-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Film 03 — Finale: Yamal scores", pt: "Filme 03 — Final: Yamal marca" } },
         { src: "images/warriors/portrait-01.jpg", ar: "1376/768", col: 1, span: 6 },
         { src: "images/warriors/portrait-02.jpg", ar: "1920/1024", col: 7, span: 6 },
