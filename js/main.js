@@ -106,7 +106,8 @@
   // ---------- Intro ----------
   const stage = $("top"), corners = $("corners");
   $("loader").innerHTML = L(S.loader).map((w, i) => `<span${w[0] === "*" ? ` class="blue"` : ""} style="--d:${(0.1 + i * 0.17).toFixed(2)}s">${esc(w.replace(/^\*/, ""))}</span>`).join("")
-    + (S.loaderBig ? `<span class="big" style="--d:1.5s">${esc(L(S.loaderBig))}</span>` : "");
+    + (S.loaderBig ? `<span class="big" style="--d:1.5s">${esc(L(S.loaderBig))}</span>` : "")
+    + (S.loaderDot ? `<span class="dot" style="--d:1.44s"></span>` : "");
 
   // Name: every letter takes the same time but starts 80px further down, so they land as a wave
   const nameEl = $("name");
