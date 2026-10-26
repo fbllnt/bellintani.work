@@ -2,6 +2,10 @@
 {
   "name": "bellintani-work",
   "compatibility_date": "2026-10-01",
+  "routes": [
+    { "pattern": "bellintani.work", "custom_domain": true },
+    { "pattern": "www.bellintani.work", "custom_domain": true }
+  ],
   "assets": {
     "directory": ".",
     "not_found_handling": "none"
