@@ -18,7 +18,7 @@ window.SITE = {
   },
   // Intro loader: each word cuts on in turn; a word starting with * shows in blue. Add loaderBig: { en, pt } to end on one big word.
   loader: {
-    en: ["Hey", "don't", "blink", "*good", "*things", "take", "a", "sec"],
+    en: ["Hey", "don't", "blink", "*good", "*things", "take", "time"],
     pt: ["Ei,", "não", "pisca", "*coisa", "*boa", "leva", "um", "tempo"],
   },
   services: {
