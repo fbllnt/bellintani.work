@@ -227,8 +227,8 @@ window.SITE = {
           text: { en: "Legends from different eras meet on the same rain-soaked pitch. A key visual and a short film for Adidas, built on the grit of the game: mud, rain and the slide tackle.", pt: "Lendas de épocas diferentes se encontram no mesmo gramado encharcado. Um key visual e um filme curto para a Adidas, construídos sobre a garra do jogo: lama, chuva e o carrinho." } },
         { chapter: { en: "02 · Film", pt: "02 · Filme" }, kicker: { en: "Messi · Beckenbauer · Higuita · Yamal", pt: "Messi · Beckenbauer · Higuita · Yamal" },
           head: { en: "Adidas, official FIFA World Cup ball supplier *since 1970.*", pt: "Adidas, fornecedora oficial da bola da Copa do Mundo FIFA *desde 1970.*" } },
-        // Film 01 (Messi vs Beckenbauer) removed (Felipe, Oct 26 2026); files kept in images/warriors/
-        { video: "images/warriors/film-02.mp4", webm: "images/warriors/film-02.webm", poster: "images/warriors/film-02-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Film 02 — The breakaway", pt: "Filme 02 — A arrancada" } },
+        // Film 02 (The breakaway) removed (Felipe, Oct 26 2026); files kept in images/warriors/
+        { video: "images/warriors/film.mp4", webm: "images/warriors/film.webm", poster: "images/warriors/film-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Film 01 — Messi vs Beckenbauer", pt: "Filme 01 — Messi vs Beckenbauer" } },
         { video: "images/warriors/film-03.mp4", webm: "images/warriors/film-03.webm", poster: "images/warriors/film-03-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Film 03 — Finale: Yamal scores", pt: "Filme 03 — Final: Yamal marca" } },
         { todo: { en: "frame / concept 1", pt: "frame / concept 1" }, ar: "16/9", col: 1, span: 6 },
         { todo: { en: "frame / concept 2", pt: "frame / concept 2" }, ar: "16/9", col: 7, span: 6 },
