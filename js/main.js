@@ -28,12 +28,14 @@
   try { resumeY = sessionStorage.getItem("resume"); sessionStorage.removeItem("resume"); } catch (e) {}
 
   // ---------- Projects hidden on the public site (Felipe, Oct 2026) ----------
-  // bellintani.work shows no projects for now. Felipe sees the full site on any Netlify preview link,
-  // or on the public address after opening it once with ?full (saved in this browser; ?public undoes it).
+  // bellintani.work shows no projects for now. Felipe sees the full site on any preview link
+  // (Cloudflare <id>.<project>.pages.dev, Netlify deploy-preview-*), or on the public address after
+  // opening it once with ?full (saved in this browser; ?public undoes it).
   const q = new URLSearchParams(location.search);
   if (q.has("full")) store("full", "1");
   if (q.has("public")) store("full");
-  const publicHost = /(^|\.)bellintani\.work$/.test(location.hostname) || location.hostname === "fbllnt.netlify.app";
+  const publicHost = /(^|\.)bellintani\.work$/.test(location.hostname) || location.hostname === "fbllnt.netlify.app"
+    || /^[^.]+\.pages\.dev$/.test(location.hostname);
   if (publicHost && read("full") !== "1") {
     S.projects = [];
     document.documentElement.classList.add("no-work");
