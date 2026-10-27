@@ -700,7 +700,6 @@ window.SITE = {
         { name: "Join", src: "images/logos/join.png" },
         { name: "life's good", src: "images/logos/lifes-good.png" },
         { name: "Las Movidas de Puta Madre", src: "images/logos/las-movidas.png" },
-        { name: "Leo Mafra", src: "images/logos/leo-mafra.png" },
         { name: "Space Lab", src: "images/logos/space-lab.png" },
         { name: "SavageBrit", src: "images/logos/savage-brit.png" },
         { name: "Thura", src: "images/logos/thura.png" },
@@ -730,10 +729,10 @@ window.SITE = {
         { name: "Digital Marketing Academy by JBS", src: "images/logos/dma.png" },
         { name: "hyclean from JBS", src: "images/logos/hyclean.png" },
         { name: "Camarote Lew’Lara", src: "images/logos/camarote-lewlara.png" },
-        { name: "House Party Orloff", src: "images/logos/houseparty.png" },
         { name: "House Party Orloff, 3D", src: "images/logos/houseparty-3d.png" },
         { name: "Top Fifty Unforgettable", src: "images/logos/top-fifty.png" },
-      ].concat(Array.from({ length: 13 }, (_, k) => ({
+      // Leo Mafra and the flat House Party Orloff removed, placeholders Logo 41–50 dropped (Felipe, Oct 27 2026)
+      ].concat(Array.from({ length: 3 }, (_, k) => ({
         name: `Logo ${String(k + 38).padStart(2, "0")}`,
         year: String(2026 - (k % 9)),
       }))),

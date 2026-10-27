@@ -316,8 +316,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* ---------- Logo wall ---------- */
 /* Square tiles on hairline rules; marks are one-colour files used as masks, so CSS sets their colour */
 .logo-filter{flex-wrap:wrap;margin-bottom:22px}
-.logos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-.logos li{background:var(--bg)}
+/* Lines are drawn by each tile (right and bottom), so an unfinished last row leaves page colour, not grey */
+.logos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.logos li{background:var(--bg);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
 .logos li[hidden]{display:none}
 .logo{all:unset;box-sizing:border-box;position:relative;display:grid;place-items:center;width:100%;aspect-ratio:1;cursor:pointer;overflow:hidden;color:#000;background:#fff}
 /* Hover: --f (0 to 1) floods the tile from the bottom with the brand colour and --s zooms the mark.
