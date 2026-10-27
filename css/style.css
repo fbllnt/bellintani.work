@@ -564,7 +564,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .pair .chap.tr{border-top:0;padding-top:0}
 .ltext.side{margin:0;font-size:clamp(20px,1.9vw,30px);line-height:1.15}
 /* Cartaz: the headline runs huge across the columns; the first piece sits in 1-6, the text in 7-12 */
-.chap.cz{display:block}
+.chap.cz .chap-h{grid-column:1 / -1;grid-row:1}
+.chap.cz .chap-k{grid-row:2 / span 2}
+.chap.cz .body,.chap.cz .pills{grid-row:auto}
 .chap.cz .chap-h{font-size:clamp(48px,9.5vw,184px);line-height:.86;letter-spacing:-.055em}
 .pair.cz .pair-fig{grid-column:1 / 7;align-items:flex-start}
 .pair.cz .pair-text{grid-column:7 / 13}

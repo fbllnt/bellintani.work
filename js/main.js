@@ -276,7 +276,7 @@
   //   destaque hierarchy: one piece alone, then two, then three, then one again; films at most two to a row
   //   trilho   the chapter text sticks in columns 1-4 while its images run in columns 5-12
   //   modulos  equal cells (`cell`, default 4/3), each piece whole and centred on the panel colour
-  //   cartaz   the chapter headline runs huge across the columns; the first piece sits in 1-6 beside the text
+  //   cartaz   the chapter headline runs huge across all 12 columns; pieces keep the fluxo rows
   function looseGallery(p) {
     const ratio = ar => { const [w, h] = String(ar || "16/9").split("/").map(Number); return w / (h || 1); };
     const isMedia = it => ((it.src || it.video || it.tunnel) && !it.scrub && !it.spin) || (it.todo && it.span < 12);
@@ -350,12 +350,8 @@
         grid = pick(it.grid) || grid;
         const ch = block(it, p);
         if (grid === "trilho") { side = ch.replace('class="chap"', 'class="chap tr"'); return; }
-        if (grid === "cartaz") {
-          const head = (ch.match(/<h2 class="chap-h">[\s\S]*?<\/h2>/) || [""])[0];
-          html += `<section class="chap cz">${head}</section>`;
-          pend = { cz: true, html: ch.replace(head, "").replace(/^<section class="chap"[^>]*>|<\/section>$/g, "") };
-          return;
-        }
+        // Cartaz: the headline runs huge across all 12 columns; label and text sit below it as usual, pieces keep their rows
+        if (grid === "cartaz") { html += ch.replace('class="chap"', 'class="chap cz"'); return; }
         pend = { html: ch.replace('class="chap"', 'class="chap tr"'), solo: ch };
         return;
       }
