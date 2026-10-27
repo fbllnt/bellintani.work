@@ -238,7 +238,7 @@ window.SITE = {
           head: { en: "A trade-shop badge, *re-lettered by AI.*", pt: "Um selo de oficina, *reescrito por IA.*" },
           text: { en: "Four references and twenty-odd directions on one Flora canvas. The winner started as a vintage outfitters badge: upscaled, re-lettered with Nano Banana Pro, told to make UNFORGETTABLE bigger, then redrawn by hand as vector with a crossed hammer and wrench.", pt: "Quatro referências e umas vinte direções num canvas do Flora. A escolhida partiu de um selo vintage de outfitters: ampliado, reescrito com o Nano Banana Pro, com a ordem de deixar UNFORGETTABLE maior, e depois redesenhado à mão em vetor, com martelo e chave cruzados." },
           pills: ["*Nano Banana Pro", "*Topaz Upscaler", "Adobe CC"] },
-        { src: "images/top50/lockups.png", ar: "2000/694", col: 1, span: 12, caption: { en: "Main and stacked lockups", pt: "Assinaturas principal e empilhada" } },
+        { src: "images/top50/lockups.png", ar: "2000/831", col: 1, span: 12, caption: { en: "Main and stacked lockups", pt: "Assinaturas principal e empilhada" } },
         ...[1, 2, 3, 4, 5].map(k => ({ src: `images/top50/logo-step-${k}.jpg`, ar: "960/735", col: k === 1 ? 1 : 2 * k - 1, span: 2 })),
         { src: "images/top50/type-gin.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Gin, for headlines and the countdown", pt: "Gin, para títulos e a contagem regressiva" } },
         { src: "images/top50/type-citrus.jpg", ar: "16/9", col: 7, span: 6, caption: { en: "Citrus Gothic, the everyday voice", pt: "Citrus Gothic, a voz do dia a dia" } },
