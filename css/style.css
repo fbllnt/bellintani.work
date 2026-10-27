@@ -94,11 +94,11 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .corners > *{position:absolute;pointer-events:auto;font:700 13px/1 var(--sans);letter-spacing:-.01em;text-transform:uppercase;text-decoration:none;color:#fff}
 .corners .swap > span + span{color:inherit}
 .c-tl{left:var(--side-l);top:calc(20px + env(safe-area-inset-top,0px))}
-/* On a project page the name is the way back home, so it grows (Felipe, Oct 27 2026); a padded hit area keeps
+/* On a project page the name is the way back home, so it grows to about twice the corner size (Felipe, Oct 27 2026); a padded hit area keeps
    the ink on the margin and gives phones a 44px+ target. Hover reads "← Home" instead of the copyright line. */
 .c-tl > .swap{color:inherit}
 .c-back{display:none}
-.in-case .c-tl{font-size:clamp(19px,2.5vw,36px);font-weight:900;letter-spacing:-.02em;padding:14px;left:calc(var(--side-l) - 14px);top:calc(20px - 14px + env(safe-area-inset-top,0px))}
+.in-case .c-tl{font-size:clamp(16px,1.7vw,24px);font-weight:900;letter-spacing:-.02em;padding:14px;left:calc(var(--side-l) - 14px);top:calc(20px - 14px + env(safe-area-inset-top,0px))}
 .in-case .c-tl .c-alt{display:none}
 .in-case .c-tl .c-back{display:block}
 /* Themed pages have no blend, so over a cover the name sits on a tag in the page colour (invisible on the page itself) */
