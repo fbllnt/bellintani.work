@@ -1071,7 +1071,7 @@ window.SITE = {
       type: "poster",
       client: "Cine Joia",
       year: "2012",
-      role: "?",
+      role: { en: "Graphic Designer / Illustrator", pt: "Designer gráfico / Ilustrador" },
       scope: { en: "Gig poster // Lettering", pt: "Pôster de show // Lettering" },
       sector: { en: "Concert venue, São Paulo", pt: "Casa de shows, São Paulo" },
       deliverables: { en: "Poster, lettering, versions and social posts", pt: "Pôster, lettering, versões e posts para redes" },
