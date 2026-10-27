@@ -560,7 +560,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .pair-text{grid-column:1 / 5;grid-row:1;position:sticky;top:calc(var(--side) + 48px);min-width:0;display:flex;flex-direction:column;gap:14px}
 .pair-fig{grid-column:5 / 13;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end}
 .pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * 100svh))}
-.pair-fig > :is(.flip,.strip,.embed){width:100%}
+.pair-fig > :is(.flip,.strip,.embed,.mods){width:100%}
 .pair .chap.tr{border-top:0;padding-top:0}
 /* A vertical film under the chapter text, filling the column down to the bottom of the piece beside it */
 .pair.has-side{align-items:stretch}

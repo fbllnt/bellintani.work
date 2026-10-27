@@ -283,14 +283,15 @@
   //   fluxo    justified rows grouped by col/span (the original layout)
   //   destaque hierarchy: one piece alone, then two, then three, then one again; films at most two to a row
   //   trilho   the chapter text sticks in columns 1-4 while its images run in columns 5-12
-  //   modulos  equal cells (`cell`, default 4/3), each piece whole and centred on the panel colour
+  //   modulos  equal cells (`cell`, default 4/3), each piece whole and centred on the panel colour; a chapter can set
+  //            `cols` (and `cell`) to keep its set together, small, beside the chapter text
   //   cartaz   the chapter headline runs huge across all 12 columns; pieces keep the fluxo rows
   function looseGallery(p) {
     const ratio = ar => { const [w, h] = String(ar || "16/9").split("/").map(Number); return w / (h || 1); };
     const isMedia = it => ((it.src || it.video || it.tunnel) && !it.scrub && !it.spin) || (it.todo && it.span < 12);
     const GRIDS = ["fluxo", "destaque", "trilho", "modulos", "cartaz"];
     const pick = g => GRIDS.includes(g) ? g : null;
-    let grid = pick(p.grid) || "fluxo";
+    let grid = pick(p.grid) || "fluxo", mod = {};
     const jrow = row => {
       const sum = row.reduce((a, it) => a + ratio(it.ar), 0);
       return `<div class="jrow${row.length > 1 && sum > 2.2 ? " stack-m" : ""}" style="--sum:${sum.toFixed(4)};--n:${row.length}">${
@@ -316,9 +317,10 @@
         // Two pieces or fewer are not a series: they stay a justified row
         if (n < 3) return films.map(f => jrow([f])).join("") + (n ? jrow(cells) : "");
         // Columns that leave the fewest empty cells, preferring four
-        const cols = n <= 4 ? Math.max(n, 1) : [4, 3].sort((a, b) => ((a - n % a) % a) - ((b - n % b) % b))[0];
+        const cell = mod.cell || p.cell || "4/3";
+        const cols = mod.cols ? +mod.cols : n <= 4 ? Math.max(n, 1) : [4, 3].sort((a, b) => ((a - n % a) % a) - ((b - n % b) % b))[0];
         return films.map(f => jrow([f])).join("") + (n ? `<div class="mods" style="--mc:${cols}">${cells.map(it =>
-          it.todo ? block(it, p, `--ar:${esc(p.cell || "4/3")}`) : fig({ ...it, ar: p.cell || "4/3" }, p)).join("")}</div>` : "");
+          it.todo ? block(it, p, `--ar:${esc(cell)}`) : fig({ ...it, ar: cell }, p)).join("")}</div>` : "");
       }
       // fluxo, trilho and cartaz rows: justified, grouped by col/span
       let out = "", row = [], used = 0;
@@ -347,6 +349,8 @@
         const a = Math.min(12, run[0].span || 12), b = run[1] ? Math.min(12, run[1].span || 12) : 0;
         if (run.length > 1 && a < 9 && b < 9 && run[1].col !== 1 && a + b <= 12) closePend();
       }
+      // A chapter that sets `cols` keeps its whole set of modules together beside the text (small, even cells)
+      if (pend && run.length && grid === "modulos" && mod.cols) { pairWith(layRun(run, grid)); run = []; return; }
       if (pend && run.length) { const first = run.shift(); pairWith(first.todo ? block(first, p) : fig(first, p, `--r:${ratio(first.ar).toFixed(4)}`)); paired = true; }
       out(layRun(run, grid, paired)); run = [];
     };
@@ -357,7 +361,7 @@
       flushRun();
       if (it.chapter) {
         closePend(); closeSide();
-        grid = pick(it.grid) || grid;
+        grid = pick(it.grid) || grid; mod = { cols: it.cols, cell: it.cell };
         const ch = block(it, p);
         if (grid === "trilho") { side = ch.replace('class="chap"', 'class="chap tr"'); return; }
         // Cartaz: the headline runs huge across all 12 columns; label and text sit below it as usual, pieces keep their rows
