@@ -82,7 +82,14 @@ so sections read as clearly separate blocks.
 
 ## Grid and gaps (Felipe, Oct 26 2026)
 
-- Content always fills the width between the page margins (16px), unlike the cover, which touches the edges.
+- Content always fills the width between the page margins (`--side`: 16px on a phone up to 32px on a wide screen, same
+  left and right; Oct 27 2026 review), unlike the cover, which touches the edges.
+- One 12-column grid with `--gap` for everything (Oct 27 2026 review): chapter label = columns 1-4, chapter headline/text/
+  pills, case "about" text, flips and `.ltext` sub-headings = columns 5-12; meta = 6 per row, stats = 6, services = 3,
+  cards = 4; narrow strips = the middle 10 columns. Don't use free fractions (1fr 2fr, 84%, auto-fit minmax) for layout.
+- Optical left edge: `inkAlign()` in main.js pulls big type (name, intro lines, titles, headlines) left by its first
+  glyph's side bearing, so its ink sits on the margin. Add new display-type selectors to its `INK` list.
+- Slide-type images with empty white borders get the border trimmed (content untouched) so pairs don't show white voids.
 - One gap for everything, `--gap` (8px on a phone up to 16px on a wide screen): between pieces in a row, between rows,
   grid columns, strips, marquees. No `--breathe` inset inside gallery frames.
 - Loose galleries are justified rows: consecutive images/films share one height and fill the width (width in
