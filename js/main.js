@@ -113,6 +113,22 @@
   vIndex.onclick = () => setView(false); vGrid.onclick = () => setView(true);
   try { if (localStorage.getItem("view") === "grid") setView(true); } catch (e) {}
 
+  // ---------- Optical left edge ----------
+  // Big type starts where its ink starts, not where its side bearing starts, so a huge B or D lines up with the
+  // small copy above and below it on the page margin. The bearing is measured once per glyph, in em, so it scales.
+  const INK = ".name, .loader .ln:not(.boom), .tag b, .h2, .index .t, .card .row b, .big, .case-title, .chap-h, .ltext, .swap-ba b, .case-stats b, .credits-intro, .cend b";
+  const inkCache = {}, inkCtx = document.createElement("canvas").getContext("2d");
+  const inkAlign = (root = document) => root.querySelectorAll(INK).forEach(el => {
+    const cs = getComputedStyle(el.querySelector(".word > span, .w > span, .ti") || el);
+    let ch = el.textContent.trim()[0];
+    if (!ch) return;
+    if (cs.textTransform === "uppercase") ch = ch.toUpperCase();
+    const key = `${cs.fontWeight} ${cs.fontFamily} ${ch}`;
+    if (!(key in inkCache)) { inkCtx.font = `${cs.fontWeight} 100px ${cs.fontFamily}`; inkCache[key] = -inkCtx.measureText(ch).actualBoundingBoxLeft / 100; }
+    el.style.marginLeft = inkCache[key] > 0 ? `${(-inkCache[key]).toFixed(3)}em` : "";
+  });
+  (document.fonts ? document.fonts.load("900 100px Figtree").then(() => document.fonts.ready) : Promise.resolve()).then(() => inkAlign());
+
   // ---------- Intro ----------
   const stage = $("top"), corners = $("corners");
   // Lines of words cut on one by one (slow, like a lyric), then loaderBig lands huge and bursts to reveal the site
@@ -134,7 +150,7 @@
     const inkL = -f.actualBoundingBoxLeft, inkR = l.actualBoundingBoxRight - l.width + 5; // + the trailing -.05em tracking
     const avail = loaderEl.clientWidth - parseFloat(ls.paddingLeft) - parseFloat(ls.paddingRight);
     // The big M's ink lines up with the lyric lines' first letter, and the same margin is left after the E
-    const lf = c0.measureText(loaderEl.textContent.trim()[0].toUpperCase()), lineInk = -lf.actualBoundingBoxLeft * parseFloat(ls.fontSize) / 100;
+    const lineInk = 0; // the lyric lines are pulled onto the margin by their ink (inkAlign), so the M's ink starts on the margin too
     const size = Math.min(100 * (avail - 2 * lineInk) / (big.offsetWidth - inkL + inkR), innerHeight * .4);
     big.style.fontSize = size + "px";
     big.style.marginLeft = (lineInk - inkL * size / 100).toFixed(1) + "px";
@@ -648,6 +664,7 @@
     setupLomo();
     if (p.gallery) setupFlips(p);
     setupMotion(p);
+    inkAlign(caseEl);
   }
 
   // 360° viewer: frames drawn on a canvas. Drag (mouse or touch) or arrow keys to turn; a flick keeps it spinning

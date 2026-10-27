@@ -1,7 +1,7 @@
 /* Bellintani portfolio
    White page, black type, blue interventions. Intro sequence, then corner navigation over a minimal index. */
 :root{
-  --bg:#fff; --fg:#0a0a0a; --mute:#8e8e8e; --line:#e2e2e2; --panel:#e9e9e9; --breathe:clamp(4px,.7vw,10px); --blue:#1a2bff;
+  --bg:#fff; --fg:#0a0a0a; --mute:#6e6e6e; --line:#e2e2e2; --panel:#e9e9e9; --breathe:clamp(4px,.7vw,10px); --blue:#1a2bff;
   /* One gap for the whole site (Felipe, Oct 26 2026): between pieces, rows and grid columns; 8px on a phone, 16px on a wide screen */
   --gap:clamp(8px,1vw,16px); --tag-x:10px;
   --sans:"Figtree","Helvetica Neue",Arial,sans-serif;
@@ -9,8 +9,11 @@
   --ease:cubic-bezier(.11,.82,.39,.92);
   --spring:cubic-bezier(.3,1.32,.5,1);
   --over:cubic-bezier(.25,.1,.05,1.2);
-  --side-l:max(16px,env(safe-area-inset-left,0px));
-  --side-r:max(16px,env(safe-area-inset-right,0px));
+  /* Grid (Oct 27 2026 review): 12 columns, one --gap between them, the same side margin left and right
+     (16px on a phone up to 32px on a wide screen). Text blocks, meta, stats and images all snap to these columns. */
+  --side:clamp(16px,2.2vw,32px);
+  --side-l:max(var(--side),env(safe-area-inset-left,0px));
+  --side-r:max(var(--side),env(safe-area-inset-right,0px));
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -48,7 +51,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .name .reg{color:var(--fg);font-size:.26em!important;margin-left:.08em;margin-top:.12em}
 .tag{opacity:0;max-width:min(100%,820px)}
 .tag b{display:block;margin-bottom:10px;font:900 clamp(22px,2.6vw,38px)/.95 var(--sans);letter-spacing:-.04em;text-transform:uppercase;color:var(--fg);text-wrap:balance}
-.skip{all:unset;position:absolute;cursor:pointer;right:var(--side-r);top:calc(18px + env(safe-area-inset-top,0px));z-index:3;font:300 13px/1 var(--mono);text-transform:uppercase}
+.skip{all:unset;position:absolute;cursor:pointer;right:var(--side-r);top:calc(20px + env(safe-area-inset-top,0px));z-index:3;font:300 13px/1 var(--mono);text-transform:uppercase}
 .skip:focus-visible{outline:1px solid currentColor}
 
 /* Timeline (seconds): lyric lines 0.2–2 · MY HOUSE lands 2.4, bursts 3.3–3.9 · panels 3.9–4.5 · name 4.5 · tagline 5.05 */
@@ -97,6 +100,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .lang:focus-visible{outline:1px solid currentColor;outline-offset:3px}
 .c-bl{left:var(--side-l);bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;gap:16px}
 .c-br{right:var(--side-r);bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+/* Its hover line is wider (arrows); both lines sit on the right margin */
+.c-br.swap{justify-items:end}
 .talk{font-size:clamp(16px,1.6vw,22px)!important;font-weight:900!important}
 /* While reading (scrolling down), the corners step aside so they never sit on the work; scrolling up brings them back */
 .c-tl,.c-tr,.c-bl,.c-br{transition:opacity .3s,translate .3s}
@@ -131,7 +136,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .index .k{text-align:right;color:var(--mute)}
 /* Hover: only the title moves and turns blue; no bar (Felipe, Oct 26 2026). The .bar span stays hidden. */
 .index .bar{display:none}
-}
 /* ---------- Work list motion (classes on .works, off with reduced motion) ---------- */
 .index .ti{display:inline-block}
 /* 1. Cascade: each title rises from behind its own mask, one row after the other */
@@ -150,7 +154,10 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* 3. Open: the panel that grows from the row to the whole screen */
 .veil{position:fixed;inset:0;z-index:70;background:var(--blue);pointer-events:none}
 
-.grid{display:none;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:40px var(--gap)}
+.grid{display:none;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px var(--gap)}
+@media (max-width:1100px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:760px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px} }
+@media (max-width:480px){ .grid{grid-template-columns:1fr} }
 .works.as-grid .grid{display:grid}
 .works.as-grid .index{display:none}
 .card{display:grid;gap:10px;text-decoration:none;min-width:0}
@@ -162,8 +169,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .card .row b{font:900 26px/.9 var(--sans);letter-spacing:-.045em;text-transform:uppercase}
 .card:hover .row b{color:var(--blue)}
 
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:0 20px;border-top:1px solid var(--fg);margin:0;padding:0}
+.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 var(--gap);border-top:1px solid var(--fg);margin:0;padding:0}
 .services li{list-style:none;padding:14px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+@media (max-width:760px){ .services{grid-template-columns:1fr} }
 
 .foot{padding-top:clamp(90px,14vw,200px);padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
 .big{font:900 clamp(64px,17vw,300px)/.8 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:flex-start;gap:.08em}
@@ -190,14 +198,16 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .themed .corners > *{color:var(--fg)}
 .case-top{display:flex;justify-content:space-between;gap:16px;padding-top:calc(clamp(70px,9vw,110px) + env(safe-area-inset-top,0px))}
 /* A title shrinks below its usual size only when its longest word would not fit the page width */
-.case-title{--fit:calc((100vw - 32px) / (var(--longest,1) * .66));margin:clamp(24px,4vw,48px) 0 0;font:900 clamp(min(52px,var(--fit)),min(12.5vw,var(--fit)),240px)/.86 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere}
+.case-title{--fit:calc((100vw - 2 * var(--side)) / (var(--longest,1) * .66));margin:clamp(24px,4vw,48px) 0 0;font:900 clamp(min(52px,var(--fit)),min(12.5vw,var(--fit)),240px)/.86 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere}
 .case-title .letters{display:flex;flex-wrap:wrap}
 .case-title .w{display:inline-flex;white-space:nowrap}
 .case-title .w > span{display:inline-block;animation:rise .6s var(--over) both .12s}
 .case-title .sp{width:.22em}
-.case-meta{font-size:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:16px 20px;margin:clamp(28px,4vw,56px) 0 0;padding-top:14px;border-top:1px solid var(--fg)}
-.case-meta div{min-width:0}
-.case-meta .live,.case-meta .wide{grid-column:span 2}
+.case-meta{font-size:12px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px var(--gap);margin:clamp(28px,4vw,56px) 0 0;padding-top:14px;border-top:1px solid var(--fg)}
+.case-meta div{min-width:0;grid-column:span 2}
+.case-meta .live,.case-meta .wide{grid-column:span 4}
+@media (max-width:1000px){ .case-meta div{grid-column:span 3} .case-meta .live,.case-meta .wide{grid-column:span 6} }
+@media (max-width:560px){ .case-meta div{grid-column:span 6} .case-meta .live,.case-meta .wide{grid-column:span 12} }
 .case-tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:clamp(20px,2.4vw,32px) 0 0;padding:0;color:var(--blue)}
 .case-meta .swap{max-width:100%}
 .case-meta dt{color:var(--mute);margin-bottom:6px}
@@ -244,10 +254,10 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loose .fig figcaption{margin:6px 0 0}
 .loose .spin-ui{top:10px;bottom:auto;left:var(--tag-x)}
 /* Chapter: numbered opener for a part of the story (label line, headline, short text) */
-.chap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px 20px;padding-top:14px;border-top:2px solid var(--fg);margin-top:clamp(40px,6vw,104px);margin-bottom:var(--gap)}
-.chap-k{grid-column:1;grid-row:1 / span 2;margin:0;display:flex;flex-direction:column;gap:4px}
-.chap-h{grid-column:2;margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
-.chap .body{grid-column:2}
+.chap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px var(--gap);padding-top:14px;border-top:2px solid var(--fg);margin-top:clamp(40px,6vw,104px);margin-bottom:var(--gap)}
+.chap-k{grid-column:1 / 5;grid-row:1 / span 2;margin:0;display:flex;flex-direction:column;gap:4px}
+.chap-h{grid-column:5 / 13;margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
+.chap .body{grid-column:5 / 13}
 /* Missing material: dashed box (or chip in the meta) that Felipe fills in later */
 .todo{display:grid;place-items:center;min-height:clamp(90px,10vw,150px);aspect-ratio:var(--ar,auto);border:1.5px dashed var(--mute);padding:16px;text-align:center;color:var(--mute)}
 .todo p{margin:0;max-width:48ch}
@@ -265,17 +275,17 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .todo-chip{color:var(--blue);font-weight:400}
 .todo-chip{display:inline-block;padding:2px 8px;border:1.5px dashed currentColor}
 .chap-h em{font-style:normal;color:var(--blue)}
-.pills{grid-column:2;list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.pills{grid-column:5 / 13;list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .pills li{padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--mute)}
 .pills li.on{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:400}
 /* Before → after (a rename): the old name struck through, the new one in the accent colour */
 .swap-ba{display:grid;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
-.swap-ba p{margin:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;align-items:baseline}
+.swap-ba p{margin:0;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--gap);align-items:baseline}
 .swap-ba b{font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;overflow-wrap:anywhere}
 .swap-ba .old{opacity:.45;text-decoration:line-through;text-decoration-thickness:.08em}
 .swap-ba .new{color:var(--blue)}
 /* A word set large with a dictionary-style entry */
-.word-def{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;align-items:end}
+.word-def{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--gap);align-items:end}
 .word-big{margin:0;font:400 min(clamp(72px,15vw,250px),calc(64vw / var(--n,4)))/.9 "Didot","Bodoni 72",Georgia,serif;overflow-wrap:anywhere}
 .word-entry{margin:0;display:grid;gap:6px;padding-top:12px;border-top:1px solid var(--line);font:400 clamp(15px,1.25vw,18px)/1.5 var(--mono)}
 .word-entry .mono{color:var(--blue)}
@@ -283,12 +293,19 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .marquee-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:var(--gap)}
 .marquee-track img{display:block;width:100%;height:auto}
 .ltext{margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
-.case-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:20px;padding-block:clamp(36px,5vw,80px)}
+/* A sub-heading inside a chapter sits on the chapter's text column (5-12), with air above it */
+.loose > .ltext{width:calc((100% - 11 * var(--gap)) / 12 * 8 + 7 * var(--gap));align-self:flex-end;margin-top:clamp(24px,3vw,48px);font-size:clamp(24px,3vw,48px)}
+@media (max-width:760px){ .loose > .ltext{width:100%} }
+.case-about{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px var(--gap);padding-block:clamp(36px,5vw,80px)}
+.case-about > :first-child{grid-column:1 / 5}
+.case-about > .body{grid-column:5 / 13}
 .body{font:400 clamp(15px,1.25vw,18px)/1.6 var(--mono);letter-spacing:-.01em;max-width:62ch;margin:0}
 .case-gallery{display:grid;gap:var(--gap)}
 [class^="row-"]{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:var(--gap);align-items:start}
-.case-stats{list-style:none;margin:0 0 clamp(60px,8vw,120px);padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:24px 20px;border-top:1px solid var(--fg)}
-.case-stats li{display:grid;gap:6px;padding-top:12px}
+.case-stats{list-style:none;margin:0 0 clamp(60px,8vw,120px);padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px var(--gap);border-top:1px solid var(--fg)}
+.case-stats li{display:grid;gap:6px;padding-top:12px;align-content:start}
+@media (max-width:1000px){ .case-stats{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:560px){ .case-stats{grid-template-columns:repeat(2,minmax(0,1fr))} }
 .case-stats b{font:900 clamp(48px,6vw,104px)/.85 var(--sans);letter-spacing:-.05em}
 .case-next{display:grid;gap:8px;margin-top:clamp(90px,12vw,180px);padding:16px 0 calc(110px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--fg);text-decoration:none}
 .case-next .big{font-size:clamp(48px,11vw,200px)}
@@ -298,9 +315,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .wipe.on{opacity:1;visibility:visible}
 
 @media (max-width:760px){
-  .case-about{grid-template-columns:1fr}
-  .loose > .chap{grid-template-columns:1fr;margin-top:48px}
-  .chap-k,.chap-h,.chap .body,.pills{grid-column:1;grid-row:auto}
+  .case-about > :first-child,.case-about > .body{grid-column:1 / -1}
+  .loose > .chap{margin-top:48px}
+  .chap-k,.chap-h,.chap .body,.pills{grid-column:1 / -1;grid-row:auto}
   .word-def,.swap-ba p{grid-template-columns:1fr;gap:6px}
   .word-big{font-size:min(28vw,calc(150vw / var(--n,4)))}
   .row-half{grid-template-columns:1fr}
@@ -380,7 +397,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 
 /* ---------- Scroll-played sequence ---------- */
 /* The figure is tall; its frame sticks and steps through the frames as the page scrolls past */
-.scrub{height:calc(var(--n) * 38vh + 100vh)}
+.scrub{height:calc(min(var(--n) * 38vh, 380vh) + 100vh)}
 .scrub-stick{position:sticky;top:64px;display:flex;flex-direction:column;width:min(100%,calc((100svh - 220px) * 16 / 9));margin:0 auto}
 .loose .scrub-stick figcaption{align-self:flex-start;margin:0 0 6px}
 .scrub .ph{aspect-ratio:var(--ar,16/9);position:relative;overflow:hidden}
@@ -390,7 +407,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .scrub-bar{flex:1;height:1px;background:var(--line);position:relative}
 .scrub-bar i{position:absolute;inset:0;background:var(--blue);transform-origin:left;transform:scaleX(var(--p,0))}
 @media (max-width:760px){
-  .scrub{height:calc(var(--n) * 26vh + 100vh)}
+  .scrub{height:calc(min(var(--n) * 26vh, 260vh) + 100vh)}
   .scrub-stick{top:calc(50svh - 30vw - 30px);width:100%}
   .loose .scrub-stick figcaption{order:0;margin:0 0 6px}
   .scrub-ui span:last-child{display:none}
@@ -488,8 +505,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .flip-thumbs button:focus-visible{outline:2px solid var(--blue)}
 .flip-thumbs img{width:100%;height:100%;object-fit:contain}
 /* The large image and its thumbnails fit on one screen together */
-.loose > .flip{width:min(100%,calc((100svh - 150px) / .7));align-self:center}
-.loose > .strip.narrow{width:84%;align-self:center}
+.loose > .flip{width:min(calc((100% - 11 * var(--gap)) / 12 * 8 + 7 * var(--gap)),calc((100svh - 150px) / .7));align-self:flex-end}
+@media (max-width:760px){ .loose > .flip{width:100%} }
+.loose > .strip.narrow{width:calc((100% - 11 * var(--gap)) / 12 * 10 + 9 * var(--gap));align-self:center}
 @media (max-width:760px){ .loose > .strip.narrow{width:100%} }
 .strip .vctl{flex-direction:column;align-items:flex-start}
 .case.motion .case-gallery .scrub .ph > img{scale:1;translate:none!important}
