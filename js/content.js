@@ -787,8 +787,8 @@ window.SITE = {
       layout: "loose",
       gallery: [
         { chapter: { en: "01 · Challenge", pt: "01 · Desafio" }, kicker: { en: "The brief", pt: "O briefing" },
-          head: { en: "The challenge", pt: "O desafio" } },
-        { todo: { en: "the brief: what the brand needed and why", pt: "o briefing: o que a marca precisava e por quê" }, col: 1, span: 12 },
+          head: { en: "Break the *status quo.*", pt: "Quebrar o *status quo.*" },
+          text: { en: "The founder, a friend I met at Globo, is Venezuelan, hence the name: escriba, Spanish for scribe, the one who writes. His way of working is innovative, almost revolutionary, and the agency needed a face to match: modern, disruptive, even aggressive. The idea was to break the status quo of agencies that work with brands.", pt: "O fundador, um amigo que conheci na Globo, é venezuelano, daí o nome: escriba, em espanhol, quem escreve. O jeito dele de trabalhar é inovador, quase revolucionário, e a agência precisava de uma cara à altura: moderna, disruptiva, até agressiva. A ideia era quebrar o status quo das agências que trabalham com marca." } },
         { chapter: { en: "02 · Symbol", pt: "02 · Símbolo" }, kicker: { en: "Think + · Create × · Position ✱", pt: "Pensar + · Criar × · Posicionar ✱" },
           head: { en: "Three verbs, *three marks.*", pt: "Três verbos, *três sinais.*" },
           text: { en: "An agency that only posts when it makes sense. Think (+), create (×), position (✱): three verbs became three marks, and together they make the asterisk.", pt: "Uma agência que só posta quando faz sentido. Pensar (+), criar (×), posicionar (✱): três verbos viraram três sinais, e juntos formam o asterisco." } },
