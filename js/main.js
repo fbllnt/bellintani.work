@@ -41,6 +41,14 @@
     document.documentElement.classList.add("no-work");
   }
 
+  // ---------- Work order (Felipe, Oct 27 2026) ----------
+  // Seja ANTI always first, Logofolio always last; everything in between is shuffled on each visit.
+  if (S.projects.length > 3) {
+    const mid = S.projects.slice(1, -1);
+    for (let i = mid.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [mid[i], mid[j]] = [mid[j], mid[i]]; }
+    S.projects = [S.projects[0], ...mid, S.projects[S.projects.length - 1]];
+  }
+
   // ---------- Bind copy ----------
   const binds = {
     name: S.name,

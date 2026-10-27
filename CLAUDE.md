@@ -33,6 +33,8 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   Chapters are numbered from 01 in every project, Desafio and Identidade aplicada included.
 
 - All copy and projects live in `js/content.js`, in two languages as `{ en, pt }` (EN-US / PT-BR).
+- Work order (Felipe, Oct 27 2026): Seja ANTI is always first and Logofolio always last in `projects`; main.js shuffles
+  everything in between on each page load. Add new projects anywhere between them.
 - Projects can use `layout: "loose"` (free placement: `col`, `span`, `shift`, `speed`, `{ text }` lines),
   `hero: "bleed"`, videos (`video` MP4 + `webm` + `poster`) and a 360° viewer (`spin`).
 - Compress media before adding: videos to 720p H.264 MP4 plus a VP9 WebM; images max 2000 px wide JPEG.
