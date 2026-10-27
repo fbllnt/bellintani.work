@@ -1036,6 +1036,7 @@ window.SITE = {
     },
     {
       title: "Lomography",
+      hidden: true, // Felipe, Oct 27 2026: kept here but off the site (remove this line to bring it back)
       track: { id: "3f0U5NaD1bCk8nmKpn2ZJY", name: "Kodachrome", by: "Paul Simon" },
       scope: { en: "Analogue photography", pt: "Fotografia analógica" },
       image: "images/lomography/supersampler-losangeles-01.jpg",

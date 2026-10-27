@@ -41,6 +41,9 @@
     document.documentElement.classList.add("no-work");
   }
 
+  // Projects with `hidden: true` in content.js stay off the site in every view (?full included), files untouched.
+  S.projects = S.projects.filter(p => !p.hidden);
+
   // ---------- Missing material kept off the site (Felipe, Oct 27 2026) ----------
   // With `showMissing: false` in content.js, the "Falta" placeholders don't show: "?" meta values, todo boxes and a
   // chapter left with nothing under it. Chapters are renumbered so the count has no gaps. ?missing in the address shows them.
