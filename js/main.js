@@ -277,6 +277,7 @@
   // shares one height, runs margin to margin and nothing is cropped. A new row starts at `col: 1`, at `span` 9+ or
   // when the spans pass 12; `shift`, `nudge` and `tight` are ignored. Every other block runs full width.
   // On phones a row of landscape pieces stacks one per line; a row of portraits stays side by side.
+  // A mosaic sets `mwrap: true` on its pieces: on phones its rows wrap two to a line instead of stacking.
   // Grids (Felipe, Oct 27 2026): each project picks one of five ways to fill the same 12 columns, by its content.
   // `grid` on the project sets it; `grid` on a chapter switches it from that chapter on. All keep one --gap and
   // never crop (pieces are contained at their own ratio).
@@ -295,7 +296,9 @@
     let grid = pick(p.grid) || "fluxo", mod = {};
     const jrow = row => {
       const sum = row.reduce((a, it) => a + ratio(it.ar), 0);
-      return `<div class="jrow${row.length > 1 && sum > 2.2 ? " stack-m" : ""}" style="--sum:${sum.toFixed(4)};--n:${row.length}">${
+      // `mwrap` (a mosaic): on phones the row wraps two to a line, a third piece takes the whole line
+      const wrap = row.length > 1 && row.every(it => it.mwrap);
+      return `<div class="jrow${wrap ? " wrap-m" : row.length > 1 && sum > 2.2 ? " stack-m" : ""}" style="--sum:${sum.toFixed(4)};--n:${row.length}">${
         row.map(it => it.todo ? block(it, p, `--r:${ratio(it.ar).toFixed(4)}`) : fig(it, p, `--r:${ratio(it.ar).toFixed(4)}`)).join("")}</div>`;
     };
     // A run of consecutive pieces, laid out by the grid in force
