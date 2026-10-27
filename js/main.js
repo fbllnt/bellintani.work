@@ -147,13 +147,15 @@
 
   // ---------- Intro ----------
   const stage = $("top"), corners = $("corners");
-  // Lines of words cut on one by one (slow, like a lyric), then after a pause (the echo in the song) loaderBig lands huge below them and bursts to reveal the site
+  // Lines of words cut on one by one in the song's rhythm, then after a short pause loaderBig lands huge below them, one word at a time, and bursts to reveal the site
   let d = 0.2;
   const loaderEl = $("loader");
   loaderEl.innerHTML = L(S.loader).map((line, li) => `<div class="ln">${line.map(w => {
     const html = `<span${w[0] === "*" ? ` class="blue"` : ""} style="--d:${d.toFixed(2)}s">${esc(w.replace(/^\*/, ""))}</span>`;
-    d += 0.28; return html; }).join(" ")}</div>`).join("")
-    + (S.loaderBig ? `<div class="ln boom"><span style="--d:${(d + 0.75).toFixed(2)}s">${esc(L(S.loaderBig))}</span></div>` : "");
+    d += 0.16; return html; }).join(" ")}</div>`).join("")
+    // MY, then HOUSE a beat later, as sung (Felipe, Oct 27 2026): the second word is a <b> inside the one burst span
+    + (S.loaderBig ? `<div class="ln boom"><span style="--d:${(d + 0.45).toFixed(2)}s;--d2:${(d + 0.85).toFixed(2)}s">${
+      esc(L(S.loaderBig)).replace(/^(\S+)(\s+)(.+)$/, "$1$2<b>$3</b>")}</span></div>` : "");
   // The big line fills the width and bursts from the middle of its first letter's left stem, so the screen goes solid blue
   const fitBig = () => {
     const big = loaderEl.querySelector(".boom span");
@@ -223,8 +225,8 @@
   const play = () => {
     clear(); corners.classList.remove("on");
     stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play");
-    timers.push(setTimeout(() => corners.classList.add("on"), 5150));
-    timers.push(setTimeout(finish, 6450));
+    timers.push(setTimeout(() => corners.classList.add("on"), 4250));
+    timers.push(setTimeout(finish, 5550));
   };
   $("skip").onclick = finish;
 

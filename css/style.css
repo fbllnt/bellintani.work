@@ -54,16 +54,18 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .skip{all:unset;position:absolute;cursor:pointer;right:var(--side-r);top:calc(20px + env(safe-area-inset-top,0px));z-index:3;font:300 13px/1 var(--mono);text-transform:uppercase}
 .skip:focus-visible{outline:1px solid currentColor}
 
-/* Timeline (seconds): lyric lines 0.2–2 · pause, then MY HOUSE lands 2.9 like the echo in the song (Felipe, Oct 27 2026), bursts 3.8–4.4 · panels 4.4–5 · name 5 · tagline 5.55 */
+/* Timeline (seconds), in the song's rhythm (Felipe, Oct 27 2026): lyric lines 0.2–1.2 · pause · MY 1.8 · HOUSE 2.2 · bursts 2.9–3.5 · panels 3.5–4.1 · name 4.1 · tagline 4.65 */
 .play .loader span{animation:cut 0s linear forwards var(--d)}
-.play .loader{animation:out 0s linear forwards 4.4s}
-.play .loader .boom span{animation:cut 0s linear forwards var(--d), burst .6s cubic-bezier(.7,0,.84,0) forwards 3.8s}
+.play .loader{animation:out 0s linear forwards 3.5s}
+.play .loader .boom span{animation:cut 0s linear forwards var(--d), burst .6s cubic-bezier(.7,0,.84,0) forwards 2.9s}
+.loader .boom b{opacity:0}
+.play .loader .boom b{animation:cut 0s linear forwards var(--d2)}
 @keyframes burst{to{transform:scale(90)}}
 @media (prefers-reduced-motion:reduce){ .play .loader .boom span{animation:cut 0s linear forwards var(--d)} }
-.play .panel{animation:cut 0s linear forwards var(--d), out 0s linear forwards 5s}
-.play .name .word > span{animation:rise .6s var(--over) forwards 5s}
-.play .tag{animation:fade .5s ease forwards 5.55s}
-.play .skip{animation:out 0s linear forwards 5s}
+.play .panel{animation:cut 0s linear forwards var(--d), out 0s linear forwards 4.1s}
+.play .name .word > span{animation:rise .6s var(--over) forwards 4.1s}
+.play .tag{animation:fade .5s ease forwards 4.65s}
+.play .skip{animation:out 0s linear forwards 4.1s}
 @keyframes cut{to{opacity:1}}
 @keyframes out{to{opacity:0;visibility:hidden}}
 @keyframes fade{to{opacity:1}}
@@ -76,7 +78,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .cue path{animation:cueDrop 1.6s var(--ease) infinite}
 .cue path + path{animation-delay:.18s}
 @keyframes cueDrop{0%{opacity:.45;transform:translateY(-3px)}45%{opacity:1}100%{opacity:.45;transform:translateY(4px)}}
-.play .cue{animation:fade .5s ease forwards 6s}
+.play .cue{animation:fade .5s ease forwards 5.1s}
 .done .cue{opacity:1}
 .cue.gone{opacity:0!important;pointer-events:none}
 .cue:focus-visible{outline:1px solid currentColor}
