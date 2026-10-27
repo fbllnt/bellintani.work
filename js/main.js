@@ -87,6 +87,9 @@
   // ---------- Project covers ----------
   // Real image if the project has one, otherwise a generated placeholder composition.
   function cover(i, p) {
+    // `coverVideo`: a silent film loops in place of the still (`image` is its poster, and all that shows with reduced motion)
+    if (p.coverVideo && !matchMedia("(prefers-reduced-motion: reduce)").matches) return `<video class="cover-vid" poster="${esc(p.image)}" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="${esc(p.coverVideo.mp4)}" type="video/mp4">${p.coverVideo.webm ? `<source src="${esc(p.coverVideo.webm)}" type="video/webm">` : ""}</video>`;
     if (p.image) return `<img src="${esc(p.image)}" alt="" loading="lazy">`;
     const [h, s, l] = p.hue || [0, 0, 50];
     const c1 = `hsl(${h} ${s}% ${l}%)`, c2 = `hsl(${(h + 40) % 360} ${s}% ${Math.min(l + 25, 92)}%)`, ink = l < 30 ? "#f2f2f2" : "#111";
@@ -979,7 +982,7 @@
   }
 
   function setupVideos() {
-    const vids = [...caseEl.querySelectorAll("video")];
+    const vids = [...caseEl.querySelectorAll("video:not(.cover-vid)")];
     if (!vids.length) return;
     const setSound = (v, on) => {
       v.muted = !on;

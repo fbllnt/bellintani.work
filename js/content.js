@@ -728,7 +728,8 @@ window.SITE = {
       deliverables: { en: "Logo and symbol, vignette, sign-off of the launch film", pt: "Logo e símbolo, vinheta, assinatura do filme de lançamento" },
       tags: { en: ["Branding", "Streaming", "Motion"], pt: ["Branding", "Streaming", "Motion"] },
       tools: ["Adobe CC"],
-      image: "images/globoplay/cover.jpg",
+      image: "images/globoplay/vinheta-poster.jpg",
+      coverVideo: { mp4: "images/globoplay/vinheta.mp4", webm: "images/globoplay/vinheta.webm" },
       summary: {
         en: "Visual identity for Globoplay, Globo's streaming platform, and direction of its vignette, animated by Bild. This is where Globotipo, Globo's own typeface, was born.",
         pt: "Identidade visual do Globoplay, o streaming da Globo, e direção da vinheta, animada pela Bild. Foi aqui que nasceu a Globotipo, a fonte própria da Globo.",

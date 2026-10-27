@@ -251,8 +251,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fig.third,.fig.quarter{--ar:3/4}
 /* Project cover: edge to edge, height follows the image, nothing cut */
 .cover-fig{margin-top:clamp(20px,3vw,36px);margin-left:calc(-1 * var(--side-l));margin-right:calc(-1 * var(--side-r))}
-.cover-fig .ph:has(> img){aspect-ratio:auto;background:none}
-.fig.cover-fig .ph > img{position:static;display:block;width:100%;height:auto;transform:none}
+.cover-fig .ph:has(> :is(img,video)){aspect-ratio:auto;background:none}
+.fig.cover-fig .ph > :is(img,video){position:static;display:block;width:100%;height:auto;transform:none}
 /* Loose gallery: 12-column grid, each item places itself; rows follow content */
 /* Rows sit --rg apart; items marked `tight` (same content as the row above, e.g. a set of films) sit --cg apart */
 .loose{--cg:var(--gap);--breathe:0px;display:flex;flex-direction:column;gap:var(--gap)}
