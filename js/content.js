@@ -241,8 +241,8 @@ window.SITE = {
         { src: "images/top50/lockups.png", ar: "2000/831", col: 1, span: 12, caption: { en: "Main and stacked lockups", pt: "Assinaturas principal e empilhada" } },
         // Process steps as one narrower strip, with breathing room on both sides
         { strip: [1, 2, 3, 4, 5].map(k => ({ src: `images/top50/logo-step-${k}.jpg`, ar: "960/735" })), narrow: true, col: 1, span: 12 },
-        { src: "images/top50/type-gin.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Gin, for headlines and the countdown", pt: "Gin, para títulos e a contagem regressiva" } },
-        { src: "images/top50/type-citrus.jpg", ar: "16/9", col: 7, span: 6, caption: { en: "Citrus Gothic, the everyday voice", pt: "Citrus Gothic, a voz do dia a dia" } },
+        { src: "images/top50/type-gin.png", ar: "16/9", col: 1, span: 6, caption: { en: "Gin, for headlines and the countdown", pt: "Gin, para títulos e a contagem regressiva" } },
+        { src: "images/top50/type-citrus.png", ar: "16/9", col: 7, span: 6, caption: { en: "Citrus Gothic, the everyday voice", pt: "Citrus Gothic, a voz do dia a dia" } },
         { chapter: { en: "03 · The van", pt: "03 · A van" }, kicker: { en: "Photo → Nano Banana Pro → Topaz → Seedance", pt: "Foto → Nano Banana Pro → Topaz → Seedance" },
           head: { en: "No van was wrapped in the *making of this campaign.*", pt: "Nenhuma van foi envelopada na *produção desta campanha.*" },
           text: { en: "A real white work van became the plate: repainted in Housecall navy, upscaled, branded with the crest, the trades and the tagline, then put in motion. Empty plates first, logo applied after, all on one Flora canvas.", pt: "Uma van branca de verdade virou a base: repintada no azul Housecall, ampliada, envelopada com o brasão, os ofícios e a assinatura, e depois colocada em movimento. Primeiro as bases vazias, depois o logo aplicado, tudo num canvas do Flora." } },
@@ -731,11 +731,8 @@ window.SITE = {
         { name: "Camarote Lew’Lara", src: "images/logos/camarote-lewlara.png" },
         { name: "House Party Orloff, 3D", src: "images/logos/houseparty-3d.png" },
         { name: "Top Fifty Unforgettable", src: "images/logos/top-fifty.png" },
-      // Leo Mafra and the flat House Party Orloff removed, placeholders Logo 41–50 dropped (Felipe, Oct 27 2026)
-      ].concat(Array.from({ length: 3 }, (_, k) => ({
-        name: `Logo ${String(k + 38).padStart(2, "0")}`,
-        year: String(2026 - (k % 9)),
-      }))),
+      // Leo Mafra and the flat House Party Orloff removed, and the empty "Logo 38–50" placeholders dropped (Felipe, Oct 27 2026)
+      ],
     },
   ],
 
