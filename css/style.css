@@ -299,7 +299,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .swap-ba .new{color:var(--blue)}
 /* A word set large with a dictionary-style entry */
 .word-def{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--gap);align-items:end}
-.word-big{margin:0;font:400 min(clamp(72px,15vw,250px),calc(64vw / var(--n,4)))/.9 "Didot","Bodoni 72",Georgia,serif;overflow-wrap:anywhere}
+.word-big{margin:0;font:400 min(clamp(72px,15vw,250px),calc(64vw / var(--n,4)))/.9 "Didot","Bodoni 72",Georgia,serif;white-space:nowrap}
 .word-entry{margin:0;display:grid;gap:6px;padding-top:12px;border-top:1px solid var(--line);font:400 clamp(15px,1.25vw,18px)/1.5 var(--mono)}
 .word-entry .mono{color:var(--blue)}
 /* Marquee (social carousel): the pieces stand still in a wrapping grid, each one whole at its own proportion */

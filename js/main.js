@@ -743,7 +743,17 @@
     if (p.gallery) setupFlips(p);
     setupMotion(p);
     inkAlign(caseEl);
+    fitWords();
   }
+
+  // A big dictionary word stays on one line (Felipe, Oct 27 2026): the CSS size is the most it may take; if the
+  // word (Didot on a Mac is wider than the fallback) runs past its column, the size shrinks until it fits.
+  const fitWords = () => caseEl.querySelectorAll(".word-big").forEach(el => {
+    el.style.fontSize = "";
+    if (el.scrollWidth > el.clientWidth) el.style.fontSize = parseFloat(getComputedStyle(el).fontSize) * el.clientWidth / el.scrollWidth * .96 + "px";
+  });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitWords);
+  addEventListener("resize", fitWords);
 
   // Type tunnel (SCRV kinetic type, outline): the word in white outline, repeated in depth around one vanishing point,
   // flies slowly towards the viewer in an endless loop. Parallax: the pointer (or, on touch, the scroll) moves the
