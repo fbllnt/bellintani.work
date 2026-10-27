@@ -37,7 +37,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loader span{display:inline-block;opacity:0}
 .loader span.blue{color:var(--blue)}
 .loader .boom{margin-top:.12em}
-.loader .boom span{white-space:nowrap;color:var(--blue)}
+.loader .boom span{white-space:nowrap;letter-spacing:-.05em;color:var(--blue)}
 .loader .boom b{font-weight:inherit}
 .panel{inset:0;opacity:0}
 .head{left:var(--side-l);right:var(--side-r);top:clamp(64px,10vh,110px);display:flex;flex-direction:column;gap:clamp(32px,5vw,72px)}

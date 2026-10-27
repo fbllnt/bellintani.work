@@ -126,10 +126,18 @@
   const fitBig = () => {
     const big = loaderEl.querySelector(".boom span");
     if (!big || !loaderEl.offsetParent) return;
+    // Fit by ink, not by the text box: the ink of the line ends with the same white margin on the right as on the left
     big.style.fontSize = "100px";
-    const pad = parseFloat(getComputedStyle(loaderEl).paddingLeft) + parseFloat(getComputedStyle(loaderEl).paddingRight);
-    const size = Math.min(100 * (loaderEl.clientWidth - pad) / big.offsetWidth * .99, innerHeight * .42);
+    const ls = getComputedStyle(loaderEl), txt = big.textContent.toUpperCase(), c0 = document.createElement("canvas").getContext("2d");
+    c0.font = `${ls.fontWeight} 100px ${ls.fontFamily}`;
+    const f = c0.measureText(txt[0]), l = c0.measureText(txt[txt.length - 1]);
+    const inkL = -f.actualBoundingBoxLeft, inkR = l.actualBoundingBoxRight - l.width + 5; // + the trailing -.05em tracking
+    const avail = loaderEl.clientWidth - parseFloat(ls.paddingLeft) - parseFloat(ls.paddingRight);
+    // The big M's ink lines up with the lyric lines' first letter, and the same margin is left after the E
+    const lf = c0.measureText(loaderEl.textContent.trim()[0].toUpperCase()), lineInk = -lf.actualBoundingBoxLeft * parseFloat(ls.fontSize) / 100;
+    const size = Math.min(100 * (avail - 2 * lineInk) / (big.offsetWidth - inkL + inkR), innerHeight * .4);
     big.style.fontSize = size + "px";
+    big.style.marginLeft = (lineInk - inkL * size / 100).toFixed(1) + "px";
     // Find the stem: draw the first letter and take the first solid run on its middle row
     const cs = getComputedStyle(big), cv = document.createElement("canvas"), cx = cv.getContext("2d");
     const ch = big.textContent.trim()[0].toUpperCase();
@@ -149,7 +157,8 @@
     const oy = base - asc / 2;
     big.style.transformOrigin = `${ox.toFixed(1)}px ${oy.toFixed(1)}px`;
   };
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitBig);
+  // Measure only once Figtree Black is in: fonts.ready can resolve before the hidden intro asks for it
+  (document.fonts ? document.fonts.load("900 100px Figtree").then(() => document.fonts.ready) : Promise.resolve()).then(fitBig, fitBig);
   addEventListener("resize", fitBig);
 
   // Name: every letter takes the same time but starts 80px further down, so they land as a wave
