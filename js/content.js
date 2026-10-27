@@ -16,11 +16,11 @@ window.SITE = {
     en: ["Branding & Identity, Advertising, Digital, Social, Vibe Coding and AI Workflows"],
     pt: ["Branding & Identidade, Publicidade, Digital, Social, Vibe Coding e Workflows com IA"],
   },
-  // Intro loader: each word cuts on in turn; a word starting with * shows in blue. Add loaderBig: { en, pt } to end on one big word.
-  // loaderDot: a blue full stop after the last word that grows to fill the screen as the transition.
+  // Intro loader: lines of words, left-aligned; each word cuts on in turn (a word starting with * shows in blue).
+  // loaderBig ends on one huge line that then bursts toward the viewer and reveals the site (Felipe, Oct 27 2026).
   // English only, in both languages (Felipe).
-  loader: ["Hey", "don't", "blink", "*good", "*things", "may", "take", "some", "time"],
-  loaderDot: true,
+  loader: [["Daft", "Punk", "is", "playing"], ["at", "my", "house,"]],
+  loaderBig: "My house",
   // Services follow the tagline/subline and the kinds of work shown (Oct 27 2026 review)
   services: {
     en: ["Branding & identity", "Campaigns & advertising", "Art direction", "Motion & film", "Digital & social", "Vibe coding & AI workflows"],

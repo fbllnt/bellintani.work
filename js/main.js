@@ -115,11 +115,42 @@
 
   // ---------- Intro ----------
   const stage = $("top"), corners = $("corners");
-  // With loaderDot, the last word ends on a blue full stop that later grows to fill the screen
-  const lw = L(S.loader);
-  $("loader").innerHTML = lw.map((w, i) => `<span${w[0] === "*" ? ` class="blue"` : ""} style="--d:${(0.1 + i * 0.15).toFixed(2)}s">${esc(w.replace(/^\*/, ""))}${
-    S.loaderDot && i === lw.length - 1 ? `<i class="dot" style="--d:1.44s"></i>` : ""}</span>`).join("")
-    + (S.loaderBig ? `<span class="big" style="--d:1.5s">${esc(L(S.loaderBig))}</span>` : "");
+  // Lines of words cut on one by one (slow, like a lyric), then loaderBig lands huge and bursts to reveal the site
+  let d = 0.2;
+  const loaderEl = $("loader");
+  loaderEl.innerHTML = L(S.loader).map((line, li) => `<div class="ln">${line.map(w => {
+    const html = `<span${w[0] === "*" ? ` class="blue"` : ""} style="--d:${d.toFixed(2)}s">${esc(w.replace(/^\*/, ""))}</span>`;
+    d += 0.28; return html; }).join(" ")}</div>`).join("")
+    + (S.loaderBig ? `<div class="ln boom"><span style="--d:${(d + 0.25).toFixed(2)}s">${esc(L(S.loaderBig))}</span></div>` : "");
+  // The big line fills the width and bursts from the middle of its first letter's left stem, so the screen goes solid blue
+  const fitBig = () => {
+    const big = loaderEl.querySelector(".boom span");
+    if (!big || !loaderEl.offsetParent) return;
+    big.style.fontSize = "100px";
+    const pad = parseFloat(getComputedStyle(loaderEl).paddingLeft) + parseFloat(getComputedStyle(loaderEl).paddingRight);
+    const size = Math.min(100 * (loaderEl.clientWidth - pad) / big.offsetWidth * .99, innerHeight * .42);
+    big.style.fontSize = size + "px";
+    // Find the stem: draw the first letter and take the first solid run on its middle row
+    const cs = getComputedStyle(big), cv = document.createElement("canvas"), cx = cv.getContext("2d");
+    const ch = big.textContent.trim()[0].toUpperCase();
+    cx.font = `${cs.fontWeight} ${size}px ${cs.fontFamily}`;
+    const m = cx.measureText(ch), w = Math.ceil(m.width + size * .2), asc = m.actualBoundingBoxAscent;
+    cv.width = w; cv.height = Math.ceil(asc + 4);
+    cx.font = `${cs.fontWeight} ${size}px ${cs.fontFamily}`; cx.textBaseline = "alphabetic"; cx.fillText(ch, 0, asc + 2);
+    const row = Math.round(asc / 2 + 2), px = cx.getImageData(0, row, w, 1).data;
+    let x0 = -1, x1 = -1;
+    for (let x = 0; x < w; x++) { const on = px[x * 4 + 3] > 200; if (on && x0 < 0) x0 = x; if (!on && x0 >= 0) { x1 = x; break; } }
+    const r = big.getBoundingClientRect(), range = document.createRange();
+    range.setStart(big.firstChild, big.textContent.indexOf(big.textContent.trim()[0])); range.setEnd(range.startContainer, range.startOffset + 1);
+    const g = range.getBoundingClientRect();
+    // Baseline inside the line box: half-leading plus the font's ascent; the middle row is half the cap height above it
+    const lh = parseFloat(cs.lineHeight), base = (lh - m.fontBoundingBoxAscent - m.fontBoundingBoxDescent) / 2 + m.fontBoundingBoxAscent;
+    const ox = g.left - r.left + (x0 >= 0 ? (x0 + (x1 > 0 ? x1 : x0 + 1)) / 2 : g.width / 2);
+    const oy = base - asc / 2;
+    big.style.transformOrigin = `${ox.toFixed(1)}px ${oy.toFixed(1)}px`;
+  };
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitBig);
+  addEventListener("resize", fitBig);
 
   // Name: every letter takes the same time but starts 80px further down, so they land as a wave
   const nameEl = $("name");
@@ -151,8 +182,8 @@
   const play = () => {
     clear(); corners.classList.remove("on");
     stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play");
-    timers.push(setTimeout(() => corners.classList.add("on"), 2650));
-    timers.push(setTimeout(finish, 3950));
+    timers.push(setTimeout(() => corners.classList.add("on"), 4650));
+    timers.push(setTimeout(finish, 5950));
   };
   $("skip").onclick = finish;
   // Scroll cue: jumps to the work list and hides once the visitor has started scrolling
