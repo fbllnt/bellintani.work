@@ -573,7 +573,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .pair.cz .pair-text .body{font-size:clamp(17px,1.4vw,22px)}
 @media (max-width:760px){
   .mods{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .trilho{display:flex;flex-direction:column;margin-top:48px}
+  .trilho{display:flex;flex-direction:column;align-items:stretch;margin-top:48px}
   .tr-side{position:static}
   .pair{display:flex;flex-direction:column}
   .pair.ch{margin-top:48px}
