@@ -40,9 +40,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loader span{display:inline-block;opacity:0}
 .loader span.blue{color:var(--blue)}
 .loader .boom{margin-top:.12em}
-/* MY HOUSE lands on its own: the lyric lines are gone the moment it cuts on, and it sits alone mid-screen */
-.loader.alone .ln:not(.boom){display:none}
-.loader.alone .boom{margin-top:0}
 .loader .boom span{white-space:nowrap;letter-spacing:-.05em;color:var(--blue)}
 .loader .boom b{font-weight:inherit}
 .panel{inset:0;opacity:0}
@@ -57,16 +54,16 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .skip{all:unset;position:absolute;cursor:pointer;right:var(--side-r);top:calc(20px + env(safe-area-inset-top,0px));z-index:3;font:300 13px/1 var(--mono);text-transform:uppercase}
 .skip:focus-visible{outline:1px solid currentColor}
 
-/* Timeline (seconds): lyric lines 0.2–2 · lines go, MY HOUSE lands alone 2.55, bursts 3.3–3.9 · panels 3.9–4.5 · name 4.5 · tagline 5.05 */
+/* Timeline (seconds): lyric lines 0.2–2 · pause, then MY HOUSE lands 2.9 like the echo in the song (Felipe, Oct 27 2026), bursts 3.8–4.4 · panels 4.4–5 · name 5 · tagline 5.55 */
 .play .loader span{animation:cut 0s linear forwards var(--d)}
-.play .loader{animation:out 0s linear forwards 3.9s}
-.play .loader .boom span{animation:cut 0s linear forwards var(--d), burst .6s cubic-bezier(.7,0,.84,0) forwards 3.3s}
+.play .loader{animation:out 0s linear forwards 4.4s}
+.play .loader .boom span{animation:cut 0s linear forwards var(--d), burst .6s cubic-bezier(.7,0,.84,0) forwards 3.8s}
 @keyframes burst{to{transform:scale(90)}}
 @media (prefers-reduced-motion:reduce){ .play .loader .boom span{animation:cut 0s linear forwards var(--d)} }
-.play .panel{animation:cut 0s linear forwards var(--d), out 0s linear forwards 4.5s}
-.play .name .word > span{animation:rise .6s var(--over) forwards 4.5s}
-.play .tag{animation:fade .5s ease forwards 5.05s}
-.play .skip{animation:out 0s linear forwards 4.5s}
+.play .panel{animation:cut 0s linear forwards var(--d), out 0s linear forwards 5s}
+.play .name .word > span{animation:rise .6s var(--over) forwards 5s}
+.play .tag{animation:fade .5s ease forwards 5.55s}
+.play .skip{animation:out 0s linear forwards 5s}
 @keyframes cut{to{opacity:1}}
 @keyframes out{to{opacity:0;visibility:hidden}}
 @keyframes fade{to{opacity:1}}
@@ -79,7 +76,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .cue path{animation:cueDrop 1.6s var(--ease) infinite}
 .cue path + path{animation-delay:.18s}
 @keyframes cueDrop{0%{opacity:.45;transform:translateY(-3px)}45%{opacity:1}100%{opacity:.45;transform:translateY(4px)}}
-.play .cue{animation:fade .5s ease forwards 5.5s}
+.play .cue{animation:fade .5s ease forwards 6s}
 .done .cue{opacity:1}
 .cue.gone{opacity:0!important;pointer-events:none}
 .cue:focus-visible{outline:1px solid currentColor}

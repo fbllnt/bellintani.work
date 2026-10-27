@@ -147,13 +147,13 @@
 
   // ---------- Intro ----------
   const stage = $("top"), corners = $("corners");
-  // Lines of words cut on one by one (slow, like a lyric), then loaderBig lands huge and bursts to reveal the site
+  // Lines of words cut on one by one (slow, like a lyric), then after a pause (the echo in the song) loaderBig lands huge below them and bursts to reveal the site
   let d = 0.2;
   const loaderEl = $("loader");
   loaderEl.innerHTML = L(S.loader).map((line, li) => `<div class="ln">${line.map(w => {
     const html = `<span${w[0] === "*" ? ` class="blue"` : ""} style="--d:${d.toFixed(2)}s">${esc(w.replace(/^\*/, ""))}</span>`;
     d += 0.28; return html; }).join(" ")}</div>`).join("")
-    + (S.loaderBig ? `<div class="ln boom"><span style="--d:${(d + 0.4).toFixed(2)}s">${esc(L(S.loaderBig))}</span></div>` : "");
+    + (S.loaderBig ? `<div class="ln boom"><span style="--d:${(d + 0.75).toFixed(2)}s">${esc(L(S.loaderBig))}</span></div>` : "");
   // The big line fills the width and bursts from the middle of its first letter's left stem, so the screen goes solid blue
   const fitBig = () => {
     const big = loaderEl.querySelector(".boom span");
@@ -223,12 +223,8 @@
   const play = () => {
     clear(); corners.classList.remove("on");
     stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play");
-    // MY HOUSE comes on alone: the lyric lines leave the screen the moment it cuts on (Felipe, Oct 27 2026)
-    loaderEl.classList.remove("alone");
-    const big = loaderEl.querySelector(".boom span");
-    if (big) timers.push(setTimeout(() => loaderEl.classList.add("alone"), parseFloat(big.style.getPropertyValue("--d")) * 1000));
-    timers.push(setTimeout(() => corners.classList.add("on"), 4650));
-    timers.push(setTimeout(finish, 5950));
+    timers.push(setTimeout(() => corners.classList.add("on"), 5150));
+    timers.push(setTimeout(finish, 6450));
   };
   $("skip").onclick = finish;
 
