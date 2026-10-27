@@ -229,7 +229,7 @@ window.SITE = {
         ["4", { en: "Press outlets", pt: "Veículos de imprensa" }],
       ],
       layout: "loose",
-      // Launch post, animated crest, Flora canvas and explorations grid removed (Felipe, Oct 27 2026); files kept in images/top50/
+      // Launch post, animated crest, Flora canvas, explorations grid and the two van side shots removed (Felipe, Oct 27 2026); files kept in images/top50/
       gallery: [
         { chapter: { en: "01 · Idea", pt: "01 · Ideia" }, kicker: { en: "Crowdsourced naming · public vote", pt: "Nomes inscritos pelo público · votação aberta" },
           head: { en: "Your company name belongs on *this list.*", pt: "O nome da sua empresa merece estar *nessa lista.*" },
@@ -254,8 +254,6 @@ window.SITE = {
             { src: "images/top50/van-logo-hood.jpg", ar: "2000/1116", caption: { en: "Logo applied — hood", pt: "Logo aplicado — capô" } },
           ], col: 1, span: 12 },
         { src: "images/top50/van-hero.jpg", ar: "2000/1121", col: 1, span: 12, caption: { en: "The full wrap: crest, trades and “Trusted. Reliable. Unforgettable.”", pt: "O envelopamento completo: brasão, ofícios e “Trusted. Reliable. Unforgettable.”" } },
-        { src: "images/top50/van-cargo.jpg", ar: "2000/1116", col: 1, span: 6 },
-        { src: "images/top50/van-update.jpg", ar: "2000/1116", col: 7, span: 6 },
         { chapter: { en: "04 · Social", pt: "04 · Social" }, kicker: { en: "Launch · FAQ · countdown · voting", pt: "Lançamento · FAQ · contagem · votação" },
           head: { en: "From launch to the *last vote.*", pt: "Do lançamento ao *último voto.*" },
           text: { en: "One system for every step: an FAQ carousel to explain the rules, a countdown to the submission deadline, the voting launch, a kit for finalists to rally their own customers and an email for the 50 who made it.", pt: "Um sistema para cada etapa: um carrossel de FAQ explicando as regras, a contagem regressiva até o fim das inscrições, a abertura da votação, um kit para os finalistas mobilizarem os próprios clientes e um e-mail para os 50 escolhidos." } },
