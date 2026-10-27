@@ -155,7 +155,7 @@
   const loaderEl = $("loader");
   loaderEl.innerHTML = L(S.loader).map((line, li) => `<div class="ln">${line.map(w => {
     const html = `<span${w[0] === "*" ? ` class="blue"` : ""} style="--d:${d.toFixed(2)}s">${esc(w.replace(/^\*/, ""))}</span>`;
-    d += 0.16; return html; }).join(" ")}</div>`).join("")
+    d += 0.2; return html; }).join(" ")}</div>`).join("")
     // MY, then HOUSE a beat later, as sung (Felipe, Oct 27 2026): the second word is a <b> inside the one burst span
     + (S.loaderBig ? `<div class="ln boom"><span style="--d:${(d + 0.45).toFixed(2)}s;--d2:${(d + 0.85).toFixed(2)}s">${
       esc(L(S.loaderBig)).replace(/^(\S+)(\s+)(.+)$/, "$1$2<b>$3</b>")}</span></div>` : "");
@@ -228,8 +228,8 @@
   const play = () => {
     clear(); corners.classList.remove("on");
     stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play");
-    timers.push(setTimeout(() => corners.classList.add("on"), 4250));
-    timers.push(setTimeout(finish, 5550));
+    timers.push(setTimeout(() => corners.classList.add("on"), 4550));
+    timers.push(setTimeout(finish, 5850));
   };
   $("skip").onclick = finish;
 
