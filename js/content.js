@@ -9,8 +9,8 @@ window.SITE = {
     { label: "LinkedIn", url: "https://www.linkedin.com/in/fbellintani/" },
   ],
   tagline: {
-    en: "Multidisciplinary designer, art director, and who knows what else",
-    pt: "Designer multidisciplinar, diretor de arte e sabe-se lá o que mais",
+    en: "Multidisciplinary designer, art director, ADHD, Music Freak, father of a little 7 year old princess and who knows what else",
+    pt: "Designer multidisciplinar, diretor de arte, TDAH, Music Freak, pai de uma princesinha de 7 anos e sabe-se lá o que mais",
   },
   subline: {
     en: ["Branding & Identity, Advertising, Digital, Social, Vibe Coding and AI Workflows"],
