@@ -273,26 +273,102 @@
   // shares one height, runs margin to margin and nothing is cropped. A new row starts at `col: 1`, at `span` 9+ or
   // when the spans pass 12; `shift`, `nudge` and `tight` are ignored. Every other block runs full width.
   // On phones a row of landscape pieces stacks one per line; a row of portraits stays side by side.
+  // Grids (Felipe, Oct 27 2026): each project picks one of five ways to fill the same 12 columns, by its content.
+  // `grid` on the project sets it; `grid` on a chapter switches it from that chapter on. All keep one --gap and
+  // never crop (pieces are contained at their own ratio).
+  //   fluxo    justified rows grouped by col/span (the original layout)
+  //   destaque hierarchy: one piece alone, then two, then three, then one again; films at most two to a row
+  //   trilho   the chapter text sticks in columns 1-4 while its images run in columns 5-12
+  //   modulos  equal cells (`cell`, default 4/3), each piece whole and centred on the panel colour
+  //   cartaz   the chapter headline runs huge across the columns; the first piece sits in 1-6 beside the text
   function looseGallery(p) {
     const ratio = ar => { const [w, h] = String(ar || "16/9").split("/").map(Number); return w / (h || 1); };
     const isMedia = it => ((it.src || it.video || it.tunnel) && !it.scrub && !it.spin) || (it.todo && it.span < 12);
-    let html = "", row = [], used = 0;
-    const flush = () => {
-      if (!row.length) return;
+    const GRIDS = ["fluxo", "destaque", "trilho", "modulos", "cartaz"];
+    const pick = g => GRIDS.includes(g) ? g : null;
+    let grid = pick(p.grid) || "fluxo";
+    const jrow = row => {
       const sum = row.reduce((a, it) => a + ratio(it.ar), 0);
-      html += `<div class="jrow${row.length > 1 && sum > 2.2 ? " stack-m" : ""}" style="--sum:${sum.toFixed(4)};--n:${row.length}">${
+      return `<div class="jrow${row.length > 1 && sum > 2.2 ? " stack-m" : ""}" style="--sum:${sum.toFixed(4)};--n:${row.length}">${
         row.map(it => it.todo ? block(it, p, `--r:${ratio(it.ar).toFixed(4)}`) : fig(it, p, `--r:${ratio(it.ar).toFixed(4)}`)).join("")}</div>`;
-      row = []; used = 0;
     };
+    // A run of consecutive pieces, laid out by the grid in force
+    const layRun = (run, g, afterPair) => {
+      if (!run.length) return "";
+      if (g === "destaque") {
+        // After a text + piece pair the cadence starts at two; films go at most two to a row
+        const SIZES = [1, 2, 3]; let out = "", k = afterPair ? 1 : 0, row = [];
+        const want = () => row.some(x => x.video || x.tunnel) ? Math.min(2, SIZES[k % 3]) : SIZES[k % 3];
+        run.forEach(it => {
+          row.push(it); if (row.length >= want()) { out += jrow(row); row = []; k++; }
+        });
+        if (row.length) out += jrow(row);
+        return out;
+      }
+      if (g === "modulos") {
+        const films = [], cells = [];
+        run.forEach(it => (it.video || it.tunnel ? films : cells).push(it));
+        const n = cells.length;
+        // Two pieces or fewer are not a series: they stay a justified row
+        if (n < 3) return films.map(f => jrow([f])).join("") + (n ? jrow(cells) : "");
+        // Columns that leave the fewest empty cells, preferring four
+        const cols = n <= 4 ? Math.max(n, 1) : [4, 3].sort((a, b) => ((a - n % a) % a) - ((b - n % b) % b))[0];
+        return films.map(f => jrow([f])).join("") + (n ? `<div class="mods" style="--mc:${cols}">${cells.map(it =>
+          it.todo ? block(it, p, `--ar:${esc(p.cell || "4/3")}`) : fig({ ...it, ar: p.cell || "4/3" }, p)).join("")}</div>` : "");
+      }
+      // fluxo, trilho and cartaz rows: justified, grouped by col/span
+      let out = "", row = [], used = 0;
+      const flush = () => { if (row.length) out += jrow(row); row = []; used = 0; };
+      run.forEach(it => {
+        const span = Math.min(12, it.span || 12);
+        if (row.length && (it.col === 1 || span >= 9 || used + span > 12)) flush();
+        row.push(it); used += span;
+        if (span >= 9) flush();
+      });
+      flush();
+      return out;
+    };
+    // Walk the gallery: blocks and runs of pieces. Text never floats alone above its images (Felipe, Oct 27 2026):
+    // a chapter, or a text line, sits in a side column next to the piece it talks about. Trilho keeps the chapter
+    // text beside all its pieces; cartaz sets the headline huge above and pairs the rest with the first piece.
+    let html = "", run = [], side = null, main = "", pend = null;
+    const out = h => { if (side !== null) main += h; else html += h; };
+    const pairWith = h => { out(`<div class="pair${pend.cz ? " cz" : ""}${pend.solo && pend.solo.startsWith("<section") ? " ch" : ""}"><div class="pair-fig">${h}</div><div class="pair-text">${pend.html}</div></div>`); pend = null; };
+    const flushRun = () => {
+      let paired = false;
+      if (pend && run.length) { const first = run.shift(); pairWith(first.todo ? block(first, p) : fig(first, p, `--r:${ratio(first.ar).toFixed(4)}`)); paired = true; }
+      out(layRun(run, grid, paired)); run = [];
+    };
+    const closePend = () => { if (pend) { out(pend.cz ? `<div class="pair cz solo"><div class="pair-text">${pend.html}</div></div>` : pend.solo); pend = null; } };
+    const closeSide = () => { if (side !== null) { html += `<div class="trilho"><div class="tr-side">${side}</div><div class="tr-main">${main}</div></div>`; side = null; main = ""; } };
     p.gallery.forEach(it => {
-      if (!isMedia(it)) { flush(); html += block(it, p); return; }
-      const span = Math.min(12, it.span || 12);
-      if (row.length && (it.col === 1 || span >= 9 || used + span > 12)) flush();
-      row.push(it); used += span;
-      if (span >= 9) flush();
+      if (isMedia(it)) { run.push(it); return; }
+      flushRun();
+      if (it.chapter) {
+        closePend(); closeSide();
+        grid = pick(it.grid) || grid;
+        const ch = block(it, p);
+        if (grid === "trilho") { side = ch.replace('class="chap"', 'class="chap tr"'); return; }
+        if (grid === "cartaz") {
+          const head = (ch.match(/<h2 class="chap-h">[\s\S]*?<\/h2>/) || [""])[0];
+          html += `<section class="chap cz">${head}</section>`;
+          pend = { cz: true, html: ch.replace(head, "").replace(/^<section class="chap"[^>]*>|<\/section>$/g, "") };
+          return;
+        }
+        pend = { html: ch.replace('class="chap"', 'class="chap tr"'), solo: ch };
+        return;
+      }
+      // A flip, strip or live page can take the pending text beside it
+      if (pend && (it.flip || it.strip || it.embed)) { pairWith(block(it, p)); return; }
+      closePend();
+      // A text line pairs with the piece or flip that follows it
+      if (it.text && !side) { pend = { html: `<p class="ltext side">${esc(L(it.text))}</p>`, solo: block(it, p) }; return; }
+      // Scroll sequences and 360° viewers need the full width
+      if ((it.scrub || it.spin) && side !== null) closeSide();
+      out(block(it, p));
     });
-    flush();
-    return `<div class="loose">${html}</div>`;
+    flushRun(); closePend(); closeSide();
+    return `<div class="loose g-${pick(p.grid) || "fluxo"}">${html}</div>`;
   }
 
   // A full-width block in the loose gallery: chapter, text, rename, word, marquee, flip, strip, embed, placeholder,

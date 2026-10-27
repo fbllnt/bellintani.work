@@ -533,3 +533,47 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .music-swap{all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;font-size:11px;padding:0 2px 8px;color:var(--blue)}
 .music-swap[hidden]{display:none}
 .music-frame iframe{display:block;width:100%;height:80px;border:0;border-radius:12px}
+
+/* ---------- Grids per project (Felipe, Oct 27 2026): fluxo, destaque, trilho, modulos, cartaz ----------
+   All on the same 12 columns and one --gap; pieces are always whole (contain). */
+/* Módulos: equal cells, each piece centred whole on the panel colour */
+.mods{display:grid;grid-template-columns:repeat(var(--mc,4),minmax(0,1fr));gap:var(--gap)}
+.mods > .fig .ph{background:var(--panel)}
+.loose .mods > .fig .ph > :is(img,video){inset:7%;width:86%;height:86%}
+/* Trilho: chapter text sticks in columns 1-4, its pieces run in 5-12 */
+.trilho{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:start;margin-top:clamp(40px,6vw,104px)}
+.tr-side{grid-column:1 / 5;position:sticky;top:calc(var(--side) + 48px);min-width:0}
+.tr-main{grid-column:5 / 13;display:flex;flex-direction:column;gap:var(--gap);min-width:0}
+.tr-main > .jrow{width:min(100%,calc(var(--sum) * 100svh + (var(--n) - 1) * var(--gap)))}
+.chap.tr{display:flex;flex-direction:column;gap:14px;margin:0}
+.chap.tr .chap-h{font-size:clamp(26px,2.6vw,44px)}
+.loose > .trilho + .trilho{margin-top:clamp(40px,6vw,104px)}
+/* Pair: a chapter or text line in columns 1-4 beside the piece it talks about in 5-12 (Felipe, Oct 27 2026) */
+.pair{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:start}
+.pair.ch{padding-top:14px;border-top:2px solid var(--fg);margin-top:clamp(40px,6vw,104px)}
+.pair-text{grid-column:1 / 5;grid-row:1;position:sticky;top:calc(var(--side) + 48px);min-width:0;display:flex;flex-direction:column;gap:14px}
+.pair-fig{grid-column:5 / 13;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end}
+.pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * 100svh))}
+.pair-fig > :is(.flip,.strip,.embed){width:100%}
+.pair .chap.tr{border-top:0;padding-top:0}
+.ltext.side{margin:0;font-size:clamp(20px,1.9vw,30px);line-height:1.15}
+/* Cartaz: the headline runs huge across the columns; the first piece sits in 1-6, the text in 7-12 */
+.chap.cz{display:block}
+.chap.cz .chap-h{font-size:clamp(48px,9.5vw,184px);line-height:.86;letter-spacing:-.055em}
+.pair.cz .pair-fig{grid-column:1 / 7;align-items:flex-start}
+.pair.cz .pair-text{grid-column:7 / 13}
+.pair.cz.solo .pair-text{position:static}
+.pair.cz .pair-text .chap-k{margin:0;display:flex;flex-direction:column;gap:4px}
+.pair.cz .pair-text .body{font-size:clamp(17px,1.4vw,22px)}
+@media (max-width:760px){
+  .mods{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trilho{display:flex;flex-direction:column;margin-top:48px}
+  .tr-side{position:static}
+  .pair{display:flex;flex-direction:column}
+  .pair.ch{margin-top:48px}
+  .pair-text{position:static;order:-1}
+  .pair-fig{align-items:stretch}
+  .chap.cz .chap-h{font-size:clamp(40px,13vw,72px)}
+}
+.trilho{border-top:2px solid var(--fg);padding-top:14px}
+.tr-side .chap.tr{border-top:0;padding-top:0}

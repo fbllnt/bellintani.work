@@ -175,7 +175,7 @@ window.SITE = {
         ["1", { en: "Landing page", pt: "Landing page" }],
       ],
       // Loose layout: benches float as a staggered collage, the campaign line sits big between them and the films
-      layout: "loose",
+      layout: "loose", grid: "destaque",
       gallery: [
         { chapter: { en: "01 · Idea", pt: "01 · Ideia" }, kicker: { en: "Receba antes, seja ANTI", pt: "Receba antes, seja ANTI" },
           head: { en: "Don't wait a *lifetime* to get paid.", pt: "Não espere uma *vida* para receber." },
@@ -229,7 +229,7 @@ window.SITE = {
         en: "Four years at Globo, Brazil's largest broadcaster. A key role in its rebrand: design system, colours and gradients, type family, on-air studies, show identities, openings and vignettes.",
         pt: "Quatro anos na Globo, a maior emissora do Brasil. Papel central no rebranding: sistema de design, cores e degradês, família tipográfica, estudos on air, identidades de programas, aberturas e vinhetas.",
       },
-      layout: "loose",
+      layout: "loose", grid: "trilho",
       gallery: [
         { chapter: { en: "01 · Intro", pt: "01 · Intro" }, kicker: { en: "2014 — 2018", pt: "2014 — 2018" },
           head: { en: "Four years at Brazil's largest *broadcaster.*", pt: "Quatro anos na maior *emissora* do Brasil." } },
@@ -456,7 +456,7 @@ window.SITE = {
       },
       // Told in storyboard order: duel films, the finale, the second key visual with the end line, then the storyboard as process
       hero: "bleed",
-      layout: "loose",
+      layout: "loose", grid: "destaque",
       gallery: [
         { chapter: { en: "01 · Idea", pt: "01 · Ideia" }, kicker: { en: "Mud · rain · the slide tackle", pt: "Lama · chuva · carrinho" },
           head: { en: "Legends from different eras, *one pitch.*", pt: "Lendas de épocas diferentes, *um só gramado.*" },
@@ -506,7 +506,7 @@ window.SITE = {
         ["8", { en: "Colours", pt: "Cores" }],
       ],
       // Story: the O, the name shrinking to a hello, grey vs the colour of the core, type and voice, then the street
-      layout: "loose",
+      layout: "loose", grid: "modulos",
       gallery: [
         { chapter: { en: "01 · Challenge", pt: "01 · Desafio" }, kicker: { en: "The brief", pt: "O briefing" },
           head: { en: "Human *+* artificial intelligence.", pt: "Humano *+* inteligência artificial." },
@@ -563,7 +563,7 @@ window.SITE = {
         en: "XP doesn't sponsor Brazilian sport, it invests in it. One crossed-out word becomes the sign-off: “Investidora oficial do esporte brasileiro”.",
         pt: "A XP não patrocina o esporte brasileiro, ela investe nele. Uma palavra riscada vira a assinatura: “Investidora oficial do esporte brasileiro”.",
       },
-      layout: "loose",
+      layout: "loose", grid: "destaque",
       gallery: [
         { chapter: { en: "01 · Idea", pt: "01 · Ideia" }, kicker: { en: "Sponsor → Investor", pt: "Patrocinadora → Investidora" },
           head: { en: "XP doesn't sponsor. *It invests.*", pt: "A XP não patrocina. *Investe.*" },
@@ -606,7 +606,7 @@ window.SITE = {
         en: "Opening for Cinema Especial, Globo's movie slot. Ink spreads over old film stock, the featured film's hero surfaces from the stains, and the title lands before the Globo mark closes. Style frames shown with The Amazing Spider-Man as the featured film.",
         pt: "Abertura do Cinema Especial, a faixa de filmes da Globo. A tinta se espalha sobre película antiga, o herói do filme da noite surge das manchas e o título entra antes da marca Globo fechar. Style frames com O Espetacular Homem-Aranha como filme em destaque.",
       },
-      layout: "loose",
+      layout: "loose", grid: "destaque",
       gallery: [
         { chapter: { en: "01 · Opening", pt: "01 · Abertura" }, kicker: { en: "Globo's movie slot", pt: "A faixa de filmes da Globo" },
           head: { en: "Ink, old film and the *hero of the night.*", pt: "Tinta, película antiga e o *herói da noite.*" },
@@ -663,7 +663,7 @@ window.SITE = {
         en: "New opening for Tela Quente, one of Brazil's most classic movie slots, on Globo. The red and silver look gives way to Globo's white and 3D, and the coloured screens of the original logo come back as a rainbow.",
         pt: "Nova abertura da Tela Quente, uma das sessões de cinema mais clássicas do Brasil, na Globo. O visual vermelho e prateado dá lugar ao branco e ao 3D da Globo, e as telas coloridas do logo original voltam como arco-íris.",
       },
-      layout: "loose",
+      layout: "loose", grid: "destaque",
       gallery: [
         { chapter: { en: "01 · Challenge", pt: "01 · Desafio" }, kicker: { en: "Where it started", pt: "O ponto de partida" },
           head: { en: "Bring back the *coloured screens.*", pt: "Resgatar as *telas coloridas.*" },
@@ -727,7 +727,7 @@ window.SITE = {
         en: "Visual identity for Globoplay, Globo's streaming platform, and direction of its vignette, animated by Bild. This is where Globotipo, Globo's own typeface, was born.",
         pt: "Identidade visual do Globoplay, o streaming da Globo, e direção da vinheta, animada pela Bild. Foi aqui que nasceu a Globotipo, a fonte própria da Globo.",
       },
-      layout: "loose",
+      layout: "loose", grid: "destaque",
       gallery: [
         { chapter: { en: "01 · Intro", pt: "01 · Intro" }, kicker: { en: "The vignette", pt: "A vinheta" },
           head: { en: "All of Globo, *one play away.*", pt: "A Globo inteira, *a um play.*" },
@@ -784,7 +784,7 @@ window.SITE = {
         pt: "Rebranding da SCRV.ag, agência que só posta quando faz sentido. Pensar (+), criar (×), posicionar (✱): três verbos, três sinais, que juntos formam o asterisco. Red Fuse, Deep Black e Hey Grey, em Mango Grotesque e Space Mono.",
       },
       // Story: the symbol, the system, type in motion, the street, then the agency's own voice
-      layout: "loose",
+      layout: "loose", grid: "cartaz",
       gallery: [
         { chapter: { en: "01 · Challenge", pt: "01 · Desafio" }, kicker: { en: "The brief", pt: "O briefing" },
           head: { en: "Break the *status quo.*", pt: "Quebrar o *status quo.*" },
@@ -845,7 +845,7 @@ window.SITE = {
         ["50", { en: "Unforgettable names", pt: "Nomes inesquecíveis" }],
         ["4", { en: "Press outlets", pt: "Veículos de imprensa" }],
       ],
-      layout: "loose",
+      layout: "loose", grid: "fluxo",
       // Launch post, animated crest, Flora canvas, explorations grid and the two van side shots removed (Felipe, Oct 27 2026); files kept in images/top50/.
       // Van canvas groups, vertical cut and alternate cut removed and their files deleted (Felipe, Oct 27 2026)
       gallery: [
@@ -914,7 +914,7 @@ window.SITE = {
         en: "A new name, a new positioning and a brand the size of the business. DIGIMOB Invest became THURA, a project done at SCRV.ag.",
         pt: "Um novo nome, um novo posicionamento e uma marca do tamanho do negócio. A DIGIMOB Invest virou THURA, um projeto feito na SCRV.ag.",
       },
-      layout: "loose",
+      layout: "loose", grid: "trilho",
       gallery: [
         { chapter: { en: "01 · Intro", pt: "01 · Intro" }, kicker: { en: "Sell · Live · Invest", pt: "Vender · Morar · Investir" },
           head: { en: "Some doors change *everything.*", pt: "Algumas portas mudam *tudo.*" },
@@ -988,7 +988,7 @@ window.SITE = {
         en: "Digital Marketing Academy by JBS, the training school for the marketing teams of one of the world's largest food companies. A brand built from the smallest unit of a screen.",
         pt: "Digital Marketing Academy by JBS, a escola de formação dos times de marketing de uma das maiores empresas de alimentos do mundo. Uma marca construída a partir da menor unidade de uma tela.",
       },
-      layout: "loose",
+      layout: "loose", grid: "modulos",
       gallery: [
         { chapter: { en: "01 · Intro", pt: "01 · Intro" }, kicker: { en: "Digital Marketing Academy", pt: "Digital Marketing Academy" },
           head: { en: "Every screen starts with a pixel.", pt: "Toda tela começa num pixel." },

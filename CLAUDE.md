@@ -95,6 +95,14 @@ so sections read as clearly separate blocks.
   new row; `shift`, `nudge`, `tight`, `speed` no longer do anything. A row taller than 115% of the screen narrows and centres.
   On phones, rows of landscape pieces stack; portrait pairs stay side by side. Captions sit 6px below each piece.
 - Video buttons (play, sound, full screen) sit inside the film as one tag hanging from the top edge, `--tag-x` in from the left.
+- Grids per project (Felipe, Oct 27 2026): `grid` on a project picks one of five ways to fill the 12 columns, and
+  `grid` on a chapter switches from there on. fluxo = justified rows by col/span (the original); destaque = one
+  piece, then two, then three (films max two per row); trilho = chapter text sticky in cols 1-4, its pieces in 5-12;
+  modulos = equal cells (`cell`, default 4/3), piece contained on the panel colour, 3+ pieces only; cartaz = huge
+  chapter headline across the columns, first piece in 1-6 beside the text. Picker artifact with Felipe's choices:
+  https://claude.ai/artifact/U5iuV1W89pBKLttprKtTy7 (db collection `escolhas`).
+- Text beside images (Felipe, Oct 27 2026): a chapter or a text line never floats alone above its images; it sits in
+  cols 1-4 next to the first piece, flip, strip or live page that follows (cols 5-12). Phones stack text first.
 
 Missing material (Felipe, Oct 24 2026): when a project lacks something its pattern calls for (an image, a fact, a
 section), put a visible placeholder instead of skipping it: a gallery item `{ todo: { en, pt }, ar?, col, span }`
