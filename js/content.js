@@ -588,7 +588,7 @@ window.SITE = {
         { scrub: { frames: "images/xp/natacao-##.jpg", count: 5 }, ar: "16/9", col: 1, span: 12, caption: { en: "Story frames, played by scroll", pt: "Quadros da história, no scroll" } },
       ],
     },
-    // Hidden from the site for now (Felipe, Oct 27 2026): Top Fifty Unforgettable, THURA and DMA. Files stay on the server.
+    // Hidden from the site for now (Felipe, Oct 27 2026): HCP Top 50 Names (ex-Top Fifty Unforgettable), THURA and DMA. Files stay on the server.
     {
       title: "Cinema Especial",
       track: { id: "2WWG2WjVJuJRVmgAxzbkad", name: "Cinema Paradiso", by: "Ennio Morricone" },
@@ -818,7 +818,7 @@ window.SITE = {
     },
     // Logofolio stays the last project.
     {
-      title: "Top Fifty Unforgettable",
+      title: "HCP Top 50 Names",
       track: { id: "4w3tQBXhn5345eUXDGBWZG", name: "9 to 5", by: "Dolly Parton" },
       type: "campaign",
       client: "Housecall Pro",
