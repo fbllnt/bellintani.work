@@ -331,7 +331,9 @@
     // text beside all its pieces; cartaz sets the headline huge above and pairs the rest with the first piece.
     let html = "", run = [], side = null, main = "", pend = null;
     const out = h => { if (side !== null) main += h; else html += h; };
-    const pairWith = h => { out(`<div class="pair${pend.cz ? " cz" : ""}${pend.solo && pend.solo.startsWith("<section") ? " ch" : ""}"><div class="pair-fig">${h}</div><div class="pair-text">${pend.html}</div></div>`); pend = null; };
+    // `side` on the piece: a second, smaller piece (e.g. a vertical film) filling the text column under the text
+    const pairWith = (h, sd) => { out(`<div class="pair${pend.cz ? " cz" : ""}${pend.solo && pend.solo.startsWith("<section") ? " ch" : ""}${sd ? " has-side" : ""}"><div class="pair-fig">${h}</div><div class="pair-text">${pend.html}${
+      sd ? `<div class="pair-side">${fig(sd, p, `--ar:${esc(sd.ar || "9/16")}`)}</div>` : ""}</div></div>`); pend = null; };
     const flushRun = () => {
       let paired = false;
       // Fluxo keeps its rows whole: the text pairs only with a piece that would sit alone in its row anyway
@@ -358,7 +360,7 @@
         return;
       }
       // A flip, strip or live page can take the pending text beside it
-      if (pend && (it.flip || it.strip || it.embed)) { pairWith(block(it, p)); return; }
+      if (pend && (it.flip || it.strip || it.embed)) { pairWith(block(it, p), it.side); return; }
       closePend();
       // A text line pairs with the piece or flip that follows it
       if (it.text && !side) { pend = { html: `<p class="ltext side">${esc(L(it.text))}</p>`, solo: block(it, p) }; return; }

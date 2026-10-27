@@ -192,7 +192,8 @@ window.SITE = {
           ], col: 1, span: 12 },
         { chapter: { en: "03 · Street", pt: "03 · Rua" }, kicker: { en: "Lambe-lambes · São Paulo", pt: "Lambe-lambes · São Paulo" },
           head: { en: "From the festival to the *street.*", pt: "Do festival para a *rua.*" } },
-        // Backstage film (film-ccsp) and the Free my freela poster removed for now (Felipe, Oct 26 2026); files kept
+        // Free my freela poster removed for now (Felipe, Oct 26 2026); file kept. Backstage film (film-ccsp) moved to
+        // 04 Digital, beside the headline (Felipe, Oct 27 2026)
         { src: "images/anti/poster-skeleton.jpg", ar: "1411/2000", mfull: true, col: 1, span: 6 },
         { src: "images/anti/poster-anti.jpg", ar: "1411/2000", mfull: true, col: 7, span: 6 },
         { src: "images/anti/street-posters.jpg", ar: "2000/1121", col: 1, span: 12, caption: { en: "Lambe-lambe posters on the street, São Paulo", pt: "Lambe-lambes na rua, São Paulo" } },
@@ -200,7 +201,9 @@ window.SITE = {
         // Yellow poster wall (street-wall-yellow.jpg) removed by Felipe, Oct 26 2026; file kept
         { chapter: { en: "04 · Digital", pt: "04 · Digital" }, kicker: { en: "naoespere.sejaanti.com.br", pt: "naoespere.sejaanti.com.br" },
           head: { en: "A landing page that counts the *wait.*", pt: "Uma landing page que conta a *espera.*" } },
-        { embed: { url: "https://naoespere.sejaanti.com.br", src: "embeds/anti/index.html", w: 1440, h: 900 }, poster: "images/anti/site-espere.jpg", col: 1, span: 12, caption: { en: "Landing page, live — click to open the site", pt: "Landing page no ar — clique para abrir o site" } },
+        { embed: { url: "https://naoespere.sejaanti.com.br", src: "embeds/anti/index.html", w: 1440, h: 900 }, poster: "images/anti/site-espere.jpg", col: 1, span: 12,
+          side: { video: "images/anti/film-ccsp.mp4", webm: "images/anti/film-ccsp.webm", poster: "images/anti/film-ccsp-poster.jpg", ar: "9/16", caption: { en: "Backstage — ANTI at the CCSP festival", pt: "Bastidores — ANTI no festival do CCSP" } },
+          caption: { en: "Landing page, live — click to open the site", pt: "Landing page no ar — clique para abrir o site" } },
         { chapter: { en: "05 · Films", pt: "05 · Filmes" }, kicker: { en: "4 films", pt: "4 filmes" },
           head: { en: "The same wait, *in motion.*", pt: "A mesma espera, *em movimento.*" } },
         // 2×2, yellow and red on the diagonal; each film starts at a different point so the four never look in sync

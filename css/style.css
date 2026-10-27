@@ -564,6 +564,12 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * 100svh))}
 .pair-fig > :is(.flip,.strip,.embed){width:100%}
 .pair .chap.tr{border-top:0;padding-top:0}
+/* A vertical film under the chapter text, filling the column down to the bottom of the piece beside it */
+.pair.has-side{align-items:stretch}
+.pair.has-side .pair-text{position:static}
+.pair-side{flex:1 1 0;min-height:240px;position:relative}
+.pair-side > .fig{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end}
+.pair-side > .fig .ph{flex:1 1 0;min-height:0;max-width:100%}
 .ltext.side{margin:0;font-size:clamp(20px,1.9vw,30px);line-height:1.15}
 /* Cartaz: the headline runs huge across the columns; the first piece sits in 1-6, the text in 7-12 */
 .chap.cz .chap-h{grid-column:1 / -1;grid-row:1}
@@ -583,6 +589,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .pair.ch{margin-top:48px}
   .pair-text{position:static;order:-1}
   .pair-fig,.pair.cz .pair-fig{align-items:stretch;width:100%}
+  .pair-side{flex:none;min-height:0;position:static}
+  .pair-side > .fig{position:static;display:block;width:min(62%,280px)}
+  .pair-side > .fig .ph{flex:none;height:auto}
   .chap.cz .chap-h{font-size:clamp(40px,13vw,72px)}
 }
 .trilho{border-top:2px solid var(--fg);padding-top:14px}
