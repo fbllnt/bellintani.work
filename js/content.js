@@ -1117,6 +1117,11 @@ window.SITE = {
         { name: "Camarote Lew’Lara", src: "images/logos/camarote-lewlara.png" },
         { name: "House Party Orloff, 3D", src: "images/logos/houseparty-3d.png" },
         { name: "Top Fifty Unforgettable", src: "images/logos/top-fifty.png" },
+        { name: "Boogie Safari", src: "images/logos/boogie-safari.png", scale: 1.1 },
+        { name: "Dirty Projectors, São Paulo 30.11.12", src: "images/logos/dirty-projectors.png" },
+        { name: "Calatos Films", src: "images/logos/calatos-films.png" },
+        { name: "Atelier Gkeimich", src: "images/logos/gk-atelier.png" },
+        { name: "Boiler Filmes", src: "images/logos/boiler-filmes.png" },
       // Leo Mafra and the flat House Party Orloff removed, and the empty "Logo 38–50" placeholders dropped (Felipe, Oct 27 2026)
       ],
     },
