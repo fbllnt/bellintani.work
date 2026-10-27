@@ -439,10 +439,10 @@ window.SITE = {
       hero: "bleed",
       layout: "loose", grid: "destaque",
       gallery: [
-        // The story Felipe told (Oct 27 2026): a print idea from about 2009 at an agency with the Adidas account, carried to Lew'Lara\\TBWA in 2012, picked up again in 2026
+        // The story Felipe told (Oct 27 2026): a print idea from about 2009 at AGE (Adidas account), carried to Lew'Lara\\TBWA in 2012, picked up again in 2026
         { chapter: { en: "01 · Idea", pt: "01 · Ideia" }, kicker: { en: "2009 · 2012 · print ads", pt: "2009 · 2012 · anúncios impressos" },
           head: { en: "From Beckenbauer to Messi. *The official World Cup ball for 40 years.*", pt: "De Beckenbauer a Messi. *A bola oficial da Copa há 40 anos.*" },
-          text: { en: "Around 2009, at an agency with the Adidas account, I found out the World Cup ball had been Adidas for 40 years. The joke became print-ad headlines, and came with me to Lew'Lara\\TBWA in 2012, also an Adidas agency.", pt: "Por volta de 2009, numa agência com a conta da Adidas, descobri que a bola da Copa era Adidas havia 40 anos. A brincadeira virou título de anúncios impressos e foi comigo para a Lew'Lara\\TBWA em 2012, que também atendia a Adidas." } },
+          text: { en: "Around 2009, at AGE, the first agency that let me think about this game, we had the Adidas account and I found out the World Cup ball had been Adidas for 40 years. The joke became print-ad headlines, and came with me to Lew'Lara\\TBWA in 2012, also an Adidas agency.", pt: "Por volta de 2009, na AGE, a primeira agência que me deu a chance de pensar nesse jogo, a gente tinha a conta da Adidas e descobri que a bola da Copa era Adidas havia 40 anos. A brincadeira virou título de anúncios impressos e foi comigo para a Lew'Lara\\TBWA em 2012, que também atendia a Adidas." } },
         { chapter: { en: "02 · Film", pt: "02 · Filme" }, kicker: { en: "Work in progress · 56 → 60 years", pt: "Work in progress · 56 → 60 anos" },
           head: { en: "Today, 56 years. At the next Cup, *60.*", pt: "Hoje são 56 anos. Na próxima Copa, *60.*" },
           text: { en: "In 2026 I picked the idea up again as a film: legends from different eras on the same pitch. Studies, storyboards and tests, all made with AI, on the way to a finished film.", pt: "Em 2026 retomei a ideia como filme: lendas de épocas diferentes no mesmo gramado. Estudos, storyboards e testes, todos feitos com IA, a caminho de um filme pronto." } },
