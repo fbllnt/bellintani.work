@@ -569,7 +569,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .pair{display:flex;flex-direction:column}
   .pair.ch{margin-top:48px}
   .pair-text{position:static;order:-1}
-  .pair-fig{align-items:stretch}
+  .pair-fig,.pair.cz .pair-fig{align-items:stretch;width:100%}
   .chap.cz .chap-h{font-size:clamp(40px,13vw,72px)}
 }
 .trilho{border-top:2px solid var(--fg);padding-top:14px}
