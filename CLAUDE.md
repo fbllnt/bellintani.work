@@ -28,6 +28,10 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 ## Content
 
+- Corner links (Oct 27 2026 review): scrolling down past the first screen hides the bottom corners (all four on phones);
+  scrolling up brings them back, so they never sit on the work. Project meta shows Type only when a project has no Scope.
+  Chapters are numbered from 01 in every project, Desafio and Identidade aplicada included.
+
 - All copy and projects live in `js/content.js`, in two languages as `{ en, pt }` (EN-US / PT-BR).
 - Projects can use `layout: "loose"` (free placement: `col`, `span`, `shift`, `speed`, `{ text }` lines),
   `hero: "bleed"`, videos (`video` MP4 + `webm` + `poster`) and a 360° viewer (`spin`).

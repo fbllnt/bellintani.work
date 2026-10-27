@@ -156,6 +156,16 @@
   $("replay").onclick = () => { scrollTo({ top: 0 }); play(); };
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
+  // corners (on phones all four), scrolling up or reaching the top brings them back, so they never sit on the work
+  let lastY = scrollY;
+  const calmCheck = () => {
+    const y = scrollY, dy = y - lastY;
+    if (Math.abs(dy) < 6) return;
+    corners.classList.toggle("calm", dy > 0 && y > innerHeight * .6);
+    lastY = y;
+  };
+  addEventListener("scroll", calmCheck, { passive: true });
 
   // ---------- Project pages ----------
   // Each job opens at #p-<slug>. The page is rendered in place; the hash keeps it linkable.
@@ -520,7 +530,8 @@
   function renderCase(i) {
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length];
     applyTheme(p.theme);
-    const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("type"), p.type && S.types ? L(S.types[p.type]) : ""], [T("before"), L(p.before)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)], [T("tools"), Array.isArray(p.tools) ? p.tools : L(p.tools)]].filter(([, v]) => v);
+    // Type only shows when there is no Scope: the two said the same thing twice (Oct 27 2026 review)
+    const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("type"), !p.scope && p.type && S.types ? L(S.types[p.type]) : ""], [T("before"), L(p.before)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)], [T("tools"), Array.isArray(p.tools) ? p.tools : L(p.tools)]].filter(([, v]) => v);
     let n = 0;
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
