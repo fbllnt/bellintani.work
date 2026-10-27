@@ -32,6 +32,11 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   scrolling up brings them back, so they never sit on the work. Project meta shows Type only when a project has no Scope.
   Chapters are numbered from 01 in every project, Desafio and Identidade aplicada included.
 
+- Music (Felipe, Oct 27 2026): "♪ Música" in the top-right corner opens a small Spotify embed (loaded only when opened)
+  with the song suggested for the page: each project's `track: { id, name, by }`, `homeTrack` on the home. It keeps
+  playing across pages; on another project it offers that project's song. Intro jingle: `introAudio` (a short MP3 of
+  the start of "Daft Punk Is Playing at My House"); browsers block sound before a click, so it plays on its own only
+  where allowed, otherwise "♪ Ligar som" (top left during the intro) or "↻ Rever intro" replays the intro with sound.
 - All copy and projects live in `js/content.js`, in two languages as `{ en, pt }` (EN-US / PT-BR).
 - Work order (Felipe, Oct 27 2026): Seja ANTI is always first and Logofolio always last in `projects`; main.js shuffles
   everything in between on each page load. Add new projects anywhere between them.

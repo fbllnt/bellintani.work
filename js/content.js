@@ -21,6 +21,13 @@ window.SITE = {
   // English only, in both languages (Felipe).
   loader: [["Daft", "Punk", "is", "playing"], ["at", "my", "house,"]],
   loaderBig: "My house",
+  // Intro jingle: a few seconds of the song, played with the intro. Browsers only allow sound after a click or tap,
+  // so it starts on its own only where the browser lets it; otherwise "♪ Sound on" replays the intro with it.
+  // Leave introAudio empty ("") and the sound button stays hidden.
+  introAudio: "",
+  // Suggested music (Felipe, Oct 27 2026): a small Spotify player behind "♪" in the top-right corner.
+  // Each project sets track: { id (Spotify track id, from open.spotify.com/track/<id>), name, by }; the home plays homeTrack.
+  homeTrack: { id: "73mlvsfJM2qwlDUJxeaatI", name: "Daft Punk Is Playing at My House", by: "LCD Soundsystem" },
   // Services follow the tagline/subline and the kinds of work shown (Oct 27 2026 review)
   services: {
     en: ["Branding & identity", "Campaigns & advertising", "Art direction", "Motion & film", "Digital & social", "Vibe coding & AI workflows"],
@@ -95,6 +102,7 @@ window.SITE = {
       logoHint: "Click the logo to close · ← → to browse", logoHintTouch: "Tap the logo to close · Swipe to browse",
       placeholder: "Placeholder", missing: "Missing", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
+      music: "♪ Music", musicLabel: "Suggested music", nowSuggested: "Suggested soundtrack", introSound: "♪ Sound on", introMute: "♪ Sound off", musicSwap: "Play this project's song",
       langSwitch: "PT", langLabel: "Ver em português",
       description: "Bellintani — multidisciplinary designer and art director.",
     },
@@ -107,6 +115,7 @@ window.SITE = {
       logoHint: "Clique no logo para fechar · ← → para navegar", logoHintTouch: "Toque no logo para fechar · Deslize para navegar",
       placeholder: "Provisório", missing: "Falta", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Substitua pela história do projeto: o briefing, a ideia e o que foi feito.",
+      music: "♪ Música", musicLabel: "Música sugerida", nowSuggested: "Trilha sugerida", introSound: "♪ Ligar som", introMute: "♪ Sem som", musicSwap: "Tocar a música deste projeto",
       langSwitch: "EN", langLabel: "View in English",
       description: "Bellintani — designer multidisciplinar e diretor de arte.",
     },
@@ -133,6 +142,7 @@ window.SITE = {
   projects: [
     {
       title: "Seja ANTI",
+      track: { id: "59WN2psjkt1tyaxjspN8fp", name: "Killing In The Name", by: "Rage Against The Machine" },
       type: "campaign",
       client: "ANTI Creative Finance",
       // Credits (ficha técnica): shown in the meta after Tools; url makes the name a link
@@ -204,6 +214,7 @@ window.SITE = {
     },
     {
       title: "Globo",
+      track: { id: "4NexI5goFxDd1zXcLF2x6x", name: "Do Leme ao Pontal", by: "Tim Maia" },
       type: "branding",
       client: "Globo",
       year: "2014 — 2018",
@@ -383,6 +394,7 @@ window.SITE = {
     },
     {
       title: "Adidas 60",
+      track: { id: "04HOx7AhRXimqJETzRRAS9", name: "Filho Maravilha (Fio Maravilha)", by: "Jorge Ben Jor" },
       type: "motion",
       client: "Adidas",
       year: "2026",
@@ -425,6 +437,7 @@ window.SITE = {
     },
     {
       title: "CoreHi",
+      track: { id: "5BXBi5pLeJhblMVH2ltjpl", name: "Computer Love", by: "Kraftwerk" },
       type: "branding",
       client: "CoreHuman Intelligence",
       year: "2025",
@@ -487,6 +500,7 @@ window.SITE = {
     },
     {
       title: "XP Investments",
+      track: { id: "5W3cjX2J3tjhG8zb6u0qHn", name: "Harder, Better, Faster, Stronger", by: "Daft Punk" },
       type: "campaign",
       client: "XP Investimentos",
       year: "?",
@@ -532,6 +546,7 @@ window.SITE = {
     // Hidden from the site for now (Felipe, Oct 27 2026): Top Fifty Unforgettable, THURA and DMA. Files stay on the server.
     {
       title: "Cinema Especial",
+      track: { id: "2WWG2WjVJuJRVmgAxzbkad", name: "Cinema Paradiso", by: "Ennio Morricone" },
       type: "motion",
       client: "TV Globo",
       year: "?",
@@ -589,6 +604,7 @@ window.SITE = {
     },
     {
       title: "Tela Quente",
+      track: { id: "6ZFbXIJkuI1dVNWvzJzown", name: "Time", by: "Hans Zimmer" },
       type: "motion",
       client: "TV Globo",
       year: "?",
@@ -646,6 +662,7 @@ window.SITE = {
     },
     {
       title: "SCRV*",
+      track: { id: "0LrwgdLsFaWh9VXIjBRe8t", name: "Changes", by: "David Bowie" },
       type: "branding",
       client: "SCRV.ag",
       year: "2025",
@@ -698,6 +715,7 @@ window.SITE = {
     // Logofolio stays the last project.
     {
       title: "Top Fifty Unforgettable",
+      track: { id: "4w3tQBXhn5345eUXDGBWZG", name: "9 to 5", by: "Dolly Parton" },
       type: "campaign",
       client: "Housecall Pro",
       year: "2026",
@@ -774,6 +792,7 @@ window.SITE = {
     },
     {
       title: "THURA",
+      track: { id: "6aBUnkXuCEQQHAlTokv9or", name: "This Must Be the Place", by: "Talking Heads" },
       type: "branding",
       client: "THURA Negócios Imobiliários",
       year: "2025",
@@ -850,6 +869,7 @@ window.SITE = {
     },
     {
       title: "DMA",
+      track: { id: "2VEZx7NWsZ1D0eJ4uv5Fym", name: "Digital Love", by: "Daft Punk" },
       type: "branding",
       client: "JBS",
       year: "2022",
@@ -908,6 +928,7 @@ window.SITE = {
     },
     {
       title: "Lomography",
+      track: { id: "3f0U5NaD1bCk8nmKpn2ZJY", name: "Kodachrome", by: "Paul Simon" },
       scope: { en: "Analogue photography", pt: "Fotografia analógica" },
       image: "images/lomography/supersampler-losangeles-01.jpg",
       summary: {
@@ -940,6 +961,7 @@ window.SITE = {
     },
     {
       title: "Logofolio",
+      track: { id: "6hHc7Pks7wtBIW8Z6A0iFq", name: "Blue Monday", by: "New Order" },
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca" },
       summary: {
         en: "A wall of marks, from full identities to a single sign, in a new order on every visit. Open any of them to look closer.",

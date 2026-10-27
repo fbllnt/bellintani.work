@@ -191,10 +191,26 @@
   const play = () => {
     clear(); corners.classList.remove("on");
     stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play");
+    if (jingle) { jingle.currentTime = 0; jingle.play().catch(() => {}); }
     timers.push(setTimeout(() => corners.classList.add("on"), 4650));
     timers.push(setTimeout(finish, 5950));
   };
-  $("skip").onclick = finish;
+  $("skip").onclick = () => { finish(); if (jingle) jingle.pause(); };
+
+  // Intro jingle (Felipe, Oct 27 2026): the start of the song plays with the lyric. Browsers block sound until the
+  // visitor clicks or taps, so it starts on its own only where allowed; otherwise "♪ Sound on" replays the intro
+  // with sound (so it stays in sync), and so does "↻ Replay intro".
+  const introBtn = $("intro-sound");
+  let jingle = null;
+  if (S.introAudio) {
+    jingle = new Audio(S.introAudio); jingle.preload = "auto";
+    const mark = on => { introBtn.textContent = T(on ? "introMute" : "introSound"); introBtn.setAttribute("aria-pressed", String(on)); };
+    introBtn.hidden = false; mark(false);
+    jingle.addEventListener("play", () => mark(true));
+    jingle.addEventListener("pause", () => mark(false));
+    jingle.addEventListener("ended", () => mark(false));
+    introBtn.onclick = () => { if (!jingle.paused) jingle.pause(); else play(); };
+  }
   // Scroll cue: jumps to the work list and hides once the visitor has started scrolling
   const cue = $("cue");
   if (!S.projects.length) { cue.href = "#services"; cue.setAttribute("aria-label", T("services")); }
@@ -1007,6 +1023,40 @@
     addEventListener("pointerdown", () => ball.classList.add("press"));
     addEventListener("pointerup", () => ball.classList.remove("press"));
   }
+
+  // ---------- Suggested music (Felipe, Oct 27 2026) ----------
+  // "♪" in the corner menu drops down a small Spotify player with the song suggested for the page in view
+  // (the project's `track`, or homeTrack on the home). Spotify loads only once it is opened. It keeps playing while
+  // browsing, even closed: on another project it offers that project's song instead of cutting the one playing.
+  const musicBtn = $("music-btn"), music = $("music"), musicFrame = $("music-frame"), musicSwap = $("music-swap");
+  let loaded = null;
+  const suggested = () => { const i = projectFromHash(); return (i >= 0 && S.projects[i].track) || S.homeTrack; };
+  const songOf = t => `${t.name} — ${t.by}`;
+  const loadSong = t => {
+    loaded = t;
+    musicFrame.innerHTML = `<iframe title="Spotify — ${esc(songOf(t))}" src="https://open.spotify.com/embed/track/${encodeURIComponent(t.id)}?utm_source=generator" width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+  };
+  const syncMusic = () => {
+    const t = suggested(), i = projectFromHash();
+    $("music-title").textContent = T("nowSuggested") + (i >= 0 ? ` · ${L(S.projects[i].title)}` : "");
+    const other = !!(loaded && t && loaded.id !== t.id);
+    musicSwap.hidden = !other;
+    if (other) musicSwap.textContent = `▶ ${T("musicSwap")}: ${songOf(t)}`;
+  };
+  const openMusic = on => {
+    if (on && !loaded && suggested()) loadSong(suggested());
+    if (on && jingle) jingle.pause();
+    music.hidden = !on; musicBtn.setAttribute("aria-expanded", String(on));
+    syncMusic();
+  };
+  const note = `<span>♪<b> ${esc(T("music").replace(/^♪\s*/, ""))}</b></span>`;
+  musicBtn.innerHTML = note + note;
+  musicBtn.onclick = () => openMusic(music.hidden);
+  $("music-close").onclick = () => openMusic(false);
+  musicSwap.onclick = () => { loadSong(suggested()); syncMusic(); };
+  addEventListener("hashchange", syncMusic);
+  addEventListener("keydown", e => { if (e.key === "Escape" && !music.hidden) openMusic(false); });
+  document.addEventListener("click", e => { if (!music.hidden && !music.contains(e.target) && !musicBtn.contains(e.target)) openMusic(false); });
 
   const first = projectFromHash();
   if (first >= 0) { finish(); openCase(first, false); }
