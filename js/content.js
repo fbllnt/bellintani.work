@@ -23,6 +23,8 @@ window.SITE = {
   loaderBig: "My house",
   // Suggested music (Felipe, Oct 27 2026): a small Spotify player behind "♪" in the top-right corner.
   // Each project sets track: { id (Spotify track id, from open.spotify.com/track/<id>), name, by }; the home plays homeTrack.
+  // false: "Falta" placeholders ("?" meta, todo boxes, empty chapters) stay off the site; true brings them back
+  showMissing: false,
   homeTrack: { id: "73mlvsfJM2qwlDUJxeaatI", name: "Daft Punk Is Playing at My House", by: "LCD Soundsystem" },
   // Services follow the tagline/subline and the kinds of work shown (Oct 27 2026 review)
   services: {

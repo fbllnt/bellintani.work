@@ -41,6 +41,22 @@
     document.documentElement.classList.add("no-work");
   }
 
+  // ---------- Missing material kept off the site (Felipe, Oct 27 2026) ----------
+  // With `showMissing: false` in content.js, the "Falta" placeholders don't show: "?" meta values, todo boxes and a
+  // chapter left with nothing under it. Chapters are renumbered so the count has no gaps. ?missing in the address shows them.
+  if (S.showMissing === false && !q.has("missing")) S.projects.forEach(p => {
+    Object.keys(p).forEach(k => { if (p[k] === "?") delete p[k]; });
+    if (!Array.isArray(p.gallery)) return;
+    const g = p.gallery.filter(it => !it.todo);
+    p.gallery = g.filter((it, k) => !(it.chapter && !it.text && (!g[k + 1] || g[k + 1].chapter)));
+    let n = 0;
+    p.gallery.forEach(it => {
+      if (!it.chapter || !/^\d+ · /.test(it.chapter.en || "")) return;
+      const num = String(++n).padStart(2, "0");
+      it.chapter = Object.fromEntries(Object.entries(it.chapter).map(([l, v]) => [l, v.replace(/^\d+ · /, `${num} · `)]));
+    });
+  });
+
   // ---------- Work order (Felipe, Oct 27 2026) ----------
   // Seja ANTI always first, Logofolio always last; everything in between is shuffled on each visit.
   if (S.projects.length > 3) {

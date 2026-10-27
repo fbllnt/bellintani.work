@@ -100,6 +100,9 @@ Missing material (Felipe, Oct 24 2026): when a project lacks something its patte
 section), put a visible placeholder instead of skipping it: a gallery item `{ todo: { en, pt }, ar?, col, span }`
 (dashed box "Falta …") or `"?"` as a meta value (year, role…). Felipe finds and sends the material. If something
 in a project doesn't fit, flag it to him so you decide together; never remove it silently.
+For launch (Felipe, Oct 27 2026) `showMissing: false` in content.js keeps the placeholders off the site: "?" meta values,
+todo boxes and a chapter left empty are dropped and chapters renumber themselves. Add `?missing` to the address to see
+them; set `showMissing: true` to bring them back for everyone. Keep adding placeholders as before.
 
 ## Domain
 
