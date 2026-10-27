@@ -245,7 +245,7 @@
     if (it.text) return `<p class="ltext" style="${style}"${speed}>${esc(L(it.text))}</p>`;
     // Flip: one item large with the whole set as thumbnails below; a thumbnail, the large image or the arrow keys turn the page
     if (it.flip) { const f = it.flip[0];
-      return `<div class="flip" style="${style}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
+      return `<div class="flip" style="${style}${it.cols ? `;--n:${+it.cols}` : ""}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
         <p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
         <div class="flip-thumbs" role="group">${it.flip.map((t, k) => `<button type="button" aria-pressed="${!k}" data-k="${k}" aria-label="${esc(L(t.caption) || "")}"><img src="${esc(t.src)}" alt="" loading="lazy"></button>`).join("")}</div></div>`; }
     // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
