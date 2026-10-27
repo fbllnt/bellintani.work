@@ -332,6 +332,11 @@
     const pairWith = h => { out(`<div class="pair${pend.cz ? " cz" : ""}${pend.solo && pend.solo.startsWith("<section") ? " ch" : ""}"><div class="pair-fig">${h}</div><div class="pair-text">${pend.html}</div></div>`); pend = null; };
     const flushRun = () => {
       let paired = false;
+      // Fluxo keeps its rows whole: the text pairs only with a piece that would sit alone in its row anyway
+      if (pend && run.length && grid === "fluxo") {
+        const a = Math.min(12, run[0].span || 12), b = run[1] ? Math.min(12, run[1].span || 12) : 0;
+        if (run.length > 1 && a < 9 && b < 9 && run[1].col !== 1 && a + b <= 12) closePend();
+      }
       if (pend && run.length) { const first = run.shift(); pairWith(first.todo ? block(first, p) : fig(first, p, `--r:${ratio(first.ar).toFixed(4)}`)); paired = true; }
       out(layRun(run, grid, paired)); run = [];
     };

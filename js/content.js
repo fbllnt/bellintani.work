@@ -176,7 +176,7 @@ window.SITE = {
         ["1", { en: "Landing page", pt: "Landing page" }],
       ],
       // Loose layout: benches float as a staggered collage, the campaign line sits big between them and the films
-      layout: "loose", grid: "destaque",
+      layout: "loose", grid: "fluxo",
       gallery: [
         { chapter: { en: "01 · Idea", pt: "01 · Ideia" }, kicker: { en: "Receba antes, seja ANTI", pt: "Receba antes, seja ANTI" },
           head: { en: "Don't wait a *lifetime* to get paid.", pt: "Não espere uma *vida* para receber." },
