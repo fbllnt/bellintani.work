@@ -481,5 +481,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .flip-thumbs img{width:100%;height:100%;object-fit:contain}
 /* The large image and its thumbnails fit on one screen together */
 .loose > .flip{width:min(100%,calc((100svh - 150px) / .7));align-self:center}
+.loose > .strip.narrow{width:84%;align-self:center}
+@media (max-width:760px){ .loose > .strip.narrow{width:100%} }
 .strip .vctl{flex-direction:column;align-items:flex-start}
 .case.motion .case-gallery .scrub .ph > img{scale:1;translate:none!important}

@@ -231,7 +231,8 @@
         <p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
         <div class="flip-thumbs" role="group">${it.flip.map((t, k) => `<button type="button" aria-pressed="${!k}" data-k="${k}" aria-label="${esc(L(t.caption) || "")}"><img src="${esc(t.src)}" alt="" loading="lazy"></button>`).join("")}</div></div>`; }
     // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
-    if (it.strip) return `<div class="strip" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
+    // `narrow: true` sets the strip in a little from both sides (desktop), for small process rows
+    if (it.strip) return `<div class="strip${it.narrow ? " narrow" : ""}" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
       return fig(s, p, `--sar:${(w / (h || 1)).toFixed(4)}`); }).join("")}</div>`;
     return fig(it, p);
   }
