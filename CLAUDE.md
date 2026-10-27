@@ -40,6 +40,8 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Compress media before adding: videos to 720p H.264 MP4 plus a VP9 WebM; images max 2000 px wide JPEG.
 - Lomography (`layout: "lomo"`, Felipe Oct 27 2026): one horizontal film roll per camera (Fisheye, Super Sampler, LC-A),
   two or three photos in view, arrows + drag/swipe, no full-screen view. Camera = the `camera` field of each photo.
+  Drag cues: "← Arraste →" in each roll head, a position bar under it, a one-time slide on entering view, and the
+  cursor ball grows into a labelled drag handle over a roll. Cover = Super Sampler losangeles-01.
 - Logos project (`layout: "logos"`): every logo file must be pure black #000000 on a transparent background
   (PNG or SVG, trimmed). Check each upload and correct off-blacks such as #231F20 before adding it.
 - Typefaces: Figtree (display) and JetBrains Mono (small copy / body). White page, black type, blue accents.

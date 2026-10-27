@@ -461,9 +461,11 @@
     return `<div class="rolls">${cams.map(c => { const list = p.photos.filter(ph => (ph.camera || "") === c);
       return `<section class="film-roll" aria-label="${esc(c || L(p.title))}">
         <header class="roll-head mono"><h3>${esc(c || L(p.title))}</h3><span class="roll-count">${pad(list.length)}</span>
+          <span class="roll-hint" aria-hidden="true">← ${esc(T("drag"))} →</span>
           <span class="roll-arrows"><button type="button" class="roll-prev" aria-label="${esc(T("prev"))}">←</button><button type="button" class="roll-next" aria-label="${esc(T("nextItem"))}">→</button></span></header>
         <div class="roll-track" tabindex="0">${list.map((ph, k) => { const [w, h] = String(ph.ar || "3/2").split("/").map(Number);
           return `<figure class="roll-frame" style="--ar:${(w / h).toFixed(4)}"><img src="${esc(ph.src)}" alt="${esc(L(ph.caption) || `${L(p.title)}, ${c}`)}" loading="lazy" draggable="false"><figcaption class="mono">${pad(k + 1)}</figcaption></figure>`; }).join("")}</div>
+        <div class="roll-bar" aria-hidden="true"><i></i></div>
       </section>`; }).join("")}</div>`;
   }
   function setupFlips(p) {
@@ -493,8 +495,12 @@
     caseEl.querySelectorAll(".film-roll").forEach(roll => {
       const track = roll.querySelector(".roll-track"), prev = roll.querySelector(".roll-prev"), next = roll.querySelector(".roll-next");
       const frames = [...track.children];
+      const bar = roll.querySelector(".roll-bar i");
+      // Arrow states, and the bar under the roll: its thumb shows how much of the roll is in view and where
       const ends = () => { const max = track.scrollWidth - track.clientWidth - 2;
-        prev.disabled = track.scrollLeft <= 2; next.disabled = track.scrollLeft >= max; roll.classList.toggle("fits", max <= 0); };
+        prev.disabled = track.scrollLeft <= 2; next.disabled = track.scrollLeft >= max; roll.classList.toggle("fits", max <= 0);
+        const f = track.clientWidth / track.scrollWidth;
+        bar.style.width = `${f * 100}%`; bar.style.translate = `${track.scrollLeft / track.clientWidth * 100}% 0`; };
       // Arrows move one frame at a time: to the next frame whose left edge lies past the current position
       const go = d => {
         const x = track.scrollLeft, lefts = frames.map(f => f.offsetLeft);
@@ -520,6 +526,15 @@
       track.addEventListener("pointerup", drop);
       track.addEventListener("pointercancel", drop);
       track.addEventListener("click", e => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+      // The first time a roll comes into view it slides a little to the side and back, so it reads as something that moves
+      if (!reduced && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver(([en]) => {
+          if (!en.isIntersecting || roll.classList.contains("fits") || track.scrollLeft > 2) return;
+          io.disconnect();
+          frames.forEach(f => f.animate([{ translate: "0" }, { translate: "-72px 0", offset: .45 }, { translate: "0" }], { duration: 1400, delay: 350, easing: "cubic-bezier(.45,0,.2,1)" }));
+        }, { threshold: .6 });
+        io.observe(track);
+      }
     });
   }
 
@@ -974,6 +989,8 @@
       ball.classList.add("on");
       hover = onBlue ? null : e.target.closest(".logo");
       row = onBlue ? null : e.target.closest(".index a");
+      const drag = !onBlue && !!e.target.closest(".roll-track");
+      if (drag !== ball.classList.contains("drag")) { ball.dataset.label = `← ${T("drag")} →`; ball.classList.toggle("drag", drag); }
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });

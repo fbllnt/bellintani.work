@@ -91,7 +91,7 @@ window.SITE = {
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
       client: "Client", year: "Year", scope: "Scope", role: "Role", type: "Type", before: "Before", after: "After", sector: "Sector", deliverables: "Deliverables", tools: "Tools & AI", openSite: "Open the site", aiMark: "AI", live: "Live",
-      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓", aboutNav: "About", scrollDown: "Scroll down to see the work", overview: "Overview", camera: "Camera", film: "Film", aboutTitle: "About", skipCredits: "Skip credits →",
+      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓", aboutNav: "About", scrollDown: "Scroll down to see the work", overview: "Overview", camera: "Camera", film: "Film", drag: "Drag", aboutTitle: "About", skipCredits: "Skip credits →",
       logoHint: "Click the logo to close · ← → to browse", logoHintTouch: "Tap the logo to close · Swipe to browse",
       placeholder: "Placeholder", missing: "Missing", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
@@ -103,7 +103,7 @@ window.SITE = {
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Visualização",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
       client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", type: "Tipo", before: "Antes", after: "Depois", sector: "Setor", deliverables: "Entregas", tools: "Ferramentas & IA", openSite: "Abrir o site", aiMark: "IA", live: "No ar",
-      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓", aboutNav: "Sobre", scrollDown: "Role para ver os trabalhos", overview: "Visão geral", camera: "Câmera", film: "Filme", aboutTitle: "Sobre", skipCredits: "Pular créditos →",
+      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓", aboutNav: "Sobre", scrollDown: "Role para ver os trabalhos", overview: "Visão geral", camera: "Câmera", film: "Filme", drag: "Arraste", aboutTitle: "Sobre", skipCredits: "Pular créditos →",
       logoHint: "Clique no logo para fechar · ← → para navegar", logoHintTouch: "Toque no logo para fechar · Deslize para navegar",
       placeholder: "Provisório", missing: "Falta", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Substitua pela história do projeto: o briefing, a ideia e o que foi feito.",
@@ -909,7 +909,7 @@ window.SITE = {
     {
       title: "Lomography",
       scope: { en: "Analogue photography", pt: "Fotografia analógica" },
-      image: "images/lomography/fisheye-poste.jpg",
+      image: "images/lomography/supersampler-losangeles-01.jpg",
       summary: {
         en: "Film photography shot on three Lomography cameras: the LC-A, the Fisheye and the Super Sampler. Flares, double exposures and whatever the street gives.",
         pt: "Fotografia em filme feita com três câmeras Lomography: a LC-A, a Fisheye e a Super Sampler. Flares, dupla exposição e o que a rua oferecer.",
