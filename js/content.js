@@ -802,7 +802,8 @@ window.SITE = {
         ["4", { en: "Press outlets", pt: "Veículos de imprensa" }],
       ],
       layout: "loose",
-      // Launch post, animated crest, Flora canvas, explorations grid and the two van side shots removed (Felipe, Oct 27 2026); files kept in images/top50/
+      // Launch post, animated crest, Flora canvas, explorations grid and the two van side shots removed (Felipe, Oct 27 2026); files kept in images/top50/.
+      // Van canvas groups, vertical cut and alternate cut removed and their files deleted (Felipe, Oct 27 2026)
       gallery: [
         { chapter: { en: "01 · Idea", pt: "01 · Ideia" }, kicker: { en: "Crowdsourced naming · public vote", pt: "Nomes inscritos pelo público · votação aberta" },
           head: { en: "Your company name belongs on *this list.*", pt: "O nome da sua empresa merece estar *nessa lista.*" },
@@ -821,7 +822,6 @@ window.SITE = {
           text: { en: "A real white work van became the plate: repainted in Housecall navy, upscaled, branded with the crest, the trades and the tagline, then put in motion. Empty plates first, logo applied after, all on one Flora canvas.", pt: "Uma van branca de verdade virou a base: repintada no azul Housecall, ampliada, envelopada com o brasão, os ofícios e a assinatura, e depois colocada em movimento. Primeiro as bases vazias, depois o logo aplicado, tudo num canvas do Flora." } },
         // Process steps as one narrower strip, with breathing room on both sides
         { strip: [1, 2, 3, 4, 5, 6].map(k => ({ src: `images/top50/van-step-${k}.jpg`, ar: "960/735" })), narrow: true, col: 1, span: 12 },
-        { src: "images/top50/van-groups.jpg", ar: "2000/774", col: 1, span: 12, caption: { en: "Canvas groups: empty plates first, logo applied after", pt: "Grupos do canvas: primeiro as bases vazias, depois o logo aplicado" } },
         { flip: [
             { src: "images/top50/van-plate-back.jpg", ar: "2000/1116", caption: { en: "Plate — rear doors", pt: "Base — portas traseiras" } },
             { src: "images/top50/van-logo-back.jpg", ar: "2000/1116", caption: { en: "Logo applied — rear doors", pt: "Logo aplicado — portas traseiras" } },
@@ -841,13 +841,11 @@ window.SITE = {
         { src: "images/top50/email-made-it.jpg", ar: "2000/666", col: 7, span: 6, caption: { en: "Email header for the 50 finalists", pt: "Header de e-mail para os 50 finalistas" } },
         { chapter: { en: "05 · Films", pt: "05 · Filmes" }, kicker: "Seedance",
           head: { en: "The van, *in motion.*", pt: "A van, *em movimento.*" },
-          text: { en: "The shot list was written as one cinematic prompt and cut in four, then resized for Reels and Stories.", pt: "A lista de planos virou um único prompt cinematográfico, cortado em quatro, e depois redimensionado para Reels e Stories." } },
+          text: { en: "The shot list was written as one cinematic prompt and cut in four; stills from the shoot were resized for Stories.", pt: "A lista de planos virou um único prompt cinematográfico, cortado em quatro; os stills da produção foram redimensionados para Stories." } },
         { video: "images/top50/film-van.mp4", webm: "images/top50/film-van.webm", poster: "images/top50/film-van-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Film — the van in motion", pt: "Filme — a van em movimento" } },
-        { video: "images/top50/film-vertical.mp4", webm: "images/top50/film-vertical.webm", poster: "images/top50/film-vertical-poster.jpg", ar: "720/1280", col: 1, span: 3, caption: { en: "Vertical cut", pt: "Corte vertical" } },
-        { src: "images/top50/van-scene.jpg", ar: "1080/1920", col: 4, span: 3 },
-        { src: "images/top50/van-worker.jpg", ar: "1080/1920", col: 7, span: 3 },
-        { src: "images/top50/van-branding.jpg", ar: "1080/1920", col: 10, span: 3 },
-        { video: "images/top50/film-van-02.mp4", webm: "images/top50/film-van-02.webm", poster: "images/top50/film-van-02-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Film — alternate cut", pt: "Filme — corte alternativo" } },
+        { src: "images/top50/van-scene.jpg", ar: "1080/1920", col: 1, span: 4 },
+        { src: "images/top50/van-worker.jpg", ar: "1080/1920", col: 5, span: 4 },
+        { src: "images/top50/van-branding.jpg", ar: "1080/1920", col: 9, span: 4 },
       ],
     },
     {
