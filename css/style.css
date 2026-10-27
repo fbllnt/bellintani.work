@@ -546,6 +546,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .mods{display:grid;grid-template-columns:repeat(var(--mc,4),minmax(0,1fr));gap:var(--gap)}
 .mods > .fig .ph{background:var(--panel)}
 .loose .mods > .fig .ph > :is(img,video){inset:7%;width:86%;height:86%}
+.mods.bare > .fig .ph{background:none}
+.loose .mods.bare > .fig .ph > :is(img,video){inset:0;width:100%;height:100%}
 /* Trilho: chapter text sticks in columns 1-4, its pieces run in 5-12 */
 .trilho{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:start;margin-top:clamp(40px,6vw,104px)}
 .tr-side{grid-column:1 / 5;position:sticky;top:calc(var(--side) + 48px);min-width:0}
@@ -581,6 +583,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .pair.cz .pair-text .body{font-size:clamp(17px,1.4vw,22px)}
 @media (max-width:760px){
   .mods{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mods.bare{grid-template-columns:repeat(var(--mc,4),minmax(0,1fr))}
   .trilho{display:flex;flex-direction:column;align-items:stretch;margin-top:48px}
   .tr-side{position:static}
   .pair{display:flex;flex-direction:column}

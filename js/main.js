@@ -284,7 +284,8 @@
   //   destaque hierarchy: one piece alone, then two, then three, then one again; films at most two to a row
   //   trilho   the chapter text sticks in columns 1-4 while its images run in columns 5-12
   //   modulos  equal cells (`cell`, default 4/3), each piece whole and centred on the panel colour; a chapter can set
-  //            `cols` (and `cell`) to keep its set together, small, beside the chapter text
+  //            `cols` (and `cell`) to keep its set together, small, beside the chapter text;
+  //            `bare: true` drops the panel so pieces of the cell's own ratio fill it edge to edge
   //   cartaz   the chapter headline runs huge across all 12 columns; pieces keep the fluxo rows
   function looseGallery(p) {
     const ratio = ar => { const [w, h] = String(ar || "16/9").split("/").map(Number); return w / (h || 1); };
@@ -319,7 +320,7 @@
         // Columns that leave the fewest empty cells, preferring four
         const cell = mod.cell || p.cell || "4/3";
         const cols = mod.cols ? +mod.cols : n <= 4 ? Math.max(n, 1) : [4, 3].sort((a, b) => ((a - n % a) % a) - ((b - n % b) % b))[0];
-        return films.map(f => jrow([f])).join("") + (n ? `<div class="mods" style="--mc:${cols}">${cells.map(it =>
+        return films.map(f => jrow([f])).join("") + (n ? `<div class="mods${mod.bare ? " bare" : ""}" style="--mc:${cols}">${cells.map(it =>
           it.todo ? block(it, p, `--ar:${esc(cell)}`) : fig({ ...it, ar: cell }, p)).join("")}</div>` : "");
       }
       // fluxo, trilho and cartaz rows: justified, grouped by col/span
@@ -361,7 +362,7 @@
       flushRun();
       if (it.chapter) {
         closePend(); closeSide();
-        grid = pick(it.grid) || grid; mod = { cols: it.cols, cell: it.cell };
+        grid = pick(it.grid) || grid; mod = { cols: it.cols, cell: it.cell, bare: it.bare };
         const ch = block(it, p);
         if (grid === "trilho") { side = ch.replace('class="chap"', 'class="chap tr"'); return; }
         // Cartaz: the headline runs huge across all 12 columns; label and text sit below it as usual, pieces keep their rows
