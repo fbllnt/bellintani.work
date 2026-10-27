@@ -132,7 +132,7 @@
   // ---------- Optical left edge ----------
   // Big type starts where its ink starts, not where its side bearing starts, so a huge B or D lines up with the
   // small copy above and below it on the page margin. The bearing is measured once per glyph, in em, so it scales.
-  const INK = ".name, .loader .ln:not(.boom), .tag b, .h2, .index .t, .card .row b, .big, .case-title, .chap-h, .ltext, .swap-ba b, .case-stats b, .credits-intro, .cend b";
+  const INK = ".c-tl, .name, .loader .ln:not(.boom), .tag b, .h2, .index .t, .card .row b, .big, .case-title, .chap-h, .ltext, .swap-ba b, .case-stats b, .credits-intro, .cend b";
   const inkCache = {}, inkCtx = document.createElement("canvas").getContext("2d");
   const inkAlign = (root = document) => root.querySelectorAll(INK).forEach(el => {
     const cs = getComputedStyle(el.querySelector(".word > span, .w > span, .ti") || el);
