@@ -909,19 +909,33 @@ window.SITE = {
     {
       title: "Lomography",
       scope: { en: "Analogue photography", pt: "Fotografia analógica" },
-      image: "images/lomography/fisheye-05.jpg",
+      image: "images/lomography/fisheye-poste.jpg",
       summary: {
         en: "Film photography shot on three Lomography cameras: the LC-A, the Fisheye and the Super Sampler. Flares, double exposures and whatever the street gives.",
         pt: "Fotografia em filme feita com três câmeras Lomography: a LC-A, a Fisheye e a Super Sampler. Flares, dupla exposição e o que a rua oferecer.",
       },
-      // Photo library: justified mosaic. Each photo: { src, ar: "w/h", camera: "LC-A" | "Fisheye" | "Super Sampler", film, caption }.
+      // Film rolls: one horizontal strip per camera, in the order the cameras first appear below. Two or three photos show at a time;
+      // arrows, drag and swipe move along the roll. No full-screen view. Each photo: { src, ar: "w/h", camera, caption }.
       layout: "lomo",
       photos: [
-        { src: "images/lomography/fisheye-01.jpg", ar: "2000/1326", camera: "Fisheye" },
-        { src: "images/lomography/fisheye-02.jpg", ar: "2000/1326", camera: "Fisheye" },
-        { src: "images/lomography/fisheye-03.jpg", ar: "2000/1326", camera: "Fisheye" },
-        { src: "images/lomography/fisheye-04.jpg", ar: "2000/1326", camera: "Fisheye" },
-        { src: "images/lomography/fisheye-05.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-cet.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-mx.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-sassasushi.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-bronx.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-rochavera.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-retrovisor.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/fisheye-poste.jpg", ar: "2000/1326", camera: "Fisheye" },
+        { src: "images/lomography/supersampler-coachella-01.jpg", ar: "2000/1326", camera: "Super Sampler" },
+        { src: "images/lomography/supersampler-coachella-02.jpg", ar: "1326/2000", camera: "Super Sampler" },
+        { src: "images/lomography/supersampler-losangeles-01.jpg", ar: "2000/1340", camera: "Super Sampler" },
+        { src: "images/lomography/supersampler-coachella-03.jpg", ar: "1326/2000", camera: "Super Sampler" },
+        { src: "images/lomography/supersampler-santamonica.jpg", ar: "2000/1340", camera: "Super Sampler" },
+        { src: "images/lomography/supersampler-losangeles-02.jpg", ar: "2000/1340", camera: "Super Sampler" },
+        { src: "images/lomography/lca-saopaulo.jpg", ar: "2000/1326", camera: "LC-A" },
+        { src: "images/lomography/lca-chouchin.jpg", ar: "2000/1326", camera: "LC-A" },
+        { src: "images/lomography/lca-dancingshoes.jpg", ar: "2000/1326", camera: "LC-A" },
+        { src: "images/lomography/lca-redlight.jpg", ar: "2000/1326", camera: "LC-A" },
+        { src: "images/lomography/lca-loveclub.jpg", ar: "2000/1326", camera: "LC-A" },
       ],
     },
     {

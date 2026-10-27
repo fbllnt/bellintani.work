@@ -453,21 +453,18 @@
     }));
   }
 
-  // Photo library (Lomography): a justified mosaic, rows of equal height filling the width, like a contact wall.
-  // Each photo: { src, ar: "w/h", camera, film, caption: { en, pt } }. Camera filters appear once two cameras are used.
-  // A click opens the photo on white with Previous / Overview / Next and its details; arrows, swipe and Esc work.
+  // Photo library (Lomography): one film roll per camera. Each roll is a horizontal strip of same-height frames,
+  // two or three in view, moved with the arrows, a mouse drag or a swipe. Photos are never opened full screen.
+  // Each photo: { src, ar: "w/h", camera, caption: { en, pt } }. Rolls follow the order cameras first appear in p.photos.
   function lomoGallery(p) {
-    const cams = [...new Set(p.photos.map(ph => ph.camera).filter(Boolean))];
-    const filter = cams.length > 1 ? `<div class="seg mono lomo-filter" role="group" aria-label="${esc(T("camera"))}">${["", ...cams].map(c =>
-      `<button type="button" data-cam="${esc(c)}" aria-pressed="${!c}">${esc(c || T("all"))}</button>`).join("")}</div>` : "";
-    return `${filter}<div class="mosaic">${p.photos.map((ph, k) => { const [w, h] = String(ph.ar || "3/2").split("/").map(Number), ar = w / h;
-      return `<button type="button" class="ph-tile" data-k="${k}" data-cam="${esc(ph.camera || "")}" style="--ar:${ar.toFixed(4)}" aria-label="${esc(L(ph.caption) || L(p.title))}${ph.camera ? ` — ${esc(ph.camera)}` : ""}">
-        <img src="${esc(ph.src)}" alt="" loading="lazy"><span class="mono">${esc(ph.camera || "")}</span></button>`; }).join("")}</div>
-      <dialog class="photo-view" aria-label="${esc(L(p.title))}">
-        <nav class="pv-nav mono"><button type="button" class="pv-prev">${esc(T("prev"))}</button><button type="button" class="pv-close" autofocus>${esc(T("overview"))}</button><button type="button" class="pv-next">${esc(T("nextItem"))}</button></nav>
-        <div class="pv-img"></div>
-        <div class="pv-info"><p class="pv-cap"></p><p class="mono pv-meta"></p></div>
-      </dialog>`;
+    const cams = [...new Set(p.photos.map(ph => ph.camera || ""))];
+    return `<div class="rolls">${cams.map(c => { const list = p.photos.filter(ph => (ph.camera || "") === c);
+      return `<section class="film-roll" aria-label="${esc(c || L(p.title))}">
+        <header class="roll-head mono"><h3>${esc(c || L(p.title))}</h3><span class="roll-count">${pad(list.length)}</span>
+          <span class="roll-arrows"><button type="button" class="roll-prev" aria-label="${esc(T("prev"))}">←</button><button type="button" class="roll-next" aria-label="${esc(T("nextItem"))}">→</button></span></header>
+        <div class="roll-track" tabindex="0">${list.map((ph, k) => { const [w, h] = String(ph.ar || "3/2").split("/").map(Number);
+          return `<figure class="roll-frame" style="--ar:${(w / h).toFixed(4)}"><img src="${esc(ph.src)}" alt="${esc(L(ph.caption) || `${L(p.title)}, ${c}`)}" loading="lazy" draggable="false"><figcaption class="mono">${pad(k + 1)}</figcaption></figure>`; }).join("")}</div>
+      </section>`; }).join("")}</div>`;
   }
   function setupFlips(p) {
     let i = 0;
@@ -492,43 +489,38 @@
       it.flip.slice(1).forEach(t => { const im = new Image(); im.src = t.src; });
     });
   }
-  function setupLomo(p) {
-    const wall = caseEl.querySelector(".mosaic");
-    if (!wall) return;
-    const tiles = [...wall.children], dlg = caseEl.querySelector(".photo-view");
-    const shown = () => tiles.filter(t => !t.hidden).map(t => +t.dataset.k);
-    let cur = 0;
-    const show = (k, d = 0) => {
-      cur = k;
-      const ph = p.photos[k], list = shown();
-      dlg.querySelector(".pv-img").innerHTML = `<img src="${esc(ph.src)}" alt="${esc(L(ph.caption) || L(p.title))}">`;
-      dlg.querySelector(".pv-cap").textContent = L(ph.caption) || `${L(p.title)} ${pad(list.indexOf(k) + 1)} / ${pad(list.length)}`;
-      dlg.querySelector(".pv-meta").innerHTML = [[T("camera"), ph.camera], [T("film"), L(ph.film)]].filter(([, v]) => v).map(([a, b]) => `<b>${esc(a)}:</b> ${esc(b)}`).join("");
-      if (d && !reduced) dlg.querySelector(".pv-img img").animate([{ transform: `translateX(${d * 40}px)`, opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 380, easing: "cubic-bezier(.11,.82,.39,.92)" });
-    };
-    const step = d => { const list = shown(); show(list[(list.indexOf(cur) + d + list.length) % list.length], d); };
-    wall.addEventListener("click", e => {
-      const t = e.target.closest(".ph-tile");
-      if (!t) return;
-      show(+t.dataset.k);
-      dlg.showModal ? dlg.showModal() : dlg.setAttribute("open", "");
-      cursorTo(dlg, false);
+  function setupLomo() {
+    caseEl.querySelectorAll(".film-roll").forEach(roll => {
+      const track = roll.querySelector(".roll-track"), prev = roll.querySelector(".roll-prev"), next = roll.querySelector(".roll-next");
+      const frames = [...track.children];
+      const ends = () => { const max = track.scrollWidth - track.clientWidth - 2;
+        prev.disabled = track.scrollLeft <= 2; next.disabled = track.scrollLeft >= max; roll.classList.toggle("fits", max <= 0); };
+      // Arrows move one frame at a time: to the next frame whose left edge lies past the current position
+      const go = d => {
+        const x = track.scrollLeft, lefts = frames.map(f => f.offsetLeft);
+        const to = d > 0 ? lefts.find(l => l > x + 4) : [...lefts].reverse().find(l => l < x - 4);
+        track.scrollTo({ left: to ?? (d > 0 ? track.scrollWidth : 0), behavior: reduced ? "auto" : "smooth" });
+      };
+      prev.addEventListener("click", () => go(-1));
+      next.addEventListener("click", () => go(1));
+      track.addEventListener("scroll", ends, { passive: true });
+      addEventListener("resize", ends);
+      frames.forEach(f => f.querySelector("img").addEventListener("load", ends));
+      ends();
+      // Mouse drag pulls the roll sideways (touch already scrolls natively)
+      let x0 = null, s0 = 0, moved = false;
+      track.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse" || e.button) return;
+        x0 = e.clientX; s0 = track.scrollLeft; moved = false; track.classList.add("dragging"); track.setPointerCapture(e.pointerId); });
+      track.addEventListener("pointermove", e => { if (x0 === null) return;
+        const dx = e.clientX - x0; if (Math.abs(dx) > 3) moved = true; track.scrollLeft = s0 - dx; });
+      const drop = () => { if (x0 === null) return; x0 = null; track.classList.remove("dragging");
+        // Settle on the nearest frame once the drag ends
+        const x = track.scrollLeft, lefts = frames.map(f => f.offsetLeft);
+        track.scrollTo({ left: lefts.reduce((a, b) => Math.abs(b - x) < Math.abs(a - x) ? b : a, 0), behavior: reduced ? "auto" : "smooth" }); };
+      track.addEventListener("pointerup", drop);
+      track.addEventListener("pointercancel", drop);
+      track.addEventListener("click", e => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
     });
-    dlg.querySelector(".pv-close").addEventListener("click", () => dlg.close());
-    dlg.querySelector(".pv-prev").addEventListener("click", () => step(-1));
-    dlg.querySelector(".pv-next").addEventListener("click", () => step(1));
-    dlg.addEventListener("keydown", e => {
-      if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
-      if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
-    });
-    dlg.addEventListener("close", () => { cursorTo(document.body); wall.querySelector(`.ph-tile[data-k="${cur}"]`).focus({ preventScroll: true }); });
-    let x0 = null;
-    dlg.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") x0 = e.clientX; });
-    dlg.addEventListener("pointerup", e => { if (x0 !== null && Math.abs(e.clientX - x0) > 50) step(e.clientX < x0 ? 1 : -1); x0 = null; });
-    caseEl.querySelectorAll(".lomo-filter button").forEach(b => b.addEventListener("click", () => {
-      caseEl.querySelectorAll(".lomo-filter button").forEach(o => o.setAttribute("aria-pressed", String(o === b)));
-      tiles.forEach(t => { t.hidden = !!b.dataset.cam && t.dataset.cam !== b.dataset.cam; });
-    }));
   }
 
   function gallery(i, p) {
@@ -600,7 +592,7 @@
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
     setupLogos(p);
     setupScrub();
-    setupLomo(p);
+    setupLomo();
     if (p.gallery) setupFlips(p);
     setupMotion(p);
   }

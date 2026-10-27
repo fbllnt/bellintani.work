@@ -38,6 +38,8 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Projects can use `layout: "loose"` (free placement: `col`, `span`, `shift`, `speed`, `{ text }` lines),
   `hero: "bleed"`, videos (`video` MP4 + `webm` + `poster`) and a 360° viewer (`spin`).
 - Compress media before adding: videos to 720p H.264 MP4 plus a VP9 WebM; images max 2000 px wide JPEG.
+- Lomography (`layout: "lomo"`, Felipe Oct 27 2026): one horizontal film roll per camera (Fisheye, Super Sampler, LC-A),
+  two or three photos in view, arrows + drag/swipe, no full-screen view. Camera = the `camera` field of each photo.
 - Logos project (`layout: "logos"`): every logo file must be pure black #000000 on a transparent background
   (PNG or SVG, trimmed). Check each upload and correct off-blacks such as #231F20 before adding it.
 - Typefaces: Figtree (display) and JetBrains Mono (small copy / body). White page, black type, blue accents.

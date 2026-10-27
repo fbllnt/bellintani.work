@@ -432,34 +432,26 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .cblock.wrap{max-width:1000px;justify-self:center}
 .cblock.wrap .crow.solo{display:inline-block;margin:0 clamp(8px,1vw,14px) 6px}
 
-/* ---------- Photo library (Lomography) ---------- */
-/* Justified mosaic: each tile grows in proportion to its aspect ratio, so a row shares one height */
-.lomo-filter{flex-wrap:wrap;margin-bottom:22px}
-.mosaic{display:flex;flex-wrap:wrap;gap:6px}
-.mosaic::after{content:"";flex:999 1 0}
-.ph-tile{all:unset;box-sizing:border-box;position:relative;flex:var(--ar) 1 calc(var(--ar) * clamp(110px,17vw,250px));aspect-ratio:var(--ar);overflow:hidden;cursor:pointer}
-.ph-tile[hidden]{display:none}
-.ph-tile img{width:100%;height:100%;object-fit:contain;transition:transform .8s var(--ease)}
-.ph-tile:hover img,.ph-tile:focus-visible img{transform:scale(.97)}
-.ph-tile span{position:absolute;left:8px;bottom:8px;padding:3px 6px;background:var(--bg);font-size:11px;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .35s var(--ease)}
-.ph-tile:hover span,.ph-tile:focus-visible span{opacity:1;transform:none}
-.ph-tile:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-/* Single photo on white, gallery style */
-.photo-view{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;padding:20px max(16px,4vw);background:var(--bg);color:var(--fg);display:none;grid-template-rows:auto 1fr auto;gap:18px;touch-action:pan-y}
-.photo-view[open]{display:grid;animation:pvIn .35s var(--ease)}
-.photo-view::backdrop{background:transparent}
-@keyframes pvIn{from{opacity:0}to{opacity:1}}
-.pv-nav{display:flex;justify-content:center;gap:28px}
-.pv-nav button{all:unset;cursor:pointer;color:var(--mute)}
-.pv-nav button:hover,.pv-nav button:focus-visible{color:var(--fg)}
-.pv-nav button:focus-visible{outline:1px solid var(--fg);outline-offset:4px}
-.pv-img{position:relative;min-height:0}
-.pv-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.pv-info{display:grid;gap:6px;max-width:1100px;width:100%;justify-self:center}
-.pv-info p{margin:0}
-.pv-cap{font:500 15px/1.3 var(--sans)}
-.pv-meta b{font-weight:500;margin-right:4px}
-@media (prefers-reduced-motion:reduce){ .photo-view[open]{animation:none} .ph-tile img{transition:none} }
+/* ---------- Photo library (Lomography): one film roll per camera ---------- */
+/* Each roll is a horizontal strip of frames sharing one height, two or three in view; it scrolls sideways (arrows, drag, swipe). */
+.rolls{display:grid;gap:clamp(48px,7vw,96px)}
+.film-roll{--h:min(calc((100vw - 32px) / 3.6), 62svh);display:grid;gap:12px}
+.roll-head{display:flex;align-items:baseline;gap:10px;border-top:2px solid var(--fg);padding-top:10px}
+.roll-head h3{margin:0;font:inherit;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+.roll-count{color:var(--mute);font-size:13px}
+.roll-arrows{margin-left:auto;display:flex;gap:6px}
+.roll-arrows button{all:unset;cursor:pointer;width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--fg);border-radius:50%;font-size:15px;transition:background .2s,color .2s,opacity .2s}
+.roll-arrows button:hover:not(:disabled),.roll-arrows button:focus-visible{background:var(--blue);border-color:var(--blue);color:#fff}
+.roll-arrows button:disabled{opacity:.25;cursor:default}
+.film-roll.fits .roll-arrows{visibility:hidden}
+.roll-track{position:relative;display:flex;gap:var(--gap);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.roll-track::-webkit-scrollbar{display:none}
+.roll-track.dragging{cursor:grabbing;scroll-snap-type:none}
+.roll-track:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.roll-frame{flex:none;margin:0;scroll-snap-align:start;display:grid;gap:6px}
+.roll-frame img{display:block;height:var(--h);width:auto;aspect-ratio:var(--ar);object-fit:contain;pointer-events:none;-webkit-user-drag:none}
+.roll-frame figcaption{font-size:11px;color:var(--mute)}
+@media (max-width:700px){ .film-roll{--h:min(calc((100vw - 32px) / 2.3), 55svh)} }
 
 /* Content motion: frames rise tilted in 3D and flatten as they enter (scroll-linked), photos drift inside them, text lines rise */
 .case.motion .case-gallery .fig .ph{transform-origin:50% 100%;will-change:transform,opacity}
