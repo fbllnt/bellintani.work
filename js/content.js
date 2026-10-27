@@ -762,7 +762,7 @@ window.SITE = {
         { chapter: { en: "04 · Motion", pt: "04 · Movimento" }, kicker: { en: "Kinetic type", pt: "Tipografia cinética" },
           head: { en: "Type that *moves.*", pt: "Tipografia que se *mexe.*" } },
         { video: "images/scriva/kinetic.mp4", webm: "images/scriva/kinetic.webm", poster: "images/scriva/kinetic-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Kinetic type", pt: "Tipografia cinética" } },
-        { src: "images/scriva/kinetic-outline.jpg", ar: "2000/833", col: 3, span: 10, caption: { en: "Kinetic type, outline", pt: "Tipografia cinética, contorno" } },
+        { tunnel: { word: "SCRV", bg: "#222" }, poster: "images/scriva/kinetic-outline.jpg", ar: "2000/833", col: 3, span: 10, caption: { en: "Kinetic type, outline", pt: "Tipografia cinética, contorno" } },
         { chapter: { en: "05 · Applied identity", pt: "05 · Identidade aplicada" }, kicker: { en: "Street · Merch · Social", pt: "Rua · Brindes · Redes" },
           head: { en: "Quem não se posiciona é *posicionado.*", pt: "Quem não se posiciona é *posicionado.*" } },
         { src: "images/scriva/posters.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Lambe-lambe posters", pt: "Lambe-lambes" } },

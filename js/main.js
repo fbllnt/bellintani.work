@@ -127,7 +127,7 @@
     if (!(key in inkCache)) { inkCtx.font = `${cs.fontWeight} 100px ${cs.fontFamily}`; inkCache[key] = -inkCtx.measureText(ch).actualBoundingBoxLeft / 100; }
     el.style.marginLeft = inkCache[key] > 0 ? `${(-inkCache[key]).toFixed(3)}em` : "";
   });
-  (document.fonts ? document.fonts.load("900 100px Figtree").then(() => document.fonts.ready) : Promise.resolve()).then(() => inkAlign());
+  (document.fonts ? document.fonts.load("700 100px Figtree").then(() => document.fonts.ready) : Promise.resolve()).then(() => inkAlign());
 
   // ---------- Intro ----------
   const stage = $("top"), corners = $("corners");
@@ -174,7 +174,7 @@
     big.style.transformOrigin = `${ox.toFixed(1)}px ${oy.toFixed(1)}px`;
   };
   // Measure only once Figtree Black is in: fonts.ready can resolve before the hidden intro asks for it
-  (document.fonts ? document.fonts.load("900 100px Figtree").then(() => document.fonts.ready) : Promise.resolve()).then(fitBig, fitBig);
+  (document.fonts ? document.fonts.load("700 100px Figtree").then(() => document.fonts.ready) : Promise.resolve()).then(fitBig, fitBig);
   addEventListener("resize", fitBig);
 
   // Name: every letter takes the same time but starts 80px further down, so they land as a wave
@@ -283,7 +283,7 @@
   // On phones a row of landscape pieces stacks one per line; a row of portraits stays side by side.
   function looseGallery(p) {
     const ratio = ar => { const [w, h] = String(ar || "16/9").split("/").map(Number); return w / (h || 1); };
-    const isMedia = it => ((it.src || it.video) && !it.scrub && !it.spin) || (it.todo && it.span < 12);
+    const isMedia = it => ((it.src || it.video || it.tunnel) && !it.scrub && !it.spin) || (it.todo && it.span < 12);
     let html = "", row = [], used = 0;
     const flush = () => {
       if (!row.length) return;
@@ -354,6 +354,11 @@
         <canvas width="${it.spin.w || 960}" height="${it.spin.h || 540}" tabindex="0" role="slider" data-frames="${esc(it.spin.frames)}" data-count="${+it.spin.count}"
           aria-label="${esc(L(it.caption) || L(p.title))}" aria-valuemin="0" aria-valuemax="359" aria-valuenow="0" aria-valuetext="0°"></canvas>
         <div class="spin-ui mono"><span>${esc(T("dragToRotate"))}</span><span class="spin-deg">0°</span></div>
+      </div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
+    // Type tunnel: a word in outline repeated in depth, drawn live (see setupTunnel). The still sits underneath until it starts.
+    if (it.tunnel) return `<figure class="fig full tunnel" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${style}"><div class="ph">
+        ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
+        <canvas data-tunnel="${esc(it.tunnel.word)}" data-bg="${esc(it.tunnel.bg || "#000")}" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"></canvas>
       </div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
     return `<figure class="fig ${it.size || "full"}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${style}"${speed}><div class="ph">${
       it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""}${it.offset ? ` data-offset="${+it.offset}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
@@ -659,12 +664,77 @@
     setupEmbeds();
     setupDrift();
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
+    caseEl.querySelectorAll("canvas[data-tunnel]").forEach(setupTunnel);
     setupLogos(p);
     setupScrub();
     setupLomo();
     if (p.gallery) setupFlips(p);
     setupMotion(p);
     inkAlign(caseEl);
+  }
+
+  // Type tunnel (SCRV kinetic type, outline): the word in white outline, repeated in depth around one vanishing point,
+  // flies slowly towards the viewer in an endless loop. Parallax: the pointer (or, on touch, the scroll) moves the
+  // camera, so near layers slide much more than far ones. Scrolling also pushes the flight forward a little.
+  // Only runs while on screen; reduced motion gets one still frame.
+  function setupTunnel(cv) {
+    const word = cv.dataset.tunnel, bg = cv.dataset.bg, ctx = cv.getContext("2d");
+    const N = 14, MIN = .12, MAX = 6, LOOP = 1.6; // layers, smallest/largest scale, seconds per layer
+    let W = 0, H = 0, dpr = 1, raf = 0, visible = false, t = 0, last = 0, push = 0, lastY = scrollY;
+    let cx = 0, cy = 0, tx = 0, ty = 0, hover = false;
+    const size = () => {
+      dpr = Math.min(devicePixelRatio || 1, 1.5);
+      W = cv.width = Math.round(cv.clientWidth * dpr); H = cv.height = Math.round(cv.clientHeight * dpr);
+    };
+    const draw = () => {
+      if (!W) size();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      const F = H * .34;
+      ctx.font = `700 ${F}px Figtree, sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.lineJoin = "round"; ctx.strokeStyle = "#fff";
+      // far to near
+      const ph = (t / LOOP) % 1;
+      for (let i = 0; i < N; i++) {
+        const f = (i + ph) / N, s = MIN * (MAX / MIN) ** f;
+        // fade in from the depth, fade out as it passes the viewer
+        const a = Math.min(1, f / .12) * Math.min(1, (1 - f) / .2);
+        if (a <= 0) continue;
+        ctx.globalAlpha = a;
+        ctx.filter = s > 2.2 ? `blur(${Math.min(4, (s - 2.2) * 1.4) * dpr}px)` : "none";
+        ctx.setTransform(s, 0, 0, s, W / 2 - cx * W * .09 * s, H / 2 - cy * H * .09 * s);
+        ctx.lineWidth = Math.max(dpr, F * .012 * s) / s;
+        ctx.strokeText(word, 0, F * .04);
+      }
+      ctx.globalAlpha = 1; ctx.filter = "none";
+    };
+    const tick = now => {
+      raf = 0;
+      if (!cv.isConnected || !visible) return;
+      const dt = Math.min(.05, (now - (last || now)) / 1000); last = now;
+      t += dt + push; push *= .9;
+      if (!hover) { // on its own: a slow drift, plus the scroll position on touch screens
+        const r = cv.getBoundingClientRect(), k = (r.top + r.height / 2) / innerHeight - .5;
+        tx = Math.sin(now / 2600) * .35; ty = k * .9 + Math.cos(now / 3100) * .15;
+      }
+      cx += (tx - cx) * .06; cy += (ty - cy) * .06;
+      draw();
+      raf = requestAnimationFrame(tick);
+    };
+    const run = () => { if (!raf && !reduced) { last = 0; raf = requestAnimationFrame(tick); } };
+    const start = () => { size(); draw(); cv.classList.add("on"); };
+    (document.fonts ? document.fonts.load("700 100px Figtree").catch(() => {}) : Promise.resolve()).then(() => {
+      start();
+      new IntersectionObserver(es => es.forEach(e => { visible = e.isIntersecting; if (visible) run(); }), { rootMargin: "100px 0px" }).observe(cv);
+    });
+    if (window.ResizeObserver) new ResizeObserver(() => { if (cv.clientWidth && Math.round(cv.clientWidth * dpr) !== W) { size(); draw(); } }).observe(cv);
+    cv.addEventListener("pointermove", e => {
+      if (e.pointerType !== "mouse") return;
+      const r = cv.getBoundingClientRect(); hover = true;
+      tx = ((e.clientX - r.left) / r.width - .5) * 2; ty = ((e.clientY - r.top) / r.height - .5) * 2;
+    });
+    cv.addEventListener("pointerleave", () => { hover = false; });
+    addEventListener("scroll", () => { if (visible) push = Math.min(.15, push + Math.abs(scrollY - lastY) / 4000); lastY = scrollY; }, { passive: true });
   }
 
   // 360° viewer: frames drawn on a canvas. Drag (mouse or touch) or arrow keys to turn; a flick keeps it spinning
