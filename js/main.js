@@ -137,7 +137,7 @@
   loaderEl.innerHTML = L(S.loader).map((line, li) => `<div class="ln">${line.map(w => {
     const html = `<span${w[0] === "*" ? ` class="blue"` : ""} style="--d:${d.toFixed(2)}s">${esc(w.replace(/^\*/, ""))}</span>`;
     d += 0.28; return html; }).join(" ")}</div>`).join("")
-    + (S.loaderBig ? `<div class="ln boom"><span style="--d:${(d + 0.25).toFixed(2)}s">${esc(L(S.loaderBig))}</span></div>` : "");
+    + (S.loaderBig ? `<div class="ln boom"><span style="--d:${(d + 0.4).toFixed(2)}s">${esc(L(S.loaderBig))}</span></div>` : "");
   // The big line fills the width and bursts from the middle of its first letter's left stem, so the screen goes solid blue
   const fitBig = () => {
     const big = loaderEl.querySelector(".boom span");
@@ -207,46 +207,22 @@
   const play = () => {
     clear(); corners.classList.remove("on");
     stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play");
-    if (jingle) timers.push(setTimeout(jingleGo, jingleAt()));
+    // MY HOUSE comes on alone: the lyric lines leave the screen the moment it cuts on (Felipe, Oct 27 2026)
+    loaderEl.classList.remove("alone");
+    const big = loaderEl.querySelector(".boom span");
+    if (big) timers.push(setTimeout(() => loaderEl.classList.add("alone"), parseFloat(big.style.getPropertyValue("--d")) * 1000));
     timers.push(setTimeout(() => corners.classList.add("on"), 4650));
     timers.push(setTimeout(finish, 5950));
   };
-  $("skip").onclick = () => { finish(); if (jingle) jingle.pause(); };
+  $("skip").onclick = finish;
 
-  // Intro jingle (Felipe, Oct 27 2026): his clip of the song plays as the huge MY HOUSE lands. Browsers block sound
-  // until the visitor clicks or taps, so it plays on its own only where allowed; otherwise "♪ Sound on" replays
-  // the intro with sound (so it stays in sync), and so does "↻ Replay intro".
-  const introBtn = $("intro-sound");
-  let jingle = null, userOff = false, blocked = false;
-  // When MY HOUSE cuts on (its --d), minus the clip's short lead-in
-  const jingleAt = () => { const b = loaderEl.querySelector(".boom span"); return Math.max(0, (b ? parseFloat(b.style.getPropertyValue("--d")) : 2.4) - .2) * 1000; };
-  const markJingle = () => { const on = !userOff && !blocked; introBtn.textContent = T(on ? "introMute" : "introSound"); introBtn.setAttribute("aria-pressed", String(on)); };
-  const jingleGo = () => {
-    if (userOff) return;
-    jingle.currentTime = 0;
-    jingle.play().then(() => { blocked = false; markJingle(); }, () => { blocked = true; markJingle(); });
-  };
-  // A muted play inside the click lets the delayed play through on Safari and iPhone too
-  const unlockJingle = () => {
-    if (!jingle) return;
-    blocked = false; jingle.muted = true;
-    jingle.play().then(() => { jingle.pause(); jingle.muted = false; }, () => { jingle.muted = false; });
-  };
-  if (S.introAudio) {
-    jingle = new Audio(S.introAudio); jingle.preload = "auto";
-    introBtn.hidden = false; markJingle();
-    introBtn.onclick = () => {
-      if (!userOff && !blocked) { userOff = true; jingle.pause(); markJingle(); return; }
-      userOff = false; unlockJingle(); markJingle(); play();
-    };
-  }
   // Scroll cue: jumps to the work list and hides once the visitor has started scrolling
   const cue = $("cue");
   if (!S.projects.length) { cue.href = "#services"; cue.setAttribute("aria-label", T("services")); }
   cue.addEventListener("click", e => { e.preventDefault(); $(S.projects.length ? "work" : "services").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
   const cueCheck = () => cue.classList.toggle("gone", scrollY > 40);
   addEventListener("scroll", cueCheck, { passive: true }); cueCheck();
-  $("replay").onclick = () => { scrollTo({ top: 0 }); unlockJingle(); play(); };
+  $("replay").onclick = () => { scrollTo({ top: 0 }); play(); };
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
@@ -1145,7 +1121,6 @@
   };
   const openMusic = on => {
     if (on && !loaded && suggested()) loadSong(suggested());
-    if (on && jingle) jingle.pause();
     music.hidden = !on; musicBtn.setAttribute("aria-expanded", String(on));
     syncMusic();
   };

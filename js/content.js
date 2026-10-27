@@ -21,10 +21,6 @@ window.SITE = {
   // English only, in both languages (Felipe).
   loader: [["Daft", "Punk", "is", "playing"], ["at", "my", "house,"]],
   loaderBig: "My house",
-  // Intro jingle: Felipe's clip of the song, played as the huge MY HOUSE lands. Browsers only allow sound after a click or tap,
-  // so it starts on its own only where the browser lets it; otherwise "♪ Sound on" replays the intro with it.
-  // Leave introAudio empty ("") and the sound button stays hidden.
-  introAudio: "audio/intro.mp3",
   // Suggested music (Felipe, Oct 27 2026): a small Spotify player behind "♪" in the top-right corner.
   // Each project sets track: { id (Spotify track id, from open.spotify.com/track/<id>), name, by }; the home plays homeTrack.
   homeTrack: { id: "73mlvsfJM2qwlDUJxeaatI", name: "Daft Punk Is Playing at My House", by: "LCD Soundsystem" },
@@ -102,7 +98,7 @@ window.SITE = {
       logoHint: "Click the logo to close · ← → to browse", logoHintTouch: "Tap the logo to close · Swipe to browse",
       placeholder: "Placeholder", missing: "Missing", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
-      music: "♪ Music", musicLabel: "Suggested music", nowSuggested: "Suggested soundtrack", introSound: "♪ Sound on", introMute: "♪ Sound off", musicSwap: "Play this project's song",
+      music: "♪ Music", musicLabel: "Suggested music", nowSuggested: "Suggested soundtrack", musicSwap: "Play this project's song",
       langSwitch: "PT", langLabel: "Ver em português",
       description: "Bellintani — multidisciplinary designer and art director.",
     },
@@ -115,7 +111,7 @@ window.SITE = {
       logoHint: "Clique no logo para fechar · ← → para navegar", logoHintTouch: "Toque no logo para fechar · Deslize para navegar",
       placeholder: "Provisório", missing: "Falta", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Substitua pela história do projeto: o briefing, a ideia e o que foi feito.",
-      music: "♪ Música", musicLabel: "Música sugerida", nowSuggested: "Trilha sugerida", introSound: "♪ Ligar som", introMute: "♪ Sem som", musicSwap: "Tocar a música deste projeto",
+      music: "♪ Música", musicLabel: "Música sugerida", nowSuggested: "Trilha sugerida", musicSwap: "Tocar a música deste projeto",
       langSwitch: "EN", langLabel: "View in English",
       description: "Bellintani — designer multidisciplinar e diretor de arte.",
     },
