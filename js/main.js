@@ -191,25 +191,38 @@
   const play = () => {
     clear(); corners.classList.remove("on");
     stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play");
-    if (jingle) { jingle.currentTime = 0; jingle.play().catch(() => {}); }
+    if (jingle) timers.push(setTimeout(jingleGo, jingleAt()));
     timers.push(setTimeout(() => corners.classList.add("on"), 4650));
     timers.push(setTimeout(finish, 5950));
   };
   $("skip").onclick = () => { finish(); if (jingle) jingle.pause(); };
 
-  // Intro jingle (Felipe, Oct 27 2026): the start of the song plays with the lyric. Browsers block sound until the
-  // visitor clicks or taps, so it starts on its own only where allowed; otherwise "♪ Sound on" replays the intro
-  // with sound (so it stays in sync), and so does "↻ Replay intro".
+  // Intro jingle (Felipe, Oct 27 2026): his clip of the song plays as the huge MY HOUSE lands. Browsers block sound
+  // until the visitor clicks or taps, so it plays on its own only where allowed; otherwise "♪ Sound on" replays
+  // the intro with sound (so it stays in sync), and so does "↻ Replay intro".
   const introBtn = $("intro-sound");
-  let jingle = null;
+  let jingle = null, userOff = false, blocked = false;
+  // When MY HOUSE cuts on (its --d), minus the clip's short lead-in
+  const jingleAt = () => { const b = loaderEl.querySelector(".boom span"); return Math.max(0, (b ? parseFloat(b.style.getPropertyValue("--d")) : 2.4) - .2) * 1000; };
+  const markJingle = () => { const on = !userOff && !blocked; introBtn.textContent = T(on ? "introMute" : "introSound"); introBtn.setAttribute("aria-pressed", String(on)); };
+  const jingleGo = () => {
+    if (userOff) return;
+    jingle.currentTime = 0;
+    jingle.play().then(() => { blocked = false; markJingle(); }, () => { blocked = true; markJingle(); });
+  };
+  // A muted play inside the click lets the delayed play through on Safari and iPhone too
+  const unlockJingle = () => {
+    if (!jingle) return;
+    blocked = false; jingle.muted = true;
+    jingle.play().then(() => { jingle.pause(); jingle.muted = false; }, () => { jingle.muted = false; });
+  };
   if (S.introAudio) {
     jingle = new Audio(S.introAudio); jingle.preload = "auto";
-    const mark = on => { introBtn.textContent = T(on ? "introMute" : "introSound"); introBtn.setAttribute("aria-pressed", String(on)); };
-    introBtn.hidden = false; mark(false);
-    jingle.addEventListener("play", () => mark(true));
-    jingle.addEventListener("pause", () => mark(false));
-    jingle.addEventListener("ended", () => mark(false));
-    introBtn.onclick = () => { if (!jingle.paused) jingle.pause(); else play(); };
+    introBtn.hidden = false; markJingle();
+    introBtn.onclick = () => {
+      if (!userOff && !blocked) { userOff = true; jingle.pause(); markJingle(); return; }
+      userOff = false; unlockJingle(); markJingle(); play();
+    };
   }
   // Scroll cue: jumps to the work list and hides once the visitor has started scrolling
   const cue = $("cue");
@@ -217,7 +230,7 @@
   cue.addEventListener("click", e => { e.preventDefault(); $(S.projects.length ? "work" : "services").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
   const cueCheck = () => cue.classList.toggle("gone", scrollY > 40);
   addEventListener("scroll", cueCheck, { passive: true }); cueCheck();
-  $("replay").onclick = () => { scrollTo({ top: 0 }); play(); };
+  $("replay").onclick = () => { scrollTo({ top: 0 }); unlockJingle(); play(); };
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom

@@ -21,10 +21,10 @@ window.SITE = {
   // English only, in both languages (Felipe).
   loader: [["Daft", "Punk", "is", "playing"], ["at", "my", "house,"]],
   loaderBig: "My house",
-  // Intro jingle: a few seconds of the song, played with the intro. Browsers only allow sound after a click or tap,
+  // Intro jingle: Felipe's clip of the song, played as the huge MY HOUSE lands. Browsers only allow sound after a click or tap,
   // so it starts on its own only where the browser lets it; otherwise "♪ Sound on" replays the intro with it.
   // Leave introAudio empty ("") and the sound button stays hidden.
-  introAudio: "",
+  introAudio: "audio/intro.mp3",
   // Suggested music (Felipe, Oct 27 2026): a small Spotify player behind "♪" in the top-right corner.
   // Each project sets track: { id (Spotify track id, from open.spotify.com/track/<id>), name, by }; the home plays homeTrack.
   homeTrack: { id: "73mlvsfJM2qwlDUJxeaatI", name: "Daft Punk Is Playing at My House", by: "LCD Soundsystem" },
