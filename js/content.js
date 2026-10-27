@@ -1183,6 +1183,7 @@ window.SITE = {
         { name: "Supernova", src: "images/logos/supernova.png", scale: 1.1 },
         { name: "GinTeam", src: "images/logos/ginteam.png" },
         { name: "DISORD/AIR", src: "images/logos/disordair.png" },
+        { name: "Cinema Especial", src: "images/logos/cinema-especial.png" },
       // Leo Mafra and the flat House Party Orloff removed, and the empty "Logo 38–50" placeholders dropped (Felipe, Oct 27 2026)
       ],
     },
