@@ -1122,6 +1122,8 @@ window.SITE = {
         { name: "Calatos Films", src: "images/logos/calatos-films.png" },
         { name: "Atelier Gkeimich", src: "images/logos/gk-atelier.png" },
         { name: "Boiler Filmes", src: "images/logos/boiler-filmes.png" },
+        { name: "Supernova", src: "images/logos/supernova.png", scale: 1.1 },
+        { name: "GinTeam", src: "images/logos/ginteam.png" },
       // Leo Mafra and the flat House Party Orloff removed, and the empty "Logo 38–50" placeholders dropped (Felipe, Oct 27 2026)
       ],
     },
