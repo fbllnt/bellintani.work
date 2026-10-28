@@ -9,8 +9,8 @@ window.SITE = {
     { label: "LinkedIn", url: "https://www.linkedin.com/in/fbellintani/" },
   ],
   tagline: {
-    en: "Multidisciplinary designer, art director, ADHD, dad of an amazing 7 year old rebel princess, Music Freak, wanna be stand-up comedian and who knows what else",
-    pt: "Designer multidisciplinar, diretor de arte, TDAH, pai de uma incrível princesa rebelde de 7 anos, Music Freak, aspirante a comediante de stand-up e sabe-se lá o que mais",
+    en: "Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad to an amazing 7-year-old rebel princess, music freak, amateur photographer, wannabe stand-up comedian, and who knows what else.",
+    pt: "Designer multidisciplinar, diretor de arte, mente criativa, cérebro TDAH hiperfocado, pai de uma incrível princesa rebelde de 7 anos, fanático por música, fotógrafo amador, aspirante a comediante de stand-up e sabe-se lá o que mais.",
   },
   subline: {
     en: ["Branding & Identity, Advertising, Digital, Social, Vibe Coding and AI Workflows"],
@@ -102,7 +102,7 @@ window.SITE = {
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
       music: "♪ Music", musicLabel: "Suggested music", nowSuggested: "Suggested soundtrack", musicSwap: "Play this project's song",
       langSwitch: "PT", langLabel: "Ver em português",
-      description: "Bellintani — Multidisciplinary designer, art director, ADHD, dad of an amazing 7 year old rebel princess, Music Freak, wanna be stand-up comedian and who knows what else.",
+      description: "Bellintani — Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad to an amazing 7-year-old rebel princess, music freak, amateur photographer, wannabe stand-up comedian, and who knows what else.",
     },
     pt: {
       work: "Trabalhos", backHome: "← Início", services: "Serviços", letsTalk: "Vamos conversar",
@@ -115,7 +115,7 @@ window.SITE = {
       placeholderText: "Texto provisório. Substitua pela história do projeto: o briefing, a ideia e o que foi feito.",
       music: "♪ Música", musicLabel: "Música sugerida", nowSuggested: "Trilha sugerida", musicSwap: "Tocar a música deste projeto",
       langSwitch: "EN", langLabel: "View in English",
-      description: "Bellintani — Designer multidisciplinar, diretor de arte, TDAH, pai de uma incrível princesa rebelde de 7 anos, Music Freak, aspirante a comediante de stand-up e sabe-se lá o que mais.",
+      description: "Bellintani — Designer multidisciplinar, diretor de arte, mente criativa, cérebro TDAH hiperfocado, pai de uma incrível princesa rebelde de 7 anos, fanático por música, fotógrafo amador, aspirante a comediante de stand-up e sabe-se lá o que mais.",
     },
   },
 
