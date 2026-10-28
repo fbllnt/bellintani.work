@@ -866,3 +866,14 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-depth.in .ph > img,.case .case-depth .ph > img{transform:translate3d(var(--depth-x,0px),var(--depth-y,0px),0);transition:transform .6s cubic-bezier(.2,.7,.25,1)}
 @media(max-width:760px){.story-rail{gap:3px 6px}.story-rail-step{font-size:10px;padding:8px}.case-depth .ph > img{transform:none!important}}
 @media(prefers-reduced-motion:reduce){.story-rail-step,.case-depth .ph > img{transition:none!important}}
+
+/* Editorial introduction: description and project numbers share one aligned block. */
+.case-intro-block{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(22px,2.6vw,48px) var(--gap);align-items:start;margin-bottom:clamp(44px,6vw,88px);padding:clamp(30px,4vw,64px) 0;border-bottom:1px solid var(--line)}
+.case-intro-block .case-about{grid-column:1/-1;padding:0}
+.case-intro-block .case-stats{grid-column:5/-1;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);border:0;margin:0}
+.case-intro-block .case-stats li{padding:0}
+@media(max-width:760px){
+ .case-intro-block{padding:30px 0 36px;gap:24px}
+ .case-intro-block .case-stats{grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+ .case-intro-block .case-stats b{font-size:clamp(40px,11vw,78px)}
+}
