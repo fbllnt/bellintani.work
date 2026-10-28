@@ -818,7 +818,7 @@ window.SITE = {
           kicker: { en: "Human creativity × artificial intelligence", pt: "Criatividade humana × inteligência artificial" },
           head: { en: "The human at the *core.*", pt: "O humano no *centro.*" },
           text: { en: "What if an AI company put people, not technology, at the centre of its identity? I led the research, strategy and design to turn that proposition into a brand. The O became a bold ring around an open, human centre.", pt: "E se uma empresa de IA colocasse as pessoas, e não a tecnologia, no centro da própria identidade? Liderei a pesquisa, a estratégia e o design para transformar essa ideia em marca. O O virou um anel marcante em torno de um centro aberto e humano." } },
-        { src: "images/corehi/icon-light.jpg", ar: "16/9", col: 1, span: 12,
+        { src: "images/corehi/icon-light.jpg", corehiInteractive: true, ar: "16/9", col: 1, span: 12,
           caption: { en: "A simple shape. A human idea.", pt: "Uma forma simples. Uma ideia humana." } },
 
         { fullWidthIntro: true, chapter: { en: "02 · The name", pt: "02 · O nome" },
