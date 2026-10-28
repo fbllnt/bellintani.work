@@ -722,6 +722,22 @@
       main.setAttribute("role", "button");
       main.setAttribute("aria-label", L({ en: "Next gallery image", pt: "Próxima imagem da galeria" }));
       main.addEventListener("click", () => go(cur + 1, true));
+      // Small, inertial two-axis movement for the PopStar identity slides only.
+      // CSS variables keep the artwork intact and return it to center on leave.
+      if (it.flipWide && !reduced && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        main.addEventListener("pointermove", e => {
+          const r = main.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - .5;
+          const y = (e.clientY - r.top) / r.height - .5;
+          img.style.setProperty("--px", (x * 16).toFixed(2) + "px");
+          img.style.setProperty("--py", (y * 12).toFixed(2) + "px");
+        }, { passive: true });
+        main.addEventListener("pointerleave", () => {
+          img.style.setProperty("--px", "0px");
+          img.style.setProperty("--py", "0px");
+        });
+      }
+
       box.addEventListener("keydown", e => {
         if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1, true); }
         if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1, true); }
