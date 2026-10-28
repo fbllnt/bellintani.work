@@ -251,8 +251,8 @@ window.SITE = {
           pills: [{ en: "3D logo", pt: "Logo 3D" }, { en: "Flat logo", pt: "Logo vetor" }, { en: "Circle pattern", pt: "Pattern de círculos" }, { en: "8 colours", pt: "8 cores" }, { en: "*Gradients", pt: "*Degradês" }] },
         { src: "images/globo/logo-3d-vetor.jpg", ar: "1397/646", col: 1, span: 6, caption: { en: "Logo — 3D and flat versions", pt: "Logotipo — versão 3D e versão vetor" } },
         { src: "images/globo/grafismos.jpg", ar: "1962/1088", col: 7, span: 6, caption: { en: "Free circle pattern, white and solid colour", pt: "Pattern livre de círculos, branco e cor sólida" } },
-        { src: "images/globo/gradientes-funcionais.jpg", ar: "1743/904", col: 1, span: 6, caption: { en: "Functional gradients — news, sport, entertainment", pt: "Gradientes funcionais — jornalismo, esporte, entretenimento" } },
-        { src: "images/globo/gradientes-decorativos.jpg", ar: "1961/1088", col: 7, span: 6, caption: { en: "Decorative gradients, three colours each", pt: "Gradientes decorativos, de três cores cada" } },
+        // One large editorial infographic on the right; decorative gradient removed from this row.
+        { src: "images/globo/gradientes-funcionais.jpg", ar: "1743/904", col: 1, span: 12, caption: { en: "Functional gradients — news, sport, entertainment", pt: "Gradientes funcionais — jornalismo, esporte, entretenimento" } },
         { gradientPalette: true },
         { chapter: { en: "06 · Type", pt: "06 · Tipografia" }, kicker: { en: "Globoface → Globotipo", pt: "Globoface → Globotipo" },
           head: { en: "From Globoface to *Globotipo.*", pt: "Da Globoface à *Globotipo.*" },
