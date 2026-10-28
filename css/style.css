@@ -508,6 +508,21 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .flip-thumbs button:focus-visible{outline:2px solid var(--blue)}
 .flip-thumbs img{width:100%;height:100%;object-fit:contain}
 /* The large image and its thumbnails fit on one screen together */
+.rooms-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--gap)}
+.rooms-tabs button{all:unset;cursor:pointer;padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--mute);transition:background .2s,color .2s,border-color .2s}
+.rooms-tabs button sup{margin-left:4px;font-size:.75em}
+.rooms-tabs button:hover{color:var(--fg);border-color:var(--fg)}
+.rooms-tabs button[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:var(--bg)}
+.rooms-tabs button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.rooms-stage .ph{cursor:pointer;touch-action:pan-y}
+.rooms-stage .ph > img{transition:none;user-select:none}
+.rooms-bar{display:flex;align-items:center;gap:12px;margin-top:10px}
+.rooms-cap{margin:0;flex:1;min-width:0}
+.rooms-count{color:var(--mute)}
+.rooms-bar .roll-arrows{margin-left:0}
+.loose > .rooms{width:min(calc((100% - 11 * var(--gap)) / 12 * 8 + 7 * var(--gap)),calc((100svh - 150px) * 1.4));align-self:flex-end}
+@media (max-width:760px){ .loose > .rooms{width:100%} .rooms{margin-top:24px} .rooms-bar .roll-arrows button{width:40px;height:40px} }
+.pair-fig > .rooms{width:100%}
 .loose > .flip{width:min(calc((100% - 11 * var(--gap)) / 12 * 8 + 7 * var(--gap)),calc((100svh - 150px) / .7));align-self:flex-end}
 @media (max-width:760px){ .loose > .flip{width:100%} }
 .loose > .strip.narrow{width:calc((100% - 11 * var(--gap)) / 12 * 10 + 9 * var(--gap));align-self:center}

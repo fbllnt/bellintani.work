@@ -346,7 +346,7 @@
         return;
       }
       // A flip, strip or live page can take the pending text beside it
-      if (pend && (it.flip || it.strip || it.embed || it.yt)) { pairWith(block(it, p), it.side); return; }
+      if (pend && (it.flip || it.rooms || it.strip || it.embed || it.yt)) { pairWith(block(it, p), it.side); return; }
       closePend();
       // A text line pairs with the piece or flip that follows it
       if (it.text && !side) { pend = { html: `<p class="ltext side">${esc(L(it.text))}</p>`, solo: block(it, p) }; return; }
@@ -386,6 +386,15 @@
         <div class="marquee" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"><div class="marquee-track">${imgs}</div></div></figure>`; }
     if (it.text) return `<p class="ltext" style="${style}"${speed}>${esc(L(it.text))}</p>`;
     // Flip: one item large with the whole set as thumbnails below; a thumbnail, the large image or the arrow keys turn the page
+    // Rooms: a few groups shown one at a time, one large piece at a time, with arrows / swipe and no thumbnail strip:
+    // { rooms: [{ name: { en, pt }, items: [{ src, ar, caption }, …] }, …], ar } (ar = the stage, pieces are contained in it)
+    if (it.rooms) { const f = it.rooms[0].items[0], n0 = it.rooms[0].items.length;
+      return `<div class="rooms" style="${style}">
+        <div class="rooms-tabs mono" role="tablist">${it.rooms.map((r, g) => `<button type="button" role="tab" aria-selected="${!g}" data-g="${g}">${esc(L(r.name))}<sup>${r.items.length}</sup></button>`).join("")}</div>
+        <figure class="fig rooms-stage" style="--ar:${esc(it.ar || "16/10")}"><div class="ph" tabindex="0"><img src="${esc(f.src)}" alt="${esc(L(f.caption) || "")}" draggable="false"></div></figure>
+        <div class="rooms-bar mono"><p class="rooms-cap muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
+          <span class="rooms-count">01 / ${String(n0).padStart(2, "0")}</span>
+          <span class="roll-arrows"><button type="button" class="rooms-prev" aria-label="${esc(T("prev"))}">←</button><button type="button" class="rooms-next" aria-label="${esc(T("nextItem"))}">→</button></span></div></div>`; }
     if (it.flip) { const f = it.flip[0];
       return `<div class="flip" style="${style}${it.cols ? `;--n:${+it.cols}` : ""}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
         <p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
@@ -609,6 +618,40 @@
       it.flip.slice(1).forEach(t => { const im = new Image(); im.src = t.src; });
     });
   }
+  function setupRooms(p) {
+    let i = 0;
+    p.gallery.forEach(it => { if (!it.rooms) return;
+      const box = caseEl.querySelectorAll(".rooms")[i++], ph = box.querySelector(".rooms-stage .ph"), img = ph.querySelector("img"),
+        cap = box.querySelector(".rooms-cap"), count = box.querySelector(".rooms-count"), tabs = [...box.querySelectorAll(".rooms-tabs button")];
+      let g = 0, cur = 0;
+      const pad2 = n => String(n).padStart(2, "0");
+      const show = (ng, k, d) => {
+        const list = it.rooms[ng].items; k = (k + list.length) % list.length;
+        if (ng === g && k === cur) return;
+        g = ng; cur = k; const t = list[k];
+        tabs.forEach((b, j) => b.setAttribute("aria-selected", String(j === g)));
+        count.textContent = `${pad2(k + 1)} / ${pad2(list.length)}`;
+        const set = () => { img.src = t.src; img.alt = L(t.caption) || ""; cap.textContent = L(t.caption) || ""; };
+        if (reduced) { set(); return; }
+        img.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: `translateX(${-d * 6}%)` }], { duration: 200, easing: "ease-in" }).finished.then(() => {
+          set(); img.animate([{ opacity: 0, transform: `translateX(${d * 6}%)` }, { opacity: 1, transform: "none" }], { duration: 460, easing: "cubic-bezier(.11,.82,.39,.92)" });
+        });
+        list.forEach(x => { const im = new Image(); im.src = x.src; });
+      };
+      const step = d => show(g, cur + d, d);
+      tabs.forEach((b, j) => b.addEventListener("click", () => show(j, 0, j > g ? 1 : -1)));
+      box.querySelector(".rooms-prev").addEventListener("click", () => step(-1));
+      box.querySelector(".rooms-next").addEventListener("click", () => step(1));
+      ph.addEventListener("click", e => step(e.offsetX < ph.clientWidth / 3 ? -1 : 1));
+      box.addEventListener("keydown", e => { if (e.key === "ArrowRight") { e.preventDefault(); step(1); } if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); } });
+      // Swipe on touch screens
+      let x0 = null, y0 = 0;
+      ph.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      ph.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1); }, { passive: true });
+      it.rooms[0].items.slice(1).forEach(x => { const im = new Image(); im.src = x.src; });
+    });
+  }
   function setupLomo() {
     caseEl.querySelectorAll(".film-roll").forEach(roll => {
       const track = roll.querySelector(".roll-track"), prev = roll.querySelector(".roll-prev"), next = roll.querySelector(".roll-next");
@@ -727,7 +770,7 @@
     setupLogos(p);
     setupScrub();
     setupLomo();
-    if (p.gallery) setupFlips(p);
+    if (p.gallery) { setupFlips(p); setupRooms(p); }
     setupMotion(p);
     inkAlign(caseEl);
     fitWords();

@@ -68,7 +68,7 @@ Project pages follow the THURA case (SCRV.ag format, reference artifact https://
 chapters (`01 · Intro`, `Desafio`, `Naming`, `Posicionamento`, `Estratégia`, `Identidade aplicada`), each a `chapter`
 item with kicker, big headline (`*words*` in the accent colour), short text, optional `pills`, followed by captioned
 images that prove the text. Extra blocks: `swap` (before → after names), `word` (big word + dictionary entry),
-`strip` (same-height row, e.g. posts), `marquee` (social carousel, shown as a still grid so every piece is whole). A project may set `theme`
+`strip` (same-height row, e.g. posts), `marquee` (social carousel, shown as a still grid so every piece is whole), `rooms` (a few named groups, one large piece at a time with arrows/swipe and no thumbnail strip; used for Globo signage). A project may set `theme`
 ({ bg, fg, mute, line, panel, accent }) to use its brand colours instead of the white page, when it makes sense.
 Never invent facts for the text: ask Felipe.
 
