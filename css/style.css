@@ -43,7 +43,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loader .boom span{white-space:nowrap;letter-spacing:-.05em;color:var(--blue)}
 .loader .boom b{font-weight:inherit}
 .panel{inset:0;opacity:0}
-.head{left:var(--side-l);right:var(--side-r);top:clamp(64px,10vh,110px);display:flex;flex-direction:column;gap:clamp(32px,5vw,72px)}
+.head{left:var(--side-l);right:var(--side-r);top:clamp(64px,10vh,110px);display:flex;flex-direction:column;gap:clamp(20px,3vw,44px)}
 .name{display:flex;flex-wrap:wrap;align-items:flex-end;margin:0;font-size:var(--name-size,clamp(64px,17vw,330px));row-gap:.06em}
 .name .word{display:inline-flex;white-space:nowrap;align-items:flex-start}
 .name .word > span{font:900 1em/.86 var(--sans);letter-spacing:-.07em;text-transform:uppercase;display:inline-block;opacity:0}
