@@ -280,6 +280,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .embed .ph{aspect-ratio:var(--ar);border:1px solid var(--line)}
 .embed .ph > img{inset:0;width:100%;height:100%}
 .embed iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;transform:scale(var(--s,.5));pointer-events:none;background:transparent}
+.yt .ph{aspect-ratio:var(--ar);background:#000}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 /* Print of a live page: clicking opens the page; a small label says so */
 .fig .ph > .fig-link{position:absolute;inset:0;display:block;cursor:pointer}
 .fig .ph > .fig-link img{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain}
@@ -567,7 +569,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .pair-text{grid-column:1 / 5;grid-row:1;position:sticky;top:calc(var(--side) + 48px);min-width:0;display:flex;flex-direction:column;gap:14px}
 .pair-fig{grid-column:5 / 13;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end}
 .pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * 100svh))}
-.pair-fig > :is(.flip,.strip,.embed,.mods){width:100%}
+.pair-fig > :is(.flip,.strip,.embed,.mods,.yt){width:100%}
 .pair .chap.tr{border-top:0;padding-top:0}
 /* A vertical film under the chapter text, filling the column down to the bottom of the piece beside it */
 .pair.has-side{align-items:stretch}
