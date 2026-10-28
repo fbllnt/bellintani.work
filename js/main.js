@@ -107,6 +107,70 @@
   index.innerHTML = S.projects.map((p, i) => `<li><a href="${href(p)}" data-i="${i}">
     <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono"><span class="k-top">${p.year ? `<span class="k-year">${esc(p.year)}</span>` : ""}${Array.isArray(p.tools) && p.tools.some(tool => typeof tool === "string" && tool.startsWith("*")) ? `<span class="k-ai" aria-label="${esc(L({ en: "AI-assisted project", pt: "Projeto com uso de IA" }))}" title="${esc(L({ en: "AI-assisted project", pt: "Projeto com uso de IA" }))}">AI</span>` : ""}</span><span class="k-scope">${esc(L(p.scope))}</span>${tagFor(p)}</span></a></li>`).join("");
 
+  // Curated, multi-discipline work filters. AI is based on the explicit *tool
+  // convention in content.js, never on a project's year or aesthetic.
+  const filterCategories = [
+    { id: "all", label: "ALL" },
+    { id: "branding", label: "BRANDING" },
+    { id: "campaigns", label: "CAMPAIGNS" },
+    { id: "film", label: "FILM & TV" },
+    { id: "digital", label: "DIGITAL / SOCIAL" },
+    { id: "ai", label: "AI" },
+  ];
+  // Each case can appear in multiple disciplines; order always follows S.projects.
+  const curatedFilters = {
+    "Seja ANTI": ["campaigns", "digital"],
+    "Globo": ["branding", "film"],
+    "SCRV*": ["branding", "digital"],
+    "HCP Top 50 Names": ["branding", "campaigns", "digital"],
+    "Adidas 60": ["campaigns", "film"],
+    "Cinema Especial": ["film"],
+    "XP Investments": ["branding", "campaigns"],
+    "XP Inc.": ["branding", "campaigns"],
+    "THURA": ["branding"],
+    "DMA": ["branding", "digital"],
+    "Tela Quente": ["film"],
+    "CoreHi": ["branding"],
+    "Dirty Projectors": ["campaigns"],
+    "Globoplay": ["branding", "film", "digital"],
+    "Lomography": ["digital"],
+    "Logofolio": ["branding"],
+    "PopStar": ["branding", "film"],
+    "Popstar": ["branding", "film"],
+  };
+  const categoryFor = p => [
+    ...(curatedFilters[L(p.title)] || []),
+    ...(Array.isArray(p.tools) && p.tools.some(t => typeof t === "string" && t.startsWith("*")) ? ["ai"] : [])
+  ];
+  const filterBar = $("work-filters");
+  const filterResults = $("work-filter-results");
+  const filterButtons = filterCategories.map(({ id, label }) => {
+    const count = id === "all" ? S.projects.length : S.projects.filter(p => categoryFor(p).includes(id)).length;
+    return `<button class="work-filter mono" type="button" data-filter="${id}" aria-pressed="${id === "all"}"><span>${label}</span><sup>${String(count).padStart(2, "0")}</sup></button>`;
+  }).join("");
+  filterBar.innerHTML = filterButtons;
+  let selectedFilter = "all";
+  const selectWorkFilter = id => {
+    if (!filterCategories.some(f => f.id === id)) return;
+    selectedFilter = id;
+    let visible = 0;
+    [...index.children].forEach((li, i) => {
+      const show = id === "all" || categoryFor(S.projects[i]).includes(id);
+      li.hidden = !show;
+      if (show) visible++;
+    });
+    filterBar.querySelectorAll("button[data-filter]").forEach(btn => {
+      btn.setAttribute("aria-pressed", String(btn.dataset.filter === id));
+    });
+    filterResults.textContent = `${String(visible).padStart(2, "0")} / ${String(S.projects.length).padStart(2, "0")}`;
+    filterResults.setAttribute("aria-label", `${visible} of ${S.projects.length} projects shown`);
+  };
+  filterBar.addEventListener("click", e => {
+    const btn = e.target.closest("button[data-filter]");
+    if (btn) selectWorkFilter(btn.dataset.filter);
+  });
+  selectWorkFilter("all");
+
   const works = document.querySelector(".works");
 
   // ---------- Optical left edge ----------
