@@ -24,7 +24,6 @@ jobs:
           mkdir -p images/popstar
           cat .media-staging/popstar-opening/part-*.txt | base64 --decode > images/popstar/opening.mp4
           test "$(stat -c%s images/popstar/opening.mp4)" -eq 11108581
-          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height -of default=noprint_wrappers=1 images/popstar/opening.mp4
           rm -rf .media-staging/popstar-opening
           git config user.name "portfolio-media-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
