@@ -453,7 +453,7 @@
           { name: { en: "Sport", pt: "Esporte" }, cls: "sport", number: "02" },
           { name: { en: "Entertainment", pt: "Entretenimento" }, cls: "entertainment", number: "03" }
         ].map(x => `<div class="globo-palette-card ${x.cls}" tabindex="0" role="img" aria-label="${esc(L(x.name))}: ${esc(L({en:"animated gradient",pt:"degradê animado"}))}">
-          <div class="globo-palette-swatch" aria-hidden="true"><canvas class="globo-wave" aria-hidden="true"></canvas></div>
+          <div class="globo-palette-swatch" aria-hidden="true"></div>
           <div class="globo-palette-meta mono"><span>${x.number} / ${esc(L(x.name))}</span><span aria-hidden="true">↗</span></div>
         </div>`).join("")}
       </div>
@@ -526,7 +526,7 @@
       // `msrc` + `mar`: a version drawn for phones (e.g. a wide diagram stacked into one column)
       : it.src && it.msrc ? `<picture><source media="(max-width:760px)" srcset="${esc(it.msrc)}"><img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy"></picture>`
       : it.src ? `<img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy">` : cover(it.art, p)
-    }${it.gradientMotion ? `<canvas class="globo-wave" aria-hidden="true"></canvas>` : ""}</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
+    }</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
   }
 
   // Logo wall: every mark sits black on white so thirty clients read as one body of work.
