@@ -779,10 +779,6 @@ window.SITE = {
           head: { en: "Door. Entrance. *Passage.*", pt: "Porta. Entrada. *Passagem.*" },
           text: { en: "THURA comes from the ancient Greek θύρα, door or entrance. More than a name, a territory: access, transition and possibility, where what exists meets what can begin.", pt: "THURA vem do grego antigo θύρα, porta ou entrada. Mais que um nome, um território: acesso, transição e possibilidade, o encontro entre o que existe e o que pode começar." } },
         { word: { glyph: "θύρα", lang: "grc", head: "θύρα · thýra", note: { en: "fem. noun · door, entrance", pt: "subst. fem. · porta, entrada" } }, col: 1, span: 12 },
-        { strip: [
-          { src: "images/thura/logo-verde.jpg", ar: "1/1" }, { src: "images/thura/logo-laranja.jpg", ar: "1/1" },
-          { src: "images/thura/logo-amarelo.jpg", ar: "1/1" }, { src: "images/thura/selo.jpg", ar: "1/1" },
-        ], col: 1, span: 12 },
         { src: "images/thura/grafismo.jpg", ar: "2000/1125", col: 1, span: 12, caption: { en: "Symbol and graphics · the half-open door becomes a system", pt: "Símbolo e grafismo · a porta entreaberta vira sistema" } },
         { src: "images/thura/cores.jpg", ar: "2000/1125", col: 3, span: 10, caption: { en: "Colours", pt: "Cores" } },
         { chapter: { en: "04 · Positioning", pt: "04 · Posicionamento" }, kicker: { en: "Data + strategy + people", pt: "Dados + estratégia + pessoas" },
@@ -795,11 +791,7 @@ window.SITE = {
           head: { en: "From the brand to the *founders.*", pt: "Da marca aos *fundadores.*" },
           text: { en: "Beyond naming, positioning and communication, consulting sessions with the founders shaped a Founder-Led Growth approach, with their voices at the heart of growth.", pt: "Além do naming, do posicionamento e da comunicação, consultorias com os fundadores criaram uma abordagem de Founder-Led Growth, com a voz deles no centro do crescimento." },
           pills: [{ en: "Naming", pt: "Naming" }, { en: "Positioning", pt: "Posicionamento" }, "Rebranding", { en: "Communication", pt: "Comunicação" }, "*Founder-Led Growth"] },
-        { src: "images/thura/fundadores-laranja.jpg", ar: "2000/1125", col: 1, span: 12, caption: { en: "Campaign · the founders as the face of the brand", pt: "Campanha · os fundadores como rosto da marca" } },
-        { strip: [
-          { src: "images/thura/linkedin-fundador.jpg", ar: "1400/700", caption: { en: "The founders' own LinkedIn", pt: "LinkedIn pessoal dos fundadores" } },
-          { src: "images/thura/fundadores-verde.jpg", ar: "2000/1125", caption: { en: "The founders in the presentations", pt: "Presença dos fundadores nas apresentações" } },
-        ], col: 1, span: 12, tight: true },
+        { src: "images/thura/linkedin-fundador.jpg", ar: "1400/700", col: 1, span: 12, caption: { en: "The founders' own LinkedIn", pt: "LinkedIn pessoal dos fundadores" } },
         { chapter: { en: "06 · Applied identity", pt: "06 · Identidade aplicada" }, kicker: { en: "Stationery · Gifts · Social", pt: "Papelaria · Brindes · Social" },
           head: { en: "An open door at every touchpoint.", pt: "Uma porta aberta em cada ponto de contato." } },
         { src: "images/thura/papelaria-laranja.jpg", ar: "2000/1125", col: 1, span: 12, caption: { en: "Stationery", pt: "Papelaria" } },
