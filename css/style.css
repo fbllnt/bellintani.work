@@ -917,3 +917,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
  .fig.gradient-motion .ph > img,.fig.gradient-motion .ph:hover > img{transform:none!important;transition:none!important}
  .globo-palette-swatch{animation:none!important}
 }
+
+/* All Globo gradient instances: absolutely no graphical ripple, dot or glow overlays. */
+.fig.gradient-motion .ph::before,.fig.gradient-motion .ph::after,.globo-palette-swatch::before,.globo-palette-swatch::after{content:none!important;display:none!important}
+.globo-wave{display:none!important}
