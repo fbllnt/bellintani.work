@@ -761,4 +761,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 
 /* PopStar logo studies: invert black marks to white, letting the case's deep-purple background show through. */
 .popstar-invert,.popstar-invert .ph{background:transparent!important}
-.popstar-invert .ph img{filter:invert(1);mix-blend-mode:screen}
+/* The original JPG paper is slightly cream, not pure white; push inverted paper to solid black
+   before SCREEN blending, so only the white mark remains and the actual case background shows. */
+.popstar-invert .ph img{filter:grayscale(1) invert(1) contrast(700%);mix-blend-mode:screen}

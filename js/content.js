@@ -623,6 +623,7 @@ window.SITE = {
     // Gig poster for Cine Joia (Felipe, Oct 27 2026); material from Drive "07. OUTROS/CINE JOIA & POSTERS/JOIA#04 - DIRTY PROJECTORS"
     {
       title: "PopStar",
+      track: { id: "5I0WMWBGRuHiAwNa6yjm9r", name: "Lucky Star", by: "Madonna" },
       type: "motion",
       client: "TV Globo",
       year: "2017",
