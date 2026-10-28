@@ -528,8 +528,8 @@ window.SITE = {
           text: { en: "In 2026 I picked the idea up again as a film: legends from different eras on the same pitch. Studies, storyboards and tests, all made with AI, on the way to a finished film.", pt: "Em 2026 retomei a ideia como filme: lendas de épocas diferentes no mesmo gramado. Estudos, storyboards e testes, todos feitos com IA, a caminho de um filme pronto." } },
         // Film 02 (The breakaway) removed (Felipe, Oct 26 2026); files kept in images/warriors/
         { video: "images/warriors/film.mp4?v=2", webm: "images/warriors/film.webm?v=2", poster: "images/warriors/film-poster.jpg?v=2", ar: "16/9", col: 1, span: 12, caption: { en: "Test 01 — Messi vs Beckenbauer", pt: "Teste 01 — Messi vs Beckenbauer" } },
-        { video: "images/warriors/film-04.mp4", webm: "images/warriors/film-04.webm", poster: "images/warriors/film-04-poster.jpg", ar: "1280/714", col: 1, span: 6, caption: { en: "Test 02 — Maradona vs Pelé", pt: "Teste 02 — Maradona vs Pelé" } },
-        { video: "images/warriors/film-03.mp4", webm: "images/warriors/film-03.webm", poster: "images/warriors/film-03-poster.jpg", ar: "16/9", col: 7, span: 6, caption: { en: "Test 03 — Finale: Yamal scores", pt: "Teste 03 — Final: Yamal marca" } },
+        { video: "images/warriors/film-04.mp4", webm: "images/warriors/film-04.webm", poster: "images/warriors/film-04-poster.jpg", ar: "1280/714", col: 1, span: 12, caption: { en: "Test 02 — Maradona vs Pelé", pt: "Teste 02 — Maradona vs Pelé" } },
+
         { chapter: { en: "03 · Visual studies", pt: "03 · Estudos visuais" }, kicker: { en: "Frames · Characters", pt: "Frames · Personagens" },
           head: { en: "Legends from different eras. *One pitch.*", pt: "Lendas de épocas diferentes. *Um só campo.*" } },
         { src: "images/warriors/portrait-01.jpg", ar: "1376/768", col: 1, span: 6 },
@@ -539,10 +539,9 @@ window.SITE = {
         { chapter: { en: "04 · Key visual", pt: "04 · Key visual" }, kicker: { en: "Yamal vs Higuita", pt: "Yamal vs Higuita" },
           head: { en: "Higuita, *final boss.*", pt: "Higuita, o *chefão final.*" } },
         { src: "images/warriors/key-visual-02.jpg", ar: "2000/1116", col: 1, span: 12, caption: { en: "Key visual 02 — Yamal vs Higuita", pt: "Key visual 02 — Yamal vs Higuita" } },
-        { chapter: { en: "05 · Process", pt: "05 · Processo" }, kicker: { en: "Storyboard", pt: "Storyboard" },
-          head: { en: "Six scenes, from Pelé to the *end card.*", pt: "Seis cenas, de Pelé ao *end card.*" },
-          text: { en: "The storyboard that guides the tests. Each new round brings the film closer to its final cut.", pt: "O storyboard que guia os testes. Cada rodada nova aproxima o filme do corte final." } },
-        { src: "images/warriors/storyboard.jpg", ar: "2000/1116", col: 1, span: 12, caption: { en: "Storyboard", pt: "Storyboard" } },
+        { chapter: { en: "05 · Final showdown", pt: "05 · Confronto final" }, kicker: { en: "Yamal vs Higuita", pt: "Yamal vs Higuita" },
+          head: { en: "One last match. *One final boss.*", pt: "O último confronto. *O chefão final.*" } },
+        { video: "images/warriors/film-03.mp4", webm: "images/warriors/film-03.webm", poster: "images/warriors/film-03-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Yamal vs Higuita — final film test", pt: "Yamal vs Higuita — teste do filme final" } },
       ],
     },
     {
