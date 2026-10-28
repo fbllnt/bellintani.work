@@ -1451,12 +1451,58 @@
   // (the project's `track`, or homeTrack on the home). Spotify loads only once it is opened. It keeps playing while
   // browsing, even closed: on another project it offers that project's song instead of cutting the one playing.
   const musicBtn = $("music-btn"), music = $("music"), musicFrame = $("music-frame"), musicSwap = $("music-swap");
-  let loaded = null;
+  let loaded = null, spotifyAPI = null, spotifyController = null, spotifyReady = false, playRequested = false;
   const suggested = () => { const i = projectFromHash(); return (i >= 0 && S.projects[i].track) || S.homeTrack; };
   const songOf = t => `${t.name} — ${t.by}`;
-  const loadSong = t => {
+  const playNote = $("music-play-note");
+  const setPlayNote = (message = "") => { if (playNote) playNote.textContent = message; };
+  const uriOf = t => `spotify:track:${t.id}`;
+  const mountSpotify = () => {
+    if (!spotifyAPI || !loaded) return;
+    spotifyReady = false;
+    spotifyController = null;
+    musicFrame.innerHTML = '<div class="spotify-embed-mount"></div>';
+    spotifyAPI.createController(musicFrame.firstElementChild, { uri: uriOf(loaded), width: "100%", height: 80 }, controller => {
+      spotifyController = controller;
+      controller.addListener("ready", () => {
+        spotifyReady = true;
+        if (playRequested) {
+          playRequested = false;
+          controller.play();
+          setPlayNote(L({ en: "If playback is blocked, press Play on Spotify.", pt: "Se a reprodução for bloqueada, toque em Play no Spotify." }));
+        }
+      });
+      controller.addListener("playback_started", () => setPlayNote(""));
+    });
+  };
+  // Spotify's official iFrame API enables click-to-play, subject to browser playback policies.
+  window.onSpotifyIframeApiReady = api => { spotifyAPI = api; mountSpotify(); };
+  const ensureSpotifyAPI = () => {
+    if (spotifyAPI || document.getElementById("spotify-iframe-api")) return;
+    const script = document.createElement("script");
+    script.id = "spotify-iframe-api";
+    script.src = "https://open.spotify.com/embed/iframe-api/v1";
+    script.async = true;
+    document.body.appendChild(script);
+  };
+  const loadSong = (t, play = false) => {
+    if (!t) return;
     loaded = t;
-    musicFrame.innerHTML = `<iframe title="Spotify — ${esc(songOf(t))}" src="https://open.spotify.com/embed/track/${encodeURIComponent(t.id)}?utm_source=generator" width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+    playRequested = play;
+    if (spotifyController && spotifyReady) {
+      spotifyController.loadEntity(uriOf(t));
+      if (play) {
+        spotifyController.play();
+        playRequested = false;
+        setPlayNote(L({ en: "If playback is blocked, press Play on Spotify.", pt: "Se a reprodução for bloqueada, toque em Play no Spotify." }));
+      }
+    } else if (spotifyAPI) {
+      mountSpotify();
+    } else {
+      // Temporary official embed while its playback controller is loading.
+      musicFrame.innerHTML = `<iframe title="Spotify — ${esc(songOf(t))}" src="https://open.spotify.com/embed/track/${encodeURIComponent(t.id)}" width="100%" height="80" frameborder="0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+      ensureSpotifyAPI();
+    }
   };
   const syncMusic = () => {
     const t = suggested(), i = projectFromHash();
@@ -1474,7 +1520,7 @@
   musicBtn.innerHTML = note + note;
   musicBtn.onclick = () => openMusic(music.hidden);
   $("music-close").onclick = () => openMusic(false);
-  musicSwap.onclick = () => { loadSong(suggested()); syncMusic(); };
+  musicSwap.onclick = () => { loadSong(suggested(), true); syncMusic(); };
   addEventListener("hashchange", syncMusic);
   addEventListener("keydown", e => { if (e.key === "Escape" && !music.hidden) openMusic(false); });
   document.addEventListener("click", e => { if (!music.hidden && !music.contains(e.target) && !musicBtn.contains(e.target)) openMusic(false); });
@@ -1497,7 +1543,7 @@
     if (!row) return;
     const item = soundtrack[Number(row.dataset.track)];
     if (!item) return;
-    if (!loaded || loaded.id !== item.track.id) loadSong(item.track);
+    loadSong(item.track, true);
     syncMusic();
     renderSoundtrack();
   });
@@ -1507,6 +1553,8 @@
   musicSwap.onclick = () => { previousSwapMusic(); renderSoundtrack(); };
   // Keep the queue highlight aligned when the visitor returns to an open panel.
   listEl.setAttribute("role", "group");
+  const workInvite = $("work-music-invite");
+  if (workInvite) workInvite.onclick = () => { openMusic(true); renderSoundtrack(); musicBtn.focus(); };
 
   const first = projectFromHash();
   if (first >= 0) { finish(); openCase(first, false); }
