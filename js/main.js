@@ -777,6 +777,23 @@
       it.flip.slice(1).forEach(t => { const im = new Image(); im.src = t.src; });
     });
   }
+  // coverFlow: the colour fields lean towards the pointer, each at its own depth (CSS eases the move).
+  function setupCoverFlow() {
+    const flow = caseEl.querySelector(".cover-flow");
+    if (!flow || !matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+    const stage = flow.parentElement;
+    stage.addEventListener("pointermove", e => {
+      const r = stage.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      flow.style.setProperty("--cf-mx", (((e.clientX - r.left) / r.width - .5) * 2).toFixed(3));
+      flow.style.setProperty("--cf-my", (((e.clientY - r.top) / r.height - .5) * 2).toFixed(3));
+    }, { passive: true });
+    stage.addEventListener("pointerleave", () => {
+      flow.style.setProperty("--cf-mx", 0);
+      flow.style.setProperty("--cf-my", 0);
+    });
+  }
+
   // Globo gradients: the pointer gently pulls the colours, without visual overlays.
   function setupGloboWaves(p) {
     if (L(p.title) !== "Globo" || reduced) return;
@@ -1046,6 +1063,7 @@
 
     setupMotion(p);
     setupGloboWaves(p);
+    setupCoverFlow();
     inkAlign(caseEl);
     fitWords();
   }

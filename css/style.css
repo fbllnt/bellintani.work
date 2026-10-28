@@ -240,7 +240,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fig.cover-fig .ph > :is(img,video){position:static;display:block;width:100%;height:auto;transform:none}
 /* coverFlow (Globo): colour fields drift over the still cover in constant motion; the still keeps the height and nothing is cropped */
 .cover-flow{position:absolute;inset:0;overflow:hidden;background:linear-gradient(100deg,#de829d,#dfd9cc 32%,#6dd4ce 52%,#2f7baf 78%,#26529a);animation:cover-flow-in 1.4s ease both}
-.cover-flow i{position:absolute;left:var(--cf-x);top:var(--cf-y);width:var(--cf-s);aspect-ratio:1;margin:calc(var(--cf-s) / -2) 0 0 calc(var(--cf-s) / -2);border-radius:50%;background:radial-gradient(closest-side,var(--cf-c),color-mix(in srgb,var(--cf-c) 45%,transparent) 55%,transparent);animation:cover-drift var(--cf-t) ease-in-out var(--cf-d) infinite alternate;will-change:transform}
+.cover-flow i{position:absolute;left:var(--cf-x);top:var(--cf-y);width:var(--cf-s);aspect-ratio:1;margin:calc(var(--cf-s) / -2) 0 0 calc(var(--cf-s) / -2);border-radius:50%;background:radial-gradient(closest-side,var(--cf-c),color-mix(in srgb,var(--cf-c) 45%,transparent) 55%,transparent);animation:cover-drift var(--cf-t) ease-in-out var(--cf-d) infinite alternate;will-change:transform,translate;translate:calc(var(--cf-mx,0) * var(--cf-k,12%)) calc(var(--cf-my,0) * var(--cf-k,12%));transition:translate 1.6s cubic-bezier(.2,.7,.2,1)}
+.cover-flow i:nth-child(even){--cf-k:-9%}.cover-flow i:nth-child(3n){--cf-k:16%}
 @keyframes cover-drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(calc(var(--cf-dx) * .55),calc(var(--cf-dy) * -.4)) scale(1.12)}100%{transform:translate(var(--cf-dx),var(--cf-dy)) scale(.94)}}
 @keyframes cover-flow-in{from{opacity:0}}
 @media(prefers-reduced-motion:reduce){.cover-flow{display:none}}

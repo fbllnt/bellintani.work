@@ -232,14 +232,14 @@ window.SITE = {
       heroAr: "2500/1562",
       // The cover gradient never stops moving: colours sampled from cover.jpg drift slowly over it.
       coverFlow: [
-        [6, 40, 75, "#e68ba4", 16, 12, 23],
-        [4, 104, 70, "#bf338f", 14, -10, 29],
-        [30, 52, 58, "#ece0d2", 22, -14, 19],
-        [52, 44, 52, "#6dd8cf", -18, 16, 21],
-        [68, 6, 62, "#36a6bd", -14, 14, 26],
-        [102, 32, 72, "#26569c", -12, 10, 24],
-        [100, 106, 72, "#2d3377", -14, -8, 31],
-        [56, 104, 52, "#8178a4", 16, -12, 27],
+        [6, 40, 75, "#e68ba4", 16, 12, 13],
+        [4, 104, 70, "#bf338f", 14, -10, 16],
+        [30, 52, 58, "#ece0d2", 22, -14, 11],
+        [52, 44, 52, "#6dd8cf", -18, 16, 12],
+        [68, 6, 62, "#36a6bd", -14, 14, 14],
+        [102, 32, 72, "#26569c", -12, 10, 13],
+        [100, 106, 72, "#2d3377", -14, -8, 17],
+        [56, 104, 52, "#8178a4", 16, -12, 15],
       ],
       summary: {
         en: "Four years at Globo, Brazil's largest broadcaster. A key role in its rebrand: design system, colours and gradients, type family, on-air studies, show identities, openings and vignettes.",
