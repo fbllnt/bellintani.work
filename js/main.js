@@ -1452,6 +1452,7 @@
   // browsing, even closed: on another project it offers that project's song instead of cutting the one playing.
   const musicBtn = $("music-btn"), music = $("music"), musicFrame = $("music-frame"), musicSwap = $("music-swap");
   let loaded = null, spotifyAPI = null, spotifyController = null, spotifyReady = false, playRequested = false;
+  let playbackConfirmed = false;
   const suggested = () => { const i = projectFromHash(); return (i >= 0 && S.projects[i].track) || S.homeTrack; };
   const songOf = t => `${t.name} — ${t.by}`;
   const playNote = $("music-play-note");
@@ -1461,6 +1462,7 @@
     if (!spotifyAPI || !loaded) return;
     spotifyReady = false;
     spotifyController = null;
+    playbackConfirmed = false;
     musicFrame.innerHTML = '<div class="spotify-embed-mount"></div>';
     spotifyAPI.createController(musicFrame.firstElementChild, { uri: uriOf(loaded), width: "100%", height: 80 }, controller => {
       spotifyController = controller;
@@ -1469,10 +1471,10 @@
         if (playRequested) {
           playRequested = false;
           controller.play();
-          setPlayNote(L({ en: "If playback is blocked, press Play on Spotify.", pt: "Se a reprodução for bloqueada, toque em Play no Spotify." }));
+          setPlayNote(L({ en: "If audio does not start, your browser may require Play inside Spotify.", pt: "Se o áudio não começar, o navegador pode exigir Play dentro do Spotify." }));
         }
       });
-      controller.addListener("playback_started", () => setPlayNote(""));
+      controller.addListener("playback_started", () => { playbackConfirmed = true; setPlayNote(""); });
     });
   };
   // Spotify's official iFrame API enables click-to-play, subject to browser playback policies.
@@ -1487,23 +1489,30 @@
   };
   const loadSong = (t, play = false) => {
     if (!t) return;
+    const changed = !loaded || loaded.id !== t.id;
     loaded = t;
+    playbackConfirmed = false;
+    // Preserve the playback request until the Spotify controller is ready.
+    // Only the official player can determine whether a browser permits autoplay.
     playRequested = play;
     if (spotifyController && spotifyReady) {
-      spotifyController.loadEntity(uriOf(t));
+      if (changed) spotifyController.loadEntity(uriOf(t));
       if (play) {
         spotifyController.play();
         playRequested = false;
-        setPlayNote(L({ en: "If playback is blocked, press Play on Spotify.", pt: "Se a reprodução for bloqueada, toque em Play no Spotify." }));
+        setPlayNote(L({ en: "If audio does not start, press Play in Spotify (browser restriction).", pt: "Se o áudio não começar, toque em Play no Spotify (restrição do navegador)." }));
       }
     } else if (spotifyAPI) {
-      mountSpotify();
+      // Do not create a temporary iframe and then replace it with a second one.
+      // That reset previously prevented the track click from starting smoothly.
+      if (!spotifyController) mountSpotify();
     } else {
-      // Temporary official embed while its playback controller is loading.
-      musicFrame.innerHTML = `<iframe title="Spotify — ${esc(songOf(t))}" src="https://open.spotify.com/embed/track/${encodeURIComponent(t.id)}" width="100%" height="80" frameborder="0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
       ensureSpotifyAPI();
+      setPlayNote(L({ en: "Loading Spotify player…", pt: "Carregando o player do Spotify…" }));
     }
   };
+  // Preload the API before the visitor picks a track, reducing click-to-play latency.
+  ensureSpotifyAPI();
   const syncMusic = () => {
     const t = suggested(), i = projectFromHash();
     $("music-title").textContent = T("nowSuggested") + (i >= 0 ? ` · ${L(S.projects[i].title)}` : "");
