@@ -319,7 +319,7 @@
     const out = h => { if (side !== null) main += h; else html += h; };
     // `side` on the piece: a second, smaller piece (e.g. a vertical film) sharing the piece's row in cols 5-12,
     // both at one height (widths in proportion to their ratios), so no void opens between them (Felipe, Oct 28 2026)
-    const pairWith = (h, sd) => { out(`<div class="pair${pend.cz ? " cz" : ""}${pend.solo && pend.solo.startsWith("<section") ? " ch" : ""}${sd ? " has-side" : ""}"><div class="pair-fig">${
+    const pairWith = (h, sd, wide = false) => { out(`<div class="pair${pend.cz ? " cz" : ""}${pend.solo && pend.solo.startsWith("<section") ? " ch" : ""}${sd ? " has-side" : ""}${wide ? " feature-wide" : ""}"><div class="pair-fig">${
       sd ? `<div class="side-row">${h}${fig(sd, p, `--ar:${esc(sd.ar || "9/16")};--rw:${ratio(sd.ar || "9/16").toFixed(4)}`)}</div>` : h}</div><div class="pair-text">${pend.html}</div></div>`); pend = null; };
     const flushRun = () => {
       let paired = false;
@@ -349,7 +349,7 @@
         return;
       }
       // A flip, strip or live page can take the pending text beside it
-      if (pend && (it.flip || it.rooms || it.strip || it.embed || it.yt)) { pairWith(block(it, p), it.side); return; }
+      if (pend && (it.flip || it.rooms || it.strip || it.embed || it.yt)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
       closePend();
       // A text line pairs with the piece or flip that follows it
       if (it.text && !side) { pend = { html: `<p class="ltext side">${esc(L(it.text))}</p>`, solo: block(it, p) }; return; }
