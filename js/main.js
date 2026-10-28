@@ -453,7 +453,7 @@
           { name: { en: "Sport", pt: "Esporte" }, cls: "sport", number: "02" },
           { name: { en: "Entertainment", pt: "Entretenimento" }, cls: "entertainment", number: "03" }
         ].map(x => `<div class="globo-palette-card ${x.cls}" tabindex="0" role="img" aria-label="${esc(L(x.name))}: ${esc(L({en:"animated gradient",pt:"degradê animado"}))}">
-          <div class="globo-palette-swatch" aria-hidden="true"></div>
+          <div class="globo-palette-swatch" aria-hidden="true"><canvas class="globo-wave" aria-hidden="true"></canvas></div>
           <div class="globo-palette-meta mono"><span>${x.number} / ${esc(L(x.name))}</span><span aria-hidden="true">↗</span></div>
         </div>`).join("")}
       </div>
@@ -526,7 +526,7 @@
       // `msrc` + `mar`: a version drawn for phones (e.g. a wide diagram stacked into one column)
       : it.src && it.msrc ? `<picture><source media="(max-width:760px)" srcset="${esc(it.msrc)}"><img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy"></picture>`
       : it.src ? `<img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy">` : cover(it.art, p)
-    }</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
+    }${it.gradientMotion ? `<canvas class="globo-wave" aria-hidden="true"></canvas>` : ""}</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
   }
 
   // Logo wall: every mark sits black on white so thirty clients read as one body of work.
@@ -708,6 +708,76 @@
       it.flip.slice(1).forEach(t => { const im = new Image(); im.src = t.src; });
     });
   }
+  // Pointer-driven caustic waves for the Globo gradient specimens.
+  // No permanent animation loop: frames are rendered only while the ripples dissipate.
+  function setupGloboWaves(p) {
+    if (L(p.title) !== "Globo" || reduced) return;
+    caseEl.querySelectorAll(".gradient-motion .ph, .globo-palette-swatch").forEach(stage => {
+      const canvas = stage.querySelector("canvas.globo-wave");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      let waves = [], frame = 0, last = 0, bounds = null;
+      const size = () => {
+        bounds = stage.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(1, Math.round(bounds.width * dpr));
+        canvas.height = Math.max(1, Math.round(bounds.height * dpr));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
+      const tick = now => {
+        frame = 0;
+        if (!stage.isConnected) { waves = []; return; }
+        if (!bounds || !bounds.width || !bounds.height) size();
+        ctx.clearRect(0, 0, bounds.width, bounds.height);
+        waves = waves.filter(w => now - w.t < 1250);
+        for (const w of waves) {
+          const life = Math.min(1, (now - w.t) / 1250);
+          const fade = (1 - life) ** 1.7, radius = 8 + life * Math.max(bounds.width, bounds.height) * .65;
+          const glow = ctx.createRadialGradient(w.x, w.y, Math.max(0, radius - 65), w.x, w.y, radius + 32);
+          glow.addColorStop(0, "rgba(255,255,255,0)");
+          glow.addColorStop(.64, `rgba(255,255,255,${(.14 * fade).toFixed(3)})`);
+          glow.addColorStop(.81, `rgba(255,255,255,${(.28 * fade).toFixed(3)})`);
+          glow.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(w.x, w.y, radius + 32, 0, Math.PI * 2); ctx.fill();
+          ctx.lineWidth = 1.6 + 2 * fade;
+          ctx.strokeStyle = `rgba(255,255,255,${(.48 * fade).toFixed(3)})`;
+          ctx.beginPath(); ctx.arc(w.x, w.y, radius * .91, 0, Math.PI * 2); ctx.stroke();
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = `rgba(255,255,255,${(.3 * fade).toFixed(3)})`;
+          ctx.beginPath(); ctx.arc(w.x, w.y, radius * .74, 0, Math.PI * 2); ctx.stroke();
+        }
+        if (waves.length) frame = requestAnimationFrame(tick);
+      };
+      const ripple = e => {
+        if (!stage.isConnected) return;
+        if (!bounds || Math.abs(stage.clientWidth - bounds.width) > 1) size();
+        const x = Math.max(0, Math.min(bounds.width, e.clientX - bounds.left));
+        const y = Math.max(0, Math.min(bounds.height, e.clientY - bounds.top));
+        stage.style.setProperty("--pointer-x", `${(x / bounds.width * 100).toFixed(2)}%`);
+        stage.style.setProperty("--pointer-y", `${(y / bounds.height * 100).toFixed(2)}%`);
+        const now = performance.now();
+        if (now - last < 80) return;
+        last = now;
+        waves.push({ x, y, t: now });
+        if (waves.length > 14) waves.shift();
+        if (!frame) frame = requestAnimationFrame(tick);
+      };
+      stage.addEventListener("pointerenter", ripple, { passive: true });
+      stage.addEventListener("pointermove", ripple, { passive: true });
+      stage.addEventListener("pointerdown", ripple, { passive: true });
+      stage.addEventListener("pointerleave", () => {
+        stage.style.removeProperty("--pointer-x");
+        stage.style.removeProperty("--pointer-y");
+      });
+      stage.addEventListener("focusin", () => {
+        size();
+        waves.push({ x: bounds.width / 2, y: bounds.height / 2, t: performance.now() });
+        if (!frame) frame = requestAnimationFrame(tick);
+      });
+    });
+  }
+
   function setupRooms(p) {
     let i = 0;
     p.gallery.forEach(it => { if (!it.rooms) return;
@@ -887,6 +957,7 @@
     setupLomo();
     if (p.gallery) { setupFlips(p); setupRooms(p); }
     setupMotion(p);
+    setupGloboWaves(p);
     inkAlign(caseEl);
     fitWords();
   }
