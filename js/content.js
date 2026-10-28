@@ -655,7 +655,6 @@ window.SITE = {
           head: { en: "Familiar faces. *Unexpected voices.*", pt: "Rostos conhecidos. *Vozes inesperadas.*" },
           text: { en: "Hosted by Fernanda Lima, the first season brought together André Frateschi, Claudio Lins, Eduardo Sterblitch, Fabiana Karla, Lucio Mauro Filho, Mariana Rios, Sabrina Parlatore and other TV personalities. André Frateschi won the 2017 final.", pt: "Apresentada por Fernanda Lima, a primeira temporada reuniu André Frateschi, Claudio Lins, Eduardo Sterblitch, Fabiana Karla, Lucio Mauro Filho, Mariana Rios, Sabrina Parlatore e outras personalidades da TV. André Frateschi venceu a final de 2017." } },
         { src: "images/popstar/cast.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Cast and host · PopStar, 2017", pt: "Elenco e apresentadora · PopStar, 2017" } },
-        { episodeLink: { url: "https://globoplay.globo.com/v/5995816/", title: { en: "Watch the premiere", pt: "Assistir à estreia" }, detail: { en: "Episode 01 · 09 Jul 2017 · Globoplay", pt: "Episódio 01 · 09 jul 2017 · Globoplay" } } },
         { episodeLink: { url: "https://globoplay.globo.com/popstar/t/sDWCkghbGS/", title: { en: "Watch the grand final", pt: "Assistir à grande final" }, detail: { en: "Episode 10 · 10 Sep 2017 · Globoplay", pt: "Episódio 10 · 10 set 2017 · Globoplay" } } },
       ],
     },
