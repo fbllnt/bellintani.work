@@ -317,9 +317,10 @@
     // text beside all its pieces; cartaz sets the headline huge above and pairs the rest with the first piece.
     let html = "", run = [], side = null, main = "", pend = null;
     const out = h => { if (side !== null) main += h; else html += h; };
-    // `side` on the piece: a second, smaller piece (e.g. a vertical film) filling the text column under the text
-    const pairWith = (h, sd) => { out(`<div class="pair${pend.cz ? " cz" : ""}${pend.solo && pend.solo.startsWith("<section") ? " ch" : ""}${sd ? " has-side" : ""}"><div class="pair-fig">${h}</div><div class="pair-text">${pend.html}${
-      sd ? `<div class="pair-side">${fig(sd, p, `--ar:${esc(sd.ar || "9/16")}`)}</div>` : ""}</div></div>`); pend = null; };
+    // `side` on the piece: a second, smaller piece (e.g. a vertical film) sharing the piece's row in cols 5-12,
+    // both at one height (widths in proportion to their ratios), so no void opens between them (Felipe, Oct 28 2026)
+    const pairWith = (h, sd) => { out(`<div class="pair${pend.cz ? " cz" : ""}${pend.solo && pend.solo.startsWith("<section") ? " ch" : ""}${sd ? " has-side" : ""}"><div class="pair-fig">${
+      sd ? `<div class="side-row">${h}${fig(sd, p, `--ar:${esc(sd.ar || "9/16")};--rw:${ratio(sd.ar || "9/16").toFixed(4)}`)}</div>` : h}</div><div class="pair-text">${pend.html}</div></div>`); pend = null; };
     const flushRun = () => {
       let paired = false;
       // Fluxo keeps its rows whole: the text pairs only with a piece that would sit alone in its row anyway
