@@ -730,10 +730,6 @@ window.SITE = {
       },
       layout: "loose", grid: "destaque",
       gallery: [
-        { chapter: { en: "01 · Intro", pt: "01 · Intro" }, kicker: { en: "The vignette", pt: "A vinheta" },
-          head: { en: "All of Globo, *one play away.*", pt: "A Globo inteira, *a um play.*" },
-          text: { en: "I created the identity and directed the vignette.", pt: "Eu criei a identidade visual e dirigi a vinheta." } },
-        { video: "images/globoplay/vinheta.mp4", webm: "images/globoplay/vinheta.webm", poster: "images/globoplay/vinheta-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "Vignette — 10s", pt: "Vinheta — 10s" } },
         { chapter: { en: "02 · Type", pt: "02 · Tipografia" }, kicker: { en: "Where Globotipo was born", pt: "Onde nasceu a Globotipo" },
           head: { en: "A more modern *Futura.*", pt: "Uma Futura *mais moderna.*" },
           text: { en: "Globo still mixed Swiss, Avant Garde and Futura. Globoplay is when we decided on our own typeface: my idea was a more modern Futura with rounded corners.", pt: "A Globo ainda misturava Swiss, Avant Garde e Futura. Foi no Globoplay que decidimos ter uma fonte própria: minha ideia era uma Futura mais moderna, de cantos arredondados." },
