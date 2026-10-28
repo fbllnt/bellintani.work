@@ -409,6 +409,7 @@
         if (grid === "trilho") { side = ch.replace('class="chap"', 'class="chap tr"'); return; }
         // Cartaz: the headline runs huge across all 12 columns; label and text sit below it as usual, pieces keep their rows
         if (grid === "cartaz") { html += ch.replace('class="chap"', 'class="chap cz"'); return; }
+        if (it.fullWidthIntro) { html += ch; return; }
         pend = { html: ch.replace('class="chap"', 'class="chap tr"'), solo: ch };
         return;
       }
@@ -732,6 +733,23 @@
       ph.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
         if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1); }, { passive: true });
       it.rooms[0].items.slice(1).forEach(x => { const im = new Image(); im.src = x.src; });
+      // A slow, opt-in-by-case slideshow. Only advances while the gallery is on screen;
+      // user hover/focus or a hidden browser tab pauses it. Manual controls still work.
+      if (it.roomsAuto && !reduced) {
+        let inView = false, pausedByPointer = false;
+        const io = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
+          inView = entries.some(entry => entry.isIntersecting);
+        }, { threshold: .22 }) : null;
+        if (io) io.observe(box); else inView = true;
+        box.addEventListener("pointerenter", () => { pausedByPointer = true; });
+        box.addEventListener("pointerleave", () => { pausedByPointer = false; });
+        const timer = setInterval(() => {
+          if (!box.isConnected) { clearInterval(timer); if (io) io.disconnect(); return; }
+          if (!inView || pausedByPointer || box.contains(document.activeElement) || document.hidden) return;
+          const atEnd = cur + 1 >= it.rooms[g].items.length;
+          show(atEnd ? (g + 1) % it.rooms.length : g, atEnd ? 0 : cur + 1, 1);
+        }, 6000);
+      }
     });
   }
   function setupLomo() {

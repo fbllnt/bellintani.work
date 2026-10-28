@@ -277,13 +277,12 @@ window.SITE = {
           { src: "images/globo/tipo/f2-13.jpg", ar: "16/9", caption: { en: "Globoface revisions — 11/12", pt: "Revisões da Globoface — 11/12" } },
           { src: "images/globo/tipo/f2-14.jpg", ar: "16/9", caption: { en: "Globoface revisions — 12/12", pt: "Revisões da Globoface — 12/12" } }
         ], cols: 6, col: 1, span: 12 },
-        { grid: "destaque", chapter: { en: "07 · On air", pt: "07 · No ar" }, kicker: { en: "Promos · vignettes", pt: "Chamadas · vinhetas" },
+        { grid: "fluxo", fullWidthIntro: true, chapter: { en: "07 · On air", pt: "07 · No ar" }, kicker: { en: "Promos · vignettes", pt: "Chamadas · vinhetas" },
           head: { en: "Entertainment, journalism and *sport.*", pt: "Entretenimento, jornalismo e *esporte.*" },
           text: { en: "The system on screen. \"A seguir\" (up next) reveals the show through a circle and closes on the 3D mark. \"Hoje na Globo\" (tonight) gives each show its own gradient: news, drama and sport.", pt: "O sistema na tela. O \"A seguir\" revela o programa por um círculo e fecha na marca 3D. O \"Hoje na Globo\" mostra a noite com um degradê para cada programa: jornalismo, novela e esporte." } },
         { video: "images/globo/a-seguir-na-globo.mp4", webm: "images/globo/a-seguir-na-globo.webm", poster: "images/globo/a-seguir-na-globo-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "A seguir na Globo — coming up next", pt: "A seguir na Globo" } },
         { video: "images/globo/hoje-na-globo.mp4", webm: "images/globo/hoje-na-globo.webm", poster: "images/globo/hoje-na-globo-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "Hoje na Globo — tonight's line-up in 30 seconds", pt: "Hoje na Globo — a programação da noite em 30 segundos" } },
         // "Hoje na Globo" promo, circles version (nova_v1), sent by Felipe Oct 27 2026
-        { src: "images/globo/a-seguir-01.jpg", ar: "16/9", col: 1, span: 3 },
         { src: "images/globo/a-seguir-04.jpg", ar: "16/9", col: 4, span: 3 },
         { src: "images/globo/a-seguir-10.jpg", ar: "16/9", col: 7, span: 3 },
         { src: "images/globo/a-seguir-16.jpg", ar: "16/9", col: 10, span: 3 },
@@ -295,10 +294,10 @@ window.SITE = {
         { src: "images/globo/chamada-hoje-na-globo.jpg", ar: "16/9", col: 1, span: 6 },
         { src: "images/globo/chamada-pilulas.jpg", ar: "16/9", col: 7, span: 6 },
         { src: "images/globo/chamada-grade.jpg", ar: "16/9", col: 1, span: 6 },
-        { src: "images/globo/chamada-logo.jpg", ar: "16/9", col: 7, span: 6, caption: { en: "Hoje na Globo — tonight's line-up", pt: "Hoje na Globo — a programação da noite" } },
-        { src: "images/globo/chamada-jornal-nacional.jpg", ar: "16/9", col: 1, span: 4 },
-        { src: "images/globo/chamada-velho-chico.jpg", ar: "16/9", col: 5, span: 4 },
-        { src: "images/globo/chamada-brasileirao.jpg", ar: "16/9", col: 9, span: 4, caption: { en: "One promo per show: journalism, drama, sport", pt: "Uma chamada por programa: jornalismo, novela, esporte" } },
+        { src: "images/globo/chamada-jornal-nacional.jpg", ar: "16/9", col: 1, span: 6 },
+        { src: "images/globo/chamada-velho-chico.jpg", ar: "16/9", col: 7, span: 6 },
+        { src: "images/globo/chamada-brasileirao.jpg", ar: "16/9", col: 1, span: 6 },
+        { src: "images/globo/chamada-logo.jpg", ar: "16/9", col: 7, span: 6, caption: { en: "Tonight on Globo — news, drama, sport and the network signature", pt: "Hoje na Globo — jornalismo, novela, esporte e assinatura da emissora" } },
         { grid: "trilho", chapter: { en: "08 · On-air studies", pt: "08 · Estudos on air" }, kicker: { en: "4 routes", pt: "4 caminhos" },
           head: { en: "One promo, *four routes.*", pt: "Uma chamada, *quatro caminhos.*" },
           text: { en: "One promo, drawn four ways: the gradient over the image (the films above), vertical colour bands, sliding panels and a typographic route. Click or use the arrows to flip through each album.", pt: "A mesma chamada, desenhada de quatro jeitos: o degradê sobre a imagem (os filmes acima), faixas verticais de cor, painéis deslizantes e um caminho tipográfico. Clique ou use as setas para folhear cada álbum." },
@@ -362,7 +361,7 @@ window.SITE = {
           text: { en: "The system leaves the screen for the building: signs shaped like the on-air pills, gradients, rounded pictograms and walls of circles. Two projects, the second from June 2016. Here, the twelve key pieces in four groups.", pt: "O sistema sai da tela e entra no prédio: placas no formato das pílulas do on air, degradês, pictogramas arredondados e paredes de círculos. Dois projetos, o segundo de junho de 2016. Aqui, as doze peças principais em quatro grupos." },
           pills: [{ en: "Directional", pt: "Orientação" }, { en: "Doors", pt: "Portas" }, { en: "Pictograms", pt: "Pictogramas" }, { en: "Walls", pt: "Paredes" }, { en: "*Globo team", pt: "*Equipe Globo" }] },
         // Signage (Felipe, Oct 28 2026): the 12 most relevant of 35 in four groups, one at a time; the rest stay in images/globo/sinal/
-        { rooms: [
+        { roomsAuto: true, rooms: [
           { name: { en: "Doors and rooms", pt: "Portas e salas" }, items: [{ src: "images/globo/sinal/b07.jpg", ar: "1932/1347", caption: { en: "Proposal 1 · door sign", pt: "Proposta 1 · placa de porta" } }, { src: "images/globo/sinal/b13.jpg", ar: "1932/1347", caption: { en: "Meeting room: free", pt: "Sala de reunião: livre" } }, { src: "images/globo/sinal/a11.jpg", ar: "16/9", caption: { en: "Restroom signs", pt: "Placas de banheiro" } }] },
           { name: { en: "Pictograms", pt: "Pictogramas" }, items: [{ src: "images/globo/sinal/a12.jpg", ar: "16/9", caption: { en: "Pictograms", pt: "Pictogramas" } }, { src: "images/globo/sinal/b18.jpg", ar: "1932/1347", caption: { en: "Pictograms", pt: "Pictogramas" } }, { src: "images/globo/sinal/a29.jpg", ar: "16/9", caption: { en: "Warning signs", pt: "Placas de advertência" } }] },
           { name: { en: "Wayfinding", pt: "Orientação" }, items: [{ src: "images/globo/sinal/a08.jpg", ar: "16/9", caption: { en: "Directional sign", pt: "Placa de orientação" } }, { src: "images/globo/sinal/a19.jpg", ar: "16/9", caption: { en: "Flag sign", pt: "Placa bandeira" } }, { src: "images/globo/sinal/b43.jpg", ar: "1932/1347", caption: { en: "Stairs", pt: "Escadas" } }] },
