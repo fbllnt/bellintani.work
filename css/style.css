@@ -847,3 +847,11 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Keep the PopStar preview on the themed canvas, never on the JPG black matte. */
 .case .flip-wide .fig .ph{background-color:var(--bg)!important;isolation:isolate}
 @media(hover:none),(prefers-reduced-motion:reduce){.flip-wide .fig .ph > img{--px:0px!important;--py:0px!important;transition:none}}
+
+/* CoreHi: interactive identity specimen, restrained and accessible. */
+.corehi-interactive .ph{isolation:isolate;cursor:pointer;outline-offset:4px}
+.corehi-interactive .ph:focus-visible{outline:2px solid var(--blue)}
+.case .corehi-interactive.in .ph > img,
+.case .corehi-interactive .ph > img{transform:translate3d(var(--core-x,0px),var(--core-y,0px),0) scale(1.008);transition:transform .45s cubic-bezier(.2,.75,.25,1),opacity .3s ease}
+.corehi-hint{position:absolute;z-index:3;right:clamp(12px,2vw,32px);bottom:clamp(12px,2vw,32px);padding:8px 10px;color:#fff;background:rgba(0,0,0,.65);font-size:clamp(9px,.72vw,11px);letter-spacing:.03em;pointer-events:none}
+@media(hover:none),(prefers-reduced-motion:reduce){.case .corehi-interactive .ph > img{--core-x:0px!important;--core-y:0px!important;transition:none}.corehi-hint{font-size:9px}}
