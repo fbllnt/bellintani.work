@@ -991,11 +991,13 @@
         (p.credits || []).map(c => `<div><dt>${esc(L(c.role))}</dt><dd>${c.url ? `<a class="swap" href="${esc(c.url)}" target="_blank" rel="noopener"><span>${esc(c.name)} ↗</span><span>${esc(c.name)} ↗</span></a>` : esc(c.name)}</dd></div>`).join("")}${
         p.link ? `<div class="live"><dt>${esc(T("live"))}</dt><dd><a class="swap" href="${esc(p.link.url)}" target="_blank" rel="noopener"><span>${esc(p.link.label)} ↗</span><span>${esc(p.link.label)} ↗</span></a></dd></div>` : ""}</dl>
       ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}</div></figure>`}
-      <section class="case-about">
-        <span class="mono muted">${esc(T("about"))}</span>
-        <p class="body">${esc(L(p.summary) || T("placeholderText"))}${tagFor(p)}</p>
+      <section class="case-intro-block${p.stats ? " has-stats" : ""}">
+        <div class="case-about">
+          <span class="mono muted">${esc(T("about"))}</span>
+          <p class="body">${esc(L(p.summary) || T("placeholderText"))}${tagFor(p)}</p>
+        </div>
+        ${p.stats ? `<ul class="case-stats">${p.stats.map(([n, label]) => `<li><b>${esc(n)}</b><span class="mono">${esc(L(label))}</span></li>`).join("")}</ul>` : ""}
       </section>
-      ${p.stats ? `<ul class="case-stats">${p.stats.map(([n, label]) => `<li><b>${esc(n)}</b><span class="mono">${esc(L(label))}</span></li>`).join("")}</ul>` : ""}
       <div class="case-gallery">${gallery(i, p)}</div>
       <nav class="case-neighbors" aria-label="Project navigation">
         <a class="case-neighbor previous" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}">
