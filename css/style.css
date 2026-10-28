@@ -725,3 +725,23 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .music-track:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
 @media(max-width:760px){.music{top:calc(52px + env(safe-area-inset-top,0px));width:min(420px,calc(100vw - 24px));right:12px;max-height:calc(100svh - 88px)}}
 @media(prefers-reduced-motion:reduce){.music-track{transition:none}}
+
+/* Curated discipline filters above the work index (2026-10-28). */
+.work-filter-area{display:flex;align-items:center;justify-content:space-between;gap:24px;min-width:0;margin:4px 0 20px}
+.work-filters{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0}
+.work-filter{appearance:none;border:1px solid var(--line);border-radius:2px;background:transparent;color:var(--fg);cursor:pointer;padding:10px 12px 9px;display:inline-flex;align-items:flex-start;gap:8px;white-space:nowrap;font:700 12px/1 var(--sans);letter-spacing:.012em;transition:border-color .2s,background .2s,color .2s}
+.work-filter sup{font:600 9px/1 var(--mono);opacity:.6;letter-spacing:0;top:0}
+.work-filter:hover,.work-filter:focus-visible{border-color:var(--blue);color:var(--blue)}
+.work-filter[aria-pressed="true"]{border-color:var(--blue);background:var(--blue);color:#fff}
+.work-filter[aria-pressed="true"] sup{opacity:.8}
+.work-filter:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.work-filter-results{font-size:11px;color:var(--mute);white-space:nowrap;flex:none}
+.index > li[hidden]{display:none!important}
+@media(max-width:760px){
+ .work-filter-area{position:relative;display:block;margin-bottom:14px}
+ .work-filters{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none;margin-inline:calc(-1 * var(--side-l));padding:4px var(--side-l) 12px}
+ .work-filters::-webkit-scrollbar{display:none}
+ .work-filter{font-size:11px;padding:10px 11px;flex:none;scroll-snap-align:start}
+ .work-filter-results{display:block;text-align:right;margin-top:-2px}
+}
+@media(prefers-reduced-motion:reduce){.work-filter{transition:none}}
