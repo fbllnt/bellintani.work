@@ -49,8 +49,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .name .word > span{font:900 1em/.86 var(--sans);letter-spacing:-.07em;text-transform:uppercase;display:inline-block;opacity:0}
 .name .sp{width:.22em}
 .name .reg{color:var(--fg);font-size:.26em!important;margin-left:.08em;margin-top:.12em}
-.tag{opacity:0;max-width:min(100%,820px)}
-.tag b{display:block;margin-bottom:10px;font:900 clamp(22px,2.6vw,38px)/.95 var(--sans);letter-spacing:-.04em;text-transform:uppercase;color:var(--fg);text-wrap:balance}
+.tag{opacity:0;max-width:min(100%,1180px)}
+.tag b{display:block;margin-bottom:10px;font:900 clamp(20px,2.6vw,38px)/.95 var(--sans);letter-spacing:-.04em;text-transform:uppercase;color:var(--fg);text-wrap:balance}
 .skip{all:unset;position:absolute;cursor:pointer;right:var(--side-r);top:calc(20px + env(safe-area-inset-top,0px));z-index:3;font:300 13px/1 var(--mono);text-transform:uppercase}
 .skip:focus-visible{outline:1px solid currentColor}
 
