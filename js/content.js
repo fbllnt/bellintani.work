@@ -202,7 +202,7 @@ window.SITE = {
         // Yellow poster wall (street-wall-yellow.jpg) removed by Felipe, Oct 26 2026; file kept
         { chapter: { en: "04 · Digital", pt: "04 · Digital" }, kicker: { en: "naoespere.sejaanti.com.br", pt: "naoespere.sejaanti.com.br" },
           head: { en: "A landing page that counts the *wait.*", pt: "Uma landing page que conta a *espera.*" } },
-        { embed: { url: "https://naoespere.sejaanti.com.br", src: "embeds/anti/index.html", w: 1440, h: 900 }, poster: "images/anti/site-espere.jpg", col: 1, span: 12,
+        { embed: { url: "https://naoespere.sejaanti.com.br", src: "embeds/anti/index.html", w: 1440, h: 900 }, poster: "images/anti/site-espere.jpg", col: 1, span: 12, featureWide: true,
           side: { video: "images/anti/film-ccsp.mp4", webm: "images/anti/film-ccsp.webm", poster: "images/anti/film-ccsp-poster.jpg", ar: "9/16", caption: { en: "Backstage — ANTI at the CCSP festival", pt: "Bastidores — ANTI no festival do CCSP" } },
           caption: { en: "Landing page, live — click to open the site", pt: "Landing page no ar — clique para abrir o site" } },
         { chapter: { en: "05 · Films", pt: "05 · Filmes" }, kicker: { en: "4 films", pt: "4 filmes" },
