@@ -636,7 +636,7 @@ window.SITE = {
       // Black page, white type, XP yellow accent
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#fec142" },
       tools: ["Adobe CC"],
-      image: "images/xp/lockup.jpg",
+      image: "images/xp/stadium.jpg",
       hero: "bleed",
       heroAr: "16/9",
       summary: {
@@ -649,7 +649,7 @@ window.SITE = {
           head: { en: "XP doesn't sponsor. *It invests.*", pt: "A XP não patrocina. *Investe.*" },
           text: { en: "An investment company shouldn't sound like any other sponsor. The crossed-out word becomes a statement that works for the Brazilian Olympic Committee and for sport as a whole.", pt: "Uma empresa de investimentos não deveria soar como qualquer patrocinador. A palavra riscada vira uma afirmação, que serve ao Comitê Olímpico Brasileiro e ao esporte como um todo." } },
         { swap: { before: { en: "Patrocinadora", pt: "Patrocinadora" }, after: { en: "Investidora", pt: "Investidora" } }, col: 1, span: 12 },
-        { src: "images/xp/stadium.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Investidora oficial do esporte brasileiro", pt: "Investidora oficial do esporte brasileiro" } },
+        { src: "images/xp/lockup.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "XP sponsorship signature and identity", pt: "Assinatura de patrocínio e identidade XP" } },
         { chapter: { en: "02 · Key visuals", pt: "02 · Key visuals" }, kicker: { en: "Black, white and gold", pt: "Preto, branco e dourado" },
           head: { en: "The athlete at the centre, the *investment* around them.", pt: "O atleta no centro, o *investimento* em volta." },
           text: { en: "Black and white portraits of the athletes, lit by a spray of gold, with the crossed-out sign-off always at hand.", pt: "Retratos dos atletas em preto e branco, iluminados por uma explosão dourada, com a assinatura riscada sempre por perto." } },
