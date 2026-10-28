@@ -37,7 +37,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   playing across pages; on another project it offers that project's song. The intro jingle was tried and removed (Felipe, Oct 27 2026: it did not work); no sound in the intro.
 - All copy and projects live in `js/content.js`, in two languages as `{ en, pt }` (EN-US / PT-BR).
 - Work order (Felipe, Oct 28 2026): FIXED, exactly the order of `projects` in content.js (no shuffle): Seja ANTI, Globo,
-  Adidas 60, SCRV*, DMA, XP, CoreHi, Tela Quente, THURA, Cinema Especial, Dirty Projectors, HCP Top 50 Names, Globoplay,
+  Adidas 60, SCRV*, DMA, XP, CoreHi, Tela Quente, (THURA hidden Oct 28 2026), Cinema Especial, Dirty Projectors, HCP Top 50 Names, Globoplay,
   Logofolio always last. The home has only the Index list (the Grid view was removed). Ask Felipe where a new project goes.
 - Projects can use `layout: "loose"` (free placement: `col`, `span`, `shift`, `speed`, `{ text }` lines),
   `hero: "bleed"`, videos (`video` MP4 + `webm` + `poster`) and a 360° viewer (`spin`).

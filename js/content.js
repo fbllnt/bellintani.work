@@ -737,6 +737,7 @@ window.SITE = {
     },
     {
       title: "THURA",
+      hidden: true, // Felipe, Oct 28 2026: off the site, everything kept (remove this line to bring it back)
       track: { id: "6aBUnkXuCEQQHAlTokv9or", name: "This Must Be the Place", by: "Talking Heads" },
       type: "branding",
       client: "THURA Negócios Imobiliários",
