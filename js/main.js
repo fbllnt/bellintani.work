@@ -1523,7 +1523,7 @@
   musicSwap.onclick = () => { loadSong(suggested(), true); syncMusic(); };
   addEventListener("hashchange", syncMusic);
   addEventListener("keydown", e => { if (e.key === "Escape" && !music.hidden) openMusic(false); });
-  document.addEventListener("click", e => { if (!music.hidden && !music.contains(e.target) && !musicBtn.contains(e.target)) openMusic(false); });
+  document.addEventListener("click", e => { if (!music.hidden && !music.contains(e.target) && !musicBtn.contains(e.target) && !e.target.closest("#work-music-invite")) openMusic(false); });
 
   // Curated listening queue from the existing project soundtrack. Choosing a track is explicit:
   // Spotify embeds control playback and may require the listener to press Play / sign in.
@@ -1556,7 +1556,7 @@
   const workInvite = $("work-music-invite");
   if (workInvite) {
     workInvite.textContent = L({ en: "♪ EXPLORE THE WORK WITH MY CURATED SOUNDTRACK ↗", pt: "♪ EXPLORE OS PROJETOS COM A TRILHA QUE ESCOLHI ↗" });
-    workInvite.onclick = () => { openMusic(true); renderSoundtrack(); musicBtn.focus(); };
+    workInvite.addEventListener("click", () => { openMusic(true); renderSoundtrack(); $("music-close").focus({ preventScroll: true }); });
   }
   const musicInvite = $("music-invite");
   if (musicInvite) musicInvite.textContent = L({ en: "A SOUNDTRACK FOR EVERY PROJECT. PICK A SONG AND EXPLORE.", pt: "CADA PROJETO TEM SUA TRILHA. ESCOLHA UMA MÚSICA E EXPLORE." });
