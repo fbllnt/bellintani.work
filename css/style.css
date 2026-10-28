@@ -615,3 +615,31 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 }
 .trilho{border-top:2px solid var(--fg);padding-top:14px}
 .tr-side .chap.tr{border-top:0;padding-top:0}
+
+
+/* Globo / living gradients. Original printed design-system assets remain untouched. */
+.fig.gradient-motion .ph{overflow:hidden}
+.fig.gradient-motion .ph > img{transform:scale(1.08);animation:globo-gradient-breathe 22s ease-in-out infinite alternate;will-change:transform}
+.fig.gradient-motion:hover .ph > img{animation-duration:12s}
+@keyframes globo-gradient-breathe{
+  0%{transform:scale(1.08) translate3d(-1.5%,-1%,0)}
+  50%{transform:scale(1.14) translate3d(1.5%,1%,0)}
+  100%{transform:scale(1.08) translate3d(-1%,1.4%,0)}
+}
+.globo-palette{width:100%;margin:clamp(24px,3.5vw,56px) 0 0;border-top:1px solid var(--line);padding-top:14px}
+.globo-palette-head{display:flex;justify-content:space-between;gap:16px;color:var(--mute);font-size:clamp(10px,.8vw,13px);letter-spacing:.07em;margin-bottom:16px;text-transform:uppercase}
+.globo-palette-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
+.globo-palette-card{min-width:0;outline-offset:5px}
+.globo-palette-swatch{height:clamp(130px,16vw,260px);position:relative;overflow:hidden;isolation:isolate;background-size:180% 180%;background-position:0% 50%;animation:globo-functional-flow 19s ease-in-out infinite alternate;transition:filter .6s ease}
+.globo-palette-card.news .globo-palette-swatch{background-image:linear-gradient(120deg,#305d9e 8%,#3894ad 45%,#6ac4a0 85%,#305d9e 115%)}
+.globo-palette-card.sport .globo-palette-swatch{background-image:linear-gradient(120deg,#6cbb56 5%,#a9d448 43%,#ffe330 85%,#6cbb56 115%);animation-delay:-6s}
+.globo-palette-card.entertainment .globo-palette-swatch{background-image:linear-gradient(120deg,#e91367 5%,#f65a70 40%,#f59a30 85%,#e91367 115%);animation-delay:-12s}
+.globo-palette-swatch::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 85%,rgba(255,255,255,.2),transparent 65%);opacity:.18;transform:translateX(-18%);transition:opacity .65s ease,transform 1s ease}
+.globo-palette-card:is(:hover,:focus-visible) .globo-palette-swatch{filter:saturate(1.13) contrast(1.03)}
+.globo-palette-card:is(:hover,:focus-visible) .globo-palette-swatch::after{opacity:.8;transform:translateX(16%)}
+.globo-palette-meta{display:flex;justify-content:space-between;gap:8px;padding:9px 0;color:var(--fg);font-size:clamp(10px,.85vw,13px);text-transform:uppercase}
+.globo-palette-meta span:last-child{color:var(--mute);transition:transform .3s ease}
+.globo-palette-card:is(:hover,:focus-visible) .globo-palette-meta span:last-child{transform:translate(3px,-3px)}
+@keyframes globo-functional-flow{from{background-position:5% 50%}to{background-position:95% 50%}}
+@media(max-width:760px){.globo-palette-head span:last-child{display:none}.globo-palette-grid{grid-template-columns:1fr;gap:12px}.globo-palette-swatch{height:clamp(96px,28vw,170px)}}
+@media(prefers-reduced-motion:reduce){.fig.gradient-motion .ph > img,.globo-palette-swatch{animation:none;transform:none}.globo-palette-swatch::after,.globo-palette-meta span:last-child{transition:none}}

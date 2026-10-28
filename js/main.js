@@ -371,6 +371,20 @@
         it.pills ? `<ul class="pills mono">${it.pills.map(x => { const t = L(x); return `<li${t[0] === "*" ? ` class="on"` : ""}>${esc(t.replace(/^\*/, ""))}</li>`; }).join("")}</ul>` : ""}</section>`;
     // Something the story still needs (an image, a fact, a section): a dashed box saying what is missing
     if (it.todo) return `<div class="todo${style ? " fig" : ""}" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
+    // Globo's functional gradients as living, CSS-only specimens (existing historic source artwork remains above).
+    if (it.gradientPalette) return `<section class="globo-palette" aria-label="${esc(L({ en: "Globo functional gradients", pt: "Gradientes funcionais da Globo" }))}">
+      <div class="globo-palette-head mono"><span>${esc(L({ en: "THREE COLOUR WORLDS", pt: "TRÊS UNIVERSOS DE COR" }))}</span><span>${esc(L({ en: "MOVE THE POINTER OVER THE COLOURS", pt: "PASSE O MOUSE SOBRE AS CORES" }))}</span></div>
+      <div class="globo-palette-grid">
+        ${[
+          { name: { en: "News", pt: "Jornalismo" }, cls: "news", number: "01" },
+          { name: { en: "Sport", pt: "Esporte" }, cls: "sport", number: "02" },
+          { name: { en: "Entertainment", pt: "Entretenimento" }, cls: "entertainment", number: "03" }
+        ].map(x => `<div class="globo-palette-card ${x.cls}" tabindex="0" role="img" aria-label="${esc(L(x.name))}: ${esc(L({en:"animated gradient",pt:"degradê animado"}))}">
+          <div class="globo-palette-swatch" aria-hidden="true"></div>
+          <div class="globo-palette-meta mono"><span>${x.number} / ${esc(L(x.name))}</span><span aria-hidden="true">↗</span></div>
+        </div>`).join("")}
+      </div>
+    </section>`;
     // A live page running inside the case, at desktop size scaled to fit; the print sits underneath while it loads,
     // and a click anywhere opens the page itself: { embed: { url, w, h }, poster, caption }
     if (it.embed) { const { url, src = url, w = 1440, h = 900 } = it.embed;
@@ -429,7 +443,7 @@
         ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
         <canvas data-tunnel="${esc(it.tunnel.word)}" data-bg="${esc(it.tunnel.bg || "#000")}" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"></canvas>
       </div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
-    return `<figure class="fig ${it.size || "full"}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
+    return `<figure class="fig ${it.size || "full"}${it.gradientMotion ? " gradient-motion" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
       it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""}${it.offset ? ` data-offset="${+it.offset}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
           <source src="${esc(it.video)}" type="video/mp4">${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}</video>
         <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button><button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
