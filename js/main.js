@@ -105,7 +105,7 @@
   // ---------- Work: index (the only view; Felipe dropped the Grid view, Oct 28 2026) ----------
   const index = $("index");
   index.innerHTML = S.projects.map((p, i) => `<li><a href="${href(p)}" data-i="${i}">
-    <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono">${esc(L(p.scope))}${p.year ? ` — ${esc(p.year)}` : ""}${tagFor(p)}</span></a></li>`).join("");
+    <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono"><span class="k-top">${p.year ? `<span class="k-year">${esc(p.year)}</span>` : ""}${Array.isArray(p.tools) && p.tools.some(tool => typeof tool === "string" && tool.startsWith("*")) ? `<span class="k-ai" aria-label="${esc(L({ en: "AI-assisted project", pt: "Projeto com uso de IA" }))}" title="${esc(L({ en: "AI-assisted project", pt: "Projeto com uso de IA" }))}">AI</span>` : ""}</span><span class="k-scope">${esc(L(p.scope))}</span>${tagFor(p)}</span></a></li>`).join("");
 
   const works = document.querySelector(".works");
 
