@@ -606,7 +606,7 @@ window.SITE = {
         { chapter: { en: "05 · Opening", pt: "05 · Abertura" }, kicker: { en: "Globo's movie slot", pt: "A faixa de filmes da Globo" }, grid: "fluxo",
           head: { en: "Ink, old film and the *hero of the night.*", pt: "Tinta, película antiga e o *herói da noite.*" },
           text: { en: "Ink spreads over old film stock, the featured film's hero surfaces from the stains, and the title lands before the Globo mark closes.", pt: "A tinta se espalha sobre película antiga, o herói do filme da noite surge das manchas e o título entra antes da marca Globo fechar." } },
-        { video: "images/cinema-especial/opening.mp4", webm: "images/cinema-especial/opening.webm", poster: "images/cinema-especial/opening-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Opening — 7s preview", pt: "Abertura — prévia de 7s" } },
+        { size: "cinema-finale", video: "images/cinema-especial/opening.mp4", webm: "images/cinema-especial/opening.webm", poster: "images/cinema-especial/opening-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Opening — 7s preview", pt: "Abertura — prévia de 7s" } },
       ],
     },
     // Gig poster for Cine Joia (Felipe, Oct 27 2026); material from Drive "07. OUTROS/CINE JOIA & POSTERS/JOIA#04 - DIRTY PROJECTORS"
