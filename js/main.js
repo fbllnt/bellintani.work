@@ -486,8 +486,8 @@
           <span class="rooms-dots" aria-hidden="true">${it.rooms[0].items.map((_, k) => `<i${k ? "" : ` class="on"`}></i>`).join("")}</span><span class="rooms-count">01 / ${String(n0).padStart(2, "0")}</span>
           <span class="roll-arrows"><button type="button" class="rooms-prev" aria-label="${esc(T("prev"))}">←</button><button type="button" class="rooms-next" aria-label="${esc(T("nextItem"))}">→</button></span></div></div>`; }
     if (it.flip) { const f = it.flip[0];
-      return `<div class="flip" style="${style}${it.cols ? `;--n:${+it.cols}` : ""}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
-        <p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
+      return `<div class="flip${it.flipWide ? " flip-wide" : ""}" style="${style}${it.cols ? `;--n:${+it.cols}` : ""}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
+        ${it.flipWide ? `<div class="flip-controls mono"><button class="flip-prev" type="button" aria-label="${esc(T("prev"))}">←</button><span class="flip-count">01 / ${String(it.flip.length).padStart(2, "0")}</span><button class="flip-next" type="button" aria-label="${esc(T("next"))}">→</button></div>` : `<p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>`}
         <div class="flip-thumbs" role="group">${it.flip.map((t, k) => `<button type="button" aria-pressed="${!k}" data-k="${k}" aria-label="${esc(L(t.caption) || "")}"><img src="${esc(t.src)}" alt="" loading="lazy"></button>`).join("")}</div></div>`; }
     // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
     // `narrow: true` sets the strip in a little from both sides (desktop), for small process rows
@@ -689,7 +689,7 @@
     let i = 0;
     p.gallery.forEach(it => { if (!it.flip) return;
       const box = caseEl.querySelectorAll(".flip")[i++], img = box.querySelector(".fig .ph > img"),
-        cap = box.querySelector(".flip-cap"), btns = [...box.querySelectorAll(".flip-thumbs button")];
+        cap = box.querySelector(".flip-cap"), count = box.querySelector(".flip-count"), btns = [...box.querySelectorAll(".flip-thumbs button")];
       let cur = 0, animating = false, visible = false, hover = false, userUntil = 0, lastChange = performance.now();
       const go = (k, manual = false) => {
         k = (k + it.flip.length) % it.flip.length;
@@ -699,7 +699,8 @@
         lastChange = performance.now();
         const set = () => {
           img.src = item.src; img.alt = L(item.caption) || "";
-          cap.textContent = L(item.caption) || "";
+          if (cap) cap.textContent = L(item.caption) || "";
+          if (count) count.textContent = `${String(k + 1).padStart(2, "0")} / ${String(it.flip.length).padStart(2, "0")}`;
         };
         btns.forEach((b, j) => b.setAttribute("aria-pressed", String(j === k)));
         if (reduced) { set(); return; }
@@ -714,6 +715,8 @@
           }).catch(() => {}).finally(() => { animating = false; });
       };
       btns.forEach((b, j) => b.addEventListener("click", () => go(j, true)));
+      box.querySelector(".flip-prev")?.addEventListener("click", () => go(cur - 1, true));
+      box.querySelector(".flip-next")?.addEventListener("click", () => go(cur + 1, true));
       const main = box.querySelector(".fig .ph");
       main.setAttribute("tabindex", "0");
       main.setAttribute("role", "button");
