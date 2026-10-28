@@ -577,6 +577,11 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * 100svh))}
 .pair-fig > :is(.flip,.strip,.embed,.mods,.yt){width:100%}
 .pair .chap.tr{border-top:0;padding-top:0}
+/* A featured editorial row: the chapter leads across the page and the live landing page plus vertical film share the full width. */
+.pair.feature-wide .pair-text{grid-column:1 / -1;grid-row:1;position:static}
+.pair.feature-wide .pair-fig{grid-column:1 / -1;grid-row:2;align-items:stretch}
+.pair.feature-wide .chap-h{max-width:24ch}
+.pair.feature-wide .side-row > .embed{--rw:1.6}
 /* A vertical film under the chapter text, filling the column down to the bottom of the piece beside it */
 .side-row{display:flex;gap:var(--gap);width:100%;align-items:flex-start}
 .side-row > .fig{flex:var(--rw) 1 0%;min-width:0;display:flex;flex-direction:column}
