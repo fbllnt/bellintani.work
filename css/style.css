@@ -746,7 +746,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .index > li[hidden]{display:none!important}
 @media(max-width:760px){
  .work-filter-area{position:relative;display:block;margin-bottom:14px}
- .work-filters{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none;margin-inline:calc(-1 * var(--side-l));padding:4px var(--side-l) 12px}
+ .work-filters{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding-inline:var(--side-l);scrollbar-width:none;margin-inline:calc(-1 * var(--side-l));padding:4px var(--side-l) 12px}
  .work-filters::-webkit-scrollbar{display:none}
  .work-filter{font-size:11px;padding:10px 11px;flex:none;scroll-snap-align:start}
  .work-filter-results{display:block;text-align:right;margin-top:-2px}

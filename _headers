@@ -1,0 +1,7 @@
+# Cloudflare static-asset headers (read by wrangler, never served).
+# Images and films: browsers reuse them for a day without asking again, then keep showing the
+# cached copy for up to a week while they check for a new one in the background.
+# Replacing a file under the same name can take up to a day to reach returning visitors:
+# give it a new name (or a ?v= stamp) when it must change at once.
+/images/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800

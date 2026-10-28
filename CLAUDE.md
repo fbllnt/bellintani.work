@@ -3,7 +3,8 @@
 Static site (HTML/CSS/JS, no build). `main` on GitHub (fbllnt/bellintani.work) is deployed automatically by
 a Cloudflare Worker named `bellintani-work` serving static assets (free plan; moved from Netlify on Oct 26 2026
 after Netlify paused the site for deploy credits) to https://bellintani.work about a minute after each push.
-Config: `wrangler.jsonc` (assets = repo root) and `.assetsignore` (files never served). Deploy command `npx wrangler deploy`.
+Config: `wrangler.jsonc` (assets = repo root), `.assetsignore` (files never served) and `_headers` (images cached
+for a day: replacing an image under the same name can take that long to reach returning visitors, so rename it instead). Deploy command `npx wrangler deploy`.
 Deploys run from GitHub Actions (`.github/workflows/deploy.yml`, secret `CLOUDFLARE_API_TOKEN`) because Cloudflare's own
 Workers Builds started skipping builds on Oct 26 2026. Check a deploy with `gh run list --workflow deploy.yml`.
 Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still batch pushes.
@@ -36,9 +37,10 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   with the song suggested for the page: each project's `track: { id, name, by }`, `homeTrack` on the home. It keeps
   playing across pages; on another project it offers that project's song. The intro jingle was tried and removed (Felipe, Oct 27 2026: it did not work); no sound in the intro.
 - All copy and projects live in `js/content.js`, in two languages as `{ en, pt }` (EN-US / PT-BR).
-- Work order (Felipe, Oct 28 2026): FIXED, exactly the order of `projects` in content.js (no shuffle): Seja ANTI, Globo,
-  Adidas 60, SCRV*, DMA, XP, CoreHi, Tela Quente, (THURA hidden Oct 28 2026), Cinema Especial, Dirty Projectors, HCP Top 50 Names, Globoplay,
-  Logofolio always last. The home has only the Index list (the Grid view was removed). Ask Felipe where a new project goes.
+- Work order (Felipe, Oct 28 2026): FIXED, exactly the order of `projects` in content.js (no shuffle). As of Oct 28 2026:
+  Seja ANTI, Globo, SCRV*, HOUSECALL PRO, XP Inc., Cinema Especial, PopStar, (THURA hidden), Tela Quente, CoreHi,
+  Adidas 60, Dirty Projectors, Globoplay, DMA, (Lomography hidden), Logofolio always last.
+  content.js is the source of truth; update this list when the order changes. The home has only the Index list (the Grid view was removed). Ask Felipe where a new project goes.
 - Projects can use `layout: "loose"` (free placement: `col`, `span`, `shift`, `speed`, `{ text }` lines),
   `hero: "bleed"`, videos (`video` MP4 + `webm` + `poster`) and a 360° viewer (`spin`).
 - Compress media before adding: videos to 720p H.264 MP4 plus a VP9 WebM; images max 2000 px wide JPEG.
