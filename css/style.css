@@ -877,3 +877,20 @@ main,.case{background:var(--bg);position:relative;z-index:3}
  .case-intro-block .case-stats{grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
  .case-intro-block .case-stats b{font-size:clamp(40px,11vw,78px)}
 }
+
+/* Editorial rhythm audit: space between rules, titles, and supporting text. */
+.case-gallery .chap{padding-top:clamp(24px,2.8vw,48px);row-gap:clamp(16px,1.5vw,28px)}
+.case-gallery .chap-k{gap:7px;font-size:clamp(10px,.78vw,12px);line-height:1.5}
+.case-gallery .chap-h{line-height:1.01}
+.case-gallery .chap .body{margin-top:0}
+.case-gallery .pair .chap.tr{padding-top:clamp(20px,2.2vw,36px)}
+.case-gallery .chap.cz{padding-top:clamp(28px,3vw,52px)}
+.case-gallery .chap.cz .chap-h{line-height:.9}
+.case-intro-block .case-stats b{line-height:.95}
+.case-intro-block .case-stats span{line-height:1.45}
+.story-rail{padding-top:clamp(20px,2vw,32px);padding-bottom:clamp(18px,1.8vw,28px)}
+@media(max-width:760px){
+ .case-gallery .chap{padding-top:clamp(22px,5vw,34px);row-gap:15px}
+ .case-gallery .pair .chap.tr{padding-top:22px}
+ .case-gallery .chap.cz{padding-top:30px}
+}
