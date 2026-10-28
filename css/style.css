@@ -857,14 +857,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @media(hover:none),(prefers-reduced-motion:reduce){.case .corehi-interactive .ph > img{--core-x:0px!important;--core-y:0px!important;transition:none}.corehi-hint{font-size:9px}}
 
 /* Editorial story navigation, added progressively to multi-chapter cases. */
-.story-rail{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:16px 0;margin:clamp(14px,2vw,30px) 0 clamp(26px,3.5vw,56px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.story-rail-heading{flex-basis:100%;font-size:10px;letter-spacing:.09em;color:var(--mute);margin-bottom:5px}
-.story-rail-step{appearance:none;border:0;background:transparent;color:var(--mute);cursor:pointer;text-align:left;font:400 clamp(10px,.83vw,12px)/1.4 var(--mono);padding:7px 9px;transition:color .2s,background .2s}
-.story-rail-step:is(:hover,:focus-visible){color:var(--fg)}
-.story-rail-step.active{background:var(--fg);color:var(--bg)}
-.story-rail-step:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .case-depth.in .ph > img,.case .case-depth .ph > img{transform:translate3d(var(--depth-x,0px),var(--depth-y,0px),0);transition:transform .6s cubic-bezier(.2,.7,.25,1)}
-@media(max-width:760px){.story-rail{gap:3px 6px}.story-rail-step{font-size:10px;padding:8px}.case-depth .ph > img{transform:none!important}}
 @media(prefers-reduced-motion:reduce){.story-rail-step,.case-depth .ph > img{transition:none!important}}
 
 /* Editorial introduction: description and project numbers share one aligned block. */
@@ -888,7 +881,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-gallery .chap.cz .chap-h{line-height:.9}
 .case-intro-block .case-stats b{line-height:.95}
 .case-intro-block .case-stats span{line-height:1.45}
-.story-rail{padding-top:clamp(20px,2vw,32px);padding-bottom:clamp(18px,1.8vw,28px)}
 @media(max-width:760px){
  .case-gallery .chap{padding-top:clamp(22px,5vw,34px);row-gap:15px}
  .case-gallery .pair .chap.tr{padding-top:22px}
