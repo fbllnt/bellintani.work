@@ -19,12 +19,12 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Before each push that changes CSS or JS, bump the `?v=` stamp on the three asset links in `index.html`
   (e.g. `v=$(date +%Y%m%d%H%M)`) so browsers fetch the new files instead of a cached copy.
 
-## Projects hidden on the public site (Felipe, Oct 24 2026)
+## Launch (Felipe, Oct 28 2026)
 
-- bellintani.work (and the production `bellintani-work.<account>.workers.dev`) shows no projects: `main.js` empties `S.projects` and the `no-work` class
-  hides the Work section and the Work link in the corner menu. Everything else stays.
-- Felipe sees the full site on any preview link (`<branch or id>-bellintani-work.<account>.workers.dev`), or at https://bellintani.work/?full (remembered in that
-  browser; `?public` switches back). Undo by removing the block "Projects hidden on the public site" in main.js.
+- The site is public with all projects: the old "Projects hidden on the public site" block was removed from main.js
+  (the unused `.no-work` rule in style.css can bring it back). `hidden: true` in content.js still hides a single project.
+- Icon: Figtree Black "B" centred with a small ® (favicon.svg, apple-touch-icon.png, images/icon-512.png; avatars in the
+  project files folder avatar-b/).
 
 ## Content
 
