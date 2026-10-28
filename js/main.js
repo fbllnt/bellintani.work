@@ -116,6 +116,7 @@
     { id: "film", label: "FILM & TV" },
     { id: "digital", label: "DIGITAL / SOCIAL" },
     { id: "ai", label: "AI" },
+    { id: "posters", label: "POSTERS / MUSIC" },
   ];
   // Each case can appear in multiple disciplines; order always follows S.projects.
   const curatedFilters = {
@@ -131,7 +132,7 @@
     "DMA": ["branding", "digital"],
     "Tela Quente": ["film"],
     "CoreHi": ["branding"],
-    "Dirty Projectors": ["campaigns"],
+    "Dirty Projectors": ["posters"],
     "Globoplay": ["branding", "film", "digital"],
     "Lomography": ["digital"],
     "Logofolio": ["branding"],
@@ -515,7 +516,7 @@
         ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
         <canvas data-tunnel="${esc(it.tunnel.word)}" data-bg="${esc(it.tunnel.bg || "#000")}" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"></canvas>
       </div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
-    return `<figure class="fig ${it.size || "full"}${it.gradientMotion ? " gradient-motion" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
+    return `<figure class="fig ${it.size || "full"}${it.gradientMotion ? " gradient-motion" : ""}${it.popstarInvert ? " popstar-invert" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
       it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""}${it.offset ? ` data-offset="${+it.offset}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
           <source src="${esc(it.video)}" type="video/mp4">${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}</video>
         <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button><button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
