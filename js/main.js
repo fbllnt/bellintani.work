@@ -1036,7 +1036,7 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = "story-rail-step";
-        const label = (chapter.querySelector(".chap-k")?.textContent || chapter.querySelector(".chap-h")?.textContent || "").replace(/\\s+/g," ").trim();
+        const label = (chapter.querySelector(".chap-k")?.textContent || chapter.querySelector(".chap-h")?.textContent || "").replace(/\\s+/g," ").trim().replace(/^\\d{1,2}\\s*[·.\/-]\\s*/, "");
         const name = label.length > 46 ? label.slice(0,43)+"…" : label;
         button.textContent = String(index+1).padStart(2,"0")+" / "+name;
         button.setAttribute("aria-label", name);
