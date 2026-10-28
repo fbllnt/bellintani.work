@@ -894,3 +894,26 @@ main,.case{background:var(--bg);position:relative;z-index:3}
  .case-gallery .pair .chap.tr{padding-top:22px}
  .case-gallery .chap.cz{padding-top:30px}
 }
+
+/* Globo: organic colour movement, without dots, concentric rings or cursor effects. */
+.fig.gradient-motion .globo-wave,.globo-palette-swatch .globo-wave{display:none!important}
+.fig.gradient-motion .ph::after,.globo-palette-swatch::before{display:none!important}
+.fig.gradient-motion .ph{cursor:default;overflow:hidden}
+.fig.gradient-motion .ph > img,
+.fig.gradient-motion .ph:hover > img,
+.fig.gradient-motion.in .ph > img{
+  animation:none!important;
+  transform:translate3d(var(--globo-x,0px),var(--globo-y,0px),0) scale(1.09)!important;
+  transition:transform .18s linear;
+  will-change:transform;
+}
+.globo-palette-swatch,
+.globo-palette-swatch:hover{
+  animation:globo-functional-flow 24s ease-in-out infinite alternate;
+  background-position:var(--globo-pos-x,50%) var(--globo-pos-y,50%)!important;
+  transition:background-position .2s ease;
+}
+@media(prefers-reduced-motion:reduce){
+ .fig.gradient-motion .ph > img,.fig.gradient-motion .ph:hover > img{transform:none!important;transition:none!important}
+ .globo-palette-swatch{animation:none!important}
+}
