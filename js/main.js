@@ -754,14 +754,14 @@
   }
 
   function renderCase(i) {
-    const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length];
+    const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
     applyTheme(p.theme);
     // Type only shows when there is no Scope: the two said the same thing twice (Oct 27 2026 review)
     const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("type"), !p.scope && p.type && S.types ? L(S.types[p.type]) : ""], [T("before"), L(p.before)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)], [T("tools"), Array.isArray(p.tools) ? p.tools : L(p.tools)]].filter(([, v]) => v);
     let n = 0;
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
-      <div class="case-top mono"><a class="swap" href="#work"><span>${esc(T("allWork"))}</span><span>${esc(T("allWork"))}</span></a><span>(${String(i + 1).padStart(2, "0")} / ${String(S.projects.length).padStart(2, "0")})</span></div>
+      <div class="case-top mono"><a class="swap" href="#work"><span>${esc(T("allWork"))}</span><span>${esc(T("allWork"))}</span></a><div class="case-top-nav" aria-label="Project navigation"><a class="case-top-link" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}" title="${esc(L(prev.title))}">← ${esc(T("prev"))}</a><span class="case-position">(${String(i + 1).padStart(2, "0")} / ${String(S.projects.length).padStart(2, "0")})</span><a class="case-top-link" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}" title="${esc(L(next.title))}">${esc(T("nextItem"))} →</a></div></div>
       <h1 class="case-title" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
       ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
       <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>`
@@ -775,10 +775,16 @@
       </section>
       ${p.stats ? `<ul class="case-stats">${p.stats.map(([n, label]) => `<li><b>${esc(n)}</b><span class="mono">${esc(L(label))}</span></li>`).join("")}</ul>` : ""}
       <div class="case-gallery">${gallery(i, p)}</div>
-      <a class="case-next" href="${href(next)}">
-        <span class="mono muted">${esc(T("next"))}</span>
-        <span class="big"><span>${esc(L(next.title))}</span><span class="arr">↗</span></span>
-      </a>`;
+      <nav class="case-neighbors" aria-label="Project navigation">
+        <a class="case-neighbor previous" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}">
+          <span class="mono muted">← ${esc(T("prev"))} · ${String((i - 1 + S.projects.length) % S.projects.length + 1).padStart(2,"0")}</span>
+          <span class="case-neighbor-title">${esc(L(prev.title))}</span>
+        </a>
+        <a class="case-neighbor next" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}">
+          <span class="mono muted">${esc(T("next"))} · ${String((i + 1) % S.projects.length + 1).padStart(2,"0")} →</span>
+          <span class="case-neighbor-title">${esc(L(next.title))}</span>
+        </a>
+      </nav>`;
     document.title = `${L(p.title)} — ${S.name}`;
     observe();
     setupVideos();
