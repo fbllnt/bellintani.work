@@ -688,23 +688,66 @@
   function setupFlips(p) {
     let i = 0;
     p.gallery.forEach(it => { if (!it.flip) return;
-      const box = caseEl.querySelectorAll(".flip")[i++], img = box.querySelector(".fig .ph > img"), cap = box.querySelector(".flip-cap"), btns = [...box.querySelectorAll(".flip-thumbs button")];
-      let cur = 0;
-      const go = k => {
-        k = (k + it.flip.length) % it.flip.length; if (k === cur) return;
-        const d = k > cur ? 1 : -1; cur = k;
-        const set = () => { img.src = it.flip[k].src; img.alt = L(it.flip[k].caption) || ""; cap.textContent = L(it.flip[k].caption) || ""; };
+      const box = caseEl.querySelectorAll(".flip")[i++], img = box.querySelector(".fig .ph > img"),
+        cap = box.querySelector(".flip-cap"), btns = [...box.querySelectorAll(".flip-thumbs button")];
+      let cur = 0, animating = false, visible = false, hover = false, userUntil = 0, lastChange = performance.now();
+      const go = (k, manual = false) => {
+        k = (k + it.flip.length) % it.flip.length;
+        if (manual) userUntil = performance.now() + 9000;
+        if (k === cur || animating) return;
+        const d = k > cur ? 1 : -1, item = it.flip[k]; cur = k;
+        lastChange = performance.now();
+        const set = () => {
+          img.src = item.src; img.alt = L(item.caption) || "";
+          cap.textContent = L(item.caption) || "";
+        };
         btns.forEach((b, j) => b.setAttribute("aria-pressed", String(j === k)));
         if (reduced) { set(); return; }
-        // Page turn: the current image slides out, the next slides in from the side it comes from
-        img.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: `translateX(${-d * 6}%)` }], { duration: 220, easing: "ease-in" }).finished.then(() => {
-          set(); img.animate([{ opacity: 0, transform: `translateX(${d * 6}%)` }, { opacity: 1, transform: "none" }], { duration: 480, easing: "cubic-bezier(.11,.82,.39,.92)" });
-        });
+        animating = true;
+        // Gentle lateral slide with no flash between images.
+        img.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: `translateX(${-d * 5}%)` }],
+          { duration: 230, easing: "ease-in", fill: "forwards" }).finished.then(() => {
+            if (!box.isConnected) return;
+            set();
+            return img.animate([{ opacity: 0, transform: `translateX(${d * 5}%)` }, { opacity: 1, transform: "none" }],
+              { duration: 420, easing: "cubic-bezier(.11,.82,.39,.92)", fill: "forwards" }).finished;
+          }).catch(() => {}).finally(() => { animating = false; });
       };
-      btns.forEach((b, j) => b.addEventListener("click", () => go(j)));
+      btns.forEach((b, j) => b.addEventListener("click", () => go(j, true)));
       const main = box.querySelector(".fig .ph");
-      main.addEventListener("click", () => go(cur + 1));
-      box.addEventListener("keydown", e => { if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1); } if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1); } });
+      main.setAttribute("tabindex", "0");
+      main.setAttribute("role", "button");
+      main.setAttribute("aria-label", L({ en: "Next gallery image", pt: "Próxima imagem da galeria" }));
+      main.addEventListener("click", () => go(cur + 1, true));
+      box.addEventListener("keydown", e => {
+        if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1, true); }
+        if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1, true); }
+        if ((e.key === "Enter" || e.key === " ") && e.target === main) { e.preventDefault(); go(cur + 1, true); }
+      });
+      let swipeX = null;
+      main.addEventListener("touchstart", e => { if (e.touches.length === 1) swipeX = e.touches[0].clientX; }, { passive: true });
+      main.addEventListener("touchend", e => {
+        if (swipeX === null || !e.changedTouches.length) return;
+        const dx = e.changedTouches[0].clientX - swipeX; swipeX = null;
+        if (Math.abs(dx) > 38) go(cur + (dx < 0 ? 1 : -1), true);
+      }, { passive: true });
+      box.addEventListener("pointerenter", () => { hover = true; });
+      box.addEventListener("pointerleave", () => { hover = false; });
+      const io = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
+        visible = entries.some(e => e.isIntersecting && e.intersectionRatio >= .25);
+      }, { threshold: [.25] }) : null;
+      if (io) io.observe(box); else visible = true;
+      // Every thumbnail gallery advances, but only while actually visible.
+      // Hover/focus/manual navigation pauses it; reduced-motion preferences are honored.
+      if (!reduced && it.flip.length > 1) {
+        const timer = setInterval(() => {
+          if (!box.isConnected) { clearInterval(timer); io?.disconnect(); return; }
+          const now = performance.now();
+          if (!visible || hover || document.hidden || box.contains(document.activeElement) ||
+              now < userUntil || animating || now - lastChange < 5200) return;
+          go(cur + 1);
+        }, 900);
+      }
       it.flip.slice(1).forEach(t => { const im = new Image(); im.src = t.src; });
     });
   }
