@@ -635,7 +635,7 @@ window.SITE = {
         { chapter: { en: "01 · Opening", pt: "01 · Abertura" }, kicker: { en: "TV Globo · 2017", pt: "TV Globo · 2017" },
           head: { en: "From familiar faces to *pop stars.*", pt: "Dos rostos conhecidos às *estrelas da música.*" },
           text: { en: "The opening connects the show's central idea with the energy of a live music performance: 14 familiar faces step out of their usual roles and into the spotlight.", pt: "A abertura traduz a premissa do programa em energia de show ao vivo: 14 nomes conhecidos deixam seus papéis habituais para ocupar o centro do palco." } },
-        { chapter: { en: "02 · Visual identity", pt: "02 · Identidade visual" }, kicker: { en: "Symbol · Wordmark", pt: "Símbolo · Logotipo" },
+        { fullWidthIntro: true, chapter: { en: "02 · Visual identity", pt: "02 · Identidade visual" }, kicker: { en: "Symbol · Wordmark", pt: "Símbolo · Logotipo" },
           head: { en: "The star starts *with a line.*", pt: "A estrela começa *com uma linha.*" },
           text: { en: "Simple strokes outline the star and staff-like graphic, setting up the foundation for the PopStar wordmark and the full on-screen identity.", pt: "Traços simples desenham a estrela sobre uma estrutura gráfica que remete à pauta musical. O símbolo abre caminho para o logotipo PopStar e para a identidade em movimento." } },
         { flipWide: true, flip: [
