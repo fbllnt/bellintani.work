@@ -57,6 +57,9 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Never cut any part of an image, anywhere on the site (galleries, home cards, sequences, photo tiles,
   thumbnails, full screen; desktop and phone). Use `object-fit: contain`, never `cover`, and no zoom-in
   (`scale` > 1) or parallax shift of an image inside its frame.
+- Pointer effects (Felipe, Oct 28 2026: "manter sem cortar"): move the whole piece (`.ph`, frame and image together),
+  never the image inside it, and at most 3px so it never reaches a neighbour (`case-depth`, CoreHi). Living gradients
+  are drawn as a `coverFlow` colour layer over the still, never by zooming the image (Globo cover and degradê).
 - Gallery images get breathing room: they sit inside their frame with the `--breathe` margin of white page around them (no grey frames: Felipe said "sem cinza").
 - No image may cover part of another: gallery items don't drift on scroll, and `unstack()` in main.js pushes
   down any item a negative `shift` pulls over an earlier one.

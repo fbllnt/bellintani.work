@@ -523,7 +523,7 @@
         ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
         <canvas data-tunnel="${esc(it.tunnel.word)}" data-bg="${esc(it.tunnel.bg || "#000")}" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"></canvas>
       </div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
-    return `<figure class="fig ${it.size || "full"}${it.gradientMotion ? " gradient-motion" : ""}${it.popstarInvert ? " popstar-invert" : ""}${it.corehiInteractive ? " corehi-interactive" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
+    return `<figure class="fig ${it.size || "full"}${it.popstarInvert ? " popstar-invert" : ""}${it.corehiInteractive ? " corehi-interactive" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
       it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""}${it.offset ? ` data-offset="${+it.offset}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
           <source src="${esc(it.video)}" type="video/mp4">${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}</video>
         <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button><button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
@@ -533,7 +533,7 @@
       // `msrc` + `mar`: a version drawn for phones (e.g. a wide diagram stacked into one column)
       : it.src && it.msrc ? `<picture><source media="(max-width:760px)" srcset="${esc(it.msrc)}"><img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy"></picture>`
       : it.src ? `<img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy">` : cover(it.art, p)
-    }</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
+    }${it.coverFlow && p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
   }
 
   // Logo wall: every mark sits black on white so thirty clients read as one body of work.
@@ -777,10 +777,10 @@
       it.flip.slice(1).forEach(t => { const im = new Image(); im.src = t.src; });
     });
   }
-  // coverFlow: the colour fields lean towards the pointer, each at its own depth (CSS eases the move).
+  // coverFlow (cover, and gallery items with `coverFlow: true`): the colour fields lean towards the pointer, each at its own depth (CSS eases the move).
   function setupCoverFlow() {
-    const flow = caseEl.querySelector(".cover-flow");
-    if (!flow || !matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+    if (!matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+    caseEl.querySelectorAll(".cover-flow").forEach(flow => {
     const stage = flow.parentElement;
     stage.addEventListener("pointermove", e => {
       const r = stage.getBoundingClientRect();
@@ -792,12 +792,13 @@
       flow.style.setProperty("--cf-mx", 0);
       flow.style.setProperty("--cf-my", 0);
     });
+    });
   }
 
   // Globo gradients: the pointer gently pulls the colours, without visual overlays.
   function setupGloboWaves(p) {
     if (L(p.title) !== "Globo" || reduced) return;
-    caseEl.querySelectorAll(".gradient-motion .ph, .globo-palette-swatch").forEach(stage => {
+    caseEl.querySelectorAll(".globo-palette-swatch").forEach(stage => {
       let raf = 0, targetX = 0, targetY = 0, x = 0, y = 0;
       const image = stage.querySelector(":scope > img");
       const animate = () => {
@@ -1007,17 +1008,18 @@
     // Selected hero images respond to pointer movement with restrained depth.
     // Exclude artwork with existing interactions, motion, and CoreHi's approved behavior.
     if(!reduced && matchMedia("(hover:hover) and (pointer:fine)").matches){
-      caseEl.querySelectorAll(".case-gallery .fig:not(.corehi-interactive):not(.popstar-invert):not(.gradient-motion):not(.cinema-finale)").forEach(figure=>{
+      caseEl.querySelectorAll(".case-gallery .fig:not(.corehi-interactive):not(.popstar-invert):not(.cinema-finale)").forEach(figure=>{
         if(figure.closest(".flip, .rooms, .scrub, .mods, .jrow.stack-m"))return;
         const stage=figure.querySelector(".ph"), img=stage?.querySelector(":scope > img");
-        if(!img || stage.querySelector("video, canvas, .vctl"))return;
+        if(!img || stage.querySelector("video, canvas, .vctl, .cover-flow"))return;
+        // The whole piece moves (never the image inside its frame, which would crop it), at most 3px so it never reaches a neighbour.
         figure.classList.add("case-depth");
-        stage.addEventListener("pointermove",e=>{
-          const r=stage.getBoundingClientRect();
-          stage.style.setProperty("--depth-x",(((e.clientX-r.left)/r.width-.5)*9).toFixed(2)+"px");
-          stage.style.setProperty("--depth-y",(((e.clientY-r.top)/r.height-.5)*7).toFixed(2)+"px");
+        figure.addEventListener("pointermove",e=>{
+          const r=figure.getBoundingClientRect();
+          stage.style.setProperty("--depth-x",(((e.clientX-r.left)/r.width-.5)*6).toFixed(2)+"px");
+          stage.style.setProperty("--depth-y",(((e.clientY-r.top)/r.height-.5)*5).toFixed(2)+"px");
         },{passive:true});
-        stage.addEventListener("pointerleave",()=>{
+        figure.addEventListener("pointerleave",()=>{
           stage.style.setProperty("--depth-x","0px");
           stage.style.setProperty("--depth-y","0px");
         });
@@ -1050,9 +1052,9 @@
       });
       if (!reduced && matchMedia("(hover: hover) and (pointer: fine)").matches) {
         stage.addEventListener("pointermove", e => {
-          const r = stage.getBoundingClientRect();
-          stage.style.setProperty("--core-x", (((e.clientX-r.left)/r.width - .5)*18).toFixed(2)+"px");
-          stage.style.setProperty("--core-y", (((e.clientY-r.top)/r.height - .5)*12).toFixed(2)+"px");
+          const r = figure.getBoundingClientRect();
+          stage.style.setProperty("--core-x", (((e.clientX-r.left)/r.width - .5)*6).toFixed(2)+"px");
+          stage.style.setProperty("--core-y", (((e.clientY-r.top)/r.height - .5)*5).toFixed(2)+"px");
         }, {passive:true});
         stage.addEventListener("pointerleave", () => {
           stage.style.setProperty("--core-x","0px");

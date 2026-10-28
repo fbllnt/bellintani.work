@@ -256,7 +256,7 @@ window.SITE = {
           pills: [{ en: "One screen → many", pt: "Uma tela → múltiplas" }, { en: "Monologue → conversation", pt: "Monólogo → conversa" }, { en: "Solidity → lightness", pt: "Solidez → leveza" }, { en: "Linear → non-linear", pt: "Linear → não-linear" }, { en: "Certainty → beta", pt: "Certeza → beta" }, { en: "*Me → us", pt: "*Eu → nós" }] },
         // The living colour gradient leads the section; the diagram is enlarged below,
         // aligned to the right-hand media rail rather than squeezed next to the gradient.
-        { src: "images/globo/degrade.jpg", ar: "2000/1250", col: 1, span: 12, gradientMotion: true, caption: { en: "Colours meet and merge in endless gradients", pt: "As cores se aproximam e se fundem em infinitos degradês" } },
+        { src: "images/globo/degrade.jpg", ar: "2000/1250", col: 1, span: 12, coverFlow: true, caption: { en: "Colours meet and merge in endless gradients", pt: "As cores se aproximam e se fundem em infinitos degradês" } },
         { src: "images/globo/movimento-diagrama.png", ar: "1854/1577", col: 1, span: 12, caption: { en: "Movement and its meanings", pt: "Movimento e seus grupos de significados" } },
         { grid: "trilho", chapter: { en: "04 · System", pt: "04 · Sistema" }, kicker: { en: "Logo · graphics · colour", pt: "Logo · grafismos · cores" },
           head: { en: "A new design system for the *network.*", pt: "Um novo sistema de design para a *emissora.*" },
