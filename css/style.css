@@ -192,7 +192,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .themed .corners > *{color:var(--fg)}
 .case-top{display:flex;justify-content:space-between;gap:16px;padding-top:calc(clamp(70px,9vw,110px) + env(safe-area-inset-top,0px))}
 /* A title shrinks below its usual size only when its longest word would not fit the page width */
-.case-title{--fit:calc((100vw - 2 * var(--side)) / (var(--longest,1) * .66));margin:clamp(24px,4vw,48px) 0 0;font:900 clamp(min(52px,var(--fit)),min(12.5vw,var(--fit)),240px)/.86 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere}
+.case-title{color:var(--title,var(--fg));--fit:calc((100vw - 2 * var(--side)) / (var(--longest,1) * .66));margin:clamp(24px,4vw,48px) 0 0;font:900 clamp(min(52px,var(--fit)),min(12.5vw,var(--fit)),240px)/.86 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere}
 .case-title .letters{display:flex;flex-wrap:wrap}
 .case-title .w{display:inline-flex;white-space:nowrap}
 .case-title .w > span{display:inline-block;animation:rise .6s var(--over) both .12s}

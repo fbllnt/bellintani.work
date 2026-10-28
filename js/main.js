@@ -725,8 +725,9 @@
     return html;
   }
 
-  // A project can bring its own colours: theme: { bg, fg, mute, line, panel, accent }. White page otherwise.
-  const THEME_VARS = { bg: "--bg", fg: "--fg", mute: "--mute", line: "--line", panel: "--panel", accent: "--blue" };
+  // A project can bring its own colours: theme: { bg, fg, mute, line, panel, accent, title }. White page otherwise.
+  // `title` colours only the big project name (Dirty Projectors: the poster's cyan, Felipe Oct 28 2026).
+  const THEME_VARS = { bg: "--bg", fg: "--fg", mute: "--mute", line: "--line", panel: "--panel", accent: "--blue", title: "--title" };
   function applyTheme(t) {
     const root = document.documentElement;
     Object.entries(THEME_VARS).forEach(([k, v]) => t && t[k] ? root.style.setProperty(v, t[k]) : root.style.removeProperty(v));

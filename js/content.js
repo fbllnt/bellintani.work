@@ -859,12 +859,13 @@ window.SITE = {
       sector: { en: "Concert venue, São Paulo", pt: "Casa de shows, São Paulo" },
       deliverables: { en: "Poster, lettering, versions and social posts", pt: "Pôster, lettering, versões e posts para redes" },
       tags: { en: ["GigPoster", "Lettering", "Music"], pt: ["PôsterDeShow", "Lettering", "Música"] },
-      // The poster's own colours: cream paper, navy ink, red and cyan faces
-      theme: { bg: "#f6f5ec", fg: "#14143a", mute: "#6d6d7e", line: "#dedbcc", panel: "#ecead9", accent: "#ec163c" },
+      // The poster's own colours: cream paper, navy ink, red and cyan faces; the title in the poster's cyan (Felipe, Oct 28 2026)
+      theme: { bg: "#f6f5ec", fg: "#14143a", mute: "#6d6d7e", line: "#dedbcc", panel: "#ecead9", accent: "#ec163c", title: "#00adef" },
       tools: ["Adobe CC"],
-      image: "images/dirty-projectors/cover.jpg",
+      // Cover: the signed poster framed on Felipe's wall (Felipe, Oct 28 2026); the old lettering cover is kept as cover.jpg
+      image: "images/dirty-projectors/cover-signed.jpg",
       hero: "bleed",
-      heroAr: "1920/1080",
+      heroAr: "2500/1359",
       summary: {
         en: "Poster for Dirty Projectors at Cine Joia, São Paulo, 30.11.12. Two faces, one cyan and one red, and the band's name in angular, cut-out letters. The band signed it.",
         pt: "Pôster do show do Dirty Projectors no Cine Joia, São Paulo, 30.11.12. Dois rostos, um azul e um vermelho, e o nome da banda em letras angulosas, de recorte. A banda autografou.",
@@ -875,19 +876,18 @@ window.SITE = {
         { chapter: { en: "01 · The poster", pt: "01 · O pôster" }, kicker: { en: "Cine Joia presents · 30.11.12", pt: "Cine Joia apresenta · 30.11.12" },
           head: { en: "Two faces, *one show.*", pt: "Dois rostos, *um show.*" },
           text: { en: "A cyan face and a red face meet in the middle, eyes wide, a tear running. Flat colours on cream paper, and the band's name stacked in the corner.", pt: "Um rosto azul e um vermelho se encontram no meio, olhos arregalados, uma lágrima caindo. Cores chapadas sobre papel creme, e o nome da banda empilhado no canto." } },
-        { src: "images/dirty-projectors/poster.jpg", ar: "1337/1964" },
+        // The art and the printed poster side by side, one row filling the column (no empty side)
+        { src: "images/dirty-projectors/poster.jpg", ar: "1337/1964", col: 1, span: 6 },
+        { src: "images/dirty-projectors/poster-room.jpg", ar: "800/991", col: 7, span: 6, caption: { en: "Printed", pt: "Impresso" } },
         { chapter: { en: "02 · Lettering", pt: "02 · Lettering" }, kicker: "DIRTY / PROJE / CTORS", grid: "modulos", cols: 3, cell: "3/5", bare: true,
           head: { en: "Letters with *sharp edges.*", pt: "Letras de *corte seco.*" },
-          text: { en: "The name broken into three lines and drawn in angular, uneven letters, tried in red, cyan and navy.", pt: "O nome quebrado em três linhas e desenhado em letras angulosas e irregulares, testadas em vermelho, azul e marinho." } },
+          text: { en: "The name broken into three lines and drawn in angular, uneven letters, in red and cyan.", pt: "O nome quebrado em três linhas e desenhado em letras angulosas e irregulares, em vermelho e azul." } },
+        // Second row of studies (red/cyan Cinejoia, navy, navy 3D) removed (Felipe, Oct 28 2026); files kept in images/dirty-projectors/
         { src: "images/dirty-projectors/type-02.jpg", ar: "879/1392" },
         { src: "images/dirty-projectors/type-01.jpg", ar: "879/1392" },
         { src: "images/dirty-projectors/tshirt-01.jpg", ar: "843/1520" },
-        { src: "images/dirty-projectors/tshirt-02.jpg", ar: "843/1521" },
-        { src: "images/dirty-projectors/type-03.jpg", ar: "887/1396" },
-        { src: "images/dirty-projectors/type-color-02.jpg", ar: "861/1532" },
         { chapter: { en: "03 · Print", pt: "03 · Impressão" }, kicker: { en: "On paper", pt: "No papel" }, grid: "destaque",
           head: { en: "Off the press, *in a pile.*", pt: "Na mão, *aos montes.*" } },
-        { src: "images/dirty-projectors/poster-room.jpg", ar: "800/991" },
         { src: "images/dirty-projectors/print-01.jpg", ar: "2000/1494" },
         { src: "images/dirty-projectors/print-02.jpg", ar: "2000/1494" },
         { src: "images/dirty-projectors/print-detail.jpg", ar: "1280/594" },
