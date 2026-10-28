@@ -223,9 +223,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-meta dd{margin:0;font-weight:400}
 .fig{margin:0}
 .fig .ph{position:relative;overflow:hidden}
-.fig .ph > :is(img,video,.art){position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain;transform:scale(.97);transition:transform 1.4s var(--ease)}
+.fig .ph > :is(img,video,.art),.fig .ph > picture > img{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain;transform:scale(.97);transition:transform 1.4s var(--ease)}
 .fig .ph > .art{inset:0;width:100%;height:100%}
-.fig.in .ph > :is(img,video,.art){transform:none}
+.fig.in .ph > :is(img,video,.art),.fig.in .ph > picture > img{transform:none}
 .fig video{cursor:pointer}
 .fig .ph > canvas{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain;background:#000;cursor:grab;touch-action:pan-y}
 .fig .ph > canvas.grabbing{cursor:grabbing}
@@ -244,6 +244,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fsbtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .fig figcaption{margin-top:8px}
 .fig .ph{aspect-ratio:var(--ar);max-width:100%}
+.fig picture{display:contents}
+@media (max-width:760px){ .fig .ph{aspect-ratio:var(--mar,var(--ar))} }
 .fig.full{--ar:16/9}
 .fig.half{--ar:4/5}
 .fig.third,.fig.quarter{--ar:3/4}
