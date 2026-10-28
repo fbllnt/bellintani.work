@@ -516,7 +516,7 @@
         ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
         <canvas data-tunnel="${esc(it.tunnel.word)}" data-bg="${esc(it.tunnel.bg || "#000")}" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"></canvas>
       </div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
-    return `<figure class="fig ${it.size || "full"}${it.gradientMotion ? " gradient-motion" : ""}${it.popstarInvert ? " popstar-invert" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
+    return `<figure class="fig ${it.size || "full"}${it.gradientMotion ? " gradient-motion" : ""}${it.popstarInvert ? " popstar-invert" : ""}${it.corehiInteractive ? " corehi-interactive" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
       it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""}${it.offset ? ` data-offset="${+it.offset}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
           <source src="${esc(it.video)}" type="video/mp4">${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}</video>
         <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button><button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
@@ -1018,6 +1018,43 @@
     setupScrub();
     setupLomo();
     if (p.gallery) { setupFlips(p); setupRooms(p); }
+    // CoreHi identity specimen: follow the pointer gently and toggle the original
+    // light/dark artwork with a single click, no new assets or dependencies.
+    caseEl.querySelectorAll(".corehi-interactive").forEach(figure => {
+      const stage = figure.querySelector(".ph"), image = stage?.querySelector("img");
+      if (!stage || !image) return;
+      const light = "images/corehi/icon-light.jpg", dark = "images/corehi/icon-dark.jpg";
+      let alternate = false;
+      stage.setAttribute("role", "button");
+      stage.setAttribute("tabindex", "0");
+      stage.setAttribute("aria-label", L({ en: "Toggle CoreHi symbol light and dark", pt: "Alternar símbolo CoreHi claro e escuro" }));
+      stage.setAttribute("aria-pressed", "false");
+      const hint = document.createElement("span");
+      hint.className = "corehi-hint mono";
+      hint.textContent = L({ en: "MOVE TO EXPLORE · CLICK TO SWITCH", pt: "MOVA PARA EXPLORAR · CLIQUE PARA ALTERNAR" });
+      stage.appendChild(hint);
+      const toggle = () => {
+        alternate = !alternate;
+        image.src = alternate ? dark : light;
+        stage.setAttribute("aria-pressed", String(alternate));
+      };
+      stage.addEventListener("click", toggle);
+      stage.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+      });
+      if (!reduced && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        stage.addEventListener("pointermove", e => {
+          const r = stage.getBoundingClientRect();
+          stage.style.setProperty("--core-x", (((e.clientX-r.left)/r.width - .5)*18).toFixed(2)+"px");
+          stage.style.setProperty("--core-y", (((e.clientY-r.top)/r.height - .5)*12).toFixed(2)+"px");
+        }, {passive:true});
+        stage.addEventListener("pointerleave", () => {
+          stage.style.setProperty("--core-x","0px");
+          stage.style.setProperty("--core-y","0px");
+        });
+      }
+    });
+
     setupMotion(p);
     setupGloboWaves(p);
     inkAlign(caseEl);
