@@ -1272,6 +1272,35 @@
   addEventListener("keydown", e => { if (e.key === "Escape" && !music.hidden) openMusic(false); });
   document.addEventListener("click", e => { if (!music.hidden && !music.contains(e.target) && !musicBtn.contains(e.target)) openMusic(false); });
 
+  // Curated listening queue from the existing project soundtrack. Choosing a track is explicit:
+  // Spotify embeds control playback and may require the listener to press Play / sign in.
+  const soundtrack = [{ project: { en: "Home", pt: "Início" }, track: S.homeTrack }, ...S.projects.filter(p => p.track).map(p => ({ project: p.title, track: p.track }))];
+  const listEl = $("music-tracklist");
+  $("music-list-count").textContent = String(soundtrack.length).padStart(2, "0") + " TRACKS";
+  $("music-list-label").textContent = L({ en: "PORTFOLIO SOUNDTRACK", pt: "TRILHA DO PORTFÓLIO" });
+  const renderSoundtrack = () => {
+    listEl.innerHTML = soundtrack.map(({ project, track }, i) => `<button class="music-track${loaded && loaded.id === track.id ? " active" : ""}" type="button" data-track="${i}" aria-pressed="${String(!!loaded && loaded.id === track.id)}">
+      <span class="music-track-index mono">${String(i + 1).padStart(2, "0")}</span>
+      <span class="music-track-info"><b>${esc(track.name)}</b><small>${esc(track.by)} · ${esc(L(project))}</small></span>
+      <span class="music-track-play" aria-hidden="true">${loaded && loaded.id === track.id ? "♫" : "↗"}</span>
+    </button>`).join("");
+  };
+  listEl.addEventListener("click", e => {
+    const row = e.target.closest("button[data-track]");
+    if (!row) return;
+    const item = soundtrack[Number(row.dataset.track)];
+    if (!item) return;
+    if (!loaded || loaded.id !== item.track.id) loadSong(item.track);
+    syncMusic();
+    renderSoundtrack();
+  });
+  const previousOpenMusic = musicBtn.onclick;
+  musicBtn.onclick = () => { previousOpenMusic(); if (!music.hidden) renderSoundtrack(); };
+  const previousSwapMusic = musicSwap.onclick;
+  musicSwap.onclick = () => { previousSwapMusic(); renderSoundtrack(); };
+  // Keep the queue highlight aligned when the visitor returns to an open panel.
+  listEl.setAttribute("role", "group");
+
   const first = projectFromHash();
   if (first >= 0) { finish(); openCase(first, false); }
   else if (reduced || resumeY !== null) finish(); else play();
