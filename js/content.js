@@ -603,7 +603,7 @@ window.SITE = {
           { src: "images/cinema-especial/color-06.jpg", ar: "16/9", caption: { en: "Colour version — 06/07", pt: "Versão colorida — 06/07" } },
           { src: "images/cinema-especial/color-07.jpg", ar: "16/9", caption: { en: "Colour version — 07/07", pt: "Versão colorida — 07/07" } }
         ], cols: 7, col: 1, span: 12 },
-        { chapter: { en: "05 · Opening", pt: "05 · Abertura" }, kicker: { en: "Globo's movie slot", pt: "A faixa de filmes da Globo" }, grid: "fluxo",
+        { fullWidthIntro: true, chapter: { en: "05 · Opening", pt: "05 · Abertura" }, kicker: { en: "Globo's movie slot", pt: "A faixa de filmes da Globo" }, grid: "fluxo",
           head: { en: "Ink, old film and the *hero of the night.*", pt: "Tinta, película antiga e o *herói da noite.*" },
           text: { en: "Ink spreads over old film stock, the featured film's hero surfaces from the stains, and the title lands before the Globo mark closes.", pt: "A tinta se espalha sobre película antiga, o herói do filme da noite surge das manchas e o título entra antes da marca Globo fechar." } },
         { size: "cinema-finale", video: "images/cinema-especial/opening.mp4", webm: "images/cinema-especial/opening.webm", poster: "images/cinema-especial/opening-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Opening — 7s preview", pt: "Abertura — prévia de 7s" } },
