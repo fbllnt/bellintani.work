@@ -1,0 +1,33 @@
+name: Assemble PopStar opening video
+on:
+  push:
+    branches:
+      - popstar-inline-player-ready-20261028
+    paths:
+      - '.github/workflows/assemble-popstar-opening.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-media:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Reassemble previously uploaded video
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p images/popstar
+          cat .media-staging/popstar-opening/part-*.txt | base64 --decode > images/popstar/opening.mp4
+          test "$(stat -c%s images/popstar/opening.mp4)" -eq 11108581
+          ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height -of default=noprint_wrappers=1 images/popstar/opening.mp4
+          rm -rf .media-staging/popstar-opening
+          git config user.name "portfolio-media-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A .media-staging/popstar-opening images/popstar/opening.mp4
+          git commit -m "Publish optimized PopStar H264 opening"
+          git push origin HEAD:popstar-inline-player-ready-20261028
