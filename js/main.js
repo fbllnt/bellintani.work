@@ -48,13 +48,7 @@
     });
   });
 
-  // ---------- Work order (Felipe, Oct 27 2026) ----------
-  // Seja ANTI always first, Logofolio always last; everything in between is shuffled on each visit.
-  if (S.projects.length > 3) {
-    const mid = S.projects.slice(1, -1);
-    for (let i = mid.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [mid[i], mid[j]] = [mid[j], mid[i]]; }
-    S.projects = [S.projects[0], ...mid, S.projects[S.projects.length - 1]];
-  }
+  // Work order (Felipe, Oct 28 2026): fixed, exactly the order of `projects` in content.js (no shuffle).
 
   // ---------- Bind copy ----------
   const binds = {
@@ -106,27 +100,17 @@
   S.projects.forEach(p => { p.slug = p.slug || String(p.title.en || p.title).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); });
   const href = p => `#p-${p.slug}`;
 
-  // ---------- Work: index + grid ----------
-  const index = $("index"), grid = $("grid");
+  // ---------- Work: index (the only view; Felipe dropped the Grid view, Oct 28 2026) ----------
+  const index = $("index");
   index.innerHTML = S.projects.map((p, i) => `<li><a href="${href(p)}" data-i="${i}">
     <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono">${esc(L(p.scope))}${p.year ? ` — ${esc(p.year)}` : ""}${tagFor(p)}</span></a></li>`).join("");
-  grid.innerHTML = S.projects.map((p, i) => `<a class="card" href="${href(p)}"><div class="ph">${cover(i, p)}</div>
-    <div class="row"><b>${esc(L(p.title))}</b><span class="mono">(${i + 1})</span></div>
-    <span class="mono muted">${esc(L(p.scope))}${p.year ? ` — ${esc(p.year)}` : ""}${tagFor(p)}</span></a>`).join("");
 
-  const works = document.querySelector(".works"), vIndex = $("view-index"), vGrid = $("view-grid");
-  const setView = asGrid => {
-    works.classList.toggle("as-grid", asGrid);
-    vIndex.setAttribute("aria-pressed", !asGrid); vGrid.setAttribute("aria-pressed", asGrid);
-    try { localStorage.setItem("view", asGrid ? "grid" : "index"); } catch (e) {}
-  };
-  vIndex.onclick = () => setView(false); vGrid.onclick = () => setView(true);
-  try { if (localStorage.getItem("view") === "grid") setView(true); } catch (e) {}
+  const works = document.querySelector(".works");
 
   // ---------- Optical left edge ----------
   // Big type starts where its ink starts, not where its side bearing starts, so a huge B or D lines up with the
   // small copy above and below it on the page margin. The bearing is measured once per glyph, in em, so it scales.
-  const INK = ".c-tl, .name, .loader .ln:not(.boom), .tag b, .h2, .index .t, .card .row b, .big, .case-title, .chap-h, .ltext, .swap-ba b, .case-stats b, .credits-intro, .cend b";
+  const INK = ".c-tl, .name, .loader .ln:not(.boom), .tag b, .h2, .index .t, .big, .case-title, .chap-h, .ltext, .swap-ba b, .case-stats b, .credits-intro, .cend b";
   const inkCache = {}, inkCtx = document.createElement("canvas").getContext("2d");
   const inkAlign = (root = document) => root.querySelectorAll(INK).forEach(el => {
     const cs = getComputedStyle(el.querySelector(".word > span, .w > span, .ti") || el);
@@ -1067,10 +1051,9 @@
   // ---------- Work list motion (chosen by Felipe, Oct 2026) ----------
   // Cascade (titles rise from behind a mask, one after another), hover (title slides, number and tags follow;
   // the blue bar itself appears flat, with no animation), open (the row's bar grows to fill the screen while
-  // turning into the project's background colour) and morph (Index <-> Grid: each title flies to its new place).
-  // Reduced motion turns them all off.
+  // turning into the project's background colour). Reduced motion turns them all off.
   const fxOn = !reduced;
-  if (fxOn) works.classList.add("fx-cascade", "fx-hover", "fx-open", "fx-morph");
+  if (fxOn) works.classList.add("fx-cascade", "fx-hover", "fx-open");
 
   // 1. Cascade: runs once the list comes into view
   const rows = [...index.children];
@@ -1080,7 +1063,7 @@
     cio.observe(index);
   } else index.classList.add("in");
 
-  // 3. Open: a blue panel grows from the clicked row (or card) to the whole screen, turning into the project's
+  // 3. Open: a blue panel grows from the clicked row to the whole screen, turning into the project's
   // background colour as it grows; the page renders underneath and the panel fades away
   let grown = false;
   const grow = (from, i) => {
@@ -1101,35 +1084,14 @@
       .then(() => veil.remove());
   };
   works.addEventListener("click", e => {
-    const a = e.target.closest(".index a, .card");
+    const a = e.target.closest(".index a");
     if (!a || !fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
     const i = S.projects.findIndex(p => a.getAttribute("href") === href(p));
     if (i < 0) return;
     e.preventDefault();
-    grow(a.querySelector(".bar") && getComputedStyle(a.querySelector(".bar")).display !== "none" ? a : a.querySelector(".ph") || a, i);
+    grow(a, i);
   });
 
-  // 4. Morph: measure every title, switch the view, then play each one from where it was
-  const viewSwitch = setView;
-  const morph = asGrid => {
-    if (!fxOn || works.classList.contains("as-grid") === asGrid || !works.getBoundingClientRect().height) return viewSwitch(asGrid);
-    const titles = () => [...(works.classList.contains("as-grid") ? grid.querySelectorAll(".row b") : index.querySelectorAll(".ti"))];
-    const before = titles().map(t => t.getBoundingClientRect());
-    viewSwitch(asGrid);
-    index.classList.add("in");
-    const ease = "cubic-bezier(.65,0,.15,1)";
-    titles().forEach((t, i) => {
-      const a = before[i], b = t.getBoundingClientRect();
-      if (!a || (b.bottom < -200 || b.top > innerHeight + 200) && (a.bottom < -200 || a.top > innerHeight + 200)) return;
-      const k = a.height / b.height;
-      t.style.transformOrigin = "0 0";
-      t.animate([{ transform: `translate(${a.left - b.left}px, ${a.top - b.top}px) scale(${k})` }, { transform: "none" }], { duration: 760, easing: ease, delay: i * 25 });
-    });
-    const rest = asGrid ? [...grid.querySelectorAll(".ph, .row .mono, .card > .mono")] : [...index.querySelectorAll("a > .mono, .k")];
-    rest.forEach((el, j) => el.animate([{ opacity: 0, transform: "translateY(14px)" }, { opacity: 1, transform: "none" }], { duration: 520, delay: 320 + j * 12, easing: "ease-out", fill: "backwards" }));
-    if (!asGrid) index.querySelectorAll("li").forEach((li, j) => li.animate([{ borderColor: "transparent" }, { borderColor: "transparent", offset: .4 }, {}], { duration: 900 }));
-  };
-  vIndex.onclick = () => morph(false); vGrid.onclick = () => morph(true);
 
   // ---------- Cursor: a blue ball that drags a thick, flat trail ----------
   // A chain of points, each easing toward the one ahead, drawn as one solid band as wide as the ball.
