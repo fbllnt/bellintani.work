@@ -68,6 +68,13 @@
   $("social-corner").innerHTML = socialLinks;
   $("services-list").innerHTML = L(S.services).map((s, i) => `<li><span>/ ${esc(s)}</span><span>${String(i + 1).padStart(2, "0")}</span></li>`).join("");
 
+  // `coverFlow`: soft colour fields drift over a gradient cover in constant motion. The still stays underneath
+  // (it sets the height and is all that shows with reduced motion). Each field: [x %, y %, size % of width, colour, drift x %, drift y %, seconds].
+  function coverFlow(fields) {
+    return `<div class="cover-flow" aria-hidden="true">${fields.map(([x, y, s, c, dx, dy, t], n) =>
+      `<i style="--cf-x:${x}%;--cf-y:${y}%;--cf-s:${s}%;--cf-c:${c};--cf-dx:${dx}%;--cf-dy:${dy}%;--cf-t:${t}s;--cf-d:-${(t * n / fields.length).toFixed(1)}s"></i>`).join("")}</div>`;
+  }
+
   // ---------- Project covers ----------
   // Real image if the project has one, otherwise a generated placeholder composition.
   function cover(i, p) {
@@ -949,7 +956,7 @@
         : Array.isArray(v) ? v.map(t => t[0] === "*" ? `<span class="ai-tool">${esc(t.slice(1))}<sup>${esc(T("aiMark"))}</sup></span>` : esc(t)).join(", ") : esc(v)}</dd></div>`).join("")}${
         (p.credits || []).map(c => `<div><dt>${esc(L(c.role))}</dt><dd>${c.url ? `<a class="swap" href="${esc(c.url)}" target="_blank" rel="noopener"><span>${esc(c.name)} ↗</span><span>${esc(c.name)} ↗</span></a>` : esc(c.name)}</dd></div>`).join("")}${
         p.link ? `<div class="live"><dt>${esc(T("live"))}</dt><dd><a class="swap" href="${esc(p.link.url)}" target="_blank" rel="noopener"><span>${esc(p.link.label)} ↗</span><span>${esc(p.link.label)} ↗</span></a></dd></div>` : ""}</dl>
-      ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}</div></figure>`}
+      ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
       <section class="case-intro-block${p.stats ? " has-stats" : ""}">
         <div class="case-about">
           <span class="mono muted">${esc(T("about"))}</span>
