@@ -393,10 +393,10 @@
     // { rooms: [{ name: { en, pt }, items: [{ src, ar, caption }, …] }, …], ar } (ar = the stage, pieces are contained in it)
     if (it.rooms) { const f = it.rooms[0].items[0], n0 = it.rooms[0].items.length;
       return `<div class="rooms" style="${style}">
-        <div class="rooms-tabs mono" role="tablist">${it.rooms.map((r, g) => `<button type="button" role="tab" aria-selected="${!g}" data-g="${g}">${esc(L(r.name))}<sup>${r.items.length}</sup></button>`).join("")}</div>
+        <div class="rooms-tabs" role="tablist">${it.rooms.map((r, g) => `<button type="button" role="tab" aria-selected="${!g}" data-g="${g}"><span class="mono">${String(g + 1).padStart(2, "0")}</span>${esc(L(r.name))}</button>`).join("")}</div>
         <figure class="fig rooms-stage" style="--ar:${esc(it.ar || "16/10")}"><div class="ph" tabindex="0"><img src="${esc(f.src)}" alt="${esc(L(f.caption) || "")}" draggable="false"></div></figure>
         <div class="rooms-bar mono"><p class="rooms-cap muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
-          <span class="rooms-count">01 / ${String(n0).padStart(2, "0")}</span>
+          <span class="rooms-dots" aria-hidden="true">${it.rooms[0].items.map((_, k) => `<i${k ? "" : ` class="on"`}></i>`).join("")}</span><span class="rooms-count">01 / ${String(n0).padStart(2, "0")}</span>
           <span class="roll-arrows"><button type="button" class="rooms-prev" aria-label="${esc(T("prev"))}">←</button><button type="button" class="rooms-next" aria-label="${esc(T("nextItem"))}">→</button></span></div></div>`; }
     if (it.flip) { const f = it.flip[0];
       return `<div class="flip" style="${style}${it.cols ? `;--n:${+it.cols}` : ""}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
@@ -625,7 +625,7 @@
     let i = 0;
     p.gallery.forEach(it => { if (!it.rooms) return;
       const box = caseEl.querySelectorAll(".rooms")[i++], ph = box.querySelector(".rooms-stage .ph"), img = ph.querySelector("img"),
-        cap = box.querySelector(".rooms-cap"), count = box.querySelector(".rooms-count"), tabs = [...box.querySelectorAll(".rooms-tabs button")];
+        cap = box.querySelector(".rooms-cap"), count = box.querySelector(".rooms-count"), dots = box.querySelector(".rooms-dots"), tabs = [...box.querySelectorAll(".rooms-tabs button")];
       let g = 0, cur = 0;
       const pad2 = n => String(n).padStart(2, "0");
       const show = (ng, k, d) => {
@@ -634,6 +634,7 @@
         g = ng; cur = k; const t = list[k];
         tabs.forEach((b, j) => b.setAttribute("aria-selected", String(j === g)));
         count.textContent = `${pad2(k + 1)} / ${pad2(list.length)}`;
+        dots.innerHTML = list.map((_, j) => `<i${j === k ? ` class="on"` : ""}></i>`).join("");
         const set = () => { img.src = t.src; img.alt = L(t.caption) || ""; cap.textContent = L(t.caption) || ""; };
         if (reduced) { set(); return; }
         img.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: `translateX(${-d * 6}%)` }], { duration: 200, easing: "ease-in" }).finished.then(() => {

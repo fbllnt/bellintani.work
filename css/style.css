@@ -508,12 +508,18 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .flip-thumbs button:focus-visible{outline:2px solid var(--blue)}
 .flip-thumbs img{width:100%;height:100%;object-fit:contain}
 /* The large image and its thumbnails fit on one screen together */
-.rooms-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--gap)}
-.rooms-tabs button{all:unset;cursor:pointer;padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--mute);transition:background .2s,color .2s,border-color .2s}
-.rooms-tabs button sup{margin-left:4px;font-size:.75em}
-.rooms-tabs button:hover{color:var(--fg);border-color:var(--fg)}
-.rooms-tabs button[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:var(--bg)}
+/* Group tabs read as navigation, not as tags: big numbered labels on one rule, the open one underlined in blue */
+.rooms-tabs{display:flex;flex-wrap:wrap;gap:0 clamp(16px,2.4vw,36px);border-bottom:1px solid var(--line);margin-bottom:var(--gap)}
+.rooms-tabs button{all:unset;cursor:pointer;display:flex;align-items:baseline;gap:8px;padding:10px 0 12px;margin-bottom:-1px;border-bottom:3px solid transparent;
+  font-family:Figtree,sans-serif;font-weight:700;font-size:clamp(17px,1.5vw,22px);letter-spacing:-.01em;color:var(--mute);transition:color .2s,border-color .2s}
+.rooms-tabs button .mono{font-size:12px;font-weight:400;letter-spacing:0}
+.rooms-tabs button:hover{color:var(--fg)}
+.rooms-tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--blue)}
+.rooms-tabs button[aria-selected="true"] .mono{color:var(--blue)}
 .rooms-tabs button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.rooms-dots{display:flex;gap:6px}
+.rooms-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);transition:background .2s}
+.rooms-dots i.on{background:var(--blue)}
 .rooms-stage .ph{cursor:pointer;touch-action:pan-y}
 .rooms-stage .ph > img{transition:none;user-select:none}
 .rooms-bar{display:flex;align-items:center;gap:12px;margin-top:10px}
