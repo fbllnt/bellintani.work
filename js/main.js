@@ -409,6 +409,7 @@
         if (grid === "trilho") { side = ch.replace('class="chap"', 'class="chap tr"'); return; }
         // Cartaz: the headline runs huge across all 12 columns; label and text sit below it as usual, pieces keep their rows
         if (grid === "cartaz") { html += ch.replace('class="chap"', 'class="chap cz"'); return; }
+        if (it.fullWidthIntro) { html += ch; return; }
         pend = { html: ch.replace('class="chap"', 'class="chap tr"'), solo: ch };
         return;
       }
