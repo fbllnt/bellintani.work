@@ -8,6 +8,6 @@
   ],
   "assets": {
     "directory": ".",
-    "not_found_handling": "none"
+    "not_found_handling": "404-page"
   }
 }
