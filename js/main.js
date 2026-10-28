@@ -1554,7 +1554,12 @@
   // Keep the queue highlight aligned when the visitor returns to an open panel.
   listEl.setAttribute("role", "group");
   const workInvite = $("work-music-invite");
-  if (workInvite) workInvite.onclick = () => { openMusic(true); renderSoundtrack(); musicBtn.focus(); };
+  if (workInvite) {
+    workInvite.textContent = L({ en: "♪ EXPLORE THE WORK WITH MY CURATED SOUNDTRACK ↗", pt: "♪ EXPLORE OS PROJETOS COM A TRILHA QUE ESCOLHI ↗" });
+    workInvite.onclick = () => { openMusic(true); renderSoundtrack(); musicBtn.focus(); };
+  }
+  const musicInvite = $("music-invite");
+  if (musicInvite) musicInvite.textContent = L({ en: "A SOUNDTRACK FOR EVERY PROJECT. PICK A SONG AND EXPLORE.", pt: "CADA PROJETO TEM SUA TRILHA. ESCOLHA UMA MÚSICA E EXPLORE." });
 
   const first = projectFromHash();
   if (first >= 0) { finish(); openCase(first, false); }
