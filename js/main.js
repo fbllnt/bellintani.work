@@ -770,73 +770,32 @@
       it.flip.slice(1).forEach(t => { const im = new Image(); im.src = t.src; });
     });
   }
-  // Pointer-driven caustic waves for the Globo gradient specimens.
-  // No permanent animation loop: frames are rendered only while the ripples dissipate.
+  // Globo gradients: the pointer gently pulls the colours, without visual overlays.
   function setupGloboWaves(p) {
     if (L(p.title) !== "Globo" || reduced) return;
     caseEl.querySelectorAll(".gradient-motion .ph, .globo-palette-swatch").forEach(stage => {
-      const canvas = stage.querySelector("canvas.globo-wave");
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-      let waves = [], frame = 0, last = 0, bounds = null;
-      const size = () => {
-        bounds = stage.getBoundingClientRect();
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.max(1, Math.round(bounds.width * dpr));
-        canvas.height = Math.max(1, Math.round(bounds.height * dpr));
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      };
-      const tick = now => {
-        frame = 0;
-        if (!stage.isConnected) { waves = []; return; }
-        if (!bounds || !bounds.width || !bounds.height) size();
-        ctx.clearRect(0, 0, bounds.width, bounds.height);
-        waves = waves.filter(w => now - w.t < 1250);
-        for (const w of waves) {
-          const life = Math.min(1, (now - w.t) / 1250);
-          const fade = (1 - life) ** 1.7, radius = 8 + life * Math.max(bounds.width, bounds.height) * .65;
-          const glow = ctx.createRadialGradient(w.x, w.y, Math.max(0, radius - 65), w.x, w.y, radius + 32);
-          glow.addColorStop(0, "rgba(255,255,255,0)");
-          glow.addColorStop(.64, `rgba(255,255,255,${(.14 * fade).toFixed(3)})`);
-          glow.addColorStop(.81, `rgba(255,255,255,${(.28 * fade).toFixed(3)})`);
-          glow.addColorStop(1, "rgba(255,255,255,0)");
-          ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(w.x, w.y, radius + 32, 0, Math.PI * 2); ctx.fill();
-          ctx.lineWidth = 1.6 + 2 * fade;
-          ctx.strokeStyle = `rgba(255,255,255,${(.48 * fade).toFixed(3)})`;
-          ctx.beginPath(); ctx.arc(w.x, w.y, radius * .91, 0, Math.PI * 2); ctx.stroke();
-          ctx.lineWidth = 1;
-          ctx.strokeStyle = `rgba(255,255,255,${(.3 * fade).toFixed(3)})`;
-          ctx.beginPath(); ctx.arc(w.x, w.y, radius * .74, 0, Math.PI * 2); ctx.stroke();
-        }
-        if (waves.length) frame = requestAnimationFrame(tick);
-      };
-      const ripple = e => {
+      let raf = 0, targetX = 0, targetY = 0, x = 0, y = 0;
+      const image = stage.querySelector(":scope > img");
+      const animate = () => {
+        raf = 0;
         if (!stage.isConnected) return;
-        if (!bounds || Math.abs(stage.clientWidth - bounds.width) > 1) size();
-        const x = Math.max(0, Math.min(bounds.width, e.clientX - bounds.left));
-        const y = Math.max(0, Math.min(bounds.height, e.clientY - bounds.top));
-        stage.style.setProperty("--pointer-x", `${(x / bounds.width * 100).toFixed(2)}%`);
-        stage.style.setProperty("--pointer-y", `${(y / bounds.height * 100).toFixed(2)}%`);
-        const now = performance.now();
-        if (now - last < 80) return;
-        last = now;
-        waves.push({ x, y, t: now });
-        if (waves.length > 14) waves.shift();
-        if (!frame) frame = requestAnimationFrame(tick);
+        x += (targetX - x) * .085;
+        y += (targetY - y) * .085;
+        stage.style.setProperty("--globo-x", x.toFixed(2) + "px");
+        stage.style.setProperty("--globo-y", y.toFixed(2) + "px");
+        stage.style.setProperty("--globo-pos-x", (50 + x * .12).toFixed(2) + "%");
+        stage.style.setProperty("--globo-pos-y", (50 + y * .12).toFixed(2) + "%");
+        if (Math.abs(targetX-x)>.15 || Math.abs(targetY-y)>.15) raf=requestAnimationFrame(animate);
       };
-      stage.addEventListener("pointerenter", ripple, { passive: true });
-      stage.addEventListener("pointermove", ripple, { passive: true });
-      stage.addEventListener("pointerdown", ripple, { passive: true });
-      stage.addEventListener("pointerleave", () => {
-        stage.style.removeProperty("--pointer-x");
-        stage.style.removeProperty("--pointer-y");
-      });
-      stage.addEventListener("focusin", () => {
-        size();
-        waves.push({ x: bounds.width / 2, y: bounds.height / 2, t: performance.now() });
-        if (!frame) frame = requestAnimationFrame(tick);
-      });
+      const schedule = () => { if (!raf) raf=requestAnimationFrame(animate); };
+      stage.addEventListener("pointermove", e => {
+        const r=stage.getBoundingClientRect();
+        targetX=((e.clientX-r.left)/r.width-.5)*42;
+        targetY=((e.clientY-r.top)/r.height-.5)*34;
+        schedule();
+      }, {passive:true});
+      stage.addEventListener("pointerleave", () => {targetX=0;targetY=0;schedule();});
+      if (image) image.draggable=false;
     });
   }
 
