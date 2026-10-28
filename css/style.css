@@ -779,3 +779,27 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .fig.gradient-motion .ph:hover > img{animation:none;transform:none}
   .globo-palette-swatch:hover{animation:none}
 }
+
+
+/* Editorial polish: PopStar identity sequence, one specimen at a time.
+   Screen compositing keeps the original white linework while letting the case's
+   own background replace the black pixels. Source JPEGs remain unchanged. */
+.loose > .flip.flip-wide{width:100%;max-width:100%;align-self:stretch;margin-block:clamp(12px,2vw,28px) clamp(44px,6vw,100px);--n:2}
+.flip-wide .fig{width:100%;background:transparent!important}
+.flip-wide .fig .ph{background:transparent!important;isolation:auto;aspect-ratio:16/9}
+.flip-wide .fig .ph > img{filter:grayscale(1) contrast(1.3)!important;mix-blend-mode:screen!important;object-fit:contain;transform:none!important}
+.flip-wide .flip-controls{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:16px;border-top:1px solid var(--line);padding-top:10px;color:var(--fg);font-size:clamp(11px,.85vw,14px)}
+.flip-wide .flip-controls button{all:unset;cursor:pointer;min-width:44px;min-height:44px;text-align:center;font:500 clamp(22px,2vw,36px)/1 var(--sans);transition:opacity .2s ease}
+.flip-wide .flip-controls button:hover{opacity:.55}
+.flip-wide .flip-controls button:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.flip-wide .flip-thumbs{display:flex;justify-content:center;gap:12px;margin-top:8px}
+.flip-wide .flip-thumbs button{width:clamp(72px,12vw,150px);aspect-ratio:16/9;background:transparent}
+.flip-wide .flip-thumbs img{filter:grayscale(1) contrast(1.3);mix-blend-mode:screen;object-fit:contain}
+@media(min-width:761px){.flip-wide .fig .ph{max-height:min(73svh,760px)}}
+@media(max-width:760px){.loose > .flip.flip-wide{margin-block:12px 44px}.flip-wide .flip-controls{margin-top:6px}.flip-wide .flip-thumbs{gap:8px}}
+@media(prefers-reduced-motion:reduce){.flip-wide .flip-controls button{transition:none}}
+
+/* Grid-consistent spacing: chapter starts have more breathing room than
+   ordinary image runs, while collections stay visually grouped. */
+.loose > .chap,.loose > .pair.ch,.loose > .trilho{scroll-margin-top:90px}
+.loose > .chap + .flip,.loose > .chap + .rooms{margin-top:clamp(12px,2vw,28px)}
