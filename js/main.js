@@ -1018,6 +1018,65 @@
     setupScrub();
     setupLomo();
     if (p.gallery) { setupFlips(p); setupRooms(p); }
+
+    // Interactive case chapters: compact index linking story beats, with active chapter
+    // indication. Existing media, slides, projects and CoreHi interactions remain untouched.
+    const chapters = [...caseEl.querySelectorAll(".case-gallery .chap")];
+    if (chapters.length > 1) {
+      const rail = document.createElement("nav");
+      rail.className = "story-rail mono";
+      rail.setAttribute("aria-label", L({en:"Explore project chapters",pt:"Explorar capítulos do projeto"}));
+      const heading = document.createElement("span");
+      heading.className = "story-rail-heading";
+      heading.textContent = L({en:"EXPLORE THE STORY",pt:"EXPLORE A HISTÓRIA"});
+      rail.appendChild(heading);
+      const buttons = chapters.map((chapter, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "story-rail-step";
+        const label = (chapter.querySelector(".chap-k")?.textContent || chapter.querySelector(".chap-h")?.textContent || "").replace(/\\s+/g," ").trim();
+        const name = label.length > 46 ? label.slice(0,43)+"…" : label;
+        button.textContent = String(index+1).padStart(2,"0")+" / "+name;
+        button.setAttribute("aria-label", name);
+        button.addEventListener("click", () => chapter.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"}));
+        rail.appendChild(button);
+        return button;
+      });
+      const gallery = caseEl.querySelector(".case-gallery");
+      gallery?.parentNode.insertBefore(rail,gallery);
+      const update = () => {
+        if (!rail.isConnected) return;
+        let active = 0;
+        for (let j=0;j<chapters.length;j++) if(chapters[j].getBoundingClientRect().top <= innerHeight*.42) active=j;
+        buttons.forEach((b,j) => {
+          b.classList.toggle("active", j===active);
+          if(j===active)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");
+        });
+      };
+      const onScroll = () => { if(rail.isConnected) requestAnimationFrame(update); else removeEventListener("scroll",onScroll); };
+      addEventListener("scroll",onScroll,{passive:true});
+      update();
+    }
+    // Selected hero images respond to pointer movement with restrained depth.
+    // Exclude artwork with existing interactions, motion, and CoreHi's approved behavior.
+    if(!reduced && matchMedia("(hover:hover) and (pointer:fine)").matches){
+      caseEl.querySelectorAll(".case-gallery .fig:not(.corehi-interactive):not(.popstar-invert):not(.gradient-motion):not(.cinema-finale)").forEach(figure=>{
+        if(figure.closest(".flip, .rooms, .scrub, .mods, .jrow.stack-m"))return;
+        const stage=figure.querySelector(".ph"), img=stage?.querySelector(":scope > img");
+        if(!img || stage.querySelector("video, canvas, .vctl"))return;
+        figure.classList.add("case-depth");
+        stage.addEventListener("pointermove",e=>{
+          const r=stage.getBoundingClientRect();
+          stage.style.setProperty("--depth-x",(((e.clientX-r.left)/r.width-.5)*9).toFixed(2)+"px");
+          stage.style.setProperty("--depth-y",(((e.clientY-r.top)/r.height-.5)*7).toFixed(2)+"px");
+        },{passive:true});
+        stage.addEventListener("pointerleave",()=>{
+          stage.style.setProperty("--depth-x","0px");
+          stage.style.setProperty("--depth-y","0px");
+        });
+      });
+    }
+
     // CoreHi identity specimen: follow the pointer gently and toggle the original
     // light/dark artwork with a single click, no new assets or dependencies.
     caseEl.querySelectorAll(".corehi-interactive").forEach(figure => {
