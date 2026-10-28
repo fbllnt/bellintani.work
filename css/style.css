@@ -643,3 +643,33 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @keyframes globo-functional-flow{from{background-position:5% 50%}to{background-position:95% 50%}}
 @media(max-width:760px){.globo-palette-head span:last-child{display:none}.globo-palette-grid{grid-template-columns:1fr;gap:12px}.globo-palette-swatch{height:clamp(96px,28vw,170px)}}
 @media(prefers-reduced-motion:reduce){.fig.gradient-motion .ph > img,.globo-palette-swatch{animation:none;transform:none}.globo-palette-swatch::after,.globo-palette-meta span:last-child{transition:none}}
+
+
+/* Project navigation: previous / next at both ends of every case. */
+.case-top-nav{display:flex;align-items:center;gap:clamp(10px,2vw,30px);min-width:0}
+.case-top-link{white-space:nowrap;text-decoration:none;color:var(--fg);transition:color .2s ease}
+.case-top-link:hover,.case-top-link:focus-visible{color:var(--blue)}
+.case-position{white-space:nowrap;color:var(--mute)}
+.case-neighbors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:clamp(90px,12vw,180px);padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+.case-neighbor{display:flex;flex-direction:column;gap:clamp(16px,2.5vw,35px);min-width:0;padding:18px 0 10px;border-top:1px solid var(--fg);text-decoration:none;color:var(--fg)}
+.case-neighbor.next{text-align:right;align-items:flex-end}
+.case-neighbor-title{font:900 clamp(26px,4.4vw,78px)/.94 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere;transition:color .2s ease}
+.case-neighbor:hover .case-neighbor-title,.case-neighbor:focus-visible .case-neighbor-title{color:var(--blue)}
+@media(max-width:760px){
+  .case-top{align-items:flex-start;gap:10px}
+  .case-top-nav{gap:10px;font-size:11px;flex-wrap:wrap;justify-content:flex-end}
+  .case-neighbors{gap:14px}
+  .case-neighbor-title{font-size:clamp(23px,5.5vw,42px)}
+}
+@media(max-width:420px){.case-top-nav{max-width:66%}.case-position{order:-1;width:100%;text-align:right}}
+
+
+/* Footer call-to-action: stable vector arrow, aligned to the far edge on all screens. */
+.foot #mail-big{display:flex;align-items:flex-start;justify-content:space-between;width:100%;max-width:100%;gap:clamp(20px,5vw,88px)}
+.foot #mail-big > span:first-child{display:block;min-width:0;overflow-wrap:normal}
+.foot #mail-big .arr{display:block;flex:0 0 auto;width:.48em;height:.48em;line-height:0;margin:0;transform-origin:50% 50%;transition:transform .6s var(--ease)}
+.foot #mail-big .arr svg{display:block;width:100%;height:100%;overflow:visible}
+.foot #mail-big:hover .arr,.foot #mail-big:focus-visible .arr{transform:translate(6px,-6px)}
+.foot #mail-big:focus-visible{outline:2px solid var(--blue);outline-offset:7px}
+@media(max-width:560px){.foot #mail-big{gap:12px}.foot #mail-big .arr{width:.56em;height:.56em}}
+@media(prefers-reduced-motion:reduce){.foot #mail-big .arr{transition:none}.foot #mail-big:hover .arr,.foot #mail-big:focus-visible .arr{transform:none}}
