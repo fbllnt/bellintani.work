@@ -9,7 +9,7 @@ window.SITE = {
     { label: "LinkedIn", url: "https://www.linkedin.com/in/fbellintani/" },
   ],
   tagline: {
-    en: "Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad to an amazing 7-year-old rebel princess, music freak, amateur photographer, wannabe stand-up comedian, and who knows what else.",
+    en: "Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad to an amazing 7-year-old rebel princess, music freak, amateur photographer, wannabe comedian, and whatever comes next.",
     pt: "Designer multidisciplinar, diretor de arte, mente criativa, cérebro TDAH hiperfocado, pai de uma incrível princesa rebelde de 7 anos, fanático por música, fotógrafo amador, aspirante a comediante de stand-up e sabe-se lá o que mais.",
   },
   subline: {
