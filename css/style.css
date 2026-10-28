@@ -725,3 +725,15 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .music-track:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
 @media(max-width:760px){.music{top:calc(52px + env(safe-area-inset-top,0px));width:min(420px,calc(100vw - 24px));right:12px;max-height:calc(100svh - 88px)}}
 @media(prefers-reduced-motion:reduce){.music-track{transition:none}}
+
+/* PopStar: restrained links to historic broadcaster episodes.
+   The broadcaster controls playback, so these intentionally open its own player. */
+.case-episode-link{display:flex;flex-direction:column;gap:10px;padding:clamp(20px,3vw,44px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--fg);text-decoration:none;transition:color .25s ease}
+.case-episode-link + .case-episode-link{border-top:0}
+.case-episode-meta{font-size:11px;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+.case-episode-title{font:900 clamp(26px,4.2vw,64px)/.95 var(--sans);letter-spacing:-.04em;text-transform:uppercase;display:flex;justify-content:space-between;gap:20px}
+.case-episode-title > span{font-weight:500;transition:transform .3s var(--ease)}
+.case-episode-link:hover,.case-episode-link:focus-visible{color:var(--blue)}
+.case-episode-link:hover .case-episode-title > span{transform:translate(5px,-5px)}
+.case-episode-link:focus-visible{outline:2px solid var(--blue);outline-offset:5px}
+@media(prefers-reduced-motion:reduce){.case-episode-link,.case-episode-title > span{transition:none}}
