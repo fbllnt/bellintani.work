@@ -662,3 +662,14 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .case-neighbor-title{font-size:clamp(23px,5.5vw,42px)}
 }
 @media(max-width:420px){.case-top-nav{max-width:66%}.case-position{order:-1;width:100%;text-align:right}}
+
+
+/* Footer call-to-action: stable vector arrow, aligned to the far edge on all screens. */
+.foot #mail-big{display:flex;align-items:flex-start;justify-content:space-between;width:100%;max-width:100%;gap:clamp(20px,5vw,88px)}
+.foot #mail-big > span:first-child{display:block;min-width:0;overflow-wrap:normal}
+.foot #mail-big .arr{display:block;flex:0 0 auto;width:.48em;height:.48em;line-height:0;margin:0;transform-origin:50% 50%;transition:transform .6s var(--ease)}
+.foot #mail-big .arr svg{display:block;width:100%;height:100%;overflow:visible}
+.foot #mail-big:hover .arr,.foot #mail-big:focus-visible .arr{transform:translate(6px,-6px)}
+.foot #mail-big:focus-visible{outline:2px solid var(--blue);outline-offset:7px}
+@media(max-width:560px){.foot #mail-big{gap:12px}.foot #mail-big .arr{width:.56em;height:.56em}}
+@media(prefers-reduced-motion:reduce){.foot #mail-big .arr{transition:none}.foot #mail-big:hover .arr,.foot #mail-big:focus-visible .arr{transform:none}}
