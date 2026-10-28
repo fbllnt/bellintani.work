@@ -277,13 +277,12 @@ window.SITE = {
           { src: "images/globo/tipo/f2-13.jpg", ar: "16/9", caption: { en: "Globoface revisions — 11/12", pt: "Revisões da Globoface — 11/12" } },
           { src: "images/globo/tipo/f2-14.jpg", ar: "16/9", caption: { en: "Globoface revisions — 12/12", pt: "Revisões da Globoface — 12/12" } }
         ], cols: 6, col: 1, span: 12 },
-        { grid: "destaque", chapter: { en: "07 · On air", pt: "07 · No ar" }, kicker: { en: "Promos · vignettes", pt: "Chamadas · vinhetas" },
+        { grid: "fluxo", fullWidthIntro: true, chapter: { en: "07 · On air", pt: "07 · No ar" }, kicker: { en: "Promos · vignettes", pt: "Chamadas · vinhetas" },
           head: { en: "Entertainment, journalism and *sport.*", pt: "Entretenimento, jornalismo e *esporte.*" },
           text: { en: "The system on screen. \"A seguir\" (up next) reveals the show through a circle and closes on the 3D mark. \"Hoje na Globo\" (tonight) gives each show its own gradient: news, drama and sport.", pt: "O sistema na tela. O \"A seguir\" revela o programa por um círculo e fecha na marca 3D. O \"Hoje na Globo\" mostra a noite com um degradê para cada programa: jornalismo, novela e esporte." } },
         { video: "images/globo/a-seguir-na-globo.mp4", webm: "images/globo/a-seguir-na-globo.webm", poster: "images/globo/a-seguir-na-globo-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "A seguir na Globo — coming up next", pt: "A seguir na Globo" } },
         { video: "images/globo/hoje-na-globo.mp4", webm: "images/globo/hoje-na-globo.webm", poster: "images/globo/hoje-na-globo-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "Hoje na Globo — tonight's line-up in 30 seconds", pt: "Hoje na Globo — a programação da noite em 30 segundos" } },
         // "Hoje na Globo" promo, circles version (nova_v1), sent by Felipe Oct 27 2026
-        { src: "images/globo/a-seguir-01.jpg", ar: "16/9", col: 1, span: 3 },
         { src: "images/globo/a-seguir-04.jpg", ar: "16/9", col: 4, span: 3 },
         { src: "images/globo/a-seguir-10.jpg", ar: "16/9", col: 7, span: 3 },
         { src: "images/globo/a-seguir-16.jpg", ar: "16/9", col: 10, span: 3 },
