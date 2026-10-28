@@ -370,6 +370,14 @@
       <h2 class="chap-h">${esc(L(it.head)).replace(/\*(.+?)\*/g, "<em>$1</em>")}</h2>${it.text ? `<p class="body">${esc(L(it.text))}</p>` : ""}${
         it.pills ? `<ul class="pills mono">${it.pills.map(x => { const t = L(x); return `<li${t[0] === "*" ? ` class="on"` : ""}>${esc(t.replace(/^\*/, ""))}</li>`; }).join("")}</ul>` : ""}</section>`;
     // Something the story still needs (an image, a fact, a section): a dashed box saying what is missing
+    // Official broadcaster episode link: open the rights holder's own player rather than assuming iframe availability.
+    if (it.episodeLink) {
+      const e = it.episodeLink;
+      return `<a class="case-episode-link" href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(L(e.title))}">
+        <span class="case-episode-meta mono">${esc(L(e.detail))}</span>
+        <span class="case-episode-title">${esc(L(e.title))}<span aria-hidden="true"> ↗</span></span>
+      </a>`;
+    }
     if (it.todo) return `<div class="todo${style ? " fig" : ""}" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
     // Globo's functional gradients as living, CSS-only specimens (existing historic source artwork remains above).
     if (it.gradientPalette) return `<section class="globo-palette" aria-label="${esc(L({ en: "Globo functional gradients", pt: "Gradientes funcionais da Globo" }))}">
