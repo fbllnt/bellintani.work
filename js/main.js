@@ -116,6 +116,7 @@
     { id: "film", label: "FILM & TV" },
     { id: "digital", label: "DIGITAL / SOCIAL" },
     { id: "ai", label: "AI" },
+    { id: "posters", label: "POSTERS / MUSIC" },
   ];
   // Each case can appear in multiple disciplines; order always follows S.projects.
   const curatedFilters = {
@@ -131,7 +132,7 @@
     "DMA": ["branding", "digital"],
     "Tela Quente": ["film"],
     "CoreHi": ["branding"],
-    "Dirty Projectors": ["campaigns"],
+    "Dirty Projectors": ["posters"],
     "Globoplay": ["branding", "film", "digital"],
     "Lomography": ["digital"],
     "Logofolio": ["branding"],
