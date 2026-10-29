@@ -914,39 +914,41 @@ window.SITE = {
     },
     {
       title: "DJ Shadow",
-      // Draft (Oct 29 2026): Felipe left the structure to Claude ("faça por conta própria"); hidden until he approves
+      // Draft (Oct 29 2026): Felipe left the structure to Claude ("faça por conta própria"); hidden until he approves.
+      // The hands poster was rejected at the time (Felipe): only the silhouette line is shown, the black & white one first.
       hidden: true,
       track: { id: "1a9maLxqpx3cxjY1lTj62B", name: "Midnight In A Perfect World", by: "DJ Shadow" },
       type: "poster",
       client: "Cine Joia",
       year: "2012",
       role: { en: "Graphic Designer", pt: "Designer gráfico" },
-      scope: { en: "Gig poster // Illustration", pt: "Pôster de show // Ilustração" },
+      scope: { en: "Gig poster // Colour versions", pt: "Pôster de show // Versões de cor" },
       sector: { en: "Concert venue, São Paulo", pt: "Casa de shows, São Paulo" },
-      deliverables: { en: "Two posters, colour versions and digital pieces", pt: "Dois pôsteres, versões de cor e peças digitais" },
-      tags: { en: ["GigPoster", "Illustration", "Music"], pt: ["PôsterDeShow", "Ilustração", "Música"] },
-      // The hands poster's own colours: off-white paper, navy title, magenta and cyan shadows
-      theme: { bg: "#eeefe9", fg: "#272376", mute: "#6f6e8a", line: "#dcdcd2", panel: "#e4e5dd", accent: "#c8287f", title: "#1f9bd1" },
+      deliverables: { en: "Poster, colour versions and digital pieces", pt: "Pôster, versões de cor e peças digitais" },
+      tags: { en: ["GigPoster", "Halftone", "Music"], pt: ["PôsterDeShow", "Retícula", "Música"] },
+      // Felipe (Oct 29 2026): cream page, main type in black. The favourite version is black and white, so highlights
+      // follow the colour rule for black/white projects and use the site blue.
+      theme: { bg: "#f0efe8", fg: "#111111", mute: "#6c6b66", line: "#dcdbd2", panel: "#e6e5dd", accent: "#1a2bff" },
       tools: ["Adobe CC"],
-      // Cover: the hands poster wheat-pasted on a wall under the Liberdade lanterns (mockup)
-      image: "images/dj-shadow/mockup-wall.jpg",
+      // Cover: the four colour versions wheat-pasted under the Liberdade lanterns (mockup, real artwork composited)
+      image: "images/dj-shadow/mockup-wall-colours.jpg",
       hero: "bleed",
       heroAr: "2000/1341",
       summary: {
-        en: "Posters for DJ Shadow at Cine Joia, São Paulo, 19.10.12, the night of the Chocolate party's 10th anniversary. Two takes on a shadow: hands making animals in magenta and cyan, and a blurred figure behind glass.",
-        pt: "Pôsteres do show do DJ Shadow no Cine Joia, São Paulo, 19.10.12, na noite de 10 anos da festa Chocolate. Duas leituras de sombra: mãos fazendo bichos em magenta e azul, e uma figura borrada atrás do vidro.",
+        en: "Poster for DJ Shadow at Cine Joia, São Paulo, 19.10.12, the night of the Chocolate party's 10th anniversary. A figure pressed against frosted glass, in halftone, with the name cut across a circle. Black and white, and in four colours.",
+        pt: "Pôster do show do DJ Shadow no Cine Joia, São Paulo, 19.10.12, na noite de 10 anos da festa Chocolate. Uma figura colada num vidro fosco, em retícula, com o nome cortado sobre um círculo. Em preto e branco e em quatro cores.",
       },
-      // Between Dirty Projectors and Explosions in the Sky: fluxo for the pair, modulos for the versions, destaque-like rows for the street
       layout: "loose", grid: "trilho",
       gallery: [
-        { fullWidthIntro: true, grid: "fluxo", chapter: { en: "01 · The posters", pt: "01 · Os pôsteres" }, kicker: { en: "Cine Joia presents · 19.10.12", pt: "Cine Joia apresenta · 19.10.12" },
-          head: { en: "Two ways to *cast a shadow.*", pt: "Duas formas de *fazer sombra.*" },
-          text: { en: "One poster plays with the name: fifteen pairs of hands make shadow animals, each shadow printed twice, in magenta and cyan, slightly off register. The other goes darker: a figure pressed against frosted glass, in halftone, with the name cut across a colour circle.", pt: "Um pôster brinca com o nome: quinze pares de mãos fazem bichos de sombra, cada sombra impressa duas vezes, em magenta e azul, um pouco fora de registro. O outro vai para o escuro: uma figura colada num vidro fosco, em retícula, com o nome cortado sobre um círculo de cor." } },
-        { src: "images/dj-shadow/poster-hands.jpg", ar: "1428/2000", col: 1, span: 6 },
-        { src: "images/dj-shadow/poster-silhouette.jpg", ar: "1428/2000", col: 7, span: 6 },
-        { chapter: { en: "02 · Versions", pt: "02 · Versões" }, kicker: { en: "Cyan · magenta · orange · black", pt: "Azul · magenta · laranja · preto" }, grid: "modulos", cols: 4, cell: "5/7", bare: true,
+        // The black & white version, Felipe's favourite, large and centred right under the cover
+        { fullWidthIntro: true, grid: "fluxo", chapter: { en: "01 · The poster", pt: "01 · O pôster" }, kicker: { en: "Cine Joia presents · 19.10.12", pt: "Cine Joia apresenta · 19.10.12" },
+          head: { en: "A shadow *behind the glass.*", pt: "Uma sombra *atrás do vidro.*" },
+          text: { en: "A figure pressed against frosted glass, one hand raised, drawn only with halftone dots. The name is cut along the diagonal of a circle. Of all the versions, black and white is my favourite.", pt: "Uma figura colada num vidro fosco, uma mão levantada, feita só de ponto de retícula. O nome é cortado na diagonal de um círculo. De todas as versões, a preto e branca é a minha preferida." } },
+        { src: "images/dj-shadow/poster-bw.jpg", ar: "1428/2000", col: 1, span: 12 },
+        { chapter: { en: "02 · Versions", pt: "02 · Versões" }, kicker: { en: "Yellow · cyan · magenta · orange · black", pt: "Amarelo · azul · magenta · laranja · preto" }, grid: "modulos", cols: 5, cell: "5/7", bare: true,
           head: { en: "One figure, *five colours.*", pt: "Uma figura, *cinco cores.*" },
-          text: { en: "The silhouette poster in a colour for each piece: yellow for the main one, then cyan, magenta, orange and a black version with the figure in negative.", pt: "O pôster da silhueta numa cor para cada peça: amarelo no principal, depois azul, magenta, laranja e uma versão preta com a figura em negativo." } },
+          text: { en: "The same poster with the circle in yellow, cyan, magenta and orange, and a black version with the figure in negative.", pt: "O mesmo pôster com o círculo em amarelo, azul, magenta e laranja, e uma versão preta com a figura em negativo." } },
+        { src: "images/dj-shadow/poster-silhouette.jpg", ar: "1428/2000" },
         { src: "images/dj-shadow/version-cyan.jpg", ar: "999/1400" },
         { src: "images/dj-shadow/version-magenta.jpg", ar: "999/1400" },
         { src: "images/dj-shadow/version-orange.jpg", ar: "999/1400" },
@@ -960,10 +962,10 @@ window.SITE = {
         // Mockups: Flora scenes with the real artwork composited on top, so every text is the original
         { chapter: { en: "04 · Liberdade", pt: "04 · Liberdade" }, kicker: { en: "Mockups", pt: "Mockups" }, grid: "fluxo", fullWidthIntro: true,
           head: { en: "Around *the venue.*", pt: "Em volta *da casa.*" },
-          text: { en: "Cine Joia sits in Liberdade, São Paulo's Japanese quarter. The posters taken out there: under the red lanterns, at the door of the cinema, in the rain and as stickers on a street box.", pt: "O Cine Joia fica na Liberdade, o bairro japonês de São Paulo. Os pôsteres levados para lá: sob as lanternas vermelhas, na porta do cinema, na chuva e como adesivos numa caixa de luz." } },
-        { src: "images/dj-shadow/mockup-cine-joia.jpg", ar: "1611/2000", col: 1, span: 4, caption: { en: "At the door · mockup", pt: "Na porta · mockup" } },
+          text: { en: "Cine Joia sits in Liberdade, São Paulo's Japanese quarter. The poster taken out there: at the door of the cinema, in the rain under the red lanterns and as stickers on a street box.", pt: "O Cine Joia fica na Liberdade, o bairro japonês de São Paulo. O pôster levado para lá: na porta do cinema, na chuva sob as lanternas vermelhas e como adesivos numa caixa de luz." } },
+        { src: "images/dj-shadow/mockup-cine-joia-bw.jpg", ar: "1611/2000", col: 1, span: 4, caption: { en: "At the door · mockup", pt: "Na porta · mockup" } },
         { src: "images/dj-shadow/mockup-night.jpg", ar: "1611/2000", col: 5, span: 4, caption: { en: "In the rain · mockup", pt: "Na chuva · mockup" } },
-        { src: "images/dj-shadow/mockup-stickers.jpg", ar: "1611/2000", col: 9, span: 4, caption: { en: "Stickers · mockup", pt: "Adesivos · mockup" } },
+        { src: "images/dj-shadow/mockup-stickers-versions.jpg", ar: "1611/2000", col: 9, span: 4, caption: { en: "Stickers · mockup", pt: "Adesivos · mockup" } },
         { chapter: { en: "05 · Listen", pt: "05 · Ouça" }, kicker: { en: "Sample-based", pt: "Feito de samples" }, grid: "trilho",
           head: { en: "Built from *other records.*", pt: "Feito de *outros discos.*" },
           text: { en: "DJ Shadow builds his music from samples. Start with Endtroducing..... (1996) and “Midnight in a Perfect World”.", pt: "O DJ Shadow constrói a música a partir de samples. Comece pelo Endtroducing..... (1996) e por “Midnight in a Perfect World”." } },
