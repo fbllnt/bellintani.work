@@ -131,13 +131,13 @@
     "Seja ANTI": ["campaigns", "digital"],
     "Globo": ["branding", "film"],
     "SCRV*": ["branding", "digital"],
-    "HCP Top 50 Names": ["branding", "campaigns", "digital"],
+    "HOUSECALL PRO": ["branding", "campaigns", "digital"], // was keyed "HCP Top 50 Names" before the Oct 28 rename
     "Adidas 60": ["campaigns", "film"],
     "Cinema Especial": ["film"],
     "XP Investments": ["branding", "campaigns"],
     "XP Inc.": ["branding", "campaigns"],
     "THURA": ["branding"],
-    "DMA": ["branding", "digital"],
+    "DMA": ["branding"], // Felipe, Oct 29 2026: DMA is branding only
     "Tela Quente": ["film"],
     "CoreHi": ["branding"],
     "Dirty Projectors": ["posters"],
