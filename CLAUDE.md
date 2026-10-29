@@ -33,6 +33,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 - Oct 29 2026: a text on how he works with AI and the tools he uses (likely near the AI filter or the "Vibe Coding & AI
   Workflows" service). He is still thinking it through: don't write it unprompted, and the copy/tools must come from him.
+- Oct 29 2026: maybe remove "Work" from the top menu (the work list is always on the page). To discuss; don't change yet.
 
 ## Launch (Felipe, Oct 28 2026)
 

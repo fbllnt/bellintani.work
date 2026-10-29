@@ -120,7 +120,7 @@
   // ---------- Work: index (the only view; Felipe dropped the Grid view, Oct 28 2026) ----------
   const index = $("index");
   index.innerHTML = S.projects.map((p, i) => `<li><a href="${href(p)}" data-i="${i}">
-    <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono"><span class="k-top">${p.year ? `<span class="k-year">${esc(p.year)}</span>` : ""}${Array.isArray(p.tools) && p.tools.some(tool => typeof tool === "string" && tool.startsWith("*")) ? `<span class="k-ai" aria-label="${esc(L({ en: "AI-assisted project", pt: "Projeto com uso de IA", es: "Proyecto hecho con IA" }))}" title="${esc(L({ en: "AI-assisted project", pt: "Projeto com uso de IA", es: "Proyecto hecho con IA" }))}">AI</span>` : ""}</span><span class="k-scope">${esc(L(p.scope))}</span>${tagFor(p)}</span></a></li>`).join("");
+    <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono"><span class="k-top">${p.year ? `<span class="k-year">${esc(p.year)}</span>` : ""}${Array.isArray(p.tools) && p.tools.some(tool => typeof tool === "string" && tool.startsWith("*")) ? `<span class="k-ai" aria-label="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}" title="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}">AI</span>` : ""}</span><span class="k-scope">${esc(L(p.scope))}</span>${tagFor(p)}</span></a></li>`).join("");
 
   // Curated, multi-discipline work filters. AI is based on the explicit *tool
   // convention in content.js, never on a project's year or aesthetic.
@@ -463,7 +463,7 @@
     if (it.todo) return `<div class="todo${style ? " fig" : ""}" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
     // Globo's functional gradients as living, CSS-only specimens (existing historic source artwork remains above).
     if (it.gradientPalette) return `<section class="globo-palette" aria-label="${esc(L({ en: "Globo functional gradients", pt: "Gradientes funcionais da Globo", es: "Gradientes funcionales de Globo" }))}">
-      <div class="globo-palette-head mono"><span>${esc(L({ en: "THREE COLOUR WORLDS", pt: "TRÊS UNIVERSOS DE COR", es: "TRES UNIVERSOS DE COLOR" }))}</span><span>${esc(L({ en: "MOVE THE POINTER OVER THE COLOURS", pt: "PASSE O MOUSE SOBRE AS CORES", es: "PASA EL CURSOR SOBRE LOS COLORES" }))}</span></div>
+      <div class="globo-palette-head mono"><span>${esc(L({ en: "THREE COLOUR WORLDS", pt: "TRÊS UNIVERSOS DE COR", es: "TRES UNIVERSOS DE COLOR" }))}</span><span>${esc(L({ en: "MOVE THE POINTER OVER THE COLOURS", pt: "PASSA O MOUSE NAS CORES", es: "PASA EL CURSOR SOBRE LOS COLORES" }))}</span></div>
       <div class="globo-palette-grid">
         ${[
           { name: { en: "News", pt: "Jornalismo", es: "Periodismo" }, cls: "news", number: "01" },
@@ -1051,11 +1051,11 @@
       let alternate = false;
       stage.setAttribute("role", "button");
       stage.setAttribute("tabindex", "0");
-      stage.setAttribute("aria-label", L({ en: "Toggle CoreHi symbol light and dark", pt: "Alternar símbolo CoreHi claro e escuro", es: "Alternar el símbolo CoreHi claro y oscuro" }));
+      stage.setAttribute("aria-label", L({ en: "Toggle CoreHi symbol light and dark", pt: "Trocar o símbolo CoreHi entre claro e escuro", es: "Alternar el símbolo CoreHi claro y oscuro" }));
       stage.setAttribute("aria-pressed", "false");
       const hint = document.createElement("span");
       hint.className = "corehi-hint mono";
-      hint.textContent = L({ en: "MOVE TO EXPLORE · CLICK TO SWITCH", pt: "MOVA PARA EXPLORAR · CLIQUE PARA ALTERNAR", es: "MUEVE PARA EXPLORAR · HAZ CLIC PARA ALTERNAR" });
+      hint.textContent = L({ en: "MOVE TO EXPLORE · CLICK TO SWITCH", pt: "MEXE PRA EXPLORAR · CLICA PRA TROCAR", es: "MUEVE PARA EXPLORAR · HAZ CLIC PARA ALTERNAR" });
       stage.appendChild(hint);
       const toggle = () => {
         alternate = !alternate;
@@ -1552,7 +1552,7 @@
         if (playRequested) {
           playRequested = false;
           controller.play();
-          setPlayNote(L({ en: "If audio does not start, your browser may require Play inside Spotify.", pt: "Se o áudio não começar, o navegador pode exigir Play dentro do Spotify.", es: "Si el audio no empieza, tu navegador puede pedir Play dentro de Spotify." }));
+          setPlayNote(L({ en: "If audio does not start, your browser may require Play inside Spotify.", pt: "Se o som não começar, talvez o navegador peça o play no próprio Spotify.", es: "Si el audio no empieza, tu navegador puede pedir Play dentro de Spotify." }));
         }
       });
       controller.addListener("playback_started", () => { playbackConfirmed = true; setPlayNote(""); });
@@ -1581,7 +1581,7 @@
       if (play) {
         spotifyController.play();
         playRequested = false;
-        setPlayNote(L({ en: "If audio does not start, press Play in Spotify (browser restriction).", pt: "Se o áudio não começar, toque em Play no Spotify (restrição do navegador).", es: "Si el audio no empieza, toca Play en Spotify (restricción del navegador)." }));
+        setPlayNote(L({ en: "If audio does not start, press Play in Spotify (browser restriction).", pt: "Se o som não começar, dá play no Spotify (coisa do navegador).", es: "Si el audio no empieza, toca Play en Spotify (restricción del navegador)." }));
       }
     } else if (spotifyAPI) {
       // Do not create a temporary iframe and then replace it with a second one.
@@ -1645,11 +1645,11 @@
   listEl.setAttribute("role", "group");
   const workInvite = $("work-music-invite");
   if (workInvite) {
-    workInvite.textContent = L({ en: "♪ EXPLORE THE WORK WITH MY CURATED SOUNDTRACK ↗", pt: "♪ EXPLORE OS PROJETOS COM A TRILHA QUE ESCOLHI ↗", es: "♪ EXPLORA LOS PROYECTOS CON LA BANDA SONORA QUE ELEGÍ ↗" });
+    workInvite.textContent = L({ en: "♪ EXPLORE THE WORK WITH MY CURATED SOUNDTRACK ↗", pt: "♪ VEJA OS PROJETOS OUVINDO A TRILHA QUE EU ESCOLHI ↗", es: "♪ EXPLORA LOS PROYECTOS CON LA BANDA SONORA QUE ELEGÍ ↗" });
     workInvite.addEventListener("click", () => { openMusic(true); renderSoundtrack(); $("music-close").focus({ preventScroll: true }); });
   }
   const musicInvite = $("music-invite");
-  if (musicInvite) musicInvite.textContent = L({ en: "A SOUNDTRACK FOR EVERY PROJECT. PICK A SONG AND EXPLORE.", pt: "CADA PROJETO TEM SUA TRILHA. ESCOLHA UMA MÚSICA E EXPLORE.", es: "CADA PROYECTO TIENE SU CANCIÓN. ELIGE UNA Y EXPLORA." });
+  if (musicInvite) musicInvite.textContent = L({ en: "A SOUNDTRACK FOR EVERY PROJECT. PICK A SONG AND EXPLORE.", pt: "CADA PROJETO TEM A SUA TRILHA. ESCOLHE UMA MÚSICA E VAI FUNDO.", es: "CADA PROYECTO TIENE SU CANCIÓN. ELIGE UNA Y EXPLORA." });
 
   const first = projectFromHash();
   if (first >= 0) { finish(); openCase(first, false); }
