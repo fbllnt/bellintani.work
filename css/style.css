@@ -650,7 +650,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-neighbor{display:flex;flex-direction:column;gap:clamp(16px,2.5vw,35px);min-width:0;padding:18px 0 10px;border-top:1px solid var(--fg);text-decoration:none;color:var(--fg)}
 .case-neighbor.next{text-align:right;align-items:flex-end}
 .case-neighbor-title{font:900 clamp(26px,4.4vw,78px)/.94 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere;transition:color .2s ease}
-.case-neighbor:hover .case-neighbor-title,.case-neighbor:focus-visible .case-neighbor-title{color:var(--blue)}
+/* Hover takes the project accent; a white or black accent (Cinema Especial, Adidas 60) would not change, so it falls back to the site blue, as the AI tools do */
+.case-neighbor:hover .case-neighbor-title,.case-neighbor:focus-visible .case-neighbor-title{color:var(--ai,var(--blue))}
 @media(max-width:760px){
   .case-top{align-items:flex-start;gap:10px}
   .case-top-nav{gap:10px;font-size:11px;flex-wrap:wrap;justify-content:flex-end}
