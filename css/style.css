@@ -205,9 +205,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Themed project page (own colours): corners take the page ink instead of the white/difference blend */
 .themed .corners{mix-blend-mode:normal}
 .themed .corners > *{color:var(--fg)}
-.case-top{display:flex;justify-content:space-between;gap:16px;padding-top:calc(clamp(70px,9vw,110px) + env(safe-area-inset-top,0px))}
 /* A title shrinks below its usual size only when its longest word would not fit the page width */
-.case-title{color:var(--title,var(--fg));--fit:calc((100vw - 2 * var(--side)) / (var(--longest,1) * .66));margin:clamp(24px,4vw,48px) 0 0;font:900 clamp(min(52px,var(--fit)),min(12.5vw,var(--fit)),240px)/.86 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere}
+.case-title{color:var(--title,var(--fg));--fit:calc((100vw - 2 * var(--side)) / (var(--longest,1) * .66));margin:calc(clamp(70px,9vw,110px) + env(safe-area-inset-top,0px) + clamp(40px,5vw,64px)) 0 0;font:900 clamp(min(52px,var(--fit)),min(12.5vw,var(--fit)),240px)/.86 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere}
 .case-title .letters{display:flex;flex-wrap:wrap}
 .case-title .w{display:inline-flex;white-space:nowrap}
 .case-title .w > span{display:inline-block;animation:rise .6s var(--over) both .12s}
@@ -217,7 +216,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-meta .live,.case-meta .wide{grid-column:span 4}
 @media (max-width:1000px){ .case-meta div{grid-column:span 3} .case-meta .live,.case-meta .wide{grid-column:span 6} }
 @media (max-width:560px){ .case-meta div{grid-column:span 6} .case-meta .live,.case-meta .wide{grid-column:span 12} }
-.case-tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:clamp(24px,3vw,40px) 0 0;padding:0;color:var(--blue)}
+/* Tags and the prev / position / next links share one line under the title; the links stay quiet, in the muted ink (Felipe, Oct 29 2026) */
+.case-sub{display:flex;justify-content:space-between;align-items:baseline;gap:12px 24px;margin:clamp(24px,3vw,40px) 0 0}
+.case-tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:0;padding:0;color:var(--blue)}
 .case-meta .swap{max-width:100%}
 .case-meta dt{color:var(--mute);margin-bottom:8px}
 .case-meta dd{margin:0;font-weight:400;line-height:1.45}
@@ -677,9 +678,9 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 
 
 /* Project navigation: previous / next at both ends of every case. */
-.case-top-nav{display:flex;align-items:center;gap:clamp(10px,2vw,30px);min-width:0}
-.case-top-link{white-space:nowrap;text-decoration:none;color:var(--fg);transition:color .2s ease}
-.case-top-link:hover,.case-top-link:focus-visible{color:var(--blue)}
+.case-top-nav{display:flex;align-items:center;gap:clamp(10px,2vw,30px);flex-shrink:0;white-space:nowrap;margin-left:auto;color:var(--mute)}
+.case-top-link{white-space:nowrap;text-decoration:none;color:var(--mute);transition:color .2s ease}
+.case-top-link:hover,.case-top-link:focus-visible{color:var(--fg)}
 .case-position{white-space:nowrap;color:var(--mute)}
 .case-neighbors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:clamp(90px,12vw,180px);padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
 .case-neighbor{display:flex;flex-direction:column;gap:clamp(16px,2.5vw,35px);min-width:0;padding:18px 0 10px;border-top:1px solid var(--fg);text-decoration:none;color:var(--fg)}
@@ -688,12 +689,13 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 /* Hover takes the project accent; a white or black accent (Cinema Especial, Adidas 60) would not change, so it falls back to the site blue, as the AI tools do */
 .case-neighbor:hover .case-neighbor-title,.case-neighbor:focus-visible .case-neighbor-title{color:var(--ai,var(--blue))}
 @media(max-width:760px){
-  .case-top{align-items:flex-start;gap:10px}
-  .case-top-nav{gap:10px;font-size:11px;flex-wrap:wrap;justify-content:flex-end}
+  .case-sub{align-items:flex-start;gap:10px}
+  .case-top-nav{gap:10px;font-size:11px}
+  /* Phones: just the arrows and the position, so the links stay on the tags line */
+  .case-top-link .lbl{display:none}
   .case-neighbors{gap:14px}
   .case-neighbor-title{font-size:clamp(23px,5.5vw,42px)}
 }
-@media(max-width:420px){.case-top-nav{max-width:66%}.case-position{order:-1;width:100%;text-align:right}}
 
 
 /* Footer call-to-action: stable vector arrow, aligned to the far edge on all screens. */
