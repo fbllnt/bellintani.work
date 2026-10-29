@@ -141,7 +141,7 @@
     "Tela Quente": ["film"],
     "CoreHi": ["branding"],
     "Dirty Projectors": ["posters"],
-    "Explosions in the Sky": ["posters"],
+    "Explosions in the Sky": ["posters"], "DJ Shadow": ["posters"],
     "Globoplay": ["branding", "film", "digital"],
     "Lomography": ["digital"],
     "Logofolio": ["branding"],
