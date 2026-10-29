@@ -1489,8 +1489,8 @@
   // A chain of points, each easing toward the one ahead, drawn as one solid band as wide as the ball.
   // It stretches behind fast moves and pulls back into the ball when the mouse stops.
   // Mouse and trackpad only; touch screens and reduced motion keep the normal pointer.
-  // Over text and links the ball shrinks to a small dot and the trail pulls in, so it never sits on the words
-  // (Felipe, Oct 29 2026); on images and empty space it is the full ball with its trail. On blue (the close-up, the part of a logo tile the flood has covered, or the open part of a
+  // One size everywhere, 11px with a trail as wide (Felipe, Oct 29 2026: the 18px ball covered words, and shrinking to a
+  // dot over text felt jumpy, so it stays in between and never changes on hover). On blue (the close-up, the part of a logo tile the flood has covered, or the open part of a
   // home row's bar) it turns white. The trail is always drawn in the ball's own colour, read from the ball,
   // so it also follows a project's accent colour.
   const ball = document.createElement("div"), trail = document.createElement("canvas");
@@ -1502,10 +1502,9 @@
     ball.setAttribute("aria-hidden", "true"); trail.setAttribute("aria-hidden", "true");
     document.documentElement.classList.add("has-ball");
     cursorTo(document.body);
-    const ctx = trail.getContext("2d"), N = 40, EASE = .72, W = 18;
+    const ctx = trail.getContext("2d"), N = 40, EASE = .72, W = 11;
     const ptr = { x: -100, y: -100 }, chain = Array.from({ length: N }, () => ({ x: -100, y: -100 }));
-    let raf = 0, dpr = 1, tiles = [], hover = null, w = W, dot = false;
-    const TEXT = "a, button, h1, h2, h3, h4, p, li, dt, dd, figcaption, blockquote, label, .mono", DOT = 6;
+    let raf = 0, dpr = 1, tiles = [], hover = null;
     const size = () => { dpr = Math.min(2, devicePixelRatio || 1); trail.width = innerWidth * dpr; trail.height = innerHeight * dpr; };
     size(); addEventListener("resize", size);
     // The flooded part of a logo tile, from its --f (0 bare to 1 full, mid-transition too); null when bare
@@ -1524,17 +1523,14 @@
     };
     const draw = () => {
       let moving = false;
-      const target = dot ? DOT : W, ease = dot ? .95 : EASE;
-      w += (target - w) * .3;
-      if (Math.abs(target - w) > .2) moving = true;
       chain.forEach((p, i) => {
         const t = i ? chain[i - 1] : ptr;
-        p.x += (t.x - p.x) * ease; p.y += (t.y - p.y) * ease;
+        p.x += (t.x - p.x) * EASE; p.y += (t.y - p.y) * EASE;
         if (Math.abs(t.x - p.x) + Math.abs(t.y - p.y) > .3) moving = true;
       });
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, innerWidth, innerHeight);
-      ctx.lineCap = ctx.lineJoin = "round"; ctx.lineWidth = w;
+      ctx.lineCap = ctx.lineJoin = "round"; ctx.lineWidth = W;
       const floods = tiles.map(flood), hf = floods[tiles.indexOf(hover)];
       tiles = tiles.filter((t, i) => t === hover || floods[i]);
       const zones = onBlue ? [{ x: 0, y: 0, w: innerWidth, h: innerHeight, done: true }] : [...floods.filter(Boolean), dark()].filter(Boolean);
@@ -1559,8 +1555,6 @@
       const drag = spin || !onBlue && !!e.target.closest(".roll-track");
       if (drag !== ball.classList.contains("drag")) { ball.dataset.label = `← ${T("drag")} →`; ball.classList.toggle("drag", drag); }
       ball.classList.toggle("accent", spin);
-      dot = !drag && !e.target.closest(".logo, img, video, canvas, iframe") && !!e.target.closest(TEXT);
-      ball.classList.toggle("dot", dot);
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
