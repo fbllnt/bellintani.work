@@ -425,7 +425,7 @@
         return;
       }
       // A flip, strip or live page can take the pending text beside it
-      if (pend && (it.flip || it.rooms || it.strip || it.embed || it.yt || it.spotify)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
+      if (pend && (it.flip || it.rooms || it.strip || it.embed || it.yt || it.spotify || it.soundcloud)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
       closePend();
       // A text line pairs with the piece or flip that follows it
       if (it.text && !side) { pend = { html: `<p class="ltext side">${esc(L(it.text))}</p>`, solo: block(it, p) }; return; }
@@ -481,6 +481,8 @@
     // Spotify colours the player from the artwork (it can't take a custom colour); the dark theme (theme=0) keeps it
     // neutral on the themed pages (Felipe, Oct 29 2026: the green player clashed with the slate page).
     if (it.spotify) return `<figure class="fig sp" style="--sp-h:${+it.h || 452}px;${style}"><div class="ph"><iframe src="https://open.spotify.com/embed/${esc(it.spotify)}?utm_source=generator&theme=0" title="${esc(L(it.caption) || "Spotify")}" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
+    // A SoundCloud track in place (a live set, a mix): { soundcloud: "<track url>", h, caption }, played in the project accent
+    if (it.soundcloud) return `<figure class="fig sp" style="--sp-h:${+it.h || 166}px;${style}"><div class="ph"><iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(it.soundcloud)}&color=${encodeURIComponent((p.theme && p.theme.accent) || "#1a2bff")}&auto_play=false&hide_related=true&show_comments=false&show_reposts=false&visual=false" title="${esc(L(it.caption) || "SoundCloud")}" loading="lazy" allow="autoplay"></iframe></div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
     if (it.swap) return `<div class="swap-ba" style="${style}">${[["before", "old"], ["after", "new"]].map(([k, c]) =>
       `<p><span class="mono muted">${esc(T(k))}</span><b class="${c}">${esc(L(it.swap[k]))}</b></p>`).join("")}</div>`;
     if (it.word) return `<div class="word-def" style="${style}"><p class="word-big" style="--n:${[...it.word.glyph].length}"${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""} aria-hidden="true">${esc(it.word.glyph)}</p>

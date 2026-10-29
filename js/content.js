@@ -959,14 +959,46 @@ window.SITE = {
         { src: "images/dj-shadow/detail-x.jpg", ar: "1000/664", col: 1, span: 4 },
         { src: "images/dj-shadow/detail-x2.jpg", ar: "1000/664", col: 5, span: 4 },
         { src: "images/dj-shadow/detail-z.jpg", ar: "1000/664", col: 9, span: 4 },
-        // Mockups: Flora scenes with the real artwork composited on top, so every text is the original
+        // Mockups: Flora scenes with the real artwork composited on top, so every text is the original; the pasted ones
+        // get torn edges, paste bubbles and creases (Felipe, Oct 29 2026: "muito flat")
         { chapter: { en: "04 · Liberdade", pt: "04 · Liberdade" }, kicker: { en: "Mockups", pt: "Mockups" }, grid: "fluxo", fullWidthIntro: true,
           head: { en: "Around *the venue.*", pt: "Em volta *da casa.*" },
-          text: { en: "Cine Joia sits in Liberdade, São Paulo's Japanese quarter. The poster taken out there: at the door of the cinema, in the rain under the red lanterns and as stickers on a street box.", pt: "O Cine Joia fica na Liberdade, o bairro japonês de São Paulo. O pôster levado para lá: na porta do cinema, na chuva sob as lanternas vermelhas e como adesivos numa caixa de luz." } },
-        { src: "images/dj-shadow/mockup-cine-joia-bw.jpg", ar: "1611/2000", col: 1, span: 4, caption: { en: "At the door · mockup", pt: "Na porta · mockup" } },
-        { src: "images/dj-shadow/mockup-night.jpg", ar: "1611/2000", col: 5, span: 4, caption: { en: "In the rain · mockup", pt: "Na chuva · mockup" } },
-        { src: "images/dj-shadow/mockup-stickers-versions.jpg", ar: "1611/2000", col: 9, span: 4, caption: { en: "Stickers · mockup", pt: "Adesivos · mockup" } },
-        { chapter: { en: "05 · Listen", pt: "05 · Ouça" }, kicker: { en: "Sample-based", pt: "Feito de samples" }, grid: "trilho",
+          text: { en: "Cine Joia sits in Liberdade, São Paulo's Japanese quarter. The poster taken out there: at the door of the cinema and wheat-pasted in the rain, under the red lanterns.", pt: "O Cine Joia fica na Liberdade, o bairro japonês de São Paulo. O pôster levado para lá: na porta do cinema e colado na chuva, sob as lanternas vermelhas." } },
+        { src: "images/dj-shadow/mockup-cine-joia-bw.jpg", ar: "1611/2000", col: 1, span: 6, caption: { en: "At the door · mockup", pt: "Na porta · mockup" } },
+        { src: "images/dj-shadow/mockup-night.jpg", ar: "1611/2000", col: 7, span: 6, caption: { en: "In the rain · mockup", pt: "Na chuva · mockup" } },
+        // Round die-cut stickers: only the circle and its DJ badge, in the black, magenta and orange "A" versions
+        { chapter: { en: "05 · Stickers", pt: "05 · Adesivos" }, kicker: { en: "Die-cut · mockups", pt: "Recorte · mockups" }, grid: "fluxo", fullWidthIntro: true,
+          head: { en: "Just *the circle.*", pt: "Só *o círculo.*" },
+          text: { en: "The circle on its own, as round die-cut stickers in black, magenta and yellow: on a street box, on the back of a sign in Liberdade and on a skateboard.", pt: "O círculo sozinho, como adesivos redondos em preto, magenta e amarelo: numa caixa de luz, atrás de uma placa na Liberdade e num skate." } },
+        { src: "images/dj-shadow/stickers-box.jpg", ar: "1611/2000", col: 1, span: 4, caption: { en: "Street box · mockup", pt: "Caixa de luz · mockup" } },
+        { src: "images/dj-shadow/stickers-sign.jpg", ar: "1611/2000", col: 5, span: 4, caption: { en: "Street sign · mockup", pt: "Placa · mockup" } },
+        { src: "images/dj-shadow/stickers-skate.jpg", ar: "1611/2000", col: 9, span: 4, caption: { en: "Skateboard · mockup", pt: "Skate · mockup" } },
+        // The night: facts from Cine Joia's own film (YouTube description) and Popload's announcement (Aug 2012; its
+        // picture is a different flyer, so it is not shown). Photos: Serjão Carvalho on Flickr, all rights reserved,
+        // credited and linked; Felipe to ask him (Oct 29 2026).
+        { grid: "trilho", chapter: { en: "06 · The night", pt: "06 · A noite" }, kicker: { en: "Friday, 19.10.12", pt: "Sexta, 19.10.12" },
+          head: { en: "Chocolate *turns ten.*", pt: "A Chocolate *faz dez anos.*" },
+          text: { en: "The first night of the 10th anniversary of Chocolate, one of São Paulo's main hip hop parties. Its founders, Guigo Lima and Kadu Mattar, brought DJ Shadow to Cine Joia, with Dubstrong, Nuts and Tamenpi on the decks the same night, the eve of Planeta Terra.", pt: "A primeira noite dos 10 anos da Chocolate, uma das principais festas de hip hop de São Paulo. Os criadores, Guigo Lima e Kadu Mattar, trouxeram o DJ Shadow ao Cine Joia, com Dubstrong, Nuts e Tamenpi nas pick-ups na mesma noite, véspera do Planeta Terra." } },
+        { roomsAuto: true, rooms: [
+          { name: { en: "DJ Shadow at Cine Joia", pt: "DJ Shadow no Cine Joia" }, items: [
+            { src: "images/dj-shadow/show/show-04.jpg", ar: "1024/591", caption: { en: "Cine Joia, 19.10.12 · photo: Serjão Carvalho", pt: "Cine Joia, 19.10.12 · foto: Serjão Carvalho" } },
+            { src: "images/dj-shadow/show/show-03.jpg", ar: "1024/679", caption: { en: "Cine Joia, 19.10.12 · photo: Serjão Carvalho", pt: "Cine Joia, 19.10.12 · foto: Serjão Carvalho" } },
+            { src: "images/dj-shadow/show/show-05.jpg", ar: "1024/726", caption: { en: "Cine Joia, 19.10.12 · photo: Serjão Carvalho", pt: "Cine Joia, 19.10.12 · foto: Serjão Carvalho" } },
+            { src: "images/dj-shadow/show/show-02.jpg", ar: "1024/607", caption: { en: "Cine Joia, 19.10.12 · photo: Serjão Carvalho", pt: "Cine Joia, 19.10.12 · foto: Serjão Carvalho" } },
+            { src: "images/dj-shadow/show/show-01.jpg", ar: "1024/639", caption: { en: "Cine Joia, 19.10.12 · photo: Serjão Carvalho", pt: "Cine Joia, 19.10.12 · foto: Serjão Carvalho" } }
+          ] },
+        ], ar: "3/2", col: 1, span: 12 },
+        { yt: "YYq4k9wMJfs", ar: "16/9", caption: { en: "“Chocolate 10 anos @ Cine Joia – DJ Shadow” · video: Cine Joia / YouTube (camera Henrique EDMX Montanari, edit Abner Palma)", pt: "“Chocolate 10 anos @ Cine Joia – DJ Shadow” · vídeo: Cine Joia / YouTube (câmera Henrique EDMX Montanari, montagem Abner Palma)" } },
+        { yt: "j-TbaO_Bxik", ar: "16/9", caption: { en: "The night, by the party · video: GuigoChocolate / YouTube", pt: "A noite, pela festa · vídeo: GuigoChocolate / YouTube" } },
+        { yt: "JTAPlO8-QeQ", ar: "16/9", caption: { en: "“Organ Donor”, from the crowd · video: MarcosB79 / YouTube", pt: "“Organ Donor”, da pista · vídeo: MarcosB79 / YouTube" } },
+        { episodeLink: { url: "https://www.flickr.com/photos/serjaocarvalho/albums/72157631839299293", title: { en: "More photos by Serjão Carvalho", pt: "Mais fotos de Serjão Carvalho" }, detail: { en: "Photos: Serjão Carvalho · Flickr", pt: "Fotos: Serjão Carvalho · Flickr" } } },
+        { episodeLink: { url: "https://www.popload.com.br/dj-shadow-tem-show-confirmado-no-cine-joia-em-sp", title: { en: "Read the announcement", pt: "Ler o anúncio" }, detail: { en: "Popload · August 2012", pt: "Popload · agosto de 2012" } } },
+        // Dubstrong's own recording of his set that night (SoundCloud), which Felipe loves
+        { chapter: { en: "07 · Dubstrong live", pt: "07 · Dubstrong ao vivo" }, kicker: { en: "Same night · SoundCloud", pt: "Mesma noite · SoundCloud" }, grid: "trilho",
+          head: { en: "Before *the Shadow.*", pt: "Antes *do Shadow.*" },
+          text: { en: "DJ Dubstrong recorded his set that night at Cine Joia, and put it online.", pt: "O DJ Dubstrong gravou o set dele naquela noite no Cine Joia e colocou no ar." } },
+        { soundcloud: "https://soundcloud.com/dubstrong/djdubstrong-live-chocolate10anos", h: 166, caption: { en: "DJ Dubstrong live @ Cine Joia, Chocolate 10 anos · SoundCloud", pt: "DJ Dubstrong ao vivo no Cine Joia, Chocolate 10 anos · SoundCloud" } },
+        { chapter: { en: "08 · Listen", pt: "08 · Ouça" }, kicker: { en: "Sample-based", pt: "Feito de samples" }, grid: "trilho",
           head: { en: "Built from *other records.*", pt: "Feito de *outros discos.*" },
           text: { en: "DJ Shadow builds his music from samples. Start with Endtroducing..... (1996) and “Midnight in a Perfect World”.", pt: "O DJ Shadow constrói a música a partir de samples. Comece pelo Endtroducing..... (1996) e por “Midnight in a Perfect World”." } },
         { spotify: "artist/5CE2IfdYZEQGIDsfiRm8SI", h: 452, caption: { en: "DJ Shadow on Spotify", pt: "DJ Shadow no Spotify" } },
