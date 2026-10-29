@@ -74,6 +74,9 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Colour rule (Felipe, Oct 29 2026): highlights and hovers use the project's own contrast colour (theme `accent`).
   When a project has no colour of its own (no theme, or a black/white accent such as Cinema Especial and Adidas 60),
   use the site blue #1a2bff (`var(--ai,var(--blue))`).
+- About below Services on black, white text (Felipe, Oct 29 2026: "texto branco sobre fundo preto"), inverted via the
+  section's tokens in style.css. Links there hover as white on a blue band, since blue type on black is 2.7:1. The black
+  footer (Let's talk) and the rule-draw entrance come from the Oct 29 2026 audit, pending Felipe's approval.
 
 ## Images: never crop (Felipe, Oct 24 2026)
 

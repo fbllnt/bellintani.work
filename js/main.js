@@ -19,7 +19,12 @@
   const L = v => (v && typeof v === "object" && !Array.isArray(v) && ("en" in v || "pt" in v)) ? (v[lang] ?? v.en) : v;
   const T = k => S.ui[lang][k] ?? S.ui.en[k] ?? "";
   document.documentElement.lang = LANGS[lang];
-  document.querySelector('meta[name="description"]').content = T("description");
+  // Meta description: the home's own on the home; a project sets its summary in renderCase, closeCase restores this one
+  // (setting it here on a /p/ page wiped the description build-pages.mjs wrote for the project).
+  const metaDesc = document.querySelector('meta[name="description"]');
+  const clip = (s, n = 155) => s.length <= n ? s : s.slice(0, s.lastIndexOf(" ", n - 1)).replace(/[,;:.—-]+$/, "") + "…";
+  const setDesc = s => { if (metaDesc) metaDesc.content = s; };
+  if (!/^#p-/.test(location.hash)) setDesc(T("description"));
   document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T(el.dataset.i18n); });
   document.querySelectorAll("[data-i18n-label]").forEach(el => el.setAttribute("aria-label", T(el.dataset.i18nLabel)));
   // Picking a language reloads in it, keeping the page, the scroll position and skipping the intro.
@@ -28,12 +33,12 @@
     b.addEventListener("click", () => {
       if (b.dataset.lang === lang) return;
       store("lang", b.dataset.lang);
-      try { sessionStorage.setItem("resume", String(scrollY)); } catch (e) {}
+      try { sessionStorage.setItem("resume", String(scrollY)); sessionStorage.setItem("resumeFilter", selectedFilter); } catch (e) {}
       location.reload();
     });
   });
-  let resumeY = null;
-  try { resumeY = sessionStorage.getItem("resume"); sessionStorage.removeItem("resume"); } catch (e) {}
+  let resumeY = null, resumeFilter = null;
+  try { resumeY = sessionStorage.getItem("resume"); resumeFilter = sessionStorage.getItem("resumeFilter"); sessionStorage.removeItem("resume"); sessionStorage.removeItem("resumeFilter"); } catch (e) {}
 
   const q = new URLSearchParams(location.search);
 
@@ -72,7 +77,7 @@
   document.querySelectorAll('[data-bind="tagline"]').forEach(el => { el.innerHTML = esc(binds.tagline).replace(/\S+-\S+/g, w => `<span style="white-space:nowrap">${w}</span>`); });
   $("subline").innerHTML = L(S.subline).map(esc).join("<br>");
   $("mail-big").href = `mailto:${S.email}`;
-  const socialLinks = S.social.map(s => `<a class="swap" href="${esc(s.url)}" target="_blank" rel="noopener"><span>${esc(s.label)}</span><span>${esc(s.label)}</span></a>`).join("");
+  const socialLinks = S.social.map(s => `<a class="swap" href="${esc(s.url)}" target="_blank" rel="noopener"><span>${esc(s.label)}</span><span aria-hidden="true">${esc(s.label)}</span></a>`).join("");
   $("social-corner").innerHTML = socialLinks;
   $("services-list").innerHTML = L(S.services).map((s, i) => `<li><span>/ ${esc(s)}</span><span>${String(i + 1).padStart(2, "0")}</span></li>`).join("");
 
@@ -87,8 +92,9 @@
   // Real image if the project has one, otherwise a generated placeholder composition.
   function cover(i, p) {
     // `coverVideo`: a silent film loops in place of the still (`image` is its poster, and all that shows with reduced motion)
+    // Films list the WebM first (smaller) with the MP4 as fallback; an item whose WebM came out bigger has no `webm` (Oct 29 2026).
     if (p.coverVideo && !matchMedia("(prefers-reduced-motion: reduce)").matches) return `<video class="cover-vid" poster="${esc(p.image)}" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-        <source src="${esc(p.coverVideo.mp4)}" type="video/mp4">${p.coverVideo.webm ? `<source src="${esc(p.coverVideo.webm)}" type="video/webm">` : ""}</video>`;
+        ${p.coverVideo.webm ? `<source src="${esc(p.coverVideo.webm)}" type="video/webm">` : ""}<source src="${esc(p.coverVideo.mp4)}" type="video/mp4"></video>`;
     if (p.image) return `<img src="${esc(p.image)}" alt="" loading="lazy">`;
     const [h, s, l] = p.hue || [0, 0, 50];
     const c1 = `hsl(${h} ${s}% ${l}%)`, c2 = `hsl(${(h + 40) % 360} ${s}% ${Math.min(l + 25, 92)}%)`, ink = l < 30 ? "#f2f2f2" : "#111";
@@ -106,7 +112,7 @@
   // About: each block is a ruled row of the 12-column grid, label and count left, list right
   const A = S.about;
   $("credits-intro").textContent = L(A.intro);
-  const cell = (v, url) => url ? `<a class="swap" href="${esc(url)}"${/^https?:/.test(url) ? ` target="_blank" rel="noopener"` : ""}><span>${esc(L(v))}</span><span>${esc(L(v))}</span></a>` : esc(L(v));
+  const cell = (v, url) => url ? `<a class="swap" href="${esc(url)}"${/^https?:/.test(url) ? ` target="_blank" rel="noopener"` : ""}><span>${esc(L(v))}</span><span aria-hidden="true">${esc(L(v))}</span></a>` : esc(L(v));
   const isRow = r => r && typeof r === "object" && "name" in r;
   const pad = n => String(n).padStart(2, "0");
   $("credits").innerHTML = A.credits.map(b => `<div class="ab"><h3 class="ab-k mono">${esc(L(b.head))}<span class="muted">(${pad(b.rows.length)})</span>${tagFor(b)}</h3><ul class="ab-list${b.flow ? " flow" : ""}">${b.rows.map(r =>
@@ -120,18 +126,18 @@
   // ---------- Work: index (the only view; Felipe dropped the Grid view, Oct 28 2026) ----------
   const index = $("index");
   index.innerHTML = S.projects.map((p, i) => `<li><a href="${href(p)}" data-i="${i}">
-    <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono"><span class="k-top">${p.year ? `<span class="k-year">${esc(p.year)}</span>` : ""}${Array.isArray(p.tools) && p.tools.some(tool => typeof tool === "string" && tool.startsWith("*")) ? `<span class="k-ai" aria-label="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}" title="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}">AI</span>` : ""}</span><span class="k-scope">${esc(L(p.scope))}</span>${tagFor(p)}</span></a></li>`).join("");
+    <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono"><span class="k-top">${p.year ? `<span class="k-year">${esc(p.year)}</span>` : ""}${Array.isArray(p.tools) && p.tools.some(tool => typeof tool === "string" && tool.startsWith("*")) ? `<span class="k-ai" aria-label="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}" title="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}">${esc(T("aiMark"))}</span>` : ""}</span><span class="k-scope">${esc(L(p.scope))}</span>${tagFor(p)}</span></a></li>`).join("");
 
   // Curated, multi-discipline work filters. AI is based on the explicit *tool
   // convention in content.js, never on a project's year or aesthetic.
   const filterCategories = [
-    { id: "all", label: "ALL" },
+    { id: "all", label: L({ en: "ALL", pt: "TODOS", es: "TODOS" }) },
     { id: "branding", label: "BRANDING" },
-    { id: "campaigns", label: "CAMPAIGNS / ADS" }, // Felipe, Oct 29 2026
-    { id: "film", label: "FILM & TV" },
+    { id: "campaigns", label: L({ en: "CAMPAIGNS / ADS", pt: "CAMPANHAS / PUBLICIDADE", es: "CAMPAÑAS / PUBLICIDAD" }) }, // Felipe, Oct 29 2026
+    { id: "film", label: L({ en: "FILM & TV", pt: "FILME & TV", es: "CINE & TV" }) },
     { id: "digital", label: "DIGITAL / SOCIAL" },
-    { id: "ai", label: "AI" },
-    { id: "posters", label: "POSTERS / MUSIC" },
+    { id: "ai", label: T("aiMark") },
+    { id: "posters", label: L({ en: "POSTERS / MUSIC", pt: "PÔSTERES / MÚSICA", es: "PÓSTERES / MÚSICA" }) },
   ];
   // Each case can appear in multiple disciplines; order always follows S.projects.
   const curatedFilters = {
@@ -163,7 +169,7 @@
   const filterResults = $("work-filter-results");
   const filterButtons = filterCategories.map(({ id, label }) => {
     const count = id === "all" ? S.projects.length : S.projects.filter(p => categoryFor(p).includes(id)).length;
-    return `<button class="work-filter mono" type="button" data-filter="${id}" aria-pressed="${id === "all"}"><span>${label}</span><sup>${String(count).padStart(2, "0")}</sup></button>`;
+    return `<button class="work-filter mono" type="button" data-filter="${id}" aria-pressed="${id === "all"}"><span>${esc(label)}</span><sup>${String(count).padStart(2, "0")}</sup></button>`;
   }).join("");
   filterBar.innerHTML = filterButtons;
   let selectedFilter = "all";
@@ -180,15 +186,23 @@
       btn.setAttribute("aria-pressed", String(btn.dataset.filter === id));
     });
     filterResults.textContent = `${String(visible).padStart(2, "0")} / ${String(S.projects.length).padStart(2, "0")}`;
-    filterResults.setAttribute("aria-label", `${visible} of ${S.projects.length} projects shown`);
+    filterResults.setAttribute("aria-label", L({ en: `${visible} of ${S.projects.length} projects shown`, pt: `${visible} de ${S.projects.length} projetos visíveis`, es: `${visible} de ${S.projects.length} proyectos visibles` }));
   };
   filterBar.addEventListener("click", e => {
     const btn = e.target.closest("button[data-filter]");
     if (btn) selectWorkFilter(btn.dataset.filter);
   });
-  selectWorkFilter("all");
+  // A language switch reloads the page: the filter picked before it comes back with the scroll position
+  selectWorkFilter("all"); if (resumeFilter) selectWorkFilter(resumeFilter);
 
   const works = document.querySelector(".works");
+  // Skip link (first Tab stop): to the work list, or to the project title on a project page, without touching the hash
+  $("skip-link")?.addEventListener("click", e => {
+    e.preventDefault();
+    const to = document.body.classList.contains("in-case") ? $("case").querySelector(".case-title") : works;
+    if (!to) return;
+    to.setAttribute("tabindex", "-1"); to.scrollIntoView({ behavior: "instant" }); to.focus({ preventScroll: true });
+  });
 
   // ---------- Optical left edge ----------
   // Big type starts where its ink starts, not where its side bearing starts, so a huge B or D lines up with the
@@ -298,7 +312,7 @@
   cue.addEventListener("click", e => { e.preventDefault(); $(S.projects.length ? "work" : "services").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
   const cueCheck = () => cue.classList.toggle("gone", scrollY > 40);
   addEventListener("scroll", cueCheck, { passive: true }); cueCheck();
-  $("replay").onclick = () => { scrollTo({ top: 0 }); play(); };
+  $("replay").onclick = () => { scrollTo({ top: 0 }); reduced ? finish() : play(); };
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
@@ -469,7 +483,7 @@
           { name: { en: "News", pt: "Jornalismo", es: "Periodismo" }, cls: "news", number: "01" },
           { name: { en: "Sport", pt: "Esporte", es: "Deportes" }, cls: "sport", number: "02" },
           { name: { en: "Entertainment", pt: "Entretenimento", es: "Entretenimiento" }, cls: "entertainment", number: "03" }
-        ].map(x => `<div class="globo-palette-card ${x.cls}" tabindex="0" role="img" aria-label="${esc(L(x.name))}: ${esc(L({en:"animated gradient",pt:"degradê animado"}))}">
+        ].map(x => `<div class="globo-palette-card ${x.cls}" tabindex="0" role="img" aria-label="${esc(L(x.name))}: ${esc(L({en:"animated gradient",pt:"degradê animado",es:"degradado animado"}))}">
           <div class="globo-palette-swatch" aria-hidden="true"></div>
           <div class="globo-palette-meta mono"><span>${x.number} / ${esc(L(x.name))}</span><span aria-hidden="true">↗</span></div>
         </div>`).join("")}
@@ -483,7 +497,7 @@
         <iframe src="${esc(src)}" width="${w}" height="${h}" loading="lazy" tabindex="-1" aria-hidden="true" style="--w:${w}"></iframe>
         <a class="fig-link" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(T("openSite"))}: ${esc(url)}"><span class="fig-open mono">${esc(T("openSite"))} ↗</span></a></div></figure>`; }
     // A YouTube film playing in place (privacy-enhanced player), credited in the caption: { yt: "<video id>", ar, caption }
-    if (it.yt) return `<figure class="fig yt" style="--ar:${esc(it.ar || "16/9")};${style}"><div class="ph"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(it.yt)}?rel=0" title="${esc(L(it.caption) || "YouTube")}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
+    if (it.yt) return `<figure class="fig yt" style="--ar:${esc(it.ar || "16/9")};${style}"><div class="ph"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(it.yt)}?rel=0" title="${esc(L(it.caption) || "YouTube")}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen"></iframe></div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
     // A Spotify player in place (an artist's top tracks, an album or a playlist): { spotify: "artist/<id>", h, caption }.
     // Spotify colours the player from the artwork (it can't take a custom colour); the dark theme (theme=0) keeps it
     // neutral on the themed pages (Felipe, Oct 29 2026: the green player clashed with the slate page).
@@ -541,7 +555,7 @@
       </div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
     return `<figure class="fig ${it.size || "full"}${it.popstarInvert ? " popstar-invert" : ""}${it.corehiInteractive ? " corehi-interactive" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
       it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""}${it.offset ? ` data-offset="${+it.offset}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
-          <source src="${esc(it.video)}" type="video/mp4">${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}</video>
+          ${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}<source src="${esc(it.video)}" type="video/mp4"></video>
         <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button><button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
           <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M1 6V1h5M10 1h5v5M15 10v5h-5M6 15H1v-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button></div>`
       // `href`: the image is a print of a live page; clicking opens that page in a new tab
@@ -983,23 +997,23 @@
     let n = 0;
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
-      <div class="case-top mono"><a class="swap" href="#work"><span>${esc(T("allWork"))}</span><span>${esc(T("allWork"))}</span></a><div class="case-top-nav" aria-label="Project navigation"><a class="case-top-link" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}" title="${esc(L(prev.title))}">← ${esc(T("prev"))}</a><span class="case-position">(${String(i + 1).padStart(2, "0")} / ${String(S.projects.length).padStart(2, "0")})</span><a class="case-top-link" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}" title="${esc(L(next.title))}">${esc(T("nextItem"))} →</a></div></div>
-      <h1 class="case-title" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
+      <div class="case-top mono"><a class="swap" href="#work"><span>${esc(T("allWork"))}</span><span aria-hidden="true">${esc(T("allWork"))}</span></a><div class="case-top-nav" aria-label="${esc(T("projectNav"))}"><a class="case-top-link" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}" title="${esc(L(prev.title))}">← ${esc(T("prev"))}</a><span class="case-position">(${String(i + 1).padStart(2, "0")} / ${String(S.projects.length).padStart(2, "0")})</span><a class="case-top-link" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}" title="${esc(L(next.title))}">${esc(T("nextItem"))} →</a></div></div>
+      <h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
       ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
       <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>`
         : Array.isArray(v) ? v.map(t => t[0] === "*" ? `<span class="ai-tool">${esc(t.slice(1))}<sup>${esc(T("aiMark"))}</sup></span>` : esc(t)).join(", ") : esc(v)}</dd></div>`).join("")}${
-        (p.credits || []).map(c => `<div><dt>${esc(L(c.role))}</dt><dd>${c.url ? `<a class="swap" href="${esc(c.url)}" target="_blank" rel="noopener"><span>${esc(c.name)} ↗</span><span>${esc(c.name)} ↗</span></a>` : esc(c.name)}</dd></div>`).join("")}${
-        p.link ? `<div class="live"><dt>${esc(T("live"))}</dt><dd><a class="swap" href="${esc(p.link.url)}" target="_blank" rel="noopener"><span>${esc(p.link.label)} ↗</span><span>${esc(p.link.label)} ↗</span></a></dd></div>` : ""}</dl>
+        (p.credits || []).map(c => `<div><dt>${esc(L(c.role))}</dt><dd>${c.url ? `<a class="swap" href="${esc(c.url)}" target="_blank" rel="noopener"><span>${esc(c.name)} ↗</span><span aria-hidden="true">${esc(c.name)} ↗</span></a>` : esc(c.name)}</dd></div>`).join("")}${
+        p.link ? `<div class="live"><dt>${esc(T("live"))}</dt><dd><a class="swap" href="${esc(p.link.url)}" target="_blank" rel="noopener"><span>${esc(p.link.label)} ↗</span><span aria-hidden="true">${esc(p.link.label)} ↗</span></a></dd></div>` : ""}</dl>
       ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
       <section class="case-intro-block${p.stats ? " has-stats" : ""}">
         <div class="case-about">
           <span class="mono muted">${esc(T("about"))}</span>
           <p class="body">${esc(L(p.summary) || T("placeholderText"))}${tagFor(p)}</p>
         </div>
-        ${p.stats ? `<ul class="case-stats">${p.stats.map(([n, label]) => `<li><b>${esc(n)}</b><span class="mono">${esc(L(label))}</span></li>`).join("")}</ul>` : ""}
+        ${p.stats ? `<ul class="case-stats">${p.stats.map(([n, label]) => `<li><b>${esc(L(n))}</b><span class="mono">${esc(L(label))}</span></li>`).join("")}</ul>` : ""}
       </section>
       <div class="case-gallery">${gallery(i, p)}</div>
-      <nav class="case-neighbors" aria-label="Project navigation">
+      <nav class="case-neighbors" aria-label="${esc(T("projectNav"))}">
         <a class="case-neighbor previous" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}">
           <span class="mono muted">← ${esc(T("prev"))} · ${String((i - 1 + S.projects.length) % S.projects.length + 1).padStart(2,"0")}</span>
           <span class="case-neighbor-title">${esc(L(prev.title))}</span>
@@ -1010,6 +1024,7 @@
         </a>
       </nav>`;
     document.title = `${L(p.title)} — ${S.name}`;
+    setDesc(clip(`${L(p.title)}${p.year ? ` (${p.year})` : ""}. ${L(p.summary) || L(p.scope) || ""}`.trim()));
     observe();
     setupVideos();
     setupEmbeds();
@@ -1255,17 +1270,18 @@
   let motionFigs = [], motionRaf = 0;
   const motion = () => {
     motionRaf = 0;
-    const H = innerHeight;
+    const H = innerHeight, rs = motionFigs.map(f => f.getBoundingClientRect());
+    // all reads first (above), then all writes, so the layout is measured once per frame;
+    // will-change only on pieces near the screen (saves memory on phones)
     motionFigs.forEach((f, i) => {
-      const r = f.getBoundingClientRect();
-      if (r.bottom < -50 || r.top > H + 50) return;
+      const r = rs[i], ph = f.querySelector(".ph"), near = r.bottom >= -50 && r.top <= H + 50;
+      if (!ph) return;
+      ph.style.willChange = near ? "transform,opacity" : "";
+      if (!near) return;
       // 0 while the frame's top sits at the bottom edge, 1 once it has climbed 60% of the screen
-      const t = Math.min(1, Math.max(0, (H - r.top) / (H * .6))), e = 1 - (1 - t) ** 3, k = 1 - e;
-      const ph = f.querySelector(".ph"), side = i % 2 ? -1 : 1;
-      if (ph) {
-        ph.style.transform = k > .001 ? `perspective(1200px) translateY(${(k * 160).toFixed(1)}px) rotateX(${(k * 24).toFixed(2)}deg) rotate(${(k * 4 * side).toFixed(2)}deg) scale(${(1 - k * .08).toFixed(3)})` : "";
-        ph.style.opacity = (.25 + .75 * e).toFixed(3);
-      }
+      const t = Math.min(1, Math.max(0, (H - r.top) / (H * .6))), e = 1 - (1 - t) ** 3, k = 1 - e, side = i % 2 ? -1 : 1;
+      ph.style.transform = k > .001 ? `perspective(1200px) translateY(${(k * 160).toFixed(1)}px) rotateX(${(k * 24).toFixed(2)}deg) rotate(${(k * 4 * side).toFixed(2)}deg) scale(${(1 - k * .08).toFixed(3)})` : "";
+      ph.style.opacity = (.25 + .75 * e).toFixed(3);
     });
   };
   const queueMotion = () => { if (motionFigs.length && !motionRaf) motionRaf = requestAnimationFrame(motion); };
@@ -1381,6 +1397,7 @@
       renderCase(i);
       document.body.classList.add("in-case");
       scrollTo({ top: 0, behavior: "instant" });
+      caseEl.querySelector(".case-title").focus({ preventScroll: true });
     };
     if (grown) { grown = false; go(); return; }
     animate ? cutTo(go) : go();
@@ -1388,7 +1405,7 @@
   const closeCase = target => cutTo(() => {
     document.body.classList.remove("in-case");
     fit();
-    caseEl.innerHTML = ""; document.title = homeTitle; motionFigs = [];
+    caseEl.innerHTML = ""; document.title = homeTitle; setDesc(T("description")); motionFigs = [];
     applyTheme(null);
     const el = $(target) || $("work");
     el.scrollIntoView({ behavior: "instant" });
@@ -1415,6 +1432,16 @@
     const cio = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { index.classList.add("in"); cio.disconnect(); } }, { threshold: .12 });
     cio.observe(index);
   } else index.classList.add("in");
+  // About entrance (Oct 29 2026 audit, pending Felipe's approval): each block's rule draws once it comes into view (CSS .fx-rule); a block
+  // coming in also completes every block above it, so a jump past them (#contact, a fast scroll) never leaves a rule undrawn
+  if ("IntersectionObserver" in window && fxOn) {
+    const rules = [...$("about").querySelectorAll(".ab, .ab-end")];
+    $("about").classList.add("fx-rule");
+    const rio = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting || e.boundingClientRect.top < 0) rules.slice(0, rules.indexOf(e.target) + 1).forEach(b => { b.classList.add("in"); rio.unobserve(b); });
+    }), { rootMargin: "0px 0px -15% 0px" });
+    rules.forEach(b => rio.observe(b));
+  }
 
   // 3. Open: a blue panel grows from the clicked row to the whole screen, turning into the project's
   // background colour as it grows; the page renders underneath and the panel fades away
@@ -1465,7 +1492,7 @@
     cursorTo(document.body);
     const ctx = trail.getContext("2d"), N = 40, EASE = .72, W = 18;
     const ptr = { x: -100, y: -100 }, chain = Array.from({ length: N }, () => ({ x: -100, y: -100 }));
-    let raf = 0, dpr = 1, tiles = [], hover = null, row = null;
+    let raf = 0, dpr = 1, tiles = [], hover = null;
     const size = () => { dpr = Math.min(2, devicePixelRatio || 1); trail.width = innerWidth * dpr; trail.height = innerHeight * dpr; };
     size(); addEventListener("resize", size);
     // The flooded part of a logo tile, from its --f (0 bare to 1 full, mid-transition too); null when bare
@@ -1475,13 +1502,12 @@
       const r = tile.getBoundingClientRect();
       return { x: r.left, y: r.bottom - r.height * f, w: r.width, h: r.height * f, done: f === 1 };
     };
-    // The open band of a home row's blue bar, which opens from the middle out
-    const band = a => {
-      const bar = a.querySelector(".bar"), m = bar && /inset\(([\d.]+)%/.exec(getComputedStyle(bar).clipPath);
-      const c = !bar || getComputedStyle(bar).display === "none" ? 50 : m ? +m[1] : 0;
-      if (c >= 50 || !a.isConnected) return null;
-      const r = bar.getBoundingClientRect();
-      return { x: r.left, y: r.top + r.height * c / 100, w: r.width, h: r.height * (1 - c / 50), done: c === 0 };
+    // The black About (Felipe, Oct 29 2026) + contact (Oct 29 2026 audit) at the end of the home; null while a project is open
+    const aboutEl = $("about"), contactEl = $("contact");
+    const dark = () => {
+      if (!aboutEl.offsetParent) return null;
+      const t = aboutEl.getBoundingClientRect().top;
+      return { x: 0, y: t, w: innerWidth, h: contactEl.getBoundingClientRect().bottom - t, done: true };
     };
     const draw = () => {
       let moving = false;
@@ -1495,15 +1521,14 @@
       ctx.lineCap = ctx.lineJoin = "round"; ctx.lineWidth = W;
       const floods = tiles.map(flood), hf = floods[tiles.indexOf(hover)];
       tiles = tiles.filter((t, i) => t === hover || floods[i]);
-      const rb = row && band(row);
-      const zones = onBlue ? [{ x: 0, y: 0, w: innerWidth, h: innerHeight, done: true }] : [...floods, rb].filter(Boolean);
+      const zones = onBlue ? [{ x: 0, y: 0, w: innerWidth, h: innerHeight, done: true }] : [...floods.filter(Boolean), dark()].filter(Boolean);
       ball.classList.toggle("white", zones.some(z => ptr.x >= z.x && ptr.x <= z.x + z.w && ptr.y >= z.y && ptr.y <= z.y + z.h));
       ctx.strokeStyle = getComputedStyle(ball).backgroundColor;
       ctx.beginPath(); ctx.moveTo(ptr.x, ptr.y);
       chain.forEach(p => ctx.lineTo(p.x, p.y));
       ctx.stroke();
-      // Keep drawing while a flood or bar is still moving, even when the mouse is still
-      const settling = !onBlue && (zones.some(z => !z.done) || !!hover && !(hf && hf.done) || !!row && !(rb && rb.done));
+      // Keep drawing while a flood is still moving, even when the mouse is still
+      const settling = !onBlue && (zones.some(z => !z.done) || !!hover && !(hf && hf.done));
       raf = moving || settling ? requestAnimationFrame(draw) : 0;
     };
     addEventListener("pointermove", e => {
@@ -1513,7 +1538,6 @@
       ball.style.translate = `${ptr.x}px ${ptr.y}px`;
       ball.classList.add("on");
       hover = onBlue ? null : e.target.closest(".logo");
-      row = onBlue ? null : e.target.closest(".index a");
       // Over a film roll or a 360° viewer the ball becomes the drag handle (on a 360° viewer, in the project's accent colour)
       const spin = !onBlue && !!e.target.closest(".spin canvas");
       const drag = spin || !onBlue && !!e.target.closest(".roll-track");
@@ -1522,6 +1546,8 @@
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
+    // Scrolling under a still mouse can carry the ball onto the black About, so recheck its colour
+    addEventListener("scroll", () => { if (ball.classList.contains("on") && !raf) raf = requestAnimationFrame(draw); }, { passive: true });
     document.addEventListener("pointerleave", () => { ball.classList.remove("on"); ctx.clearRect(0, 0, innerWidth, innerHeight); });
     addEventListener("pointerdown", () => ball.classList.add("press"));
     addEventListener("pointerup", () => ball.classList.remove("press"));
@@ -1534,6 +1560,9 @@
   const musicBtn = $("music-btn"), music = $("music"), musicFrame = $("music-frame"), musicSwap = $("music-swap");
   let loaded = null, spotifyAPI = null, spotifyController = null, spotifyReady = false, playRequested = false;
   let playbackConfirmed = false;
+  // The track in the player (`mountedId`) can differ from the one picked (`loaded`) while Spotify is still loading;
+  // `mounts` numbers each player so a late callback from an older one is ignored.
+  let mountedId = null, mounts = 0;
   const suggested = () => { const i = projectFromHash(); return (i >= 0 && S.projects[i].track) || S.homeTrack; };
   const songOf = t => `${t.name} — ${t.by}`;
   const playNote = $("music-play-note");
@@ -1541,21 +1570,27 @@
   const uriOf = t => `spotify:track:${t.id}`;
   const mountSpotify = () => {
     if (!spotifyAPI || !loaded) return;
+    const mount = ++mounts;
     spotifyReady = false;
     spotifyController = null;
     playbackConfirmed = false;
+    mountedId = loaded.id;
     musicFrame.innerHTML = '<div class="spotify-embed-mount"></div>';
     spotifyAPI.createController(musicFrame.firstElementChild, { uri: uriOf(loaded), width: "100%", height: 80 }, controller => {
+      if (mount !== mounts) return;
       spotifyController = controller;
       controller.addListener("ready", () => {
+        if (mount !== mounts) return;
         spotifyReady = true;
+        // A track picked while the player was loading: load it before playing
+        if (loaded.id !== mountedId) { controller.loadEntity(uriOf(loaded)); mountedId = loaded.id; }
         if (playRequested) {
           playRequested = false;
           controller.play();
           setPlayNote(L({ en: "If audio does not start, your browser may require Play inside Spotify.", pt: "Se o som não começar, talvez o navegador peça o play no próprio Spotify.", es: "Si el audio no empieza, tu navegador puede pedir Play dentro de Spotify." }));
         }
       });
-      controller.addListener("playback_started", () => { playbackConfirmed = true; setPlayNote(""); });
+      controller.addListener("playback_started", () => { if (mount !== mounts) return; playbackConfirmed = true; setPlayNote(""); });
     });
   };
   // Spotify's official iFrame API enables click-to-play, subject to browser playback policies.
@@ -1570,14 +1605,13 @@
   };
   const loadSong = (t, play = false) => {
     if (!t) return;
-    const changed = !loaded || loaded.id !== t.id;
     loaded = t;
     playbackConfirmed = false;
     // Preserve the playback request until the Spotify controller is ready.
     // Only the official player can determine whether a browser permits autoplay.
     playRequested = play;
     if (spotifyController && spotifyReady) {
-      if (changed) spotifyController.loadEntity(uriOf(t));
+      if (mountedId !== t.id) { spotifyController.loadEntity(uriOf(t)); mountedId = t.id; }
       if (play) {
         spotifyController.play();
         playRequested = false;
@@ -1586,14 +1620,12 @@
     } else if (spotifyAPI) {
       // Do not create a temporary iframe and then replace it with a second one.
       // That reset previously prevented the track click from starting smoothly.
-      if (!spotifyController) mountSpotify();
+      if (!mounts) mountSpotify();
     } else {
       ensureSpotifyAPI();
       setPlayNote(L({ en: "Loading Spotify player…", pt: "Carregando o player do Spotify…", es: "Cargando el reproductor de Spotify…" }));
     }
   };
-  // Preload the API before the visitor picks a track, reducing click-to-play latency.
-  ensureSpotifyAPI();
   const syncMusic = () => {
     const t = suggested(), i = projectFromHash();
     $("music-title").textContent = T("nowSuggested") + (i >= 0 ? ` · ${L(S.projects[i].title)}` : "");
@@ -1601,25 +1633,28 @@
     musicSwap.hidden = !other;
     if (other) musicSwap.textContent = `▶ ${T("musicSwap")}: ${songOf(t)}`;
   };
-  const openMusic = on => {
+  // `focus`: opening moves the keyboard to the close button, closing (× or Esc) returns it to ♪; a click outside leaves it be
+  const openMusic = (on, focus) => {
     if (on && !loaded && suggested()) loadSong(suggested());
     music.hidden = !on; musicBtn.setAttribute("aria-expanded", String(on));
     syncMusic();
+    if (focus) (on ? $("music-close") : musicBtn).focus({ preventScroll: true });
   };
   const note = `<span>♪<b> ${esc(T("music").replace(/^♪\s*/, ""))}</b></span>`;
-  musicBtn.innerHTML = note + note;
-  musicBtn.onclick = () => openMusic(music.hidden);
-  $("music-close").onclick = () => openMusic(false);
+  musicBtn.innerHTML = note + note.replace("<span>", '<span aria-hidden="true">');
+  musicBtn.onclick = () => openMusic(music.hidden, true);
+  $("music-close").onclick = () => openMusic(false, true);
   musicSwap.onclick = () => { loadSong(suggested(), true); syncMusic(); };
   addEventListener("hashchange", syncMusic);
-  addEventListener("keydown", e => { if (e.key === "Escape" && !music.hidden) openMusic(false); });
-  document.addEventListener("click", e => { if (!music.hidden && !music.contains(e.target) && !musicBtn.contains(e.target) && !e.target.closest("#work-music-invite")) openMusic(false); });
+  addEventListener("keydown", e => { if (e.key === "Escape" && !music.hidden) openMusic(false, true); });
+  // isConnected: picking a track re-renders the list, so its click target is gone by now and must not count as outside
+  document.addEventListener("click", e => { if (!music.hidden && e.target.isConnected && !music.contains(e.target) && !musicBtn.contains(e.target) && !e.target.closest("#work-music-invite")) openMusic(false); });
 
   // Curated listening queue from the existing project soundtrack. Choosing a track is explicit:
   // Spotify embeds control playback and may require the listener to press Play / sign in.
   const soundtrack = [{ project: { en: "Home", pt: "Início", es: "Inicio" }, track: S.homeTrack }, ...S.projects.filter(p => p.track).map(p => ({ project: p.title, track: p.track }))];
   const listEl = $("music-tracklist");
-  $("music-list-count").textContent = String(soundtrack.length).padStart(2, "0") + " TRACKS";
+  $("music-list-count").textContent = String(soundtrack.length).padStart(2, "0") + " " + L({ en: "TRACKS", pt: "FAIXAS", es: "CANCIONES" });
   $("music-list-label").textContent = L({ en: "PORTFOLIO SOUNDTRACK", pt: "TRILHA DO PORTFÓLIO", es: "BANDA SONORA DEL PORTAFOLIO" });
   const renderSoundtrack = () => {
     listEl.innerHTML = soundtrack.map(({ project, track }, i) => `<button class="music-track${loaded && loaded.id === track.id ? " active" : ""}" type="button" data-track="${i}" aria-pressed="${String(!!loaded && loaded.id === track.id)}">
@@ -1648,6 +1683,8 @@
     workInvite.textContent = L({ en: "♪ EXPLORE THE WORK WITH MY CURATED SOUNDTRACK ↗", pt: "♪ VEJA OS PROJETOS OUVINDO A TRILHA QUE EU ESCOLHI ↗", es: "♪ EXPLORA LOS PROYECTOS CON LA BANDA SONORA QUE ELEGÍ ↗" });
     workInvite.addEventListener("click", () => { openMusic(true); renderSoundtrack(); $("music-close").focus({ preventScroll: true }); });
   }
+  // Spotify's API (~256 KB) loads only on the way to the music: first hover, focus or touch of ♪ or the invite
+  [musicBtn, workInvite].forEach(el => el && ["pointerenter", "focus", "touchstart"].forEach(ev => el.addEventListener(ev, ensureSpotifyAPI, { once: true, passive: true })));
   const musicInvite = $("music-invite");
   if (musicInvite) musicInvite.textContent = L({ en: "A SOUNDTRACK FOR EVERY PROJECT. PICK A SONG AND EXPLORE.", pt: "CADA PROJETO TEM A SUA TRILHA. ESCOLHE UMA MÚSICA E VAI FUNDO.", es: "CADA PROYECTO TIENE SU CANCIÓN. ELIGE UNA Y EXPLORA." });
 

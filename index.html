@@ -31,15 +31,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap">
-<link rel="stylesheet" href="css/style.css?v=20261030es">
+<link rel="stylesheet" href="css/style.css?v=20261030onda1">
 </head>
 <body>
+<a class="skip-link mono" id="skip-link" href="#work" data-i18n="skipToContent"></a>
 
 <nav class="corners" id="corners" aria-label="Main">
-  <a class="c-tl" href="#top"><span class="swap"><span data-bind="nameYear"></span><span class="c-alt" data-bind="copyright"></span><span class="c-back" data-i18n="backHome"></span></span></a>
-  <div class="c-tr"><a class="swap" href="#work"><span data-i18n="work"></span><span data-bind="workCount"></span></a><a class="swap" href="#about"><span data-i18n="aboutNav"></span><span data-i18n="aboutNav"></span></a><button class="swap" id="music-btn" type="button" aria-expanded="false" aria-controls="music" data-i18n-label="musicLabel"><span data-i18n="music"></span><span data-i18n="music"></span></button><span class="langs" id="lang" role="group" data-i18n-label="langLabel"><button class="lang swap" type="button" data-lang="en" lang="en-US"><span>EN</span><span>EN</span></button><button class="lang swap" type="button" data-lang="pt" lang="pt-BR"><span>PT</span><span>PT</span></button><button class="lang swap" type="button" data-lang="es" lang="es"><span>ES</span><span>ES</span></button></span></div>
+  <a class="c-tl" href="#top"><span class="swap"><span data-bind="nameYear"></span><span class="c-alt" data-bind="copyright" aria-hidden="true"></span><span class="c-back" data-i18n="backHome"></span></span></a>
+  <div class="c-tr"><a class="swap" href="#work"><span data-i18n="work"></span><span data-bind="workCount"></span></a><a class="swap" href="#about"><span data-i18n="aboutNav"></span><span data-i18n="aboutNav" aria-hidden="true"></span></a><button class="swap" id="music-btn" type="button" aria-expanded="false" aria-controls="music" data-i18n-label="musicLabel"><span data-i18n="music"></span><span data-i18n="music" aria-hidden="true"></span></button><span class="langs" id="lang" role="group" data-i18n-label="langLabel"><button class="lang swap" type="button" data-lang="en" lang="en-US"><span>EN</span><span aria-hidden="true">EN</span></button><button class="lang swap" type="button" data-lang="pt" lang="pt-BR"><span>PT</span><span aria-hidden="true">PT</span></button><button class="lang swap" type="button" data-lang="es" lang="es"><span>ES</span><span aria-hidden="true">ES</span></button></span></div>
   <div class="c-bl" id="social-corner"></div>
-  <a class="c-br talk swap" href="#contact"><span data-i18n="letsTalk"></span><span><span class="ar">→</span> <span data-i18n="letsTalk"></span> <span class="ar">←</span></span></a>
+  <a class="c-br talk swap" href="#contact"><span data-i18n="letsTalk"></span><span aria-hidden="true"><span class="ar">→</span> <span data-i18n="letsTalk"></span> <span class="ar">←</span></span></a>
 </nav>
 <!-- Suggested music: a small Spotify player that drops down from the corner menu -->
 <aside class="music" id="music" hidden data-i18n-label="musicLabel">
@@ -49,7 +50,7 @@
   <div class="music-frame" id="music-frame"></div>
   <p class="music-play-note mono" id="music-play-note" aria-live="polite"></p>
   <div class="music-list-head mono"><span id="music-list-label">PORTFOLIO SOUNDTRACK</span><span id="music-list-count"></span></div>
-  <div class="music-tracklist" id="music-tracklist" aria-label="Portfolio soundtrack"></div>
+  <div class="music-tracklist" id="music-tracklist" data-i18n-label="soundtrack"></div>
 </aside>
 
 <div class="home">
@@ -74,8 +75,8 @@
     <div class="sec-head">
       <h2 class="h2"><span data-i18n="work"></span><sup data-bind="workCount"></sup></h2>
     </div>
-    <div class="work-filter-area" aria-label="Filter projects by discipline">
-      <div class="work-filters" id="work-filters" role="group" aria-label="Project categories"></div>
+    <div class="work-filter-area" data-i18n-label="filterArea">
+      <div class="work-filters" id="work-filters" role="group" data-i18n-label="filterGroup"></div>
       <span class="work-filter-results mono" id="work-filter-results" aria-live="polite"></span>
       <button class="work-music-invite mono" type="button" id="work-music-invite">♪ EXPLORE THE WORK WITH MY CURATED SOUNDTRACK ↗</button>
     </div>
@@ -85,7 +86,7 @@
   <section class="sec" id="services">
     <div class="sec-head">
       <h2 class="h2" data-i18n="services"></h2>
-      <button class="replay mono swap" id="replay" type="button"><span data-i18n="replay"></span><span data-i18n="replay"></span></button>
+      <button class="replay mono swap" id="replay" type="button"><span data-i18n="replay"></span><span data-i18n="replay" aria-hidden="true"></span></button>
     </div>
     <ul class="services mono" id="services-list"></ul>
   </section>
@@ -105,10 +106,10 @@
   </footer>
 </main>
 
-<article class="case gut" id="case" aria-live="polite"></article>
+<article class="case gut" id="case"></article>
 <div class="wipe" id="wipe" aria-hidden="true"></div>
 
-<script src="js/content.js?v=20261030voz"></script>
-<script src="js/main.js?v=20261030voz"></script>
+<script src="js/content.js?v=20261030onda1"></script>
+<script src="js/main.js?v=20261030onda1"></script>
 </body>
 </html>
