@@ -1148,12 +1148,13 @@ window.SITE = {
           text: { en: "A small show at Sesc Belenzinho. A friend was producing it and invited me to make the poster. Music, and anything made for it, is one of the things I love most: drawing this one and then watching the band live was deeply moving.", pt: "Um show pequeno no Sesc Belenzinho. Uma amiga produzia e me convidou para fazer o pôster. Música, e qualquer trabalho feito para ela, está entre as coisas que eu mais gosto: desenhar este pôster e depois assistir à banda ao vivo foi muito emocionante." } },
         // The band's own handwritten logo (not Felipe's lettering: Oct 29 2026), as a transparent PNG over the page's slate
         { src: "images/explosions-in-the-sky/band-logo.png", ar: "2000/346", col: 1, span: 12, caption: { en: "The band's logo", pt: "O logo da banda" } },
-        { chapter: { en: "03 · Screen print", pt: "03 · Serigrafia" }, kicker: { en: "Limited and signed", pt: "Limitada e assinada" }, grid: "destaque",
+        // The three print photos as one row of equal height (Felipe, Oct 29 2026: "destaque" left a big void beside the text)
+        { fullWidthIntro: true, chapter: { en: "03 · Screen print", pt: "03 · Serigrafia" }, kicker: { en: "Limited and signed", pt: "Limitada e assinada" }, grid: "fluxo",
           head: { en: "A rare, *signed run.*", pt: "Uma tiragem *rara e assinada.*" },
           text: { en: "Screen printed in a small limited series, signed by me and by the band. Very few copies were made.", pt: "Serigrafia em série limitada, assinada por mim e pela banda. Foram muito poucas cópias." } },
-        { src: "images/explosions-in-the-sky/print-03.jpg", ar: "1500/2000" },
-        { src: "images/explosions-in-the-sky/print-01.jpg", ar: "2000/1500" },
-        { src: "images/explosions-in-the-sky/print-02.jpg", ar: "2000/1500" },
+        { src: "images/explosions-in-the-sky/print-01.jpg", ar: "2000/1500", col: 1, span: 4 },
+        { src: "images/explosions-in-the-sky/print-03.jpg", ar: "1500/2000", col: 5, span: 4 },
+        { src: "images/explosions-in-the-sky/print-02.jpg", ar: "2000/1500", col: 9, span: 4 },
         { chapter: { en: "04 · Out in the city", pt: "04 · Na cidade" }, kicker: { en: "Mockups", pt: "Mockups" }, grid: "destaque",
           head: { en: "The city *on the street.*", pt: "A cidade *na rua.*" },
           text: { en: "The skyline taken off the paper: pasted on a São Paulo wall, on a tote bag and on a t-shirt.", pt: "A cidade saindo do papel: colada num muro de São Paulo, numa ecobag e numa camiseta." } },
