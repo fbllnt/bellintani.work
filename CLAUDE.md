@@ -54,7 +54,9 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - All copy and projects live in `js/content.js`, in three languages as `{ en, pt, es }` (EN-US / PT-BR / Spanish, neutral
   Latin American, "tú"; added Oct 29 2026). New text needs all three; a missing `es` falls back to English.
 - Language on arrival: saved choice, else the visitor's country (worker/index.js sets a `geo` cookie on page requests:
-  Brazil → PT, Spanish-speaking countries → ES, anywhere else → EN), else the browser language. Switcher: EN · PT · ES.
+  Brazil → PT, anywhere else → EN), else the browser language. Switcher: an EN / PT pill with a sliding knob (Felipe's
+  "Future / Now" reference, Oct 29 2026). Spanish is hidden for now (Felipe, Oct 29 2026) but its `es` text stays in
+  content.js and must still be written for new copy; main.js says how to switch it back on.
 - Work order (Felipe, Oct 28 2026): FIXED, exactly the order of `projects` in content.js (no shuffle). As of Oct 28 2026:
   Seja ANTI, Globo, SCRV*, HOUSECALL PRO, XP Inc., Cinema Especial, PopStar, (THURA hidden), Tela Quente, CoreHi,
   Adidas 60, DJ Shadow (added Oct 29 2026), Dirty Projectors, Globoplay, DMA, Explosions in the Sky (added Oct 29 2026), (Lomography hidden), Logofolio always last.
@@ -115,7 +117,8 @@ so sections read as clearly separate blocks.
 - Content always fills the width between the page margins (`--side`: 16px on a phone up to 32px on a wide screen, same
   left and right; Oct 27 2026 review), unlike the cover, which touches the edges.
 - One 12-column grid with `--gap` for everything (Oct 27 2026 review): chapter label = columns 1-4, chapter headline/text/
-  pills, case "about" text, flips and `.ltext` sub-headings = columns 5-12; meta = 6 per row, stats = 6, services = 3,
+  pills, case "about" text and `.ltext` sub-headings = columns 5-12; pieces beside text and lone flips / rooms =
+  columns 6-12, column 5 left as air (Felipe, Oct 29 2026: "mais respiro"); meta = 6 per row, stats = 6, services = 3,
   cards = 4; narrow strips = the middle 10 columns. Don't use free fractions (1fr 2fr, 84%, auto-fit minmax) for layout.
 - Optical left edge: `inkAlign()` in main.js pulls big type (name, intro lines, titles, headlines) left by its first
   glyph's side bearing, so its ink sits on the margin. Add new display-type selectors to its `INK` list.
@@ -129,12 +132,13 @@ so sections read as clearly separate blocks.
 - Video buttons (play, sound, full screen) sit inside the film as one tag hanging from the top edge, `--tag-x` in from the left.
 - Grids per project (Felipe, Oct 27 2026): `grid` on a project picks one of five ways to fill the 12 columns, and
   `grid` on a chapter switches from there on. fluxo = justified rows by col/span (the original); destaque = one
-  piece, then two, then three (films max two per row); trilho = chapter text sticky in cols 1-4, its pieces in 5-12;
+  piece, then two, then three (films max two per row); trilho = chapter text sticky in cols 1-4, its pieces in 6-12;
   modulos = equal cells (`cell`, default 4/3), piece contained on the panel colour, 3+ pieces only; cartaz = huge
-  chapter headline across the columns, first piece in 1-6 beside the text. Picker artifact with Felipe's choices:
+  chapter headline across the columns, first piece in 1-5 beside the text (7-12). Picker artifact with Felipe's choices:
   https://claude.ai/artifact/U5iuV1W89pBKLttprKtTy7 (db collection `escolhas`).
 - Text beside images (Felipe, Oct 27 2026): a chapter or a text line never floats alone above its images; it sits in
-  cols 1-4 next to the first piece, flip, strip or live page that follows (cols 5-12). Phones stack text first.
+  cols 1-4 next to the first piece, flip, strip or live page that follows (cols 6-12, column 5 is air since
+  Oct 29 2026). `vh` on that piece caps its height at that share of the screen. Phones stack text first.
 
 Missing material (Felipe, Oct 24 2026): when a project lacks something its pattern calls for (an image, a fact, a
 section), put a visible placeholder instead of skipping it: a gallery item `{ todo: { en, pt }, ar?, col, span }`

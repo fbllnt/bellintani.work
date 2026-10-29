@@ -3,19 +3,24 @@
   const homeTitle = document.title; // index.html <title>, restored when a project closes
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // One arrow for every previous / next control: a line arrow drawn like the footer's, no circle, nudging its way on
+  // hover (Felipe, Oct 29 2026: "sem bolinha, só as setas"). `text` adds a visible label beside it (logo close-up).
+  const ARW = { prev: "M21 12H4M10 5l-7 7 7 7", next: "M3 12h17M14 5l7 7-7 7", close: "M5 5l14 14M19 5 5 19" };
+  const arwSvg = dir => `<svg class="arw-i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${ARW[dir]}"/></svg>`;
+  const arw = (dir, cls, label, text) => `<button type="button" class="arw ${dir} ${cls}${text ? " lbl" : ""}"${text ? "" : ` aria-label="${esc(label)}"`}>${
+    text && dir !== "prev" ? `<span>${esc(text)}</span>` : ""}${arwSvg(dir)}${text && dir === "prev" ? `<span>${esc(text)}</span>` : ""}</button>`;
 
-  // ---------- Language (EN-US / PT-BR / ES) ----------
-  // Saved choice first, then the visitor's country (geo cookie set by worker/index.js: Brazil → PT, Spanish-speaking
-  // countries → ES, anywhere else → EN), then the browser's language when there is no cookie (local preview).
-  // L() picks the current language from { en, pt, es } values, falling back to English.
+  // ---------- Language (EN-US / PT-BR; ES hidden for now) ----------
+  // Saved choice first, then the visitor's country (geo cookie set by worker/index.js: Brazil → PT, anywhere else → EN),
+  // then the browser's language when there is no cookie (local preview). L() picks the current language from
+  // { en, pt, es } values, falling back to English. Spanish stays in content.js but is off (Felipe, Oct 29 2026): to bring
+  // it back, add es to LANGS, its button in index.html, and the SPANISH countries → "es" rule below.
   const store = (k, v) => { try { v === undefined ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} };
   const read = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
-  const LANGS = { en: "en-US", pt: "pt-BR", es: "es" };
-  const SPANISH = "ES MX AR CO CL PE VE EC GT CU BO DO HN PY SV NI CR PA UY PR GQ".split(" ");
+  const LANGS = { en: "en-US", pt: "pt-BR" };
   const geo = (document.cookie.match(/(?:^|; )geo=([A-Z]{2})/) || [])[1];
   let lang = read("lang");
-  if (!LANGS[lang]) lang = geo ? (geo === "BR" ? "pt" : SPANISH.includes(geo) ? "es" : "en")
-    : (/^(pt|es)\b/i.exec(navigator.language || "") || ["en"])[0].toLowerCase();
+  if (!LANGS[lang]) lang = geo ? (geo === "BR" ? "pt" : "en") : /^pt\b/i.test(navigator.language || "") ? "pt" : "en";
   const L = v => (v && typeof v === "object" && !Array.isArray(v) && ("en" in v || "pt" in v)) ? (v[lang] ?? v.en) : v;
   const T = k => S.ui[lang][k] ?? S.ui.en[k] ?? "";
   document.documentElement.lang = LANGS[lang];
@@ -27,14 +32,19 @@
   if (!/^#p-/.test(location.hash)) setDesc(T("description"));
   document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T(el.dataset.i18n); });
   document.querySelectorAll("[data-i18n-label]").forEach(el => el.setAttribute("aria-label", T(el.dataset.i18nLabel)));
-  // Picking a language reloads in it, keeping the page, the scroll position and skipping the intro.
-  $("lang").querySelectorAll("[data-lang]").forEach(b => {
+  // EN / PT pill (after Felipe's "Future / Now" reference, Oct 29 2026): the knob slides to the picked language, then the
+  // page reloads in it, keeping the page, the scroll position and skipping the intro.
+  const langPill = $("lang");
+  langPill.dataset.on = lang;
+  langPill.querySelectorAll("[data-lang]").forEach(b => {
     if (b.dataset.lang === lang) b.setAttribute("aria-current", "true");
     b.addEventListener("click", () => {
       if (b.dataset.lang === lang) return;
       store("lang", b.dataset.lang);
       try { sessionStorage.setItem("resume", String(scrollY)); sessionStorage.setItem("resumeFilter", selectedFilter); } catch (e) {}
-      location.reload();
+      langPill.dataset.on = b.dataset.lang;
+      langPill.querySelectorAll("[data-lang]").forEach(x => x.toggleAttribute("aria-current", x === b));
+      setTimeout(() => location.reload(), reduced ? 0 : 320);
     });
   });
   let resumeY = null, resumeFilter = null;
@@ -368,7 +378,9 @@
       const sum = row.reduce((a, it) => a + ratio(it.ar), 0);
       // `mwrap` (a mosaic): on phones the row wraps two to a line, a third piece takes the whole line
       const wrap = row.length > 1 && row.every(it => it.mwrap);
-      return `<div class="jrow${wrap ? " wrap-m" : row.length > 1 && sum > 2.2 ? " stack-m" : ""}" style="--sum:${sum.toFixed(4)};--n:${row.length}">${
+      // `vh` on a piece caps its row's height at that share of the screen (Felipe, Oct 29 2026: Globo movement diagram smaller)
+      const vh = row.find(it => +it.vh);
+      return `<div class="jrow${wrap ? " wrap-m" : row.length > 1 && sum > 2.2 ? " stack-m" : ""}" style="--sum:${sum.toFixed(4)};--n:${row.length}${vh ? `;--vh:${+vh.vh}svh` : ""}">${
         row.map(it => it.todo ? block(it, p, `--r:${ratio(it.ar).toFixed(4)}`) : fig(it, p, `--r:${ratio(it.ar).toFixed(4)}`)).join("")}</div>`;
     };
     // A run of consecutive pieces, laid out by the grid in force
@@ -413,7 +425,7 @@
     // text beside all its pieces; cartaz sets the headline huge above and pairs the rest with the first piece.
     let html = "", run = [], side = null, main = "", pend = null;
     const out = h => { if (side !== null) main += h; else html += h; };
-    // `side` on the piece: a second, smaller piece (e.g. a vertical film) sharing the piece's row in cols 5-12,
+    // `side` on the piece: a second, smaller piece (e.g. a vertical film) sharing the piece's row in cols 6-12,
     // both at one height (widths in proportion to their ratios), so no void opens between them (Felipe, Oct 28 2026)
     const pairWith = (h, sd, wide = false) => { out(`<div class="pair${pend.cz ? " cz" : ""}${pend.solo && pend.solo.startsWith("<section") ? " ch" : ""}${sd ? " has-side" : ""}${wide ? " feature-wide" : ""}"><div class="pair-fig">${
       sd ? `<div class="side-row">${h}${fig(sd, p, `--ar:${esc(sd.ar || "9/16")};--rw:${ratio(sd.ar || "9/16").toFixed(4)}`)}</div>` : h}</div><div class="pair-text">${pend.html}</div></div>`); pend = null; };
@@ -426,7 +438,7 @@
       }
       // A chapter that sets `cols` keeps its whole set of modules together beside the text (small, even cells)
       if (pend && run.length && grid === "modulos" && mod.cols) { pairWith(layRun(run, grid)); run = []; return; }
-      if (pend && run.length) { const first = run.shift(); pairWith(first.todo ? block(first, p) : fig(first, p, `--r:${ratio(first.ar).toFixed(4)}`)); paired = true; }
+      if (pend && run.length) { const first = run.shift(); pairWith(first.todo ? block(first, p) : fig(first, p, `--r:${ratio(first.ar).toFixed(4)}${+first.vh ? `;--vh:${+first.vh}svh` : ""}`)); paired = true; }
       out(layRun(run, grid, paired)); run = [];
     };
     const closePend = () => { if (pend) { out(pend.cz ? `<div class="pair cz solo"><div class="pair-text">${pend.html}</div></div>` : pend.solo); pend = null; } };
@@ -520,11 +532,10 @@
         <div class="rooms-tabs" role="tablist">${it.rooms.map((r, g) => `<button type="button" role="tab" aria-selected="${!g}" data-g="${g}"><span class="mono">${String(g + 1).padStart(2, "0")}</span>${esc(L(r.name))}</button>`).join("")}</div>
         <figure class="fig rooms-stage" style="--ar:${esc(it.ar || "16/10")}"><div class="ph" tabindex="0"><img src="${esc(f.src)}" alt="${esc(L(f.caption) || "")}" draggable="false"></div></figure>
         <div class="rooms-bar mono"><p class="rooms-cap muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
-          <span class="rooms-dots" aria-hidden="true">${it.rooms[0].items.map((_, k) => `<i${k ? "" : ` class="on"`}></i>`).join("")}</span><span class="rooms-count">01 / ${String(n0).padStart(2, "0")}</span>
-          <span class="roll-arrows"><button type="button" class="rooms-prev" aria-label="${esc(T("prev"))}">←</button><button type="button" class="rooms-next" aria-label="${esc(T("nextItem"))}">→</button></span></div></div>`; }
+          <span class="arw-nav">${arw("prev", "rooms-prev", T("prev"))}<span class="arw-count rooms-count">01 / ${String(n0).padStart(2, "0")}</span>${arw("next", "rooms-next", T("nextItem"))}</span></div></div>`; }
     if (it.flip) { const f = it.flip[0];
       return `<div class="flip${it.flipWide ? " flip-wide" : ""}" style="${style}${it.cols ? `;--n:${+it.cols}` : ""}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
-        ${it.flipWide ? `<div class="flip-controls mono"><button class="flip-prev" type="button" aria-label="${esc(T("prev"))}">←</button><span class="flip-count">01 / ${String(it.flip.length).padStart(2, "0")}</span><button class="flip-next" type="button" aria-label="${esc(T("next"))}">→</button></div>` : `<p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>`}
+        ${it.flipWide ? `<div class="flip-controls arw-nav mono">${arw("prev", "flip-prev", T("prev"))}<span class="arw-count flip-count">01 / ${String(it.flip.length).padStart(2, "0")}</span>${arw("next", "flip-next", T("nextItem"))}</div>` : `<p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>`}
         <div class="flip-thumbs" role="group">${it.flip.map((t, k) => `<button type="button" aria-pressed="${!k}" data-k="${k}" aria-label="${esc(L(t.caption) || "")}"><img src="${esc(t.src)}" alt="" loading="lazy"></button>`).join("")}</div></div>`; }
     // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
     // `narrow: true` sets the strip in a little from both sides (desktop), for small process rows
@@ -617,10 +628,10 @@
         <span class="n mono">${pad(n + 1)}</span>${mark(l)}
       </button></li>`; }).join("")}</ul>
       <dialog class="logo-view" aria-label="${esc(L(p.title))}">
-        <div class="lv-top mono"><span class="lv-count"></span><button type="button" class="lv-close">${esc(T("close"))} ✕</button></div>
+        <div class="lv-top mono"><span class="lv-count"></span>${arw("close", "lv-close", "", T("close"))}</div>
         <div class="lv-mark"></div>
         <div class="lv-info"><p class="mono lv-meta"></p><p class="lv-note"></p></div>
-        <div class="lv-nav mono"><button type="button" class="lv-prev">← ${esc(T("prev"))}</button><span class="lv-hint">${esc(T(matchMedia("(hover: hover) and (pointer: fine)").matches ? "logoHint" : "logoHintTouch"))}</span><button type="button" class="lv-next">${esc(T("nextItem"))} →</button></div>
+        <div class="lv-nav mono">${arw("prev", "lv-prev", "", T("prev"))}<span class="lv-hint">${esc(T(matchMedia("(hover: hover) and (pointer: fine)").matches ? "logoHint" : "logoHintTouch"))}</span>${arw("next", "lv-next", "", T("nextItem"))}</div>
       </dialog>`;
   }
   function setupLogos(p) {
@@ -715,8 +726,8 @@
     return `<div class="rolls">${cams.map(c => { const list = p.photos.filter(ph => (ph.camera || "") === c);
       return `<section class="film-roll" aria-label="${esc(c || L(p.title))}">
         <header class="roll-head mono"><h3>${esc(c || L(p.title))}</h3><span class="roll-count">${pad(list.length)}</span>
-          <span class="roll-hint" aria-hidden="true">← ${esc(T("drag"))} →</span>
-          <span class="roll-arrows"><button type="button" class="roll-prev" aria-label="${esc(T("prev"))}">←</button><button type="button" class="roll-next" aria-label="${esc(T("nextItem"))}">→</button></span></header>
+          <span class="roll-hint" aria-hidden="true">${arwSvg("prev")}${esc(T("drag"))}${arwSvg("next")}</span>
+          <span class="arw-nav roll-arrows">${arw("prev", "roll-prev", T("prev"))}${arw("next", "roll-next", T("nextItem"))}</span></header>
         <div class="roll-track" tabindex="0">${list.map((ph, k) => { const [w, h] = String(ph.ar || "3/2").split("/").map(Number);
           return `<figure class="roll-frame" style="--ar:${(w / h).toFixed(4)}"><img src="${esc(ph.src)}" alt="${esc(L(ph.caption) || `${L(p.title)}, ${c}`)}" loading="lazy" draggable="false"><figcaption class="mono">${pad(k + 1)}</figcaption></figure>`; }).join("")}</div>
         <div class="roll-bar" aria-hidden="true"><i></i></div>
@@ -858,7 +869,7 @@
     let i = 0;
     p.gallery.forEach(it => { if (!it.rooms) return;
       const box = caseEl.querySelectorAll(".rooms")[i++], ph = box.querySelector(".rooms-stage .ph"), img = ph.querySelector("img"),
-        cap = box.querySelector(".rooms-cap"), count = box.querySelector(".rooms-count"), dots = box.querySelector(".rooms-dots"), tabs = [...box.querySelectorAll(".rooms-tabs button")];
+        cap = box.querySelector(".rooms-cap"), count = box.querySelector(".rooms-count"), tabs =[...box.querySelectorAll(".rooms-tabs button")];
       let g = 0, cur = 0;
       const pad2 = n => String(n).padStart(2, "0");
       const show = (ng, k, d) => {
@@ -867,7 +878,6 @@
         g = ng; cur = k; const t = list[k];
         tabs.forEach((b, j) => b.setAttribute("aria-selected", String(j === g)));
         count.textContent = `${pad2(k + 1)} / ${pad2(list.length)}`;
-        dots.innerHTML = list.map((_, j) => `<i${j === k ? ` class="on"` : ""}></i>`).join("");
         const set = () => { img.src = t.src; img.alt = L(t.caption) || ""; cap.textContent = L(t.caption) || ""; };
         if (reduced) { set(); return; }
         img.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: `translateX(${-d * 6}%)` }], { duration: 200, easing: "ease-in" }).finished.then(() => {
@@ -986,6 +996,9 @@
     // AI tools always stand out: a black or white accent falls back to the site blue (Felipe, Oct 26 2026)
     const plain = t && /^#(fff(fff)?|000(000)?)$/i.test(t.accent || "");
     plain ? root.style.setProperty("--ai", "#1a2bff") : root.style.removeProperty("--ai");
+    // …but blue on black is 2.8:1: focus rings and small accent text there take the page ink (--ai-ink in style.css)
+    const dark = plain && /^#(000(000)?|1[0-9a-f]{5})$/i.test(t.bg || "");
+    dark ? root.style.setProperty("--ai-ink", t.fg || "#fff") : root.style.removeProperty("--ai-ink");
     root.classList.toggle("themed", !!t);
   }
 
@@ -1014,11 +1027,11 @@
       <div class="case-gallery">${gallery(i, p)}</div>
       <nav class="case-neighbors" aria-label="${esc(T("projectNav"))}">
         <a class="case-neighbor previous" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}">
-          <span class="mono muted">← ${esc(T("prev"))} · ${String((i - 1 + S.projects.length) % S.projects.length + 1).padStart(2,"0")}</span>
+          <span class="cn-k mono muted">${arwSvg("prev")}${esc(T("prev"))} · ${String((i - 1 + S.projects.length) % S.projects.length + 1).padStart(2,"0")}</span>
           <span class="case-neighbor-title">${esc(L(prev.title))}</span>
         </a>
         <a class="case-neighbor next" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}">
-          <span class="mono muted">${esc(T("next"))} · ${String((i + 1) % S.projects.length + 1).padStart(2,"0")} →</span>
+          <span class="cn-k mono muted">${esc(T("nextItem"))} · ${String((i + 1) % S.projects.length + 1).padStart(2,"0")}${arwSvg("next")}</span>
           <span class="case-neighbor-title">${esc(L(next.title))}</span>
         </a>
       </nav>`;

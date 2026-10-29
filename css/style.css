@@ -108,11 +108,17 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .in-case .c-tl .c-back{display:block}
 .c-tr{right:var(--side-r);top:calc(20px + env(safe-area-inset-top,0px));display:flex;gap:18px;align-items:flex-start}
 .c-tr > *{color:inherit;text-decoration:none}
-.lang{all:unset;cursor:pointer;display:inline-grid;overflow:hidden;height:1.05em;line-height:1.05em;font:inherit;color:inherit}
-.lang:focus-visible{outline:1px solid currentColor;outline-offset:3px}
-.langs{display:inline-flex;gap:.45em}
-.lang:not([aria-current]){opacity:.4;transition:opacity .2s}
-.lang:not([aria-current]):hover{opacity:1}
+/* EN / PT pill (after Felipe's "Future / Now" reference, Oct 29 2026): a filled knob sits under the current language and slides
+   to the other one. --knob-ink is the label on the knob: black inside the white/difference corners, the page colour on themed pages */
+.langs{--knob-ink:#000;position:relative;display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:center;height:1.5em;margin-top:-.25em;padding:1px;border:1px solid currentColor;border-radius:999px}
+.langs::before{content:"";position:absolute;top:1px;bottom:1px;left:1px;width:calc(50% - 1px);border-radius:999px;background:currentColor;transition:translate .45s var(--spring)}
+.langs[data-on="pt"]::before{translate:100% 0}
+.themed .langs{--knob-ink:var(--bg)}
+.lang{all:unset;position:relative;cursor:pointer;padding:0 .6em;line-height:1;text-align:center;font:inherit;color:inherit;transition:color .3s}
+.lang[aria-current]{color:var(--knob-ink)}
+.lang:not([aria-current]):hover{opacity:.6}
+.lang:focus-visible{outline:1px solid currentColor;outline-offset:2px;border-radius:999px}
+@media (prefers-reduced-motion:reduce){ .langs::before{transition:none} }
 .c-bl{left:var(--side-l);bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;gap:16px}
 .c-br{right:var(--side-r);bottom:calc(20px + env(safe-area-inset-bottom,0px))}
 /* Its hover line is wider (arrows); both lines sit on the right margin */
@@ -131,7 +137,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Text swap: second line rolls up into a one-line window on hover */
 .swap{display:inline-grid;overflow:hidden;height:1.05em;line-height:1.05em;vertical-align:top;color:inherit;text-decoration:none}
 .swap > span{grid-area:1/1;transition:transform .5s var(--spring);white-space:nowrap}
-.swap > span + span{transform:translateY(110%);color:var(--blue)}
+.swap > span + span{transform:translateY(110%);color:var(--ai,var(--blue))}
 .swap:hover > span:first-child,.swap:focus-visible > span:first-child{transform:translateY(-110%)}
 .swap:hover > span + span,.swap:focus-visible > span + span{transform:none}
 
@@ -264,7 +270,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loose{--cg:var(--gap);--breathe:0px;display:flex;flex-direction:column;gap:var(--gap)}
 .loose > *{min-width:0}
 /* Justified row: pieces share one height and fill the width; a row too tall for the screen narrows and centres */
-.jrow{display:flex;gap:var(--gap);align-items:flex-start;width:min(100%,calc(var(--sum) * 115svh + (var(--n) - 1) * var(--gap)));align-self:center}
+/* `vh` on a piece sets its row's height cap (e.g. the Globo movement diagram) */
+.jrow{display:flex;gap:var(--gap);align-items:flex-start;width:min(100%,calc(var(--sum) * var(--vh,115svh) + (var(--n) - 1) * var(--gap)));align-self:center}
 .jrow > .fig{flex:var(--r) 1 0;min-width:0}
 /* A lone piece fills its row: with a portrait ratio (--r < 1) as the only flex-grow it would take just that fraction and sit left */
 .jrow > .fig:only-child{flex-grow:1}
@@ -283,6 +290,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .todo{display:grid;place-items:center;min-height:clamp(90px,10vw,150px);aspect-ratio:var(--ar,auto);border:1.5px dashed var(--mute);padding:16px;text-align:center;color:var(--mute)}
 .todo p{margin:0;max-width:48ch}
 .todo b{color:var(--blue)}.ai-tool{color:var(--ai,var(--blue))}
+/* --ai-ink: the accent where it must stay legible (focus rings, small text left on screen). On a dark page with a black or
+   white accent the site blue is 2.8:1, so applyTheme sets it to the page ink there; fills and hovers keep --ai */
 .ai-tool sup{font-size:.7em;margin-left:2px;vertical-align:super}
 /* Live embed: full desktop page scaled into the frame (no side breathing, it is a screen) */
 .embed .ph{aspect-ratio:var(--ar);border:1px solid var(--line)}
@@ -296,7 +305,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fig .ph > .fig-link{position:absolute;inset:0;display:block;cursor:pointer}
 .fig .ph > .fig-link img{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain}
 .fig-open{position:absolute;right:calc(var(--breathe) + 8px);bottom:calc(var(--breathe) + 8px);padding:6px 9px;background:var(--fg);color:var(--bg);font-size:11px;opacity:.9;transition:background .2s,color .2s}
-.fig-link:hover .fig-open,.fig-link:focus-visible .fig-open{background:var(--blue);color:#000;opacity:1}
+/* Hover like the video tags (.vctl): the accent fills the tag, the text stays the page colour (Felipe, Oct 29 2026) */
+.fig-link:hover .fig-open,.fig-link:focus-visible .fig-open{background:var(--blue);opacity:1}
 .todo-chip{color:var(--blue);font-weight:400}
 .todo-chip{display:inline-block;padding:2px 8px;border:1.5px dashed currentColor}
 .chap-h em{font-style:normal;color:var(--blue)}
@@ -400,6 +410,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .logo-view button{all:unset;cursor:pointer}
 .logo-view button:focus-visible{outline:1px solid currentColor;outline-offset:4px}
 .lv-top,.lv-nav{display:flex;justify-content:space-between}
+.lv-top{align-items:center}
 .lv-nav{align-items:center;gap:8px 16px}
 .lv-hint{opacity:.6;text-align:center}
 .lv-mark{display:grid;place-items:center;min-height:0;cursor:zoom-out}
@@ -427,8 +438,10 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .scrub .ph img{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain;opacity:0;transition:opacity .25s}
 .scrub .ph img.on{opacity:1}
 .scrub-ui{display:flex;align-items:center;gap:14px;margin-top:10px}
+/* Counters (01 / 24) keep their width as the digits change, like the arrow groups' */
+.scrub-count,.lv-count{font-variant-numeric:tabular-nums}
 .scrub-bar{flex:1;height:1px;background:var(--line);position:relative}
-.scrub-bar i{position:absolute;inset:0;background:var(--blue);transform-origin:left;transform:scaleX(var(--p,0))}
+.scrub-bar i{position:absolute;inset:0;background:var(--ai,var(--blue));transform-origin:left;transform:scaleX(var(--p,0))}
 @media (max-width:760px){
   .scrub{height:calc(min(var(--n) * 26vh, 260vh) + 100vh)}
   .scrub-stick{top:calc(50svh - 30vw - 30px);width:100%}
@@ -506,18 +519,39 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .roll-head{display:flex;align-items:center;gap:10px;border-top:1px solid var(--fg);padding-top:10px}
 .roll-head h3{margin:0;font:inherit;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
 .roll-count{color:var(--mute);font-size:13px}
-.roll-arrows{margin-left:auto;display:flex;gap:6px}
-.roll-arrows button{all:unset;cursor:pointer;width:46px;height:46px;display:grid;place-items:center;border:1px solid var(--fg);border-radius:50%;font-size:18px;transition:background .2s,color .2s,opacity .2s}
-.roll-arrows button:hover:not(:disabled),.roll-arrows button:focus-visible{background:var(--blue);border-color:var(--blue);color:#fff}
-.roll-arrows button:disabled{opacity:.25;cursor:default}
+/* Arrows: one control for every previous / next (rooms, rolls, PopStar, logo close-up, project neighbours). A line arrow
+   in the footer arrow's square stroke, no circle; a 44px hit area; hover / focus nudges it its way and takes the accent
+   (Felipe, Oct 29 2026: "sem bolinha, só as setas", "padronizada") */
+.arw-i{display:block;flex:none;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:square;stroke-linejoin:miter;overflow:visible;transition:translate .35s var(--spring)}
+button.arw{all:unset;box-sizing:border-box;flex:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;width:44px;height:44px;cursor:pointer;color:var(--fg);transition:color .2s,opacity .2s}
+button.arw.lbl{width:auto;padding:0 4px}
+button.arw:hover:not(:disabled),button.arw:focus-visible{color:var(--ai,var(--blue))}
+button.arw:focus-visible{outline:2px solid var(--ai-ink,var(--ai,var(--blue)));outline-offset:-2px}
+button.arw.prev:hover:not(:disabled) .arw-i,button.arw.prev:focus-visible .arw-i{translate:-4px 0}
+button.arw.next:hover:not(:disabled) .arw-i,button.arw.next:focus-visible .arw-i{translate:4px 0}
+button.arw.prev:active:not(:disabled) .arw-i{translate:-6px 0}
+button.arw.next:active:not(:disabled) .arw-i{translate:6px 0}
+button.arw:disabled{opacity:.25;cursor:default}
+button.arw.lbl .arw-i{width:18px;height:18px}
+button.arw.close .arw-i{width:14px;height:14px}
+/* Logo close-up: the dialog is the logo's own colour, so its arrows keep its ink and only nudge */
+.logo-view button.arw,.logo-view button.arw:is(:hover,:focus-visible){color:inherit;outline-color:currentColor}
+/* Group: ← 01 / 03 →, the counter in mono between the arrows; pulled right so the arrowhead's ink meets the column edge */
+.arw-nav{display:flex;align-items:center;flex:none}
+.arw-count{min-width:7ch;text-align:center;font-variant-numeric:tabular-nums;color:var(--mute)}
+.rooms-bar .arw-nav,.roll-head .arw-nav{margin-right:-13px}
+.roll-arrows{margin-left:auto}
+@media (max-width:760px){ .arw-i{width:20px;height:20px} }
+@media (prefers-reduced-motion:reduce){ .arw-i{transition:none} button.arw .arw-i{translate:none!important} }
 .film-roll.fits .roll-arrows,.film-roll.fits .roll-hint,.film-roll.fits .roll-bar{visibility:hidden}
-.roll-hint{color:var(--mute);font-size:12px;margin-left:12px}
+.roll-hint{display:inline-flex;align-items:center;gap:6px;color:var(--mute);font-size:12px;margin-left:12px}
+.roll-hint .arw-i{width:12px;height:12px}
 .roll-bar{height:2px;background:var(--line);overflow:hidden}
 .roll-bar i{display:block;height:100%;background:var(--fg)}
 .roll-track{position:relative;display:flex;gap:var(--gap);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;user-select:none;-webkit-user-select:none}
 .roll-track::-webkit-scrollbar{display:none}
 .roll-track.dragging{cursor:grabbing;scroll-snap-type:none}
-.roll-track:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.roll-track:focus-visible{outline:2px solid var(--ai-ink,var(--ai,var(--blue)));outline-offset:4px}
 .roll-frame{flex:none;margin:0;scroll-snap-align:start;display:grid;gap:6px}
 .roll-frame img{display:block;height:var(--h);width:auto;aspect-ratio:var(--ar);object-fit:contain;pointer-events:none;-webkit-user-drag:none}
 .roll-frame figcaption{font-size:11px;color:var(--mute)}
@@ -544,33 +578,30 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .flip-thumbs button{all:unset;cursor:pointer;aspect-ratio:9/5;overflow:hidden;opacity:.45;transition:opacity .3s;outline-offset:2px}
 .flip-thumbs button:hover,.flip-thumbs button[aria-pressed="true"]{opacity:1}
 .flip-thumbs button{position:relative}
-.flip-thumbs button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.flip-thumbs button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--ai,var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
 .flip-thumbs button[aria-pressed="true"]::after{transform:none}
-.flip-thumbs button:focus-visible{outline:2px solid var(--blue)}
+.flip-thumbs button:focus-visible{outline:2px solid var(--ai-ink,var(--ai,var(--blue)))}
 .flip-thumbs img{width:100%;height:100%;object-fit:contain}
 /* The large image and its thumbnails fit on one screen together */
-/* Group tabs read as navigation, not as tags: big numbered labels on one rule, the open one underlined in blue */
+/* Group tabs read as navigation, not as tags: big numbered labels on one rule, the open one underlined in the accent
+   (the site blue on a black / white accent, as every highlight: Felipe, Oct 29 2026) */
 .rooms-tabs{display:flex;flex-wrap:wrap;gap:0 clamp(16px,2.4vw,36px);border-bottom:1px solid var(--line);margin-bottom:var(--gap)}
 .rooms-tabs button{all:unset;cursor:pointer;display:flex;align-items:baseline;gap:8px;padding:10px 0 12px;margin-bottom:-1px;border-bottom:3px solid transparent;
   font-family:Figtree,sans-serif;font-weight:700;font-size:clamp(17px,1.5vw,22px);letter-spacing:-.01em;color:var(--mute);transition:color .2s,border-color .2s}
 .rooms-tabs button .mono{font-size:12px;font-weight:400;letter-spacing:0}
 .rooms-tabs button:hover{color:var(--fg)}
-.rooms-tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--blue)}
-.rooms-tabs button[aria-selected="true"] .mono{color:var(--blue)}
-.rooms-tabs button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.rooms-dots{display:flex;gap:6px}
-.rooms-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);transition:background .2s}
-.rooms-dots i.on{background:var(--blue)}
+.rooms-tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--ai,var(--blue))}
+.rooms-tabs button[aria-selected="true"] .mono{color:var(--ai-ink,var(--ai,var(--blue)))}
+.rooms-tabs button:focus-visible{outline:2px solid var(--ai-ink,var(--ai,var(--blue)));outline-offset:2px}
 .rooms-stage .ph{cursor:pointer;touch-action:pan-y}
 .rooms-stage .ph > img{transition:none;user-select:none}
 .rooms-bar{display:flex;align-items:center;gap:12px;margin-top:10px}
 .rooms-cap{margin:0;flex:1;min-width:0}
-.rooms-count{color:var(--mute)}
-.rooms-bar .roll-arrows{margin-left:0}
-.loose > .rooms{width:min(calc((100% - 11 * var(--gap)) / 12 * 8 + 7 * var(--gap)),calc((100svh - 150px) * 1.4));align-self:flex-end}
-@media (max-width:760px){ .loose > .rooms{width:100%} .rooms{margin-top:24px} .rooms-bar .roll-arrows button{width:40px;height:40px} .rooms-dots{display:none} .case-gallery{grid-template-columns:minmax(0,1fr)} }
+/* A lone flip or rooms block starts at column 6 like the pieces beside text, so the media edge never jogs back to 5 */
+.loose > .rooms{width:min(calc((100% - 11 * var(--gap)) / 12 * 7 + 6 * var(--gap)),calc((100svh - 150px) * 1.4));align-self:flex-end}
+@media (max-width:760px){ .loose > .rooms{width:100%} .rooms{margin-top:24px} .case-gallery{grid-template-columns:minmax(0,1fr)} }
 .pair-fig > .rooms{width:100%}
-.loose > .flip{width:min(calc((100% - 11 * var(--gap)) / 12 * 8 + 7 * var(--gap)),calc((100svh - 150px) / .7));align-self:flex-end}
+.loose > .flip{width:min(calc((100% - 11 * var(--gap)) / 12 * 7 + 6 * var(--gap)),calc((100svh - 150px) / .7));align-self:flex-end}
 @media (max-width:760px){ .loose > .flip{width:100%} }
 .loose > .strip.narrow{width:calc((100% - 11 * var(--gap)) / 12 * 10 + 9 * var(--gap));align-self:center}
 @media (max-width:760px){ .loose > .strip.narrow{width:100%} }
@@ -590,7 +621,7 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .music-head{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:11px;padding:0 2px 8px}
 .music-head button{all:unset;cursor:pointer;font:400 18px/1 var(--mono);padding:0 2px}
 .music-head button:focus-visible,.music-swap:focus-visible{outline:1px solid currentColor}
-.music-swap{all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;font-size:11px;padding:0 2px 8px;color:var(--blue)}
+.music-swap{all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;font-size:11px;padding:0 2px 8px;color:var(--ai-ink,var(--ai,var(--blue)))}
 .music-swap[hidden]{display:none}
 .music-frame iframe{display:block;width:100%;height:80px;border:0;border-radius:12px}
 
@@ -602,20 +633,21 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .loose .mods > .fig .ph > :is(img,video){inset:7%;width:86%;height:86%}
 .mods.bare > .fig .ph{background:none}
 .loose .mods.bare > .fig .ph > :is(img,video){inset:0;width:100%;height:100%}
-/* Trilho: chapter text sticks in columns 1-4, its pieces run in 5-12 */
+/* Trilho: chapter text sticks in columns 1-4, its pieces run in 6-12. Column 5 stays empty as air between text and
+   pieces, which sit a little smaller and flush right (Felipe, Oct 29 2026: "mais respiro", it read "poluído") */
 .trilho{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:start;margin-top:clamp(64px,8vw,136px)}
 .tr-side{grid-column:1 / 5;position:sticky;top:calc(var(--side) + 48px);min-width:0}
-.tr-main{grid-column:5 / 13;display:flex;flex-direction:column;gap:var(--gap);min-width:0}
-.tr-main > .jrow{width:min(100%,calc(var(--sum) * 100svh + (var(--n) - 1) * var(--gap)))}
+.tr-main{grid-column:6 / 13;display:flex;flex-direction:column;gap:var(--gap);min-width:0}
+.tr-main > .jrow{width:min(100%,calc(var(--sum) * var(--vh,88svh) + (var(--n) - 1) * var(--gap)));align-self:flex-end}
 .chap.tr{display:flex;flex-direction:column;gap:14px;margin:0}
 .chap.tr .chap-h{font-size:clamp(26px,2.6vw,44px)}
 .loose > .trilho + .trilho{margin-top:clamp(64px,8vw,136px)}
-/* Pair: a chapter or text line in columns 1-4 beside the piece it talks about in 5-12 (Felipe, Oct 27 2026) */
+/* Pair: a chapter or text line in columns 1-4 beside the piece it talks about in 6-12, column 5 left as air (Felipe, Oct 27 2026; Oct 29 2026) */
 .pair{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:start}
 .pair.ch{padding-top:var(--chap-pad);border-top:1px solid var(--fg);margin-top:clamp(64px,8vw,136px)}
 .pair-text{grid-column:1 / 5;grid-row:1;position:sticky;top:calc(var(--side) + 48px);min-width:0;display:flex;flex-direction:column;gap:14px}
-.pair-fig{grid-column:5 / 13;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end}
-.pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * 100svh))}
+.pair-fig{grid-column:6 / 13;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end}
+.pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * var(--vh,88svh)))}
 .pair-fig > :is(.flip,.strip,.embed,.mods,.yt){width:100%}
 .pair .chap.tr{border-top:0;padding-top:0}
 /* A featured editorial row: the chapter leads across the page and the live landing page plus vertical film share the full width. */
@@ -630,12 +662,12 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .side-row > .embed{--rw:1.6}
 .side-row > .embed figcaption{order:1}
 .ltext.side{margin:0;font-size:clamp(20px,1.9vw,30px);line-height:1.15}
-/* Cartaz: the headline runs huge across the columns; the first piece sits in 1-6, the text in 7-12 */
+/* Cartaz: the headline runs huge across the columns; the first piece sits in 1-5, the text in 7-12 (column 6 is air) */
 .chap.cz .chap-h{grid-column:1 / -1;grid-row:1}
 .chap.cz .chap-k{grid-row:2 / span 2}
 .chap.cz .body,.chap.cz .pills{grid-row:auto}
 .chap.cz .chap-h{font-size:clamp(48px,9.5vw,184px);line-height:.86;letter-spacing:-.055em}
-.pair.cz .pair-fig{grid-column:1 / 7;align-items:flex-start}
+.pair.cz .pair-fig{grid-column:1 / 6;align-items:flex-start}
 .pair.cz .pair-text{grid-column:7 / 13}
 .pair.cz.solo .pair-text{position:static}
 .pair.cz .pair-text .chap-k{margin:0;display:flex;flex-direction:column;gap:4px}
@@ -649,6 +681,8 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
   .pair.ch{margin-top:64px}
   .pair-text{position:static;order:-1}
   .pair-fig,.pair.cz .pair-fig{align-items:stretch;width:100%}
+  .pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * var(--vh,100svh)))}
+  .tr-main > .jrow{width:min(100%,calc(var(--sum) * var(--vh,100svh) + (var(--n) - 1) * var(--gap)));align-self:center}
   .side-row{flex-direction:column}
   .side-row > .fig{flex:none;width:100%}
   .side-row > .fig:not(.embed){width:min(62%,280px)}
@@ -683,6 +717,13 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .case-neighbor-title{font:900 clamp(26px,4.4vw,78px)/.94 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere;transition:color .2s ease}
 /* Hover takes the project accent; a white or black accent (Cinema Especial, Adidas 60) would not change, so it falls back to the site blue, as the AI tools do */
 .case-neighbor:hover .case-neighbor-title,.case-neighbor:focus-visible .case-neighbor-title{color:var(--ai,var(--blue))}
+/* The label carries the site's line arrow, which nudges its way with the title's hover (Felipe, Oct 29 2026) */
+.cn-k{display:inline-flex;align-items:center;gap:8px}
+.cn-k .arw-i{width:14px;height:14px}
+.case-neighbor:is(:hover,:focus-visible) .arw-i{stroke:var(--ai,var(--blue))}
+.case-neighbor.previous:is(:hover,:focus-visible) .arw-i{translate:-4px 0}
+.case-neighbor.next:is(:hover,:focus-visible) .arw-i{translate:4px 0}
+@media (prefers-reduced-motion:reduce){ .case-neighbor .arw-i{translate:none!important} }
 @media(max-width:760px){
   .case-neighbors{gap:14px}
   .case-neighbor-title{font-size:clamp(23px,5.5vw,42px)}
@@ -738,6 +779,10 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .music{width:min(420px,calc(100vw - var(--side-l) - var(--side-r)));top:calc(52px + env(safe-area-inset-top,0px));padding:14px;max-height:min(78svh,720px);display:flex;flex-direction:column;gap:10px;box-shadow:0 16px 46px rgba(0,0,0,.16)}
 .music-head{font-size:12px;padding:0 0 4px}
 .music-head button{font-size:23px;min-width:30px;min-height:30px;text-align:center}
+/* Close draws the same line cross as the logo close-up's, and takes the accent on hover like the arrows (Felipe, Oct 29 2026) */
+#music-close{display:grid;place-items:center;transition:color .2s}
+#music-close .arw-i{width:14px;height:14px}
+#music-close:is(:hover,:focus-visible){color:var(--ai,var(--blue))}
 .music-swap{font-size:12px;line-height:1.4;padding:2px 0 6px}
 .music-frame iframe{height:152px;border-radius:12px}
 .music-list-head{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:12px;font-size:11px;letter-spacing:.05em}
@@ -748,9 +793,9 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .music-track-info b{font:700 13px/1.2 var(--sans);white-space:normal}
 .music-track-info small{font:400 10px/1.35 var(--mono);color:var(--mute);overflow-wrap:anywhere}
 .music-track-play{font:700 16px/1 var(--sans);justify-self:end}
-.music-track:hover,.music-track:focus-visible,.music-track.active{color:var(--blue)}
-.music-track.active{background:color-mix(in srgb,var(--blue) 7%,transparent)}
-.music-track:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.music-track:hover,.music-track:focus-visible,.music-track.active{color:var(--ai-ink,var(--ai,var(--blue)))}
+.music-track.active{background:color-mix(in srgb,var(--ai,var(--blue)) 7%,transparent)}
+.music-track:focus-visible{outline:2px solid var(--ai-ink,var(--ai,var(--blue)));outline-offset:-2px}
 @media(max-width:760px){.music{top:calc(52px + env(safe-area-inset-top,0px));width:min(420px,calc(100vw - 24px));right:12px;max-height:calc(100svh - 88px)}}
 @media(prefers-reduced-motion:reduce){.music-track{transition:none}}
 
@@ -784,9 +829,9 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .case-episode-meta{font-size:11px;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
 .case-episode-title{font:900 clamp(26px,4.2vw,64px)/.95 var(--sans);letter-spacing:-.04em;text-transform:uppercase;display:flex;justify-content:space-between;gap:20px}
 .case-episode-title > span{font-weight:500;transition:transform .3s var(--ease)}
-.case-episode-link:hover,.case-episode-link:focus-visible{color:var(--blue)}
+.case-episode-link:hover,.case-episode-link:focus-visible{color:var(--ai-ink,var(--ai,var(--blue)))}
 .case-episode-link:hover .case-episode-title > span{transform:translate(5px,-5px)}
-.case-episode-link:focus-visible{outline:2px solid var(--blue);outline-offset:5px}
+.case-episode-link:focus-visible{outline:2px solid var(--ai-ink,var(--ai,var(--blue)));outline-offset:5px}
 @media(prefers-reduced-motion:reduce){.case-episode-link,.case-episode-title > span{transition:none}}
 
 /* PopStar logo studies: invert black marks to white, letting the case's deep-purple background show through. */
@@ -806,16 +851,13 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 .flip-wide .fig{width:100%;background:transparent!important}
 .flip-wide .fig .ph{background:var(--bg)!important;isolation:isolate;aspect-ratio:16/9}
 .flip-wide .fig .ph > img{filter:grayscale(1) invert(1) contrast(700%)!important;mix-blend-mode:screen!important;object-fit:contain;transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .45s cubic-bezier(.2,.8,.2,1);background:transparent!important}
-.flip-wide .flip-controls{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:16px;border-top:1px solid var(--line);padding-top:10px;color:var(--fg);font-size:clamp(11px,.85vw,14px)}
-.flip-wide .flip-controls button{all:unset;cursor:pointer;min-width:44px;min-height:44px;text-align:center;font:500 clamp(22px,2vw,36px)/1 var(--sans);transition:opacity .2s ease}
-.flip-wide .flip-controls button:hover{opacity:.55}
-.flip-wide .flip-controls button:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+/* The site's arrow group (← 01 / 08 →), centred over the centred thumbnails (Felipe, Oct 29 2026) */
+.flip-wide .flip-controls{justify-content:center;margin-top:16px;border-top:1px solid var(--line);padding-top:6px}
 .flip-wide .flip-thumbs{display:flex;justify-content:center;gap:12px;margin-top:8px}
 .flip-wide .flip-thumbs button{width:clamp(72px,12vw,150px);aspect-ratio:16/9;background:transparent}
 .flip-wide .flip-thumbs img{filter:grayscale(1) invert(1) contrast(700%)!important;mix-blend-mode:screen!important;object-fit:contain}
 @media(min-width:761px){.flip-wide .fig .ph{max-height:min(73svh,760px)}}
 @media(max-width:760px){.loose > .flip.flip-wide{margin-block:12px 44px}.flip-wide .flip-controls{margin-top:6px}.flip-wide .flip-thumbs{gap:8px}}
-@media(prefers-reduced-motion:reduce){.flip-wide .flip-controls button{transition:none}}
 
 /* Grid-consistent spacing: chapter starts have more breathing room than
    ordinary image runs, while collections stay visually grouped. */
@@ -867,7 +909,7 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 
 /* CoreHi: interactive identity specimen, restrained and accessible. */
 .corehi-interactive .ph{isolation:isolate;cursor:pointer;outline-offset:4px}
-.corehi-interactive .ph:focus-visible{outline:2px solid var(--blue)}
+.corehi-interactive .ph:focus-visible{outline:2px solid var(--ai-ink,var(--ai,var(--blue)))}
 .case .corehi-interactive.in .ph,
 .case .corehi-interactive .ph{translate:var(--core-x,0px) var(--core-y,0px);transition:translate .45s cubic-bezier(.2,.75,.25,1)}
 .case .corehi-interactive .ph > img{transition:opacity .3s ease}
