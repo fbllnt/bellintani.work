@@ -29,6 +29,11 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Logos and lettering that arrive with a colour block from the source file: always remove that background (transparent
   PNG) so the page's own background shows through.
 
+## Pending ideas (Felipe)
+
+- Oct 29 2026: a text on how he works with AI and the tools he uses (likely near the AI filter or the "Vibe Coding & AI
+  Workflows" service). He is still thinking it through: don't write it unprompted, and the copy/tools must come from him.
+
 ## Launch (Felipe, Oct 28 2026)
 
 - The site is public with all projects: the old "Projects hidden on the public site" block was removed from main.js

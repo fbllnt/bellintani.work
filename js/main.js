@@ -120,7 +120,7 @@
   const filterCategories = [
     { id: "all", label: "ALL" },
     { id: "branding", label: "BRANDING" },
-    { id: "campaigns", label: "CAMPAIGNS" },
+    { id: "campaigns", label: "CAMPAIGNS / ADS" }, // Felipe, Oct 29 2026
     { id: "film", label: "FILM & TV" },
     { id: "digital", label: "DIGITAL / SOCIAL" },
     { id: "ai", label: "AI" },
