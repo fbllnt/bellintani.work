@@ -216,9 +216,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-meta .live,.case-meta .wide{grid-column:span 4}
 @media (max-width:1000px){ .case-meta div{grid-column:span 3} .case-meta .live,.case-meta .wide{grid-column:span 6} }
 @media (max-width:560px){ .case-meta div{grid-column:span 6} .case-meta .live,.case-meta .wide{grid-column:span 12} }
-/* Tags and the prev / position / next links share one line under the title; the links stay quiet, in the muted ink (Felipe, Oct 29 2026) */
-.case-sub{display:flex;justify-content:space-between;align-items:baseline;gap:12px 24px;margin:clamp(24px,3vw,40px) 0 0}
-.case-tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:0;padding:0;color:var(--blue)}
+.case-tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:clamp(24px,3vw,40px) 0 0;padding:0;color:var(--blue)}
 .case-meta .swap{max-width:100%}
 .case-meta dt{color:var(--mute);margin-bottom:8px}
 .case-meta dd{margin:0;font-weight:400;line-height:1.45}
@@ -452,6 +450,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .ball.drag{width:92px;height:92px;margin:-46px 0 0 -46px}
 .ball.drag::after{opacity:1;transition-delay:.1s}
 .ball.drag.press{scale:.85}
+.ball.dot{width:6px;height:6px;margin:-3px 0 0 -3px}
 /* Over a 360° viewer (e.g. the ANTI skeleton) the handle is the project accent (--blue under a theme), its label in the page colour */
 .ball.accent{background:var(--blue)}
 .ball.accent::after{color:var(--bg)}
@@ -677,11 +676,7 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 @media(prefers-reduced-motion:reduce){.globo-palette-swatch{animation:none;transform:none}.globo-palette-meta span:last-child{transition:none}}
 
 
-/* Project navigation: previous / next at both ends of every case. */
-.case-top-nav{display:flex;align-items:center;gap:clamp(10px,2vw,30px);flex-shrink:0;white-space:nowrap;margin-left:auto;color:var(--mute)}
-.case-top-link{white-space:nowrap;text-decoration:none;color:var(--mute);transition:color .2s ease}
-.case-top-link:hover,.case-top-link:focus-visible{color:var(--fg)}
-.case-position{white-space:nowrap;color:var(--mute)}
+/* Project navigation: previous / next at the end of every case (the top one came off, Felipe, Oct 29 2026) */
 .case-neighbors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:clamp(90px,12vw,180px);padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
 .case-neighbor{display:flex;flex-direction:column;gap:clamp(16px,2.5vw,35px);min-width:0;padding:18px 0 10px;border-top:1px solid var(--fg);text-decoration:none;color:var(--fg)}
 .case-neighbor.next{text-align:right;align-items:flex-end}
@@ -689,10 +684,6 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 /* Hover takes the project accent; a white or black accent (Cinema Especial, Adidas 60) would not change, so it falls back to the site blue, as the AI tools do */
 .case-neighbor:hover .case-neighbor-title,.case-neighbor:focus-visible .case-neighbor-title{color:var(--ai,var(--blue))}
 @media(max-width:760px){
-  .case-sub{align-items:flex-start;gap:10px}
-  .case-top-nav{gap:10px;font-size:11px}
-  /* Phones: just the arrows and the position, so the links stay on the tags line */
-  .case-top-link .lbl{display:none}
   .case-neighbors{gap:14px}
   .case-neighbor-title{font-size:clamp(23px,5.5vw,42px)}
 }

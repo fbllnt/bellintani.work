@@ -998,7 +998,7 @@
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
       <h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
-      <div class="case-sub mono">${p.tags ? `<ul class="case-tags">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}<div class="case-top-nav" aria-label="${esc(T("projectNav"))}"><a class="case-top-link" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}" title="${esc(L(prev.title))}">←<span class="lbl"> ${esc(T("prev"))}</span></a><span class="case-position">(${String(i + 1).padStart(2, "0")} / ${String(S.projects.length).padStart(2, "0")})</span><a class="case-top-link" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}" title="${esc(L(next.title))}"><span class="lbl">${esc(T("nextItem"))} </span>→</a></div></div>
+      ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
       <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>`
         : Array.isArray(v) ? v.map(t => t[0] === "*" ? `<span class="ai-tool">${esc(t.slice(1))}<sup>${esc(T("aiMark"))}</sup></span>` : esc(t)).join(", ") : esc(v)}</dd></div>`).join("")}${
         (p.credits || []).map(c => `<div><dt>${esc(L(c.role))}</dt><dd>${c.url ? `<a class="swap" href="${esc(c.url)}" target="_blank" rel="noopener"><span>${esc(c.name)} ↗</span><span aria-hidden="true">${esc(c.name)} ↗</span></a>` : esc(c.name)}</dd></div>`).join("")}${
@@ -1476,8 +1476,8 @@
   // A chain of points, each easing toward the one ahead, drawn as one solid band as wide as the ball.
   // It stretches behind fast moves and pulls back into the ball when the mouse stops.
   // Mouse and trackpad only; touch screens and reduced motion keep the normal pointer.
-  // The ball stays the trail's width everywhere, also over links (the hover motions on the page give the
-  // feedback). On blue (the close-up, the part of a logo tile the flood has covered, or the open part of a
+  // Over text and links the ball shrinks to a small dot and the trail pulls in, so it never sits on the words
+  // (Felipe, Oct 29 2026); on images and empty space it is the full ball with its trail. On blue (the close-up, the part of a logo tile the flood has covered, or the open part of a
   // home row's bar) it turns white. The trail is always drawn in the ball's own colour, read from the ball,
   // so it also follows a project's accent colour.
   const ball = document.createElement("div"), trail = document.createElement("canvas");
@@ -1491,7 +1491,8 @@
     cursorTo(document.body);
     const ctx = trail.getContext("2d"), N = 40, EASE = .72, W = 18;
     const ptr = { x: -100, y: -100 }, chain = Array.from({ length: N }, () => ({ x: -100, y: -100 }));
-    let raf = 0, dpr = 1, tiles = [], hover = null;
+    let raf = 0, dpr = 1, tiles = [], hover = null, w = W, dot = false;
+    const TEXT = "a, button, h1, h2, h3, h4, p, li, dt, dd, figcaption, blockquote, label, .mono", DOT = 6;
     const size = () => { dpr = Math.min(2, devicePixelRatio || 1); trail.width = innerWidth * dpr; trail.height = innerHeight * dpr; };
     size(); addEventListener("resize", size);
     // The flooded part of a logo tile, from its --f (0 bare to 1 full, mid-transition too); null when bare
@@ -1510,14 +1511,17 @@
     };
     const draw = () => {
       let moving = false;
+      const target = dot ? DOT : W, ease = dot ? .95 : EASE;
+      w += (target - w) * .3;
+      if (Math.abs(target - w) > .2) moving = true;
       chain.forEach((p, i) => {
         const t = i ? chain[i - 1] : ptr;
-        p.x += (t.x - p.x) * EASE; p.y += (t.y - p.y) * EASE;
+        p.x += (t.x - p.x) * ease; p.y += (t.y - p.y) * ease;
         if (Math.abs(t.x - p.x) + Math.abs(t.y - p.y) > .3) moving = true;
       });
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, innerWidth, innerHeight);
-      ctx.lineCap = ctx.lineJoin = "round"; ctx.lineWidth = W;
+      ctx.lineCap = ctx.lineJoin = "round"; ctx.lineWidth = w;
       const floods = tiles.map(flood), hf = floods[tiles.indexOf(hover)];
       tiles = tiles.filter((t, i) => t === hover || floods[i]);
       const zones = onBlue ? [{ x: 0, y: 0, w: innerWidth, h: innerHeight, done: true }] : [...floods.filter(Boolean), dark()].filter(Boolean);
@@ -1542,6 +1546,8 @@
       const drag = spin || !onBlue && !!e.target.closest(".roll-track");
       if (drag !== ball.classList.contains("drag")) { ball.dataset.label = `← ${T("drag")} →`; ball.classList.toggle("drag", drag); }
       ball.classList.toggle("accent", spin);
+      dot = !drag && !e.target.closest(".logo, img, video, canvas, iframe") && !!e.target.closest(TEXT);
+      ball.classList.toggle("dot", dot);
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
