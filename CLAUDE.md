@@ -59,7 +59,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   (`scale` > 1) or parallax shift of an image inside its frame.
 - Pointer effects (Felipe, Oct 28 2026: "manter sem cortar"): move the whole piece (`.ph`, frame and image together),
   never the image inside it, and at most 3px so it never reaches a neighbour (`case-depth`, CoreHi). Living gradients
-  are drawn as a `coverFlow` colour layer over the still, never by zooming the image (Globo cover and degradê).
+  are drawn as a `coverFlow` colour layer over the still, never by zooming the image (Globo cover; a gallery item can reuse it with `coverFlow: true`).
 - Gallery images get breathing room: they sit inside their frame with the `--breathe` margin of white page around them (no grey frames: Felipe said "sem cinza").
 - No image may cover part of another: gallery items don't drift on scroll, and `unstack()` in main.js pushes
   down any item a negative `shift` pulls over an earlier one.
@@ -81,7 +81,7 @@ Each project sets `type` (see `types` in content.js) and follows that kind's cha
 - branding: 01 Intro · Desafio · Naming/Símbolo · Sistema (cor, tipo) · Posicionamento/Estratégia · Identidade aplicada
 - campaign (campanha/publicidade): 01 Ideia · Ativação/Key visual · Peças (rua, digital, social) · Filmes (no Resultados chapter: Felipe removed it Oct 26 2026)
 - motion (filme/TV): 01 Ideia · Filme · Frames · Processo
-Spacing: images inside a section sit close together (`--rg` = `--cg`); chapters open with a big gap and a 2px rule,
+Spacing: images inside a section sit close together (`--rg` = `--cg`); chapters open with a big gap and a 1px rule (thinned from 2px, Felipe Oct 29 2026),
 so sections read as clearly separate blocks.
 
 ## Grid and gaps (Felipe, Oct 26 2026)

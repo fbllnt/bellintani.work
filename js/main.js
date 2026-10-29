@@ -1500,8 +1500,11 @@
       ball.classList.add("on");
       hover = onBlue ? null : e.target.closest(".logo");
       row = onBlue ? null : e.target.closest(".index a");
-      const drag = !onBlue && !!e.target.closest(".roll-track");
+      // Over a film roll or a 360° viewer the ball becomes the drag handle (on a 360° viewer, in the project's accent colour)
+      const spin = !onBlue && !!e.target.closest(".spin canvas");
+      const drag = spin || !onBlue && !!e.target.closest(".roll-track");
       if (drag !== ball.classList.contains("drag")) { ball.dataset.label = `← ${T("drag")} →`; ball.classList.toggle("drag", drag); }
+      ball.classList.toggle("accent", spin);
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });

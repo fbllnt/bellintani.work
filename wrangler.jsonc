@@ -2,6 +2,8 @@
 {
   "name": "bellintani-work",
   "compatibility_date": "2026-10-01",
+  // Writes p/<slug>/index.html for every project and the sitemap before each deploy (tools/build-pages.mjs)
+  "build": { "command": "node tools/build-pages.mjs" },
   "routes": [
     { "pattern": "bellintani.work", "custom_domain": true },
     { "pattern": "www.bellintani.work", "custom_domain": true }

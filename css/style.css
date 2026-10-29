@@ -259,7 +259,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loose .fig figcaption{margin:6px 0 0}
 .loose .spin-ui{top:10px;bottom:auto;left:var(--tag-x)}
 /* Chapter: numbered opener for a part of the story (label line, headline, short text) */
-.chap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px var(--gap);padding-top:14px;border-top:2px solid var(--fg);margin-top:clamp(40px,6vw,104px);margin-bottom:var(--gap)}
+.chap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px var(--gap);padding-top:14px;border-top:1px solid var(--fg);margin-top:clamp(40px,6vw,104px);margin-bottom:var(--gap)}
 .chap-k{grid-column:1 / 5;grid-row:1 / span 2;margin:0;display:flex;flex-direction:column;gap:4px}
 .chap-h{grid-column:5 / 13;margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .chap .body{grid-column:5 / 13}
@@ -433,6 +433,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .ball.drag{width:92px;height:92px;margin:-46px 0 0 -46px}
 .ball.drag::after{opacity:1;transition-delay:.1s}
 .ball.drag.press{scale:.85}
+/* Over a 360° viewer (e.g. the ANTI skeleton) the handle is the project accent (--blue under a theme), its label in the page colour */
+.ball.accent{background:var(--blue)}
+.ball.accent::after{color:var(--bg)}
 
 /* ---------- About, run as end credits ---------- */
 /* A black band edge to edge; roles right-aligned against names, like a film's closing titles */
@@ -465,7 +468,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Each roll is a horizontal strip of frames sharing one height, two or three in view; it scrolls sideways (arrows, drag, swipe). */
 .rolls{display:grid;gap:clamp(48px,7vw,96px)}
 .film-roll{--h:min(calc((100vw - 32px) / 3.6), 62svh);display:grid;gap:12px}
-.roll-head{display:flex;align-items:center;gap:10px;border-top:2px solid var(--fg);padding-top:10px}
+.roll-head{display:flex;align-items:center;gap:10px;border-top:1px solid var(--fg);padding-top:10px}
 .roll-head h3{margin:0;font:inherit;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
 .roll-count{color:var(--mute);font-size:13px}
 .roll-arrows{margin-left:auto;display:flex;gap:6px}
@@ -574,7 +577,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loose > .trilho + .trilho{margin-top:clamp(40px,6vw,104px)}
 /* Pair: a chapter or text line in columns 1-4 beside the piece it talks about in 5-12 (Felipe, Oct 27 2026) */
 .pair{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:start}
-.pair.ch{padding-top:14px;border-top:2px solid var(--fg);margin-top:clamp(40px,6vw,104px)}
+.pair.ch{padding-top:14px;border-top:1px solid var(--fg);margin-top:clamp(40px,6vw,104px)}
 .pair-text{grid-column:1 / 5;grid-row:1;position:sticky;top:calc(var(--side) + 48px);min-width:0;display:flex;flex-direction:column;gap:14px}
 .pair-fig{grid-column:5 / 13;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end}
 .pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * 100svh))}
@@ -616,7 +619,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .side-row > .fig:not(.embed){width:min(62%,280px)}
   .chap.cz .chap-h{font-size:clamp(40px,13vw,72px)}
 }
-.trilho{border-top:2px solid var(--fg);padding-top:14px}
+.trilho{border-top:1px solid var(--fg);padding-top:14px}
 .tr-side .chap.tr{border-top:0;padding-top:0}
 
 
@@ -843,7 +846,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @media(prefers-reduced-motion:reduce){.case-depth .ph{transition:none!important}}
 
 /* Editorial introduction: description and project numbers share one aligned block. */
-.case-intro-block{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(22px,2.6vw,48px) var(--gap);align-items:start;margin-bottom:clamp(44px,6vw,88px);padding:clamp(30px,4vw,64px) 0;border-bottom:1px solid var(--line)}
+.case-intro-block{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(22px,2.6vw,48px) var(--gap);align-items:start;margin-bottom:clamp(44px,6vw,88px);padding:clamp(30px,4vw,64px) 0}
 .case-intro-block .case-about{grid-column:1/-1;padding:0}
 .case-intro-block .case-stats{grid-column:5/-1;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);border:0;margin:0}
 .case-intro-block .case-stats li{padding:0}
