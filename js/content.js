@@ -1120,20 +1120,20 @@ window.SITE = {
       client: "Sesc Belenzinho",
       year: "2013",
       role: { en: "Graphic Designer / Illustrator", pt: "Designer gráfico / Ilustrador" },
-      scope: { en: "Gig poster // Lettering // Screen print", pt: "Pôster de show // Lettering // Serigrafia" },
+      scope: { en: "Gig poster // Illustration // Screen print", pt: "Pôster de show // Ilustração // Serigrafia" },
       sector: { en: "Cultural centre, São Paulo", pt: "Centro cultural, São Paulo" },
-      deliverables: { en: "Poster, handwritten lettering, signed limited screen print", pt: "Pôster, lettering manuscrito, serigrafia limitada e assinada" },
-      tags: { en: ["GigPoster", "Lettering", "ScreenPrint", "Music"], pt: ["PôsterDeShow", "Lettering", "Serigrafia", "Música"] },
+      deliverables: { en: "Poster, skyline illustration, signed limited screen print", pt: "Pôster, ilustração da cidade, serigrafia limitada e assinada" },
+      tags: { en: ["GigPoster", "Illustration", "ScreenPrint", "Music"], pt: ["PôsterDeShow", "Ilustração", "Serigrafia", "Música"] },
       // The poster's own colours: dark slate ink, white, the pink of the windows (Felipe, Oct 29 2026)
       theme: { bg: "#26353a", fg: "#f1f1f3", mute: "#93a1a6", line: "#3c4c52", panel: "#2e3e44", accent: "#e01563" },
       tools: ["Adobe CC"],
-      // Cover: Felipe's night sky with the handwritten name, its slate matched to the page (#253231 -> #26353a)
-      image: "images/explosions-in-the-sky/cover-sky.jpg",
+      // Cover: Felipe's night sky with the band's logo, slate matched to the page (#253231 -> #273639 ~ #26353a), a little shorter
+      image: "images/explosions-in-the-sky/cover-night.jpg",
       hero: "bleed",
-      heroAr: "2500/1406",
+      heroAr: "2500/1250",
       summary: {
-        en: "Poster for Explosions in the Sky at Sesc Belenzinho, São Paulo, 22 and 23 May 2013. A city of lit windows with the band's name handwritten across it. A small screen-printed run, signed by me and by the band.",
-        pt: "Pôster do show do Explosions in the Sky no Sesc Belenzinho, São Paulo, 22 e 23 de maio de 2013. Uma cidade de janelas acesas com o nome da banda escrito à mão. Uma pequena tiragem em serigrafia, assinada por mim e pela banda.",
+        en: "Poster for Explosions in the Sky at Sesc Belenzinho, São Paulo, 22 and 23 May 2013. A city of lit windows with the band's logo across it. A small screen-printed run, signed by me and by the band.",
+        pt: "Pôster do show do Explosions in the Sky no Sesc Belenzinho, São Paulo, 22 e 23 de maio de 2013. Uma cidade de janelas acesas com o logo da banda. Uma pequena tiragem em serigrafia, assinada por mim e pela banda.",
       },
       layout: "loose", grid: "trilho",
       gallery: [
@@ -1141,13 +1141,13 @@ window.SITE = {
         // Mockup: the real artwork composited on a Flora scene, so every text is the original.
         { fullWidthIntro: true, grid: "fluxo", chapter: { en: "01 · The poster", pt: "01 · O pôster" }, kicker: { en: "Sesc Belenzinho · 22–23.05.13", pt: "Sesc Belenzinho · 22–23.05.13" },
           head: { en: "A city that *lights up.*", pt: "Uma cidade que *se acende.*" },
-          text: { en: "Buildings drawn as lit windows in pink and white, the band's name written by hand across the skyline, and the lights running down like rain.", pt: "Prédios desenhados como janelas acesas em rosa e branco, o nome da banda escrito à mão sobre a cidade, e as luzes escorrendo como chuva." } },
+          text: { en: "Buildings drawn as lit windows in pink and white, the band's logo across the skyline, and the lights running down like rain.", pt: "Prédios desenhados como janelas acesas em rosa e branco, o logo da banda sobre a cidade, e as luzes escorrendo como chuva." } },
         { src: "images/explosions-in-the-sky/poster-hanging.jpg", ar: "1856/2304", col: 1, span: 12, caption: { en: "The poster · mockup", pt: "O pôster · mockup" } },
         { grid: "trilho", chapter: { en: "02 · The invitation", pt: "02 · O convite" }, kicker: { en: "One of my favourite bands", pt: "Uma das minhas bandas favoritas" },
           head: { en: "A small show, *a deep sound.*", pt: "Um show pequeno, *um som profundo.*" },
           text: { en: "A small show at Sesc Belenzinho. A friend was producing it and invited me to make the poster. Music, and anything made for it, is one of the things I love most: drawing this one and then watching the band live was deeply moving.", pt: "Um show pequeno no Sesc Belenzinho. Uma amiga produzia e me convidou para fazer o pôster. Música, e qualquer trabalho feito para ela, está entre as coisas que eu mais gosto: desenhar este pôster e depois assistir à banda ao vivo foi muito emocionante." } },
-        // Lettering as a transparent PNG: the page's own slate shows through (no colour block from the file)
-        { src: "images/explosions-in-the-sky/lettering.png", ar: "2000/346", col: 1, span: 12, caption: { en: "The band's name, written by hand", pt: "O nome da banda, escrito à mão" } },
+        // The band's own handwritten logo (not Felipe's lettering: Oct 29 2026), as a transparent PNG over the page's slate
+        { src: "images/explosions-in-the-sky/band-logo.png", ar: "2000/346", col: 1, span: 12, caption: { en: "The band's logo", pt: "O logo da banda" } },
         { chapter: { en: "03 · Screen print", pt: "03 · Serigrafia" }, kicker: { en: "Limited and signed", pt: "Limitada e assinada" }, grid: "destaque",
           head: { en: "A rare, *signed run.*", pt: "Uma tiragem *rara e assinada.*" },
           text: { en: "Screen printed in a small limited series, signed by me and by the band. Very few copies were made.", pt: "Serigrafia em série limitada, assinada por mim e pela banda. Foram muito poucas cópias." } },
@@ -1157,7 +1157,7 @@ window.SITE = {
         { chapter: { en: "04 · Out in the city", pt: "04 · Na cidade" }, kicker: { en: "Mockups", pt: "Mockups" }, grid: "destaque",
           head: { en: "The city *on the street.*", pt: "A cidade *na rua.*" },
           text: { en: "The skyline taken off the paper: pasted on a São Paulo wall, on a tote bag and on a t-shirt.", pt: "A cidade saindo do papel: colada num muro de São Paulo, numa ecobag e numa camiseta." } },
-        { src: "images/explosions-in-the-sky/mockup-wall.jpg", ar: "2000/1342", caption: { en: "Wheat-pasted · mockup", pt: "Lambe-lambe · mockup" } },
+        { src: "images/explosions-in-the-sky/mockup-wall-street.jpg", ar: "2000/1342", caption: { en: "Wheat-pasted · mockup", pt: "Lambe-lambe · mockup" } },
         { src: "images/explosions-in-the-sky/mockup-tote.jpg", ar: "1856/2304", caption: { en: "Tote bag · mockup", pt: "Ecobag · mockup" } },
         { src: "images/explosions-in-the-sky/mockup-tshirt.jpg", ar: "1856/2304", caption: { en: "T-shirt · mockup", pt: "Camiseta · mockup" } },
         { chapter: { en: "05 · Listen", pt: "05 · Ouça" }, kicker: { en: "Instrumental · post-rock", pt: "Instrumental · post-rock" }, grid: "trilho",
