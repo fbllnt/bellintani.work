@@ -21,7 +21,7 @@ window.SITE = {
   // English only, in both languages (Felipe).
   loader: [["Daft", "Punk", "is", "playing"], ["at", "my", "house,"]],
   loaderBig: "My house",
-  // Suggested music (Felipe, Oct 27 2026): a small Spotify player behind "♪" in the top-right corner.
+  // Suggested music (Felipe, Oct 27 2026): a small Spotify player behind "Soundtrack" in the top-right corner (was "♪ Music" until Oct 29 2026).
   // Each project sets track: { id (Spotify track id, from open.spotify.com/track/<id>), name, by }; the home plays homeTrack.
   // false: "Falta" placeholders ("?" meta, todo boxes, empty chapters) stay off the site; true brings them back
   showMissing: false,
@@ -101,7 +101,7 @@ window.SITE = {
       logoHint: "Click the logo to close · ← → to browse", logoHintTouch: "Tap the logo to close · Swipe to browse",
       placeholder: "Placeholder", missing: "Missing", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
-      music: "♪ Music", musicLabel: "Suggested music", nowSuggested: "Suggested soundtrack", musicSwap: "Play this project's song",
+      music: "Soundtrack", musicLabel: "Suggested music", nowSuggested: "Suggested soundtrack", musicSwap: "Play this project's song",
       langLabel: "Language", skipToContent: "Skip to content", projectNav: "Project navigation", filterArea: "Filter projects by discipline", filterGroup: "Project categories", soundtrack: "Portfolio soundtrack",
       description: "Bellintani — Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad to an amazing 7-year-old rebel princess, music freak, amateur photographer, wannabe stand-up comedian, and who knows what else.",
     },
@@ -114,7 +114,7 @@ window.SITE = {
       logoHint: "Clica no logo pra fechar · ← → pra navegar", logoHintTouch: "Toca no logo pra fechar · Arrasta pro lado pra navegar",
       placeholder: "Provisório", missing: "Falta", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Aqui entra a história do projeto: o briefing, a ideia e o que saiu dele.",
-      music: "♪ Música", musicLabel: "Música sugerida", nowSuggested: "Trilha sugerida", musicSwap: "Tocar a música deste projeto",
+      music: "Trilha", musicLabel: "Música sugerida", nowSuggested: "Trilha sugerida", musicSwap: "Tocar a música deste projeto",
       langLabel: "Idioma", skipToContent: "Pular para o conteúdo", projectNav: "Navegação entre projetos", filterArea: "Filtrar projetos por disciplina", filterGroup: "Categorias de projeto", soundtrack: "Trilha do portfólio",
       description: "Bellintani — Designer multidisciplinar, diretor de arte, criativo hiperfocado (valeu, TDAH), pai de uma princesa rebelde incrível de 7 anos, viciado em música, fotógrafo amador, metido a comediante de stand-up e o que mais vier.",
     },
@@ -127,7 +127,7 @@ window.SITE = {
       logoHint: "Haz clic en el logo para cerrar · ← → para navegar", logoHintTouch: "Toca el logo para cerrar · Desliza para navegar",
       placeholder: "Provisional", missing: "Falta", selectedWork: "Trabajos seleccionados",
       placeholderText: "Texto provisional. Reemplázalo con la historia del proyecto: el brief, la idea y lo que se hizo.",
-      music: "♪ Música", musicLabel: "Música sugerida", nowSuggested: "Banda sonora sugerida", musicSwap: "Reproducir la canción de este proyecto",
+      music: "Banda sonora", musicLabel: "Música sugerida", nowSuggested: "Banda sonora sugerida", musicSwap: "Reproducir la canción de este proyecto",
       langLabel: "Idioma", skipToContent: "Saltar al contenido", projectNav: "Navegación entre proyectos", filterArea: "Filtrar proyectos por disciplina", filterGroup: "Categorías de proyecto", soundtrack: "Banda sonora del portafolio",
       description: "Bellintani — Diseñador multidisciplinario, director de arte, creativo hiperenfocado (gracias, TDAH), papá de una princesa rebelde increíble de 7 años, fanático de la música, fotógrafo aficionado, aspirante a comediante de stand-up y lo que venga.",
     },

@@ -48,7 +48,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   scrolling up brings them back, so they never sit on the work. Project meta shows Type only when a project has no Scope.
   Chapters are numbered from 01 in every project, Desafio and Identidade aplicada included.
 
-- Music (Felipe, Oct 27 2026): "♪ Música" in the top-right corner opens a small Spotify embed (loaded only when opened)
+- Music (Felipe, Oct 27 2026): "Soundtrack" / "Trilha" (no ♪ since Oct 29 2026) in the top-right corner opens a small Spotify embed (loaded only when opened)
   with the song suggested for the page: each project's `track: { id, name, by }`, `homeTrack` on the home. It keeps
   playing across pages; on another project it offers that project's song. The intro jingle was tried and removed (Felipe, Oct 27 2026: it did not work); no sound in the intro.
 - All copy and projects live in `js/content.js`, in three languages as `{ en, pt, es }` (EN-US / PT-BR / Spanish, neutral

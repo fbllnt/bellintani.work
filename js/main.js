@@ -1566,7 +1566,7 @@
   }
 
   // ---------- Suggested music (Felipe, Oct 27 2026) ----------
-  // "♪" in the corner menu drops down a small Spotify player with the song suggested for the page in view
+  // "Soundtrack" in the corner menu drops down a small Spotify player with the song suggested for the page in view
   // (the project's `track`, or homeTrack on the home). Spotify loads only once it is opened. It keeps playing while
   // browsing, even closed: on another project it offers that project's song instead of cutting the one playing.
   const musicBtn = $("music-btn"), music = $("music"), musicFrame = $("music-frame"), musicSwap = $("music-swap");
@@ -1652,7 +1652,8 @@
     syncMusic();
     if (focus) (on ? $("music-close") : musicBtn).focus({ preventScroll: true });
   };
-  const note = `<span>♪<b> ${esc(T("music").replace(/^♪\s*/, ""))}</b></span>`;
+  // Just the word, no ♪ (Felipe, Oct 29 2026: "Soundtrack" / "Trilha"), also on phones
+  const note = `<span>${esc(T("music"))}</span>`;
   musicBtn.innerHTML = note + note.replace("<span>", '<span aria-hidden="true">');
   musicBtn.onclick = () => openMusic(music.hidden, true);
   $("music-close").onclick = () => openMusic(false, true);

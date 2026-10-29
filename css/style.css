@@ -611,8 +611,6 @@ button.arw.close .arw-i{width:14px;height:14px}
 /* "♪ Music" in the corner menu; on phones just the note */
 #music-btn{all:unset;cursor:pointer;display:inline-grid;overflow:hidden;height:1.05em;line-height:1.05em;font:inherit;color:inherit}
 #music-btn:focus-visible{outline:1px solid currentColor;outline-offset:3px}
-#music-btn b{font-weight:inherit}
-@media (max-width:760px){ #music-btn b{display:none} }
 /* A small Spotify card that drops down under the corner menu; it sits outside the blended corners so it keeps its colours */
 .music{position:fixed;z-index:31;right:var(--side-r);top:calc(46px + env(safe-area-inset-top,0px));width:min(340px,calc(100vw - var(--side-l) - var(--side-r)));background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:8px;box-sizing:border-box;box-shadow:0 10px 30px rgba(0,0,0,.08);animation:musicIn .35s var(--ease)}
 .music[hidden]{display:none}
@@ -773,7 +771,7 @@ button.arw.close .arw-i{width:14px;height:14px}
   .corners .c-bl{font-size:12px;gap:12px;display:flex}
   .corners .c-bl{bottom:calc(20px + env(safe-area-inset-bottom,0px))}
 }
-@media(max-width:390px){.corners .c-tl{font-size:11px}.corners .c-tr{font-size:11px;gap:7px}.corners .c-bl{font-size:11px;gap:10px}}
+@media(max-width:390px){.corners .c-tl{font-size:11px}.corners .c-tr{font-size:11px;gap:6px}.corners .c-bl{font-size:11px;gap:10px}.lang{padding:0 .45em}}
 /* Listening panel: full portfolio soundtrack, original embedded Spotify playback preserved. */
 .music{width:min(420px,calc(100vw - var(--side-l) - var(--side-r)));top:calc(52px + env(safe-area-inset-top,0px));padding:14px;max-height:min(78svh,720px);display:flex;flex-direction:column;gap:10px;box-shadow:0 16px 46px rgba(0,0,0,.16)}
 .music-head{font-size:12px;padding:0 0 4px}
