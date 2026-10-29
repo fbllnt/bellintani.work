@@ -40,8 +40,10 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - All copy and projects live in `js/content.js`, in two languages as `{ en, pt }` (EN-US / PT-BR).
 - Work order (Felipe, Oct 28 2026): FIXED, exactly the order of `projects` in content.js (no shuffle). As of Oct 28 2026:
   Seja ANTI, Globo, SCRV*, HOUSECALL PRO, XP Inc., Cinema Especial, PopStar, (THURA hidden), Tela Quente, CoreHi,
-  Adidas 60, Dirty Projectors, Globoplay, DMA, (Lomography hidden), Logofolio always last.
+  Adidas 60, Dirty Projectors, Globoplay, DMA, Explosions in the Sky (added Oct 29 2026), (Lomography hidden), Logofolio always last.
   content.js is the source of truth; update this list when the order changes. The home has only the Index list (the Grid view was removed). Ask Felipe where a new project goes.
+- `spotify: "artist/<id>"` (or album/playlist) in a gallery puts a Spotify player in place (`h`, default 452px); used for
+  the Explosions in the Sky top tracks.
 - Projects can use `layout: "loose"` (free placement: `col`, `span`, `shift`, `speed`, `{ text }` lines),
   `hero: "bleed"`, videos (`video` MP4 + `webm` + `poster`) and a 360° viewer (`spin`).
 - Compress media before adding: videos to 720p H.264 MP4 plus a VP9 WebM; images max 2000 px wide JPEG.

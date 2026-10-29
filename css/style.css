@@ -274,6 +274,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .embed iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;transform:scale(var(--s,.5));pointer-events:none;background:transparent}
 .yt .ph{aspect-ratio:var(--ar);background:#000}
 .yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.sp .ph{aspect-ratio:auto;height:var(--sp-h);background:transparent;border-radius:12px}
+.sp iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 /* Print of a live page: clicking opens the page; a small label says so */
 .fig .ph > .fig-link{position:absolute;inset:0;display:block;cursor:pointer}
 .fig .ph > .fig-link img{position:absolute;inset:var(--breathe);width:calc(100% - 2 * var(--breathe));height:calc(100% - 2 * var(--breathe));object-fit:contain}

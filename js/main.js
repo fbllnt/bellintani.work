@@ -141,6 +141,7 @@
     "Tela Quente": ["film"],
     "CoreHi": ["branding"],
     "Dirty Projectors": ["posters"],
+    "Explosions in the Sky": ["posters"],
     "Globoplay": ["branding", "film", "digital"],
     "Lomography": ["digital"],
     "Logofolio": ["branding"],
@@ -424,7 +425,7 @@
         return;
       }
       // A flip, strip or live page can take the pending text beside it
-      if (pend && (it.flip || it.rooms || it.strip || it.embed || it.yt)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
+      if (pend && (it.flip || it.rooms || it.strip || it.embed || it.yt || it.spotify)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
       closePend();
       // A text line pairs with the piece or flip that follows it
       if (it.text && !side) { pend = { html: `<p class="ltext side">${esc(L(it.text))}</p>`, solo: block(it, p) }; return; }
@@ -476,6 +477,8 @@
         <a class="fig-link" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(T("openSite"))}: ${esc(url)}"><span class="fig-open mono">${esc(T("openSite"))} ↗</span></a></div></figure>`; }
     // A YouTube film playing in place (privacy-enhanced player), credited in the caption: { yt: "<video id>", ar, caption }
     if (it.yt) return `<figure class="fig yt" style="--ar:${esc(it.ar || "16/9")};${style}"><div class="ph"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(it.yt)}?rel=0" title="${esc(L(it.caption) || "YouTube")}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
+    // A Spotify player in place (an artist's top tracks, an album or a playlist): { spotify: "artist/<id>", h, caption }
+    if (it.spotify) return `<figure class="fig sp" style="--sp-h:${+it.h || 452}px;${style}"><div class="ph"><iframe src="https://open.spotify.com/embed/${esc(it.spotify)}?utm_source=generator" title="${esc(L(it.caption) || "Spotify")}" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
     if (it.swap) return `<div class="swap-ba" style="${style}">${[["before", "old"], ["after", "new"]].map(([k, c]) =>
       `<p><span class="mono muted">${esc(T(k))}</span><b class="${c}">${esc(L(it.swap[k]))}</b></p>`).join("")}</div>`;
     if (it.word) return `<div class="word-def" style="${style}"><p class="word-big" style="--n:${[...it.word.glyph].length}"${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""} aria-hidden="true">${esc(it.word.glyph)}</p>
