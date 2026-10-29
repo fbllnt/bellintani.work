@@ -52,6 +52,9 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Logos project (`layout: "logos"`): every logo file must be pure black #000000 on a transparent background
   (PNG or SVG, trimmed). Check each upload and correct off-blacks such as #231F20 before adding it.
 - Typefaces: Figtree (display) and JetBrains Mono (small copy / body). White page, black type, blue accents.
+- Colour rule (Felipe, Oct 29 2026): highlights and hovers use the project's own contrast colour (theme `accent`).
+  When a project has no colour of its own (no theme, or a black/white accent such as Cinema Especial and Adidas 60),
+  use the site blue #1a2bff (`var(--ai,var(--blue))`).
 
 ## Images: never crop (Felipe, Oct 24 2026)
 
