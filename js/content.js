@@ -33,8 +33,8 @@ window.SITE = {
   },
 
   // About, run as film end credits (content from LinkedIn).
-  // Each block: { head, rows }. A row is { role, name, years, url } (role left, name right) or a single
-  // value, which is centred. `flow: true` sets single values side by side. `placeholder: true` marks unfinished blocks.
+  // Each block: { head, rows }. A row is { role, name, years, url } (name, role, years on one ruled line) or a single
+  // value; `flow: true` runs single values as one line of text. `placeholder: true` marks unfinished blocks.
   about: {
     intro: {
       en: "I build brands, design systems and creative operations that scale. For over 20 years I've led branding, design and creative work across Latin America, Europe and North America.",
@@ -53,14 +53,18 @@ window.SITE = {
         { role: "Interactive Art Director / Team Lead", name: "AgênciaClick", years: "2008 — 2010" },
         { role: "Interactive Art Director / Team Lead", name: "Wunderman Thompson", years: "2006 — 2008" },
       ] },
-      { head: { en: "Special thanks", pt: "Agradecimentos especiais" }, flow: true, rows: [
+      { head: { en: "Clients", pt: "Clientes" }, flow: true, rows: [
         "Adidas", "Globo", "Meta", "Pernod Ricard", "Diageo", "Absolut", "Gatorade", "Nissan", "Land Rover", "Nokia", "Philips",
         "FIAT", "TIM", "Banco do Brasil", "Velo / Vuse", "Qiddiya", "JBS", "Housecall Pro", "ANTI Creative Finance", "SCRV.ag",
       ] },
+      // Disciplines rewritten from the work on the site (Felipe, Oct 30 2026: leaner, more accurate). Logo and graphic
+      // design fold into identity; content strategy and interaction design into digital; video production into motion.
       { head: { en: "Disciplines", pt: "Disciplinas" }, flow: true, rows: [
-        { en: "Brand design", pt: "Design de marca" }, { en: "Logo design", pt: "Logotipos" }, { en: "Graphic design", pt: "Design gráfico" },
-        { en: "Advertising", pt: "Publicidade" }, { en: "Brand consulting", pt: "Consultoria de marca" }, { en: "Content strategy", pt: "Estratégia de conteúdo" },
-        { en: "Social media", pt: "Redes sociais" }, { en: "Interaction design", pt: "Design de interação" }, { en: "Video production", pt: "Produção de vídeo" },
+        { en: "Brand strategy & positioning", pt: "Estratégia e posicionamento de marca" }, { en: "Brand identity & design systems", pt: "Identidade de marca e sistemas de design" },
+        { en: "Art direction", pt: "Direção de arte" }, { en: "Advertising & campaigns", pt: "Publicidade e campanhas" },
+        { en: "Motion & TV openings", pt: "Motion e aberturas de TV" }, { en: "Typography & lettering", pt: "Tipografia e lettering" },
+        { en: "Illustration & posters", pt: "Ilustração e pôsteres" }, { en: "Digital, social & UX", pt: "Digital, social e UX" },
+        { en: "AI production & vibe coding", pt: "Produção com IA e vibe coding" },
       ] },
       { head: { en: "Education", pt: "Formação" }, rows: [
         { role: { en: "MBA, Data-Driven Marketing and AI", pt: "MBA, Marketing Orientado a Dados e IA" }, name: "USP / Esalq", years: "2026 — 2027" },
@@ -75,9 +79,6 @@ window.SITE = {
         { role: { en: "Native or bilingual", pt: "Nativo ou bilíngue" }, name: { en: "Spanish", pt: "Espanhol" } },
         { role: { en: "Limited working", pt: "Proficiência limitada" }, name: { en: "Italian", pt: "Italiano" } },
         { role: { en: "Limited working", pt: "Proficiência limitada" }, name: { en: "Catalan", pt: "Catalão" } },
-      ] },
-      { head: { en: "Filmed on location", pt: "Filmado em" }, flow: true, rows: [
-        { en: "Latin America", pt: "América Latina" }, { en: "Europe", pt: "Europa" }, { en: "North America", pt: "América do Norte" },
       ] },
       { head: { en: "Contact", pt: "Contato" }, rows: [
         { role: "Email", name: "felipe@bellintani.work", url: "mailto:felipe@bellintani.work" },
@@ -96,7 +97,7 @@ window.SITE = {
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
       client: "Client", year: "Year", scope: "Scope", role: "Role", type: "Type", before: "Before", after: "After", sector: "Sector", deliverables: "Deliverables", tools: "Tools & AI", openSite: "Open the site", aiMark: "AI", live: "Live",
-      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓", aboutNav: "About", scrollDown: "Scroll down to see the work", overview: "Overview", camera: "Camera", film: "Film", drag: "Drag", aboutTitle: "About", skipCredits: "Skip credits →",
+      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", scrollToPlay: "Scroll to play ↓", aboutNav: "About", scrollDown: "Scroll down to see the work", overview: "Overview", camera: "Camera", film: "Film", drag: "Drag", aboutTitle: "About",
       logoHint: "Click the logo to close · ← → to browse", logoHintTouch: "Tap the logo to close · Swipe to browse",
       placeholder: "Placeholder", missing: "Missing", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
@@ -109,7 +110,7 @@ window.SITE = {
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Visualização",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
       client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", type: "Tipo", before: "Antes", after: "Depois", sector: "Setor", deliverables: "Entregas", tools: "Ferramentas & IA", openSite: "Abrir o site", aiMark: "IA", live: "No ar",
-      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓", aboutNav: "Sobre", scrollDown: "Role para ver os trabalhos", overview: "Visão geral", camera: "Câmera", film: "Filme", drag: "Arraste", aboutTitle: "Sobre", skipCredits: "Pular créditos →",
+      dragToRotate: "⟷ Arraste para girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", scrollToPlay: "Role para assistir ↓", aboutNav: "Sobre", scrollDown: "Role para ver os trabalhos", overview: "Visão geral", camera: "Câmera", film: "Filme", drag: "Arraste", aboutTitle: "Sobre",
       logoHint: "Clique no logo para fechar · ← → para navegar", logoHintTouch: "Toque no logo para fechar · Deslize para navegar",
       placeholder: "Provisório", missing: "Falta", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Substitua pela história do projeto: o briefing, a ideia e o que foi feito.",

@@ -95,17 +95,17 @@
     ];
     return `<div class="art" style="background:${looks[i % looks.length]}"></div>`;
   }
-  const pad = n => String(n).padStart(2, "0");
   const tagFor = p => p.placeholder ? `<span class="placeholder">${esc(T("placeholder"))}</span>` : "";
-  // About as end credits: role on the left, name on the right, single lines centred
+  // About: each block is a ruled row of the 12-column grid, label and count left, list right
   const A = S.about;
   $("credits-intro").textContent = L(A.intro);
   const cell = (v, url) => url ? `<a class="swap" href="${esc(url)}"${/^https?:/.test(url) ? ` target="_blank" rel="noopener"` : ""}><span>${esc(L(v))}</span><span>${esc(L(v))}</span></a>` : esc(L(v));
   const isRow = r => r && typeof r === "object" && "name" in r;
-  $("credits").innerHTML = A.credits.map(b => `<div class="cblock${b.flow ? " wrap" : ""}"><h3 class="mono">${esc(L(b.head))}${tagFor(b)}</h3>${b.rows.map(r =>
-    isRow(r) ? `<p class="crow"><span class="mono">${esc(L(r.role))}${r.years ? `<i>${esc(L(r.years))}</i>` : ""}</span><b>${cell(r.name, r.url)}</b></p>`
-      : `<p class="crow solo">${cell(r)}</p>`).join("")}</div>`).join("")
-    + `<div class="cend"><b>${esc(S.name)}<sup>®</sup></b><span class="mono">${esc(L(A.end))}</span><span class="mono muted">©Copyright 20${esc(S.year)}</span></div>`;
+  const pad = n => String(n).padStart(2, "0");
+  $("credits").innerHTML = A.credits.map(b => `<div class="ab"><h3 class="ab-k mono">${esc(L(b.head))}<span class="muted">(${pad(b.rows.length)})</span>${tagFor(b)}</h3><ul class="ab-list${b.flow ? " flow" : ""}">${b.rows.map(r =>
+    isRow(r) ? `<li class="ab-row"><b>${cell(r.name, r.url)}</b><span class="mono">${esc(L(r.role))}</span><span class="mono muted">${r.years ? esc(L(r.years)) : ""}</span></li>`
+      : `<li class="ab-row solo">${cell(r)}</li>`).join("")}</ul></div>`).join("")
+    + `<p class="ab-end mono"><span>©20${esc(S.year)} ${esc(S.name)}</span><span class="muted">${esc(L(A.end))}</span></p>`;
   // Slugs come from the English title so links stay the same in both languages
   S.projects.forEach(p => { p.slug = p.slug || String(p.title.en || p.title).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); });
   const href = p => `#p-${p.slug}`;
@@ -186,7 +186,7 @@
   // ---------- Optical left edge ----------
   // Big type starts where its ink starts, not where its side bearing starts, so a huge B or D lines up with the
   // small copy above and below it on the page margin. The bearing is measured once per glyph, in em, so it scales.
-  const INK = ".c-tl, .name, .loader .ln:not(.boom), .tag b, .h2, .index .t, .big, .case-title, .chap-h, .ltext, .swap-ba b, .case-stats b, .credits-intro, .cend b";
+  const INK = ".c-tl, .name, .loader .ln:not(.boom), .tag b, .h2, .index .t, .big, .case-title, .chap-h, .ltext, .swap-ba b, .case-stats b, .ab-intro";
   const inkCache = {}, inkCtx = document.createElement("canvas").getContext("2d");
   const inkAlign = (root = document) => root.querySelectorAll(INK).forEach(el => {
     const cs = getComputedStyle(el.querySelector(".word > span, .w > span, .ti") || el);

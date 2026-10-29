@@ -441,32 +441,31 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .ball.accent{background:var(--blue)}
 .ball.accent::after{color:var(--bg)}
 
-/* ---------- About, run as end credits ---------- */
-/* A black band edge to edge; roles right-aligned against names, like a film's closing titles */
-.credits{background:var(--fg);color:var(--bg);margin:clamp(80px,12vw,180px) calc(var(--side-r) * -1) 0 calc(var(--side-l) * -1);padding:clamp(48px,7vw,96px) var(--side-r) clamp(80px,12vw,160px) var(--side-l)}
-.credits .sec-head a{color:var(--bg)}
-.credits-intro{font:500 clamp(22px,2.6vw,38px)/1.15 var(--sans);letter-spacing:-.03em;max-width:28ch;margin:clamp(24px,4vw,48px) 0 clamp(80px,14vw,200px)}
-.roll{display:grid;gap:clamp(56px,9vw,120px);text-align:center}
-.cblock h3{margin:0 0 18px;color:#8e8e8e;font-size:12px}
-.crow{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,40px);align-items:baseline;margin:0 0 8px}
-.crow > span{text-align:right;color:#bdbdbd}
-.crow > b{text-align:left;font:700 clamp(20px,2.4vw,34px)/1.1 var(--sans);letter-spacing:-.03em}
-.crow.solo{display:block;font:700 clamp(20px,2.4vw,34px)/1.1 var(--sans);letter-spacing:-.03em}
-.crow a{text-decoration:none}
-.cblock .placeholder{color:#bdbdbd}
-.cend{display:grid;gap:14px;justify-items:center;padding-top:clamp(40px,8vw,120px)}
-.cend b{font:900 clamp(56px,11vw,180px)/.84 var(--sans);letter-spacing:-.05em;text-transform:uppercase}
-.cend sup{font-size:.25em;vertical-align:top}
-.credits .muted{color:#8e8e8e}
-@media (max-width:560px){
-  .crow{grid-template-columns:1fr;gap:2px;margin-bottom:16px}
-  .crow > span{text-align:center}
-  .crow > b{text-align:center}
+/* ---------- About ---------- */
+/* Same system as the project chapters: a 1px rule in the ink colour opens each block, label and count in cols 1–4,
+   the list in cols 5–12 with hairlines between items. Everything left-aligned. */
+.ab-intro{font:500 clamp(24px,3vw,46px)/1.12 var(--sans);letter-spacing:-.035em;max-width:30ch;margin:clamp(28px,4vw,56px) 0 clamp(64px,10vw,140px);text-wrap:pretty}
+.ab{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px var(--gap);border-top:1px solid var(--fg);padding-top:14px;margin-bottom:clamp(48px,7vw,104px)}
+.ab-k{grid-column:1 / 5;margin:0;display:flex;gap:8px;align-items:baseline;font-weight:300}
+.ab-k .placeholder{color:var(--mute)}
+.ab-list{grid-column:5 / 13;margin:0;padding:0;list-style:none}
+.ab-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,5fr) minmax(0,2fr);gap:var(--gap);align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.ab-row:first-child{padding-top:0}
+.ab-row > b{font:700 clamp(18px,1.7vw,26px)/1.15 var(--sans);letter-spacing:-.03em}
+.ab-row > span:last-child{text-align:right}
+.ab-row a{text-decoration:none}
+.ab-row.solo{display:block;font:500 clamp(16px,1.4vw,20px)/1.25 var(--sans);letter-spacing:-.02em}
+/* Short items (clients, disciplines, languages) run in columns, still one hairline each */
+.ab-list.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap)}
+.ab-list.flow .ab-row.solo:nth-child(-n+3){padding-top:0}
+.ab-end{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--fg);padding-top:14px;margin:0}
+@media (max-width:760px){
+  .ab-k,.ab-list{grid-column:1 / -1}
+  .ab-list.flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ab-list.flow .ab-row.solo:nth-child(3){padding-top:12px}
+  .ab-row{grid-template-columns:minmax(0,1fr) auto;row-gap:2px}
+  .ab-row > b{grid-column:1 / -1}
 }
-.crow > span i{display:block;font-style:normal;color:#8e8e8e;margin-top:4px}
-/* Long lists (thanks, disciplines) run side by side and wrap, centred */
-.cblock.wrap{max-width:1000px;justify-self:center}
-.cblock.wrap .crow.solo{display:inline-block;margin:0 clamp(8px,1vw,14px) 6px}
 
 /* ---------- Photo library (Lomography): one film roll per camera ---------- */
 /* Each roll is a horizontal strip of frames sharing one height, two or three in view; it scrolls sideways (arrows, drag, swipe). */
