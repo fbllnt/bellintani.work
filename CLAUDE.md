@@ -3,7 +3,8 @@
 Static site (HTML/CSS/JS, no build). `main` on GitHub (fbllnt/bellintani.work) is deployed automatically by
 a Cloudflare Worker named `bellintani-work` serving static assets (free plan; moved from Netlify on Oct 26 2026
 after Netlify paused the site for deploy credits) to https://bellintani.work about a minute after each push.
-Config: `wrangler.jsonc` (assets = repo root), `.assetsignore` (files never served) and `_headers` (images cached
+Config: `wrangler.jsonc` (assets = repo root; its build step runs `tools/build-pages.mjs`, which writes the
+/p/<slug>/ project pages and sitemap.xml), `.assetsignore` (files never served) and `_headers` (images cached
 for a day: replacing an image under the same name can take that long to reach returning visitors, so rename it instead). Deploy command `npx wrangler deploy`.
 Deploys run from GitHub Actions (`.github/workflows/deploy.yml`, secret `CLOUDFLARE_API_TOKEN`) because Cloudflare's own
 Workers Builds started skipping builds on Oct 26 2026. Check a deploy with `gh run list --workflow deploy.yml`.
