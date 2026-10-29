@@ -1161,12 +1161,37 @@ window.SITE = {
         { src: "images/explosions-in-the-sky/mockup-wall-paste.jpg", ar: "2000/1342", caption: { en: "Wheat-pasted · mockup", pt: "Lambe-lambe · mockup" } },
         { src: "images/explosions-in-the-sky/mockup-tote-canvas.jpg", ar: "1856/2304", caption: { en: "Tote bag · mockup", pt: "Ecobag · mockup" } },
         { src: "images/explosions-in-the-sky/mockup-tshirt.jpg", ar: "1856/2304", caption: { en: "T-shirt · mockup", pt: "Camiseta · mockup" } },
-        { chapter: { en: "05 · Listen", pt: "05 · Ouça" }, kicker: { en: "Instrumental · post-rock", pt: "Instrumental · post-rock" }, grid: "trilho",
+        // The second night, photographed by edi fortini (Flickr efortini, all rights reserved; Felipe knows her and
+        // is asking her personally, Oct 29 2026). Her signature stays on the photos; credit and link below the carousel.
+        { grid: "trilho", chapter: { en: "05 · The night", pt: "05 · A noite" }, kicker: { en: "Thursday, 23.05.13", pt: "Quinta, 23.05.13" },
+          head: { en: "Two nights, *sold out.*", pt: "Duas noites, *esgotadas.*" },
+          text: { en: "Explosions in the Sky played Sesc Belenzinho on 22 and 23 May 2013, both nights sold out. The photos and the film are from the second night.", pt: "O Explosions in the Sky tocou no Sesc Belenzinho em 22 e 23 de maio de 2013, as duas noites esgotadas. As fotos e o vídeo são da segunda noite." } },
+        { roomsAuto: true, rooms: [
+          { name: { en: "Live at Sesc Belenzinho", pt: "Ao vivo no Sesc Belenzinho" }, items: [
+            { src: "images/explosions-in-the-sky/show/show-01.jpg", ar: "1600/1060", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-02.jpg", ar: "698/1024", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-03.jpg", ar: "1600/1060", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-04.jpg", ar: "1600/1060", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-05.jpg", ar: "1600/1060", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-06.jpg", ar: "1600/1060", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-07.jpg", ar: "1600/1060", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-08.jpg", ar: "1600/1193", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-09.jpg", ar: "1600/1060", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-10.jpg", ar: "678/1023", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-11.jpg", ar: "1600/1060", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } },
+            { src: "images/explosions-in-the-sky/show/show-12.jpg", ar: "1600/1060", caption: { en: "Sesc Belenzinho, 23.05.13 · photo: edi fortini", pt: "Sesc Belenzinho, 23.05.13 · foto: edi fortini" } }
+          ] },
+        ], ar: "3/2", col: 1, span: 12 },
+        // The same night on film: "First Breath After Coma", 23.05.2013 (YouTube, Hominis Canidae)
+        { yt: "GNbmcK3z4J8", ar: "16/9", caption: { en: "“First Breath After Coma”, live at Sesc Belenzinho, 23.05.13 · video: Hominis Canidae / YouTube", pt: "“First Breath After Coma”, ao vivo no Sesc Belenzinho, 23.05.13 · vídeo: Hominis Canidae / YouTube" } },
+        { episodeLink: { url: "https://www.flickr.com/photos/efortini/", title: { en: "More by edi fortini", pt: "Mais fotos de edi fortini" }, detail: { en: "Photos: edi fortini · Flickr", pt: "Fotos: edi fortini · Flickr" } } },
+        { chapter: { en: "06 · Listen", pt: "06 · Ouça" }, kicker: { en: "Instrumental · post-rock", pt: "Instrumental · post-rock" }, grid: "trilho",
           head: { en: "If you don't know them, *you should.*", pt: "Quem não conhece *devia conhecer.*" },
           text: { en: "Instrumental, long songs, post-rock, the real thing. Start with “Your Hand in Mine” and “First Breath After Coma”.", pt: "Instrumental, músicas longas, post-rock de verdade. Comece por “Your Hand in Mine” e “First Breath After Coma”." } },
         { spotify: "artist/1uQWmt1OhuHGRKmZ2ZcL6p", h: 452, caption: { en: "Explosions in the Sky on Spotify", pt: "Explosions in the Sky no Spotify" } },
         // The night itself: the Rolling Stone Brasil review (its photo is Rodrigo Lacal's, so it is linked, not copied) and the setlist
         { episodeLink: { url: "https://rollingstone.com.br/noticia/explosions-sky-propoe-viagens-sonoras-e-instrumentais-em-sao-paulo/", title: { en: "Read the review of the night", pt: "Ler a crítica da noite" }, detail: { en: "Rolling Stone Brasil · 23 May 2013 · photo: Rodrigo Lacal", pt: "Rolling Stone Brasil · 23 de maio de 2013 · foto: Rodrigo Lacal" } } },
+        { episodeLink: { url: "https://screamyell.com.br/site/2013/05/31/explosions-in-the-sky-em-sp-e-no-rio/", title: { en: "Another review of the night", pt: "Outra crítica da noite" }, detail: { en: "Scream & Yell · 31 May 2013 · Leonardo Vinhas", pt: "Scream & Yell · 31 de maio de 2013 · Leonardo Vinhas" } } },
         { episodeLink: { url: "https://www.setlist.fm/setlist/explosions-in-the-sky/2013/sesc-belenzinho-sao-paulo-brazil-73d84299.html", title: { en: "See what they played", pt: "Ver o que eles tocaram" }, detail: { en: "Setlist · Sesc Belenzinho, 22 May 2013", pt: "Setlist · Sesc Belenzinho, 22 de maio de 2013" } } },
       ],
     },
