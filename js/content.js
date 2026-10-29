@@ -1114,6 +1114,7 @@ window.SITE = {
     },
     {
       title: "Explosions in the Sky",
+      hidden: true, // Draft (Felipe, Oct 29 2026): new projects stay off the site until he approves the preview
       track: { id: "3HBcQ5GenzAlBhCIgDGL3x", name: "Your Hand in Mine", by: "Explosions in the Sky" },
       type: "poster",
       client: "Sesc Belenzinho",
