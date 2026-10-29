@@ -652,8 +652,8 @@ window.SITE = {
           head: { en: "The star starts *with a line.*", pt: "A estrela começa *com uma linha.*" },
           text: { en: "Simple strokes outline the star and staff-like graphic, setting up the foundation for the PopStar wordmark and the full on-screen identity.", pt: "Traços simples desenham a estrela sobre uma estrutura gráfica que remete à pauta musical. O símbolo abre caminho para o logotipo PopStar e para a identidade em movimento." } },
         { flipWide: true, flip: [
-          { src: "images/popstar/symbol.jpg", popstarInvert: true, ar: "16/9", caption: { en: "Symbol study", pt: "Estudo do símbolo" } },
-          { src: "images/popstar/logo.jpg", popstarInvert: true, ar: "16/9", caption: { en: "Wordmark construction", pt: "Construção do logotipo" } }
+          { src: "images/popstar/symbol-tight.jpg", popstarInvert: true, ar: "16/9", caption: { en: "Symbol study", pt: "Estudo do símbolo" } },
+          { src: "images/popstar/logo-tight.jpg", popstarInvert: true, ar: "16/9", caption: { en: "Wordmark construction", pt: "Construção do logotipo" } }
         ], col: 1, span: 12 },
         { video: "images/popstar/opening.mp4", poster: "images/popstar/neon.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Original PopStar opening · TV Globo · 2017", pt: "Abertura original do PopStar · TV Globo · 2017" } },
         { chapter: { en: "03 · Showtime", pt: "03 · Hora do show" }, kicker: { en: "The on-screen expression", pt: "A identidade na tela" },
