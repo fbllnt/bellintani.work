@@ -314,10 +314,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @media (max-width:1000px){ .case-stats{grid-template-columns:repeat(3,minmax(0,1fr))} }
 @media (max-width:560px){ .case-stats{grid-template-columns:repeat(2,minmax(0,1fr))} }
 .case-stats b{font:900 clamp(48px,6vw,104px)/.85 var(--sans);letter-spacing:-.05em}
-.case-next{display:grid;gap:8px;margin-top:clamp(90px,12vw,180px);padding:16px 0 calc(110px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--fg);text-decoration:none}
-.case-next .big{font-size:clamp(48px,11vw,200px)}
-.case-next:hover .big{color:var(--blue)}
-.case-next:hover .arr{transform:rotate(45deg)}
 .wipe{position:fixed;inset:0;z-index:60;background:var(--blue);opacity:0;visibility:hidden;pointer-events:none}
 .wipe.on{opacity:1;visibility:visible}
 
@@ -633,15 +629,13 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .globo-palette-card.news .globo-palette-swatch{background-image:linear-gradient(120deg,#305d9e 8%,#3894ad 45%,#6ac4a0 85%,#305d9e 115%)}
 .globo-palette-card.sport .globo-palette-swatch{background-image:linear-gradient(120deg,#6cbb56 5%,#a9d448 43%,#ffe330 85%,#6cbb56 115%);animation-delay:-6s}
 .globo-palette-card.entertainment .globo-palette-swatch{background-image:linear-gradient(120deg,#e91367 5%,#f65a70 40%,#f59a30 85%,#e91367 115%);animation-delay:-12s}
-.globo-palette-swatch::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 85%,rgba(255,255,255,.2),transparent 65%);opacity:.18;transform:translateX(-18%);transition:opacity .65s ease,transform 1s ease}
 .globo-palette-card:is(:hover,:focus-visible) .globo-palette-swatch{filter:saturate(1.13) contrast(1.03)}
-.globo-palette-card:is(:hover,:focus-visible) .globo-palette-swatch::after{opacity:.8;transform:translateX(16%)}
 .globo-palette-meta{display:flex;justify-content:space-between;gap:8px;padding:9px 0;color:var(--fg);font-size:clamp(10px,.85vw,13px);text-transform:uppercase}
 .globo-palette-meta span:last-child{color:var(--mute);transition:transform .3s ease}
 .globo-palette-card:is(:hover,:focus-visible) .globo-palette-meta span:last-child{transform:translate(3px,-3px)}
 @keyframes globo-functional-flow{from{background-position:5% 50%}to{background-position:95% 50%}}
 @media(max-width:760px){.globo-palette-head span:last-child{display:none}.globo-palette-grid{grid-template-columns:1fr;gap:12px}.globo-palette-swatch{height:clamp(96px,28vw,170px)}}
-@media(prefers-reduced-motion:reduce){.globo-palette-swatch{animation:none;transform:none}.globo-palette-swatch::after,.globo-palette-meta span:last-child{transition:none}}
+@media(prefers-reduced-motion:reduce){.globo-palette-swatch{animation:none;transform:none}.globo-palette-meta span:last-child{transition:none}}
 
 
 /* Project navigation: previous / next at both ends of every case. */
@@ -764,17 +758,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
    before SCREEN blending, so only the white mark remains and the actual case background shows. */
 .popstar-invert .ph img{filter:grayscale(1) invert(1) contrast(700%);mix-blend-mode:screen}
 
-/* Globo / interactive light ripples. Original gradient imagery is never changed. */
+/* Globo palette swatches: no overlays (pointer pull and drift are set below). */
 .globo-palette-swatch{position:relative;isolation:isolate}
-.globo-wave{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;mix-blend-mode:screen;opacity:.92;filter:drop-shadow(0 0 8px rgba(255,255,255,.22))}
-.globo-palette-swatch::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(circle at var(--pointer-x,50%) var(--pointer-y,50%),rgba(255,255,255,.33),rgba(255,255,255,.13) 15%,transparent 51%);opacity:0;transition:opacity .5s ease;mix-blend-mode:soft-light}
-.globo-palette-swatch:hover::before{opacity:1}
-.globo-palette-swatch:hover{animation-play-state:paused;background-position:var(--pointer-x,50%) var(--pointer-y,50%)}
-.globo-palette-card:focus-visible .globo-palette-swatch::before{opacity:1}
-@media(prefers-reduced-motion:reduce){
-  .globo-wave{display:none}
-  .globo-palette-swatch:hover{animation:none}
-}
 
 
 /* Editorial polish: PopStar identity sequence, one specimen at a time.
@@ -855,7 +840,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 
 /* Editorial story navigation, added progressively to multi-chapter cases. */
 .case-depth.in .ph,.case .case-depth .ph{transform:translate3d(var(--depth-x,0px),var(--depth-y,0px),0);transition:transform .6s cubic-bezier(.2,.7,.25,1)}
-@media(prefers-reduced-motion:reduce){.story-rail-step,.case-depth .ph{transition:none!important}}
+@media(prefers-reduced-motion:reduce){.case-depth .ph{transition:none!important}}
 
 /* Editorial introduction: description and project numbers share one aligned block. */
 .case-intro-block{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(22px,2.6vw,48px) var(--gap);align-items:start;margin-bottom:clamp(44px,6vw,88px);padding:clamp(30px,4vw,64px) 0;border-bottom:1px solid var(--line)}
@@ -885,8 +870,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 }
 
 /* Globo: organic colour movement, without dots, concentric rings or cursor effects. */
-.globo-palette-swatch .globo-wave{display:none!important}
-.globo-palette-swatch::before{display:none!important}
 .globo-palette-swatch,
 .globo-palette-swatch:hover{
   animation:globo-functional-flow 24s ease-in-out infinite alternate;
@@ -897,6 +880,3 @@ main,.case{background:var(--bg);position:relative;z-index:3}
  .globo-palette-swatch{animation:none!important}
 }
 
-/* All Globo gradient instances: absolutely no graphical ripple, dot or glow overlays. */
-.globo-palette-swatch::before,.globo-palette-swatch::after{content:none!important;display:none!important}
-.globo-wave{display:none!important}

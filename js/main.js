@@ -1,5 +1,6 @@
 (() => {
   const S = window.SITE;
+  const homeTitle = document.title; // index.html <title>, restored when a project closes
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -229,6 +230,7 @@
     const ch = big.textContent.trim()[0].toUpperCase();
     cx.font = `${cs.fontWeight} ${size}px ${cs.fontFamily}`;
     const m = cx.measureText(ch), w = Math.ceil(m.width + size * .2), asc = m.actualBoundingBoxAscent;
+    if (!w || !asc) return; // nothing to measure yet (e.g. a window with no width)
     cv.width = w; cv.height = Math.ceil(asc + 4);
     cx.font = `${cs.fontWeight} ${size}px ${cs.fontFamily}`; cx.textBaseline = "alphabetic"; cx.fillText(ch, 0, asc + 2);
     const row = Math.round(asc / 2 + 2), px = cx.getImageData(0, row, w, 1).data;
@@ -1372,7 +1374,7 @@
   const closeCase = target => cutTo(() => {
     document.body.classList.remove("in-case");
     fit();
-    caseEl.innerHTML = ""; document.title = S.name; motionFigs = [];
+    caseEl.innerHTML = ""; document.title = homeTitle; motionFigs = [];
     applyTheme(null);
     const el = $(target) || $("work");
     el.scrollIntoView({ behavior: "instant" });
