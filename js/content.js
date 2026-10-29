@@ -914,9 +914,8 @@ window.SITE = {
     },
     {
       title: "DJ Shadow",
-      // Draft (Oct 29 2026): Felipe left the structure to Claude ("faça por conta própria"); hidden until he approves.
-      // The hands poster was rejected at the time (Felipe): only the silhouette line is shown, the black & white one first.
-      hidden: true,
+      // Approved by Felipe on the preview and published (Oct 29 2026). The hands poster was rejected at the time
+      // (Felipe): only the silhouette line is shown, the black & white one first.
       track: { id: "1a9maLxqpx3cxjY1lTj62B", name: "Midnight In A Perfect World", by: "DJ Shadow" },
       type: "poster",
       client: "Cine Joia",
