@@ -4,6 +4,9 @@
   "compatibility_date": "2026-10-01",
   // Writes p/<slug>/index.html for every project and the sitemap before each deploy (tools/build-pages.mjs)
   "build": { "command": "node tools/build-pages.mjs" },
+  // No public workers.dev address for the site itself; preview links on (drafts are reviewed there before going live)
+  "workers_dev": false,
+  "preview_urls": true,
   "routes": [
     { "pattern": "bellintani.work", "custom_domain": true },
     { "pattern": "www.bellintani.work", "custom_domain": true }

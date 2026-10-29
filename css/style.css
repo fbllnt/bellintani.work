@@ -252,6 +252,8 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Justified row: pieces share one height and fill the width; a row too tall for the screen narrows and centres */
 .jrow{display:flex;gap:var(--gap);align-items:flex-start;width:min(100%,calc(var(--sum) * 115svh + (var(--n) - 1) * var(--gap)));align-self:center}
 .jrow > .fig{flex:var(--r) 1 0;min-width:0}
+/* A lone piece fills its row: with a portrait ratio (--r < 1) as the only flex-grow it would take just that fraction and sit left */
+.jrow > .fig:only-child{flex-grow:1}
 /* Overlap: a negative shift pulls an item up over the one before it. Later items sit on top;
    captions sit above each image as a label and video controls move to the top, so the covered
    (lower) part of an image never hides them. Hover or focus brings an item to the front. */

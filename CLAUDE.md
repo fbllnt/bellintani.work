@@ -21,6 +21,14 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Before each push that changes CSS or JS, bump the `?v=` stamp on the three asset links in `index.html`
   (e.g. `v=$(date +%Y%m%d%H%M)`) so browsers fetch the new files instead of a cached copy.
 
+## New projects: draft until approved (Felipe, Oct 29 2026)
+
+- A new project goes in with `hidden: true` and stays off the live site while it is being built. Felipe reviews it on a
+  hidden preview link in the browser (a `wrangler versions upload` preview of the draft, never the production deploy) and
+  it goes live (remove `hidden`) only when he says it is ready. Don't push an unfinished project live.
+- Logos and lettering that arrive with a colour block from the source file: always remove that background (transparent
+  PNG) so the page's own background shows through.
+
 ## Launch (Felipe, Oct 28 2026)
 
 - The site is public with all projects: the old "Projects hidden on the public site" block was removed from main.js

@@ -1127,34 +1127,46 @@ window.SITE = {
       // The poster's own colours: dark slate ink, white, the pink of the windows (Felipe, Oct 29 2026)
       theme: { bg: "#26353a", fg: "#f1f1f3", mute: "#93a1a6", line: "#3c4c52", panel: "#2e3e44", accent: "#e01563" },
       tools: ["Adobe CC"],
-      // Cover: Felipe's header with the handwritten name (EITS_header); print photos colour-matched to the poster
-      image: "images/explosions-in-the-sky/cover.jpg",
+      // Cover: Felipe's night sky with the handwritten name, its slate matched to the page (#253231 -> #26353a)
+      image: "images/explosions-in-the-sky/cover-sky.jpg",
       hero: "bleed",
-      heroAr: "2500/714",
+      heroAr: "2500/1406",
       summary: {
         en: "Poster for Explosions in the Sky at Sesc Belenzinho, São Paulo, 22 and 23 May 2013. A city of lit windows with the band's name handwritten across it. A small screen-printed run, signed by me and by the band.",
         pt: "Pôster do show do Explosions in the Sky no Sesc Belenzinho, São Paulo, 22 e 23 de maio de 2013. Uma cidade de janelas acesas com o nome da banda escrito à mão. Uma pequena tiragem em serigrafia, assinada por mim e pela banda.",
       },
       layout: "loose", grid: "trilho",
       gallery: [
-        { chapter: { en: "01 · The poster", pt: "01 · O pôster" }, kicker: { en: "Sesc Belenzinho · 22–23.05.13", pt: "Sesc Belenzinho · 22–23.05.13" },
+        // The poster right under the cover, large and centred (Felipe: a poster loses its weight small at the side).
+        // Mockup: the real artwork composited on a Flora scene, so every text is the original.
+        { fullWidthIntro: true, grid: "fluxo", chapter: { en: "01 · The poster", pt: "01 · O pôster" }, kicker: { en: "Sesc Belenzinho · 22–23.05.13", pt: "Sesc Belenzinho · 22–23.05.13" },
           head: { en: "A city that *lights up.*", pt: "Uma cidade que *se acende.*" },
           text: { en: "Buildings drawn as lit windows in pink and white, the band's name written by hand across the skyline, and the lights running down like rain.", pt: "Prédios desenhados como janelas acesas em rosa e branco, o nome da banda escrito à mão sobre a cidade, e as luzes escorrendo como chuva." } },
-        { src: "images/explosions-in-the-sky/poster.jpg", ar: "1600/2264", col: 1, span: 12 },
-        { chapter: { en: "02 · The invitation", pt: "02 · O convite" }, kicker: { en: "One of my favourite bands", pt: "Uma das minhas bandas favoritas" },
+        { src: "images/explosions-in-the-sky/poster-hanging.jpg", ar: "1856/2304", col: 1, span: 12, caption: { en: "The poster · mockup", pt: "O pôster · mockup" } },
+        { grid: "trilho", chapter: { en: "02 · The invitation", pt: "02 · O convite" }, kicker: { en: "One of my favourite bands", pt: "Uma das minhas bandas favoritas" },
           head: { en: "A small show, *a deep sound.*", pt: "Um show pequeno, *um som profundo.*" },
           text: { en: "A small show at Sesc Belenzinho. A friend was producing it and invited me to make the poster. Music, and anything made for it, is one of the things I love most: drawing this one and then watching the band live was deeply moving.", pt: "Um show pequeno no Sesc Belenzinho. Uma amiga produzia e me convidou para fazer o pôster. Música, e qualquer trabalho feito para ela, está entre as coisas que eu mais gosto: desenhar este pôster e depois assistir à banda ao vivo foi muito emocionante." } },
-        { src: "images/explosions-in-the-sky/lettering.jpg", ar: "2000/346", col: 1, span: 12, caption: { en: "The band's name, written by hand", pt: "O nome da banda, escrito à mão" } },
+        // Lettering as a transparent PNG: the page's own slate shows through (no colour block from the file)
+        { src: "images/explosions-in-the-sky/lettering.png", ar: "2000/346", col: 1, span: 12, caption: { en: "The band's name, written by hand", pt: "O nome da banda, escrito à mão" } },
         { chapter: { en: "03 · Screen print", pt: "03 · Serigrafia" }, kicker: { en: "Limited and signed", pt: "Limitada e assinada" }, grid: "destaque",
           head: { en: "A rare, *signed run.*", pt: "Uma tiragem *rara e assinada.*" },
           text: { en: "Screen printed in a small limited series, signed by me and by the band. Very few copies were made.", pt: "Serigrafia em série limitada, assinada por mim e pela banda. Foram muito poucas cópias." } },
         { src: "images/explosions-in-the-sky/print-03.jpg", ar: "1500/2000" },
         { src: "images/explosions-in-the-sky/print-01.jpg", ar: "2000/1500" },
         { src: "images/explosions-in-the-sky/print-02.jpg", ar: "2000/1500" },
-        { chapter: { en: "04 · Listen", pt: "04 · Ouça" }, kicker: { en: "Instrumental · post-rock", pt: "Instrumental · post-rock" }, grid: "trilho",
+        { chapter: { en: "04 · Out in the city", pt: "04 · Na cidade" }, kicker: { en: "Mockups", pt: "Mockups" }, grid: "destaque",
+          head: { en: "The city *on the street.*", pt: "A cidade *na rua.*" },
+          text: { en: "The skyline taken off the paper: pasted on a São Paulo wall, on a tote bag and on a t-shirt.", pt: "A cidade saindo do papel: colada num muro de São Paulo, numa ecobag e numa camiseta." } },
+        { src: "images/explosions-in-the-sky/mockup-wall.jpg", ar: "2000/1342", caption: { en: "Wheat-pasted · mockup", pt: "Lambe-lambe · mockup" } },
+        { src: "images/explosions-in-the-sky/mockup-tote.jpg", ar: "1856/2304", caption: { en: "Tote bag · mockup", pt: "Ecobag · mockup" } },
+        { src: "images/explosions-in-the-sky/mockup-tshirt.jpg", ar: "1856/2304", caption: { en: "T-shirt · mockup", pt: "Camiseta · mockup" } },
+        { chapter: { en: "05 · Listen", pt: "05 · Ouça" }, kicker: { en: "Instrumental · post-rock", pt: "Instrumental · post-rock" }, grid: "trilho",
           head: { en: "If you don't know them, *you should.*", pt: "Quem não conhece *devia conhecer.*" },
           text: { en: "Instrumental, long songs, post-rock, the real thing. Start with “Your Hand in Mine” and “First Breath After Coma”.", pt: "Instrumental, músicas longas, post-rock de verdade. Comece por “Your Hand in Mine” e “First Breath After Coma”." } },
         { spotify: "artist/1uQWmt1OhuHGRKmZ2ZcL6p", h: 452, caption: { en: "Explosions in the Sky on Spotify", pt: "Explosions in the Sky no Spotify" } },
+        // The night itself: the Rolling Stone Brasil review (its photo is Rodrigo Lacal's, so it is linked, not copied) and the setlist
+        { episodeLink: { url: "https://rollingstone.com.br/noticia/explosions-sky-propoe-viagens-sonoras-e-instrumentais-em-sao-paulo/", title: { en: "Read the review of the night", pt: "Ler a crítica da noite" }, detail: { en: "Rolling Stone Brasil · 23 May 2013 · photo: Rodrigo Lacal", pt: "Rolling Stone Brasil · 23 de maio de 2013 · foto: Rodrigo Lacal" } } },
+        { episodeLink: { url: "https://www.setlist.fm/setlist/explosions-in-the-sky/2013/sesc-belenzinho-sao-paulo-brazil-73d84299.html", title: { en: "See what they played", pt: "Ver o que eles tocaram" }, detail: { en: "Setlist · Sesc Belenzinho, 22 May 2013", pt: "Setlist · Sesc Belenzinho, 22 de maio de 2013" } } },
       ],
     },
     // Logofolio stays the last project.
