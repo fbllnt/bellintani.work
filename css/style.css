@@ -107,6 +107,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .c-tr > *{color:inherit;text-decoration:none}
 .lang{all:unset;cursor:pointer;display:inline-grid;overflow:hidden;height:1.05em;line-height:1.05em;font:inherit;color:inherit}
 .lang:focus-visible{outline:1px solid currentColor;outline-offset:3px}
+.langs{display:inline-flex;gap:.45em}
+.lang:not([aria-current]){opacity:.4;transition:opacity .2s}
+.lang:not([aria-current]):hover{opacity:1}
 .c-bl{left:var(--side-l);bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;gap:16px}
 .c-br{right:var(--side-r);bottom:calc(20px + env(safe-area-inset-bottom,0px))}
 /* Its hover line is wider (arrows); both lines sit on the right margin */
@@ -698,7 +701,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .corners .c-tr,.corners .c-bl{font-size:clamp(14px,1.05vw,16px);line-height:1.05}
 .corners .c-tr{gap:clamp(12px,1.6vw,25px)}
 .corners .c-bl{gap:clamp(14px,1.4vw,23px)}
-.c-tr > a,.c-tr > button,.c-bl > a{position:relative}
+.c-tr > a,.c-tr > button,.langs > button,.c-bl > a{position:relative}
 .corners .c-tr > *:focus-visible,.corners .c-bl > *:focus-visible{outline:1px solid currentColor;outline-offset:5px}
 @media(max-width:760px){
   .corners .c-tr{font-size:12px;gap:10px}

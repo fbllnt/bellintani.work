@@ -50,7 +50,10 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Music (Felipe, Oct 27 2026): "♪ Música" in the top-right corner opens a small Spotify embed (loaded only when opened)
   with the song suggested for the page: each project's `track: { id, name, by }`, `homeTrack` on the home. It keeps
   playing across pages; on another project it offers that project's song. The intro jingle was tried and removed (Felipe, Oct 27 2026: it did not work); no sound in the intro.
-- All copy and projects live in `js/content.js`, in two languages as `{ en, pt }` (EN-US / PT-BR).
+- All copy and projects live in `js/content.js`, in three languages as `{ en, pt, es }` (EN-US / PT-BR / Spanish, neutral
+  Latin American, "tú"; added Oct 29 2026). New text needs all three; a missing `es` falls back to English.
+- Language on arrival: saved choice, else the visitor's country (worker/index.js sets a `geo` cookie on page requests:
+  Brazil → PT, Spanish-speaking countries → ES, anywhere else → EN), else the browser language. Switcher: EN · PT · ES.
 - Work order (Felipe, Oct 28 2026): FIXED, exactly the order of `projects` in content.js (no shuffle). As of Oct 28 2026:
   Seja ANTI, Globo, SCRV*, HOUSECALL PRO, XP Inc., Cinema Especial, PopStar, (THURA hidden), Tela Quente, CoreHi,
   Adidas 60, DJ Shadow (added Oct 29 2026), Dirty Projectors, Globoplay, DMA, Explosions in the Sky (added Oct 29 2026), (Lomography hidden), Logofolio always last.

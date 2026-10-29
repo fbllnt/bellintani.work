@@ -2,6 +2,8 @@
 {
   "name": "bellintani-work",
   "compatibility_date": "2026-10-01",
+  // Only job: tell the page which country the visitor is in (language choice). See worker/index.js.
+  "main": "worker/index.js",
   // Writes p/<slug>/index.html for every project and the sitemap before each deploy (tools/build-pages.mjs)
   "build": { "command": "node tools/build-pages.mjs" },
   // No public workers.dev address for the site itself; preview links on (drafts are reviewed there before going live)
@@ -13,6 +15,9 @@
   ],
   "assets": {
     "directory": ".",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "binding": "ASSETS",
+    // The worker runs for the pages only, not for images, scripts or styles
+    "run_worker_first": ["/", "/p/*", "!/p/*/*.*"]
   }
 }
