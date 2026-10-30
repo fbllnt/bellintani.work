@@ -716,20 +716,9 @@ button.arw.close .arw-i{width:14px;height:14px}
 
 
 /* Project navigation: previous / next at the end of every case (the top one came off, Felipe, Oct 29 2026) */
-.case-neighbors{margin-top:clamp(90px,12vw,180px);padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+.case-neighbors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:clamp(90px,12vw,180px);padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
 .case-neighbor{display:flex;flex-direction:column;gap:clamp(16px,2.5vw,35px);min-width:0;padding:18px 0 10px;border-top:1px solid var(--fg);text-decoration:none;color:var(--fg)}
-.case-neighbor.previous .case-neighbor-title{font-size:clamp(20px,2.4vw,40px)}
-/* Next project: a card in that project's own colours, edge to edge at the end of the page, its cover whole (never cropped) */
-.case-next{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px var(--gap);align-items:end;margin:clamp(48px,6vw,96px) calc(-1 * var(--side-r)) calc(-110px - env(safe-area-inset-bottom,0px)) calc(-1 * var(--side-l));padding:clamp(28px,4vw,56px) var(--side-r) calc(110px + env(safe-area-inset-bottom,0px)) var(--side-l);background:var(--n-bg);color:var(--n-fg);text-decoration:none;border-top:1px solid var(--fg)}
-.case-next .cn-k{grid-column:1 / -1;display:flex;align-items:center;gap:8px}
-.case-next .arw-i{width:14px;height:14px;transition:translate .3s var(--spring)}
-.case-next-title{grid-column:1 / 7;font:900 clamp(44px,8vw,150px)/.86 var(--sans);letter-spacing:-.05em;text-transform:uppercase;overflow-wrap:anywhere;transition:color .25s}
-.case-next-img{grid-column:7 / 13;display:flex;justify-content:flex-end}
-.case-next-img img{display:block;max-width:100%;max-height:55vh;width:auto;height:auto;object-fit:contain}
-.case-next:hover .case-next-title,.case-next:focus-visible .case-next-title{color:var(--n-ac)}
-.case-next:hover .arw-i,.case-next:focus-visible .arw-i{translate:4px 0}
-.case-next:focus-visible{outline:2px solid var(--n-ac);outline-offset:-6px}
-@media(max-width:760px){ .case-next-title,.case-next-img{grid-column:1 / -1} .case-next .cn-k{order:-2} .case-next-img{justify-content:flex-start;order:-1} .case-next-img img{max-height:40vh} }
+.case-neighbor.next{text-align:right;align-items:flex-end}
 /* Back from a project: its row flashes in the project's colour */
 .index a.back-here .t{animation:backHere 1.6s ease-in forwards}
 @keyframes backHere{0%,35%{color:var(--flash)}100%{color:var(--fg)}}
@@ -744,6 +733,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 .case-neighbor.next:is(:hover,:focus-visible) .arw-i{translate:4px 0}
 @media (prefers-reduced-motion:reduce){ .case-neighbor .arw-i{translate:none!important} }
 @media(max-width:760px){
+  .case-neighbors{gap:14px}
   .case-neighbor-title{font-size:clamp(23px,5.5vw,42px)}
 }
 

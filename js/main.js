@@ -1021,12 +1021,8 @@
   // The About's discipline list, keyed: a project sheet shows all of it and lights up the project's own `disciplines`
   // (after tacto's Expertise list, Felipe, Oct 29 2026)
   const disc = S.about.credits.find(b => b.rows.some(r => r && r.key));
-  // The end of a project turns the page: the next one as a card in its own colours, with its cover (Felipe, Oct 30 2026,
-  // after Hale and tacto); a white or black accent falls back to the site blue, as everywhere
-  const nextInk = p => {
-    const t = p.theme || {}, ac = /^#(fff(fff)?|000(000)?)$/i.test(t.accent || "") ? "#1a2bff" : t.accent || "#1a2bff";
-    return `--n-bg:${esc(t.bg || "#fff")};--n-fg:${esc(t.fg || "#0a0a0a")};--n-ac:${esc(ac)}`;
-  };
+  // A project's accent for the back-to-list flash; a white or black accent falls back to the site blue, as everywhere
+  const accentOf = p => { const a = (p.theme && p.theme.accent) || ""; return !a || /^#(fff(fff)?|000(000)?)$/i.test(a) ? "#1a2bff" : a; };
   function renderCase(i) {
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
     applyTheme(p.theme);
@@ -1055,10 +1051,9 @@
           <span class="cn-k mono muted">${arwSvg("prev")}${esc(T("prev"))} · ${String((i - 1 + S.projects.length) % S.projects.length + 1).padStart(2,"0")}</span>
           <span class="case-neighbor-title">${esc(L(prev.title))}</span>
         </a>
-        <a class="case-next" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}" style="${nextInk(next)}">
-          <span class="cn-k mono">${esc(T("nextItem"))} · ${String((i + 1) % S.projects.length + 1).padStart(2,"0")}${arwSvg("next")}</span>
-          <span class="case-next-title">${esc(L(next.title))}</span>
-          ${next.image ? `<span class="case-next-img"><img src="${esc(next.image)}" alt="" loading="lazy"></span>` : ""}
+        <a class="case-neighbor next" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}">
+          <span class="cn-k mono muted">${esc(T("nextItem"))} · ${String((i + 1) % S.projects.length + 1).padStart(2,"0")}${arwSvg("next")}</span>
+          <span class="case-neighbor-title">${esc(L(next.title))}</span>
         </a>
       </nav>`;
     document.title = `${L(p.title)} — ${S.name}`;
@@ -1454,7 +1449,7 @@
     if (row && row.offsetParent) {
       row.scrollIntoView({ behavior: "instant", block: "center" });
       if (!reduced) {
-        row.style.setProperty("--flash", nextInk(S.projects[+row.dataset.i]).match(/--n-ac:([^;]+)/)[1]);
+        row.style.setProperty("--flash", accentOf(S.projects[+row.dataset.i]));
         row.classList.remove("back-here"); void row.offsetWidth; row.classList.add("back-here");
         setTimeout(() => row.classList.remove("back-here"), 1800);
       }
@@ -1515,15 +1510,6 @@
       })
       .then(() => veil.remove());
   };
-  // The next-project card grows into its page the same way
-  caseEl.addEventListener("click", e => {
-    const a = e.target.closest(".case-next");
-    if (!a || !fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
-    const i = S.projects.findIndex(p => a.getAttribute("href") === href(p));
-    if (i < 0) return;
-    e.preventDefault();
-    grow(a, i);
-  });
   works.addEventListener("click", e => {
     const a = e.target.closest(".index a");
     if (!a || !fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
@@ -1606,7 +1592,7 @@
       if (drag !== ball.classList.contains("drag")) { ball.dataset.label = `← ${T("drag")} →`; ball.classList.toggle("drag", drag); }
       ball.classList.toggle("accent", spin);
       // Over a row of the work list a small "view" label rides beside the ball; the ball itself keeps its size (Felipe, Oct 29 2026)
-      tag.classList.toggle("on", !onBlue && !!e.target.closest(".index a, .case-next"));
+      tag.classList.toggle("on", !onBlue && !!e.target.closest(".index a"));
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
