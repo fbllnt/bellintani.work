@@ -1010,6 +1010,9 @@
     root.classList.toggle("themed", !!t);
   }
 
+  // The About's discipline list, keyed: a project sheet shows all of it and lights up the project's own `disciplines`
+  // (after tacto's Expertise list, Felipe, Oct 29 2026)
+  const disc = S.about.credits.find(b => b.rows.some(r => r && r.key));
   function renderCase(i) {
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
     applyTheme(p.theme);
@@ -1020,18 +1023,18 @@
     caseEl.innerHTML = `
       <h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
       ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
-      <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>`
+      <section class="case-sheet">
+        <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>`
         : Array.isArray(v) ? v.map(t => t[0] === "*" ? `<span class="ai-tool">${esc(t.slice(1))}<sup>${esc(T("aiMark"))}</sup></span>` : esc(t)).join(", ") : esc(v)}</dd></div>`).join("")}${
         (p.credits || []).map(c => `<div><dt>${esc(L(c.role))}</dt><dd>${c.url ? `<a class="swap" href="${esc(c.url)}" target="_blank" rel="noopener"><span>${esc(c.name)} ↗</span><span aria-hidden="true">${esc(c.name)} ↗</span></a>` : esc(c.name)}</dd></div>`).join("")}${
         p.link ? `<div class="live"><dt>${esc(T("live"))}</dt><dd><a class="swap" href="${esc(p.link.url)}" target="_blank" rel="noopener"><span>${esc(p.link.label)} ↗</span><span aria-hidden="true">${esc(p.link.label)} ↗</span></a></dd></div>` : ""}</dl>
-      ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
-      <section class="case-intro-block${p.stats ? " has-stats" : ""}">
-        <div class="case-about">
-          <span class="mono muted">${esc(T("about"))}</span>
-          <p class="body">${esc(L(p.summary) || T("placeholderText"))}${tagFor(p)}</p>
+        <div class="case-sheet-main">
+          <p class="body case-summary">${esc(L(p.summary) || T("placeholderText"))}${tagFor(p)}</p>
+          ${p.stats ? `<ul class="case-stats">${p.stats.map(([n, label]) => `<li><b>${esc(L(n))}</b><span class="mono">${esc(L(label))}</span></li>`).join("")}</ul>` : ""}
+          ${disc && p.disciplines ? `<div class="case-disc"><span class="mono muted">${esc(L(disc.head))} (${pad(p.disciplines.length)} / ${pad(disc.rows.length)})</span><ul>${disc.rows.map(d => `<li${p.disciplines.includes(d.key) ? ` class="on"` : ` aria-hidden="true"`}>${esc(L(d))}</li>`).join("")}</ul></div>` : ""}
         </div>
-        ${p.stats ? `<ul class="case-stats">${p.stats.map(([n, label]) => `<li><b>${esc(L(n))}</b><span class="mono">${esc(L(label))}</span></li>`).join("")}</ul>` : ""}
       </section>
+      ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
       <div class="case-gallery">${gallery(i, p)}</div>
       <nav class="case-neighbors" aria-label="${esc(T("projectNav"))}">
         <a class="case-neighbor previous" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}">
