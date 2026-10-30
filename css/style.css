@@ -160,6 +160,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .index a{display:grid;grid-template-columns:3em minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:clamp(14px,1.3vw,22px) 0 clamp(10px,1vw,16px);border-bottom:1px solid var(--line);text-decoration:none}
 .index .t{font:900 clamp(34px,6vw,96px)/.9 var(--sans);letter-spacing:-.045em;text-transform:uppercase;transition:color .3s,transform .6s var(--ease);overflow-wrap:anywhere}
 .index a:hover .t,.index a:focus-visible .t{color:var(--blue);transform:translateX(.18em)}
+/* Hover: a thin rule strikes through the title (after tacto, Felipe, Oct 29 2026) */
+.index .ti{text-decoration:line-through;text-decoration-thickness:max(2px,.035em);text-decoration-color:transparent;transition:text-decoration-color .3s}
+.index a:hover .ti,.index a:focus-visible .ti{text-decoration-color:currentColor}
 .index .k{text-align:right;color:var(--mute)}
 /* Hover: only the title moves and turns blue; no bar (Felipe, Oct 26 2026). The .bar span stays hidden. */
 .index .bar{display:none}
@@ -463,6 +466,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .ball.drag{width:92px;height:92px;margin:-46px 0 0 -46px}
 .ball.drag::after{opacity:1;transition-delay:.1s}
 .ball.drag.press{scale:.85}
+/* "View" chip beside the ball over a work row, like the AI badge (ball colour, white type); the ball keeps its 11px */
+.ball-tag{position:fixed;left:0;top:0;z-index:81;pointer-events:none;margin:-11px 0 0 14px;padding:5px 7px;border-radius:2px;color:#fff;font-size:11px;line-height:1;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity .2s}
+.ball-tag.on{opacity:1}
 /* Over a 360° viewer (e.g. the ANTI skeleton) the handle is the project accent (--blue under a theme), its label in the page colour */
 .ball.accent{background:var(--blue)}
 .ball.accent::after{color:var(--bg)}
@@ -485,6 +491,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .ab-list.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap)}
 .ab-list.flow .ab-row.solo:nth-child(-n+3){padding-top:0}
 .ab-end{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--fg);padding-top:14px;margin:0}
+.ab-clock time{font-variant-numeric:tabular-nums}
 @media (max-width:760px){
   .ab-k,.ab-list{grid-column:1 / -1}
   .ab-list.flow{grid-template-columns:repeat(2,minmax(0,1fr))}

@@ -128,7 +128,15 @@
   $("credits").innerHTML = A.credits.map(b => `<div class="ab"><h3 class="ab-k mono">${esc(L(b.head))}<span class="muted">(${pad(b.rows.length)})</span>${tagFor(b)}</h3><ul class="ab-list${b.flow ? " flow" : ""}">${b.rows.map(r =>
     isRow(r) ? `<li class="ab-row"><b>${cell(r.name, r.url)}</b><span class="mono">${esc(L(r.role))}</span><span class="mono muted">${r.years ? esc(L(r.years)) : ""}</span></li>`
       : `<li class="ab-row solo">${cell(r)}</li>`).join("")}</ul></div>`).join("")
-    + `<p class="ab-end mono"><span>©20${esc(S.year)} ${esc(S.name)}</span><span class="muted">${esc(L(A.end))}</span></p>`;
+    + `<p class="ab-end mono"><span>©20${esc(S.year)} ${esc(S.name)}</span><span class="ab-clock">São Paulo · <time></time></span><span class="muted">${esc(L(A.end))}</span></p>`;
+  // Local time in São Paulo, ticking each minute (Felipe, Oct 29 2026, from the minimal-sites research)
+  const clockEl = document.querySelector(".ab-clock time");
+  const tick = () => {
+    const d = new Date();
+    clockEl.textContent = d.toLocaleTimeString("pt-BR", { timeZone: "America/Sao_Paulo", hour: "2-digit", minute: "2-digit" });
+    setTimeout(tick, (60 - d.getSeconds()) * 1000 + 50);
+  };
+  tick();
   // Slugs come from the English title so links stay the same in both languages
   S.projects.forEach(p => { p.slug = p.slug || String(p.title.en || p.title).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); });
   const href = p => `#p-${p.slug}`;
@@ -1493,13 +1501,14 @@
   // dot over text felt jumpy, so it stays in between and never changes on hover). On blue (the close-up, the part of a logo tile the flood has covered, or the open part of a
   // home row's bar) it turns white. The trail is always drawn in the ball's own colour, read from the ball,
   // so it also follows a project's accent colour.
-  const ball = document.createElement("div"), trail = document.createElement("canvas");
+  const ball = document.createElement("div"), trail = document.createElement("canvas"), tag = document.createElement("span");
   const cursorOn = matchMedia("(hover: hover) and (pointer: fine)").matches && !reduced;
   let onBlue = false;
-  const cursorTo = (host, light = host !== document.body) => { if (cursorOn) { host.append(trail, ball); onBlue = light; } };
+  const cursorTo = (host, light = host !== document.body) => { if (cursorOn) { host.append(trail, ball, tag); onBlue = light; } };
   if (cursorOn) {
-    ball.className = "ball"; trail.className = "trail";
-    ball.setAttribute("aria-hidden", "true"); trail.setAttribute("aria-hidden", "true");
+    ball.className = "ball"; trail.className = "trail"; tag.className = "ball-tag mono";
+    ball.setAttribute("aria-hidden", "true"); trail.setAttribute("aria-hidden", "true"); tag.setAttribute("aria-hidden", "true");
+    tag.textContent = T("viewProject");
     document.documentElement.classList.add("has-ball");
     cursorTo(document.body);
     const ctx = trail.getContext("2d"), N = 40, EASE = .72, W = 11;
@@ -1535,7 +1544,7 @@
       tiles = tiles.filter((t, i) => t === hover || floods[i]);
       const zones = onBlue ? [{ x: 0, y: 0, w: innerWidth, h: innerHeight, done: true }] : [...floods.filter(Boolean), dark()].filter(Boolean);
       ball.classList.toggle("white", zones.some(z => ptr.x >= z.x && ptr.x <= z.x + z.w && ptr.y >= z.y && ptr.y <= z.y + z.h));
-      ctx.strokeStyle = getComputedStyle(ball).backgroundColor;
+      ctx.strokeStyle = tag.style.background = getComputedStyle(ball).backgroundColor;
       ctx.beginPath(); ctx.moveTo(ptr.x, ptr.y);
       chain.forEach(p => ctx.lineTo(p.x, p.y));
       ctx.stroke();
@@ -1547,7 +1556,7 @@
       if (e.pointerType !== "mouse") return;
       if (!ball.classList.contains("on")) chain.forEach(p => { p.x = e.clientX; p.y = e.clientY; });
       ptr.x = e.clientX; ptr.y = e.clientY;
-      ball.style.translate = `${ptr.x}px ${ptr.y}px`;
+      ball.style.translate = tag.style.translate = `${ptr.x}px ${ptr.y}px`;
       ball.classList.add("on");
       hover = onBlue ? null : e.target.closest(".logo");
       // Over a film roll or a 360° viewer the ball becomes the drag handle (on a 360° viewer, in the project's accent colour)
@@ -1555,12 +1564,14 @@
       const drag = spin || !onBlue && !!e.target.closest(".roll-track");
       if (drag !== ball.classList.contains("drag")) { ball.dataset.label = `← ${T("drag")} →`; ball.classList.toggle("drag", drag); }
       ball.classList.toggle("accent", spin);
+      // Over a row of the work list a small "view" label rides beside the ball; the ball itself keeps its size (Felipe, Oct 29 2026)
+      tag.classList.toggle("on", !onBlue && !!e.target.closest(".index a"));
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
     // Scrolling under a still mouse can carry the ball onto the black About, so recheck its colour
     addEventListener("scroll", () => { if (ball.classList.contains("on") && !raf) raf = requestAnimationFrame(draw); }, { passive: true });
-    document.addEventListener("pointerleave", () => { ball.classList.remove("on"); ctx.clearRect(0, 0, innerWidth, innerHeight); });
+    document.addEventListener("pointerleave", () => { ball.classList.remove("on"); tag.classList.remove("on"); ctx.clearRect(0, 0, innerWidth, innerHeight); });
     addEventListener("pointerdown", () => ball.classList.add("press"));
     addEventListener("pointerup", () => ball.classList.remove("press"));
   }
