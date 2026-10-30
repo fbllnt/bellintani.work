@@ -315,10 +315,18 @@
 
   const timers = [];
   const clear = () => { timers.forEach(clearTimeout); timers.length = 0; };
-  const finish = () => { clear(); stage.classList.remove("play"); stage.classList.add("done"); corners.classList.add("on"); };
+  const finish = () => { clear(); stage.classList.remove("play", "quick"); stage.classList.add("done"); corners.classList.add("on"); };
+  // Repeat visits (within a week) skip the countdown: only the name's wave and the tagline, about a second
+  // (Felipe, Oct 30 2026, after ET Studio's first-visit-only loader). "Replay intro" still plays the whole thing.
+  const quick = () => {
+    clear(); corners.classList.remove("on");
+    stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play", "quick");
+    timers.push(setTimeout(() => corners.classList.add("on"), 700));
+    timers.push(setTimeout(finish, 1500));
+  };
   const play = () => {
     clear(); corners.classList.remove("on");
-    stage.classList.remove("play", "done"); void stage.offsetWidth; stage.classList.add("play");
+    stage.classList.remove("play", "done", "quick"); void stage.offsetWidth; stage.classList.add("play");
     timers.push(setTimeout(() => corners.classList.add("on"), 4550));
     timers.push(setTimeout(finish, 5850));
   };
@@ -1013,6 +1021,12 @@
   // The About's discipline list, keyed: a project sheet shows all of it and lights up the project's own `disciplines`
   // (after tacto's Expertise list, Felipe, Oct 29 2026)
   const disc = S.about.credits.find(b => b.rows.some(r => r && r.key));
+  // The end of a project turns the page: the next one as a card in its own colours, with its cover (Felipe, Oct 30 2026,
+  // after Hale and tacto); a white or black accent falls back to the site blue, as everywhere
+  const nextInk = p => {
+    const t = p.theme || {}, ac = /^#(fff(fff)?|000(000)?)$/i.test(t.accent || "") ? "#1a2bff" : t.accent || "#1a2bff";
+    return `--n-bg:${esc(t.bg || "#fff")};--n-fg:${esc(t.fg || "#0a0a0a")};--n-ac:${esc(ac)}`;
+  };
   function renderCase(i) {
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
     applyTheme(p.theme);
@@ -1041,9 +1055,10 @@
           <span class="cn-k mono muted">${arwSvg("prev")}${esc(T("prev"))} · ${String((i - 1 + S.projects.length) % S.projects.length + 1).padStart(2,"0")}</span>
           <span class="case-neighbor-title">${esc(L(prev.title))}</span>
         </a>
-        <a class="case-neighbor next" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}">
-          <span class="cn-k mono muted">${esc(T("nextItem"))} · ${String((i + 1) % S.projects.length + 1).padStart(2,"0")}${arwSvg("next")}</span>
-          <span class="case-neighbor-title">${esc(L(next.title))}</span>
+        <a class="case-next" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}" style="${nextInk(next)}">
+          <span class="cn-k mono">${esc(T("nextItem"))} · ${String((i + 1) % S.projects.length + 1).padStart(2,"0")}${arwSvg("next")}</span>
+          <span class="case-next-title">${esc(L(next.title))}</span>
+          ${next.image ? `<span class="case-next-img"><img src="${esc(next.image)}" alt="" loading="lazy"></span>` : ""}
         </a>
       </nav>`;
     document.title = `${L(p.title)} — ${S.name}`;
@@ -1415,7 +1430,9 @@
     setTimeout(() => wipe.classList.remove("on"), 340);
   };
 
+  let openIdx = -1;
   const openCase = (i, animate = true) => {
+    openIdx = i;
     const go = () => {
       renderCase(i);
       document.body.classList.add("in-case");
@@ -1430,8 +1447,20 @@
     fit();
     caseEl.innerHTML = ""; document.title = homeTitle; setDesc(T("description")); motionFigs = [];
     applyTheme(null);
-    const el = $(target) || $("work");
-    el.scrollIntoView({ behavior: "instant" });
+    // Back to the list (browser back or Work): land on the row of the project just left, its title flashing in that
+    // project's colour (Felipe, Oct 30 2026); any other target (#about…) goes where it says
+    const row = (!target || target === "work") && openIdx >= 0 ? index.querySelector(`a[data-i="${openIdx}"]`) : null;
+    openIdx = -1;
+    if (row && row.offsetParent) {
+      row.scrollIntoView({ behavior: "instant", block: "center" });
+      if (!reduced) {
+        row.style.setProperty("--flash", nextInk(S.projects[+row.dataset.i]).match(/--n-ac:([^;]+)/)[1]);
+        row.classList.remove("back-here"); void row.offsetWidth; row.classList.add("back-here");
+        setTimeout(() => row.classList.remove("back-here"), 1800);
+      }
+      return;
+    }
+    ($(target) || $("work")).scrollIntoView({ behavior: "instant" });
   });
   const projectFromHash = () => S.projects.findIndex(p => location.hash === href(p));
 
@@ -1486,6 +1515,15 @@
       })
       .then(() => veil.remove());
   };
+  // The next-project card grows into its page the same way
+  caseEl.addEventListener("click", e => {
+    const a = e.target.closest(".case-next");
+    if (!a || !fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    const i = S.projects.findIndex(p => a.getAttribute("href") === href(p));
+    if (i < 0) return;
+    e.preventDefault();
+    grow(a, i);
+  });
   works.addEventListener("click", e => {
     const a = e.target.closest(".index a");
     if (!a || !fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
@@ -1568,7 +1606,7 @@
       if (drag !== ball.classList.contains("drag")) { ball.dataset.label = `← ${T("drag")} →`; ball.classList.toggle("drag", drag); }
       ball.classList.toggle("accent", spin);
       // Over a row of the work list a small "view" label rides beside the ball; the ball itself keeps its size (Felipe, Oct 29 2026)
-      tag.classList.toggle("on", !onBlue && !!e.target.closest(".index a"));
+      tag.classList.toggle("on", !onBlue && !!e.target.closest(".index a, .case-next"));
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
@@ -1717,7 +1755,9 @@
 
   const first = projectFromHash();
   if (first >= 0) { finish(); openCase(first, false); }
-  else if (reduced || resumeY !== null) finish(); else play();
+  else if (reduced || resumeY !== null) finish();
+  else { const seen = +read("introSeen") || 0; Date.now() - seen < 7 * 864e5 ? quick() : play(); }
+  store("introSeen", String(Date.now()));
   if (resumeY !== null) {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     const back = () => requestAnimationFrame(() => scrollTo({ top: +resumeY, behavior: "instant" }));
