@@ -43,14 +43,14 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   languages. HCP Top 50 Names cites only Flora.AI and Claude Code as AI tools (Nano Banana Pro, Topaz, Seedance taken out
   of the text; the step-strip images still show those names baked in, asked him). Globo has a ficha técnica: Type design =
   Plau, Sinalização = Estúdio Sílvia Girão. Drag cursor on rolls / 360°: the 92px circle goes, the 11px ball shows
-  "← Drag →" in the `.ball-tag` chip (draft `rascunho/cursor-tons`); `theme.accentText` = a stronger accent tone for text
-  only (Explosions #ff5c94, Dirty Projectors #c8102e, CoreHi #d01436), same draft, waiting for "aprovado".
+  "← Drag →" in the `.ball-tag` chip; `theme.accentText` = a stronger accent tone for text
+  only (Explosions #ff5c94, Dirty Projectors #c8102e, CoreHi #d01436). Approved and LIVE Nov 1 2026.
 - Waiting on Felipe (review pages sent Nov 1 2026): disciplines per project (https://claude.ai/artifact/AWkQFkV3ufA2RzECATBCcY;
   don't change `disciplines` until he pastes the result), image alt texts (96 suggestions, PT/EN, https://claude.ai/artifact/Ybs93J9e4GiaXaoij2LWsc;
   then add an optional `alt: { en, pt, es }` per image), research ideas GRID button / fixed list caption / drawn rules /
   Ikeda-style poster data (demos at https://claude.ai/artifact/GeTAyFHSdo44frEKWHhT24). Felipe chose (Nov 1 2026): NO GRID
   button, NO Ikeda poster data; YES running caption under the work list (`.list-cap`, replaces the bottom corners while the
-  list is on screen) and YES drawn rules on the project sheet and chapters (`.fx-lines`), both on draft `rascunho/cursor-tons`.
+  list is on screen) and YES drawn rules on the project sheet and chapters (`.fx-lines`); approved and LIVE Nov 1 2026.
   Still open: whether the ♪ leaves the work-list invite line; ← → keys between projects, cover-to-project transition.
   Research: `../pesquisa-sites-minimalistas-2026-10-29.md`; audit: `notas/auditoria-bellintani-2026-10-29.md` in the project files.
 
@@ -58,7 +58,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 - Cursor: the trailing ball is one fixed size, 11px (no dot/big switch, no change on hover; Felipe found the switch
   strange). Over a work-list row a small "View" / "Ver" chip (`.ball-tag`, `ui.viewProject`) rides next to it, filled
-  with the ball colour. Rolls and the 360° viewer still grow it into the drag handle.
+  with the ball colour. Over rolls and the 360° viewer the ball stays 11px and the chip reads "← Drag →" (Nov 1 2026).
 - Work list hover: the title gets a strike-through line in the project's accent colour (`.index .ti`).
 - Arrows: plain SVG arrows with no circle around them, everywhere (`arw()` / `arwSvg()` at the top of main.js).
 - Project header: title and hashtags only (no "All work", no prev/number/next up there).
