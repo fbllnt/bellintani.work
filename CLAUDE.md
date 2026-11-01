@@ -39,7 +39,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 - Oct 29 2026: a text on how he works with AI and the tools he uses (likely near the AI filter or the "Vibe Coding & AI
   Workflows" service). He is still thinking it through: don't write it unprompted, and the copy/tools must come from him.
-- Nov 1 2026 answers (Felipe): keep "Work" in the top menu (don't remove it). Service 04 = "Video & TV" in all three
+- Nov 1 2026 answers (Felipe): keep "Work" in the top menu (don't remove it). Service 04 = "Video, Content & TV" (Felipe, Nov 1 15:45Z; was "Video & TV") in all three
   languages. HCP Top 50 Names cites only Flora.AI and Claude Code as AI tools (Nano Banana Pro, Topaz, Seedance taken out
   of the text; the step-strip images still show those names baked in, asked him). Globo has a ficha técnica: Type design =
   Plau, Sinalização = Estúdio Sílvia Girão. Drag cursor on rolls / 360°: the 92px circle goes, the 11px ball shows

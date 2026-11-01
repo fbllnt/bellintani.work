@@ -28,8 +28,8 @@ window.SITE = {
   homeTrack: { id: "73mlvsfJM2qwlDUJxeaatI", name: "Daft Punk Is Playing at My House", by: "LCD Soundsystem" },
   // Services follow the tagline/subline and the kinds of work shown (Oct 27 2026 review)
   services: {
-    en: ["Branding & identity", "Campaigns & advertising", "Art direction", "Video & TV", "Digital & social", "Vibe coding & AI workflows"],
-    pt: ["Branding & identidade", "Campanhas & publicidade", "Direção de arte", "Video & TV", "Digital & social", "Vibe coding & workflows com IA"], es: ["Branding & identidad", "Campañas & publicidad", "Dirección de arte", "Video & TV", "Digital & social", "Vibe coding & workflows con IA"],
+    en: ["Branding & identity", "Campaigns & advertising", "Art direction", "Video, Content & TV", "Digital & social", "Vibe coding & AI workflows"],
+    pt: ["Branding & identidade", "Campanhas & publicidade", "Direção de arte", "Video, Content & TV", "Digital & social", "Vibe coding & workflows com IA"], es: ["Branding & identidad", "Campañas & publicidad", "Dirección de arte", "Video, Content & TV", "Digital & social", "Vibe coding & workflows con IA"],
   },
 
   // About, run as film end credits (content from LinkedIn).
