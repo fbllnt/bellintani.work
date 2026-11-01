@@ -83,7 +83,7 @@
     email: S.email,
   };
   document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = binds[el.dataset.bind] ?? ""; });
-  // Hyphenated words in the tagline (7-year-old, stand-up) never break at the hyphen
+  // Hyphenated words in the tagline (7-year-old) never break at the hyphen
   document.querySelectorAll('[data-bind="tagline"]').forEach(el => { el.innerHTML = esc(binds.tagline).replace(/\S+-\S+/g, w => `<span style="white-space:nowrap">${w}</span>`); });
   $("subline").innerHTML = L(S.subline).map(esc).join("<br>");
   $("mail-big").href = `mailto:${S.email}`;

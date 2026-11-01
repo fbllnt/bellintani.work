@@ -9,8 +9,8 @@ window.SITE = {
     { label: "LinkedIn", url: "https://www.linkedin.com/in/fbellintani/" },
   ],
   tagline: {
-    en: "Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad to an amazing 7-year-old rebel princess, music freak, amateur photographer, wannabe comedian, and whatever comes next.",
-    pt: "Designer multidisciplinar, diretor de arte, criativo hiperfocado (valeu, TDAH), pai de uma princesa rebelde incrível de 7 anos, viciado em música, fotógrafo amador, metido a comediante de stand-up e o que mais vier.", es: "Diseñador multidisciplinario, director de arte, creativo hiperenfocado (gracias, TDAH), papá de una princesa rebelde increíble de 7 años, fanático de la música, fotógrafo aficionado, aspirante a comediante de stand-up y lo que venga.",
+    en: "Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad of a 7-year-old princess, music freak, amateur photographer, and whatever comes next.",
+    pt: "Designer multidisciplinar, diretor de arte, criativo hiperfocado (valeu, TDAH), pai de uma princesa de 7 anos, viciado em música, fotógrafo amador e o que mais vier.", es: "Diseñador multidisciplinario, director de arte, creativo hiperenfocado (gracias, TDAH), papá de una princesa de 7 años, fanático de la música, fotógrafo aficionado y lo que venga.",
   },
   subline: {
     en: ["Branding & Identity, Advertising, Digital, Social, Vibe Coding and AI Workflows"],
@@ -104,7 +104,7 @@ window.SITE = {
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
       music: "Soundtrack", musicLabel: "Suggested music", nowSuggested: "Suggested soundtrack", musicSwap: "Play this project's song",
       langLabel: "Language", viewProject: "View", skipToContent: "Skip to content", projectNav: "Project navigation", filterArea: "Filter projects by discipline", filterGroup: "Project categories", soundtrack: "Portfolio soundtrack",
-      description: "Bellintani — Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad to an amazing 7-year-old rebel princess, music freak, amateur photographer, wannabe stand-up comedian, and who knows what else.",
+      description: "Bellintani — Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad of a 7-year-old princess, music freak, amateur photographer, and whatever comes next.",
     },
     pt: {
       work: "Trabalhos", backHome: "← Início", services: "Serviços", letsTalk: "Vamos conversar",
@@ -117,7 +117,7 @@ window.SITE = {
       placeholderText: "Texto provisório. Aqui entra a história do projeto: o briefing, a ideia e o que saiu dele.",
       music: "Trilha", musicLabel: "Música sugerida", nowSuggested: "Trilha sugerida", musicSwap: "Tocar a música deste projeto",
       langLabel: "Idioma", viewProject: "Ver", skipToContent: "Pular para o conteúdo", projectNav: "Navegação entre projetos", filterArea: "Filtrar projetos por disciplina", filterGroup: "Categorias de projeto", soundtrack: "Trilha do portfólio",
-      description: "Bellintani — Designer multidisciplinar, diretor de arte, criativo hiperfocado (valeu, TDAH), pai de uma princesa rebelde incrível de 7 anos, viciado em música, fotógrafo amador, metido a comediante de stand-up e o que mais vier.",
+      description: "Bellintani — Designer multidisciplinar, diretor de arte, criativo hiperfocado (valeu, TDAH), pai de uma princesa de 7 anos, viciado em música, fotógrafo amador e o que mais vier.",
     },
     es: {
       work: "Trabajos", backHome: "← Inicio", services: "Servicios", letsTalk: "Hablemos",
@@ -130,7 +130,7 @@ window.SITE = {
       placeholderText: "Texto provisional. Reemplázalo con la historia del proyecto: el brief, la idea y lo que se hizo.",
       music: "Banda sonora", musicLabel: "Música sugerida", nowSuggested: "Banda sonora sugerida", musicSwap: "Reproducir la canción de este proyecto",
       langLabel: "Idioma", viewProject: "Ver", skipToContent: "Saltar al contenido", projectNav: "Navegación entre proyectos", filterArea: "Filtrar proyectos por disciplina", filterGroup: "Categorías de proyecto", soundtrack: "Banda sonora del portafolio",
-      description: "Bellintani — Diseñador multidisciplinario, director de arte, creativo hiperenfocado (gracias, TDAH), papá de una princesa rebelde increíble de 7 años, fanático de la música, fotógrafo aficionado, aspirante a comediante de stand-up y lo que venga.",
+      description: "Bellintani — Diseñador multidisciplinario, director de arte, creativo hiperenfocado (gracias, TDAH), papá de una princesa de 7 años, fanático de la música, fotógrafo aficionado y lo que venga.",
     },
   },
 

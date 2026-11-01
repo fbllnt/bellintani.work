@@ -40,7 +40,7 @@ for (const p of projects) {
   const title = `${en(p.title)} — Bellintani`;
   const summary = en(p.summary) || en(p.scope);
   const desc = clip(`${en(p.title)}${p.year ? ` (${p.year})` : ""}. ${summary}`);
-  const image = `${SITE_URL}/${p.image || "images/og.jpg"}`;
+  const image = `${SITE_URL}/${p.image || "images/og-2611.jpg"}`;
   const ld = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
