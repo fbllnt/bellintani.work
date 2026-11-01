@@ -506,7 +506,7 @@ window.SITE = {
         { src: "images/gbr/app-sabre.jpg", ar: "16/9", col: 6, span: 7 },
         { chapter: { en: "06 · Applied identity", pt: "06 · Identidade aplicada", es: "06 · Identidad aplicada" }, kicker: { en: "Cards · stationery · social", pt: "Cartões · papelaria · redes", es: "Tarjetas · papelería · redes" },
           head: { en: "Consistency *builds.*", pt: "Consistência *constrói.*", es: "La consistencia *construye.*" },
-          text: { en: "A 90-page, 12-chapter guide, from purpose to image prompt, and the brand out in the world: cards, stationery, social, email and even the video-call background.", pt: "Um manual de 90 páginas e 12 capítulos, do propósito ao prompt de imagem, e a marca na rua: cartões, papelaria, redes, e-mail e até o fundo da videochamada.", es: "Un manual de 90 páginas y 12 capítulos, del propósito al prompt de imagen, y la marca en el mundo: tarjetas, papelería, redes, correo y hasta el fondo de la videollamada." } },
+          text: { en: "A 90-page, 12-chapter guide, from purpose to image prompt, and the brand out in the world: cards, stationery, social and even the video-call background.", pt: "Um manual de 90 páginas e 12 capítulos, do propósito ao prompt de imagem, e a marca na rua: cartões, papelaria, redes e até o fundo da videochamada.", es: "Un manual de 90 páginas y 12 capítulos, del propósito al prompt de imagen, y la marca en el mundo: tarjetas, papelería, redes y hasta el fondo de la videollamada." } },
         { src: "images/gbr/cartoes.jpg", ar: "2000/1333", col: 6, span: 7, caption: { en: "Business cards", pt: "Cartões de visita", es: "Tarjetas de presentación" } },
         { src: "images/gbr/app-envelopes.jpg", ar: "16/9", col: 1, span: 12 },
         { src: "images/gbr/app-papelaria.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Stationery", pt: "Papelaria", es: "Papelería" } },
@@ -515,8 +515,7 @@ window.SITE = {
         { src: "images/gbr/post2.jpg", ar: "1080/1350", col: 4, span: 3 },
         { src: "images/gbr/post3.jpg", ar: "1080/1350", col: 7, span: 3 },
         { src: "images/gbr/post4.jpg", ar: "1080/1350", col: 10, span: 3 },
-        { src: "images/gbr/app-assinatura.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Email signature", pt: "Assinatura de e-mail", es: "Firma de correo" } },
-        { src: "images/gbr/app-zoom.jpg", ar: "16/9", col: 7, span: 6, caption: { en: "Video-call background", pt: "Fundo para videochamada", es: "Fondo para videollamada" } },
+        { src: "images/gbr/app-zoom.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Video-call background", pt: "Fundo para videochamada", es: "Fondo para videollamada" } },
       ],
     },
     {
