@@ -19,6 +19,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Preview before going live (Felipe, Oct 24 2026; workflow since Oct 29 2026): new projects and visual changes are built
   on a `rascunho/<name>` branch and shown on a hidden preview made with
   `npx wrangler versions upload --preview-alias <name>` → `https://<name>-bellintani-work.fbellintani.workers.dev`
+  (pushing a `rascunho/<name>` branch runs `.github/workflows/preview.yml`, which does this upload from GitHub Actions)
   (never the production deploy). Publish only when Felipe says "aprovado": `git checkout main && git merge --ff-only`,
   push, delete the branch, then check `gh run watch` and curl the live `?v=` stamp. Small explicit text/data fixes
   may go straight live once tested.
@@ -38,14 +39,18 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 - Oct 29 2026: a text on how he works with AI and the tools he uses (likely near the AI filter or the "Vibe Coding & AI
   Workflows" service). He is still thinking it through: don't write it unprompted, and the copy/tools must come from him.
-- Oct 29 2026: maybe remove "Work" from the top menu (the work list is always on the page). To discuss; don't change yet.
-- Oct 30 2026, waiting on Felipe: confirm each project's `disciplines` (inferred from scope/role/deliverables); whether
-  the 92px "← Arraste →" drag circle on film rolls and the 360° viewer loses its circle like the other arrows; whether
-  the ♪ leaves the work-list invite line; accent tones for low-contrast projects (Explosions, Dirty Projectors, CoreHi);
-  image alt texts. Ideas from the minimal-sites research not started (Felipe hasn't chosen): GRID toggle, fixed
-  caption following the list, rules drawing under the sheet and between chapters, ← → keys between projects,
-  cover-to-project transition, Ryoji Ikeda-style technical sheet on posters (data must come from him).
-  Research: `../pesquisa-sites-minimalistas-2026-10-29.md`; audit: `../auditoria-bellintani-2026-10-29.md`.
+- Nov 1 2026 answers (Felipe): keep "Work" in the top menu (don't remove it). Service 04 = "Video & TV" in all three
+  languages. HCP Top 50 Names cites only Flora.AI and Claude Code as AI tools (Nano Banana Pro, Topaz, Seedance taken out
+  of the text; the step-strip images still show those names baked in, asked him). Globo has a ficha técnica: Type design =
+  Plau, Sinalização = Estúdio Sílvia Girão. Drag cursor on rolls / 360°: the 92px circle goes, the 11px ball shows
+  "← Drag →" in the `.ball-tag` chip (draft `rascunho/cursor-tons`); `theme.accentText` = a stronger accent tone for text
+  only (Explosions #ff5c94, Dirty Projectors #c8102e, CoreHi #d01436), same draft, waiting for "aprovado".
+- Waiting on Felipe (review pages sent Nov 1 2026): disciplines per project (https://claude.ai/artifact/AWkQFkV3ufA2RzECATBCcY;
+  don't change `disciplines` until he pastes the result), image alt texts (96 suggestions, PT/EN, https://claude.ai/artifact/Ybs93J9e4GiaXaoij2LWsc;
+  then add an optional `alt: { en, pt, es }` per image), research ideas GRID button / fixed list caption / drawn rules /
+  Ikeda-style poster data (demos at https://claude.ai/artifact/GeTAyFHSdo44frEKWHhT24; poster data must come from him).
+  Still open: whether the ♪ leaves the work-list invite line; ← → keys between projects, cover-to-project transition.
+  Research: `../pesquisa-sites-minimalistas-2026-10-29.md`; audit: `notas/auditoria-bellintani-2026-10-29.md` in the project files.
 
 ## Navigation and interaction (Felipe, Oct 29-30 2026)
 
