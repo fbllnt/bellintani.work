@@ -1402,6 +1402,8 @@ window.SITE = {
         { name: "Swift Good 4 You", src: "images/logos/swift-good-4you.svg" },
         { name: "O Mundo dos Esquecidos", src: "images/logos/mundo-dos-esquecidos.png" },
         { name: "Today by Philips", src: "images/logos/today-philips.png" },
+        { name: "Everything", src: "images/logos/everything-script.png" },
+        { name: "Everything to run and grow your business", src: "images/logos/everything-stamp.png" },
       // Leo Mafra and the flat House Party Orloff removed, and the empty "Logo 38–50" placeholders dropped (Felipe, Oct 27 2026)
       ],
     },
