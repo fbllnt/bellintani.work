@@ -12,14 +12,19 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 ## Publishing workflow (agreed with Felipe)
 
-- Felipe asked (Oct 2026) for publishing without asking first: once a change is finished and tested in the
-  browser (desktop and phone widths), commit it and push to `main`. Don't push half-done work.
+- Small, explicit fixes (a text, a number, a typo Felipe asked for) go live without asking: once finished and tested
+  in the browser (desktop and phone widths), commit and push to `main`. Don't push half-done work. Anything visual or
+  new goes through the preview below first.
 - After pushing, confirm the live site serves the new version and update the prototype artifact.
-- Preview before going live (Felipe, Oct 24 2026): when Felipe wants to see a change first, push it to a branch and
-  open a pull request instead of pushing to `main`. Cloudflare builds a preview for the branch at
-  `https://<branch>-bellintani-work.<account>.workers.dev` (the exact link appears as a check on the PR); send him that link. Merge to `main` only when he approves.
+- Preview before going live (Felipe, Oct 24 2026; workflow since Oct 29 2026): new projects and visual changes are built
+  on a `rascunho/<name>` branch and shown on a hidden preview made with
+  `npx wrangler versions upload --preview-alias <name>` → `https://<name>-bellintani-work.fbellintani.workers.dev`
+  (never the production deploy). Publish only when Felipe says "aprovado": `git checkout main && git merge --ff-only`,
+  push, delete the branch, then check `gh run watch` and curl the live `?v=` stamp. Small explicit text/data fixes
+  may go straight live once tested.
 - Before each push that changes CSS or JS, bump the `?v=` stamp on the three asset links in `index.html`
-  (e.g. `v=$(date +%Y%m%d%H%M)`) so browsers fetch the new files instead of a cached copy.
+  (e.g. `v=$(date +%Y%m%d%H%M)`) so browsers fetch the new files instead of a cached copy. `_headers` caches
+  `/css/*` and `/js/*` for a year as immutable, so a missed bump means visitors keep the old file.
 
 ## New projects: draft until approved (Felipe, Oct 29 2026)
 
@@ -34,6 +39,31 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Oct 29 2026: a text on how he works with AI and the tools he uses (likely near the AI filter or the "Vibe Coding & AI
   Workflows" service). He is still thinking it through: don't write it unprompted, and the copy/tools must come from him.
 - Oct 29 2026: maybe remove "Work" from the top menu (the work list is always on the page). To discuss; don't change yet.
+- Oct 30 2026, waiting on Felipe: confirm each project's `disciplines` (inferred from scope/role/deliverables); whether
+  the 92px "← Arraste →" drag circle on film rolls and the 360° viewer loses its circle like the other arrows; whether
+  the ♪ leaves the work-list invite line; accent tones for low-contrast projects (Explosions, Dirty Projectors, CoreHi);
+  image alt texts. Ideas from the minimal-sites research not started (Felipe hasn't chosen): GRID toggle, fixed
+  caption following the list, rules drawing under the sheet and between chapters, ← → keys between projects,
+  cover-to-project transition, Ryoji Ikeda-style technical sheet on posters (data must come from him).
+  Research: `../pesquisa-sites-minimalistas-2026-10-29.md`; audit: `../auditoria-bellintani-2026-10-29.md`.
+
+## Navigation and interaction (Felipe, Oct 29-30 2026)
+
+- Cursor: the trailing ball is one fixed size, 11px (no dot/big switch, no change on hover; Felipe found the switch
+  strange). Over a work-list row a small "View" / "Ver" chip (`.ball-tag`, `ui.viewProject`) rides next to it, filled
+  with the ball colour. Rolls and the 360° viewer still grow it into the drag handle.
+- Work list hover: the title gets a strike-through line in the project's accent colour (`.index .ti`).
+- Arrows: plain SVG arrows with no circle around them, everywhere (`arw()` / `arwSvg()` at the top of main.js).
+- Project header: title and hashtags only (no "All work", no prev/number/next up there).
+- Project sheet (`.case-sheet`): the facts (meta) pinned in cols 1-4 while the summary, numbers and the full discipline
+  list sit on the right; the discipline list is the About's keyed list (`key` on each row), with the ones used in the
+  project (`disciplines: [...]` on the project) in full ink and the rest faded.
+- Project end: the original `case-neighbors` (← previous · next →, two titles side by side). A big "next project"
+  page-turn card with the cover was tried Oct 30 2026 and rejected ("Não gostei"): don't bring it back.
+- Closing a project returns to its row in the work list (centred), and the title flashes in the project's accent
+  (`back-here`, #1a2bff for black/white projects).
+- Intro: the full intro on the first visit and on "Rever intro"; a quick ~1.5s version (`.play.quick`) when the visitor
+  came back within 7 days (`localStorage.introSeen`). No intro when returning from a project or with reduced motion.
 
 ## Launch (Felipe, Oct 28 2026)
 
@@ -78,7 +108,8 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   use the site blue #1a2bff (`var(--ai,var(--blue))`).
 - About below Services on black, white text (Felipe, Oct 29 2026: "texto branco sobre fundo preto"), inverted via the
   section's tokens in style.css. Links there hover as white on a blue band, since blue type on black is 2.7:1. The black
-  footer (Let's talk) and the rule-draw entrance come from the Oct 29 2026 audit, pending Felipe's approval.
+  footer (Let's talk) and the rule-draw entrance come from the Oct 29 2026 audit (approved and live). The About end line
+  shows a live São Paulo clock (`.ab-clock`).
 
 ## Images: never crop (Felipe, Oct 24 2026)
 
