@@ -1356,7 +1356,9 @@
   const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
   }), { rootMargin: "0px 0px -10% 0px" }) : null;
-  const observe = () => caseEl.querySelectorAll(".fig, .logos, .ltext, .chap").forEach(f => io ? io.observe(f) : f.classList.add("in"));
+  // Rules that open the project sheet and each chapter draw left to right as they come in, like the About's (Felipe, Nov 1 2026)
+  if (!reduced) caseEl.classList.add("fx-lines");
+  const observe = () => caseEl.querySelectorAll(".fig, .logos, .ltext, .chap, .case-sheet").forEach(f => io ? io.observe(f) : f.classList.add("in"));
 
   // Films play muted while on screen and pause when they leave. Every film has Play/Pause and Sound;
   // sound is one film at a time. Pausing by hand keeps it paused until the visitor plays it again.
@@ -1482,6 +1484,40 @@
     const cio = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { index.classList.add("in"); cio.disconnect(); } }, { threshold: .12 });
     cio.observe(index);
   } else index.classList.add("in");
+  // Running caption under the work list (Felipe, Nov 1 2026, from the minimal-sites research): while the list is on screen a
+  // thin mono line at the foot shows where the visitor is: "(03) / 16 · Title" and type · year. It follows the hovered row,
+  // else the row nearest the middle of the screen (phones), and takes the place of the bottom corners while it shows.
+  const cap = document.createElement("div");
+  cap.className = "list-cap mono"; cap.setAttribute("aria-hidden", "true");
+  cap.innerHTML = `<span class="lc-l"></span><span class="lc-r"></span>`;
+  document.body.append(cap);
+  let capHover = null, capRaf = 0, capI = -1;
+  const capSet = a => {
+    const i = +a.dataset.i; if (i === capI) return; capI = i;
+    const p = S.projects[i];
+    cap.firstChild.textContent = `(${String(i + 1).padStart(2, "0")}) / ${S.projects.length} · ${L(p.title)}`;
+    cap.lastChild.textContent = [S.types && p.type && S.types[p.type] ? L(S.types[p.type]) : "", p.year || ""].filter(Boolean).join(" · ");
+  };
+  const capCheck = () => {
+    capRaf = 0;
+    const r = index.getBoundingClientRect(), mid = innerHeight / 2;
+    const on = !document.body.classList.contains("in-case") && r.top < innerHeight * .7 && r.bottom > innerHeight * .4;
+    cap.classList.toggle("on", on); document.body.classList.toggle("cap-on", on);
+    if (!on) return;
+    if (capHover) return capSet(capHover);
+    let best = null, d = 1e9;
+    index.querySelectorAll("li:not([hidden]) a").forEach(a => { const b = a.getBoundingClientRect(), dd = Math.abs(b.top + b.height / 2 - mid); if (dd < d) { d = dd; best = a; } });
+    if (best) capSet(best);
+  };
+  const capQueue = () => { if (!capRaf) capRaf = requestAnimationFrame(capCheck); };
+  addEventListener("scroll", capQueue, { passive: true }); addEventListener("resize", capQueue);
+  index.addEventListener("pointerover", e => { const a = e.target.closest("a"); if (a && e.pointerType === "mouse") { capHover = a; capQueue(); } });
+  index.addEventListener("pointerleave", () => { capHover = null; capQueue(); });
+  index.addEventListener("focusin", e => { const a = e.target.closest("a"); if (a) { capHover = a; capQueue(); } });
+  index.addEventListener("focusout", () => { capHover = null; capQueue(); });
+  addEventListener("hashchange", () => setTimeout(capQueue, 50));
+  capQueue();
+
   // About entrance (Oct 29 2026 audit, pending Felipe's approval): each block's rule draws once it comes into view (CSS .fx-rule); a block
   // coming in also completes every block above it, so a jump past them (#contact, a fast scroll) never leaves a rule undrawn
   if ("IntersectionObserver" in window && fxOn) {
