@@ -1400,6 +1400,8 @@ window.SITE = {
         { name: "Símbolo circular", src: "images/logos/symbol-circle-bar.svg" },
         { name: "Hackathon", src: "images/logos/hackathon.svg" },
         { name: "Swift Good 4 You", src: "images/logos/swift-good-4you.svg" },
+        { name: "O Mundo dos Esquecidos", src: "images/logos/mundo-dos-esquecidos.png" },
+        { name: "Today by Philips", src: "images/logos/today-philips.png" },
       // Leo Mafra and the flat House Party Orloff removed, and the empty "Logo 38–50" placeholders dropped (Felipe, Oct 27 2026)
       ],
     },
