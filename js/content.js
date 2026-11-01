@@ -837,7 +837,7 @@ window.SITE = {
       deliverables: { en: "Name lockups, icon, palette, typography and brandbook", pt: "Assinaturas, ícone, paleta, tipografia e brandbook", es: "Firmas, ícono, paleta, tipografía y brandbook" },
       tags: { en: ["BrandIdentity", "Logo", "Brandbook"], pt: ["IdentidadeDeMarca", "Logo", "Brandbook"], es: ["IdentidadDeMarca", "Logo", "Brandbook"] },
       // White page; the core red is the only accent
-      theme: { accent: "#ea1e2a" },
+      theme: { accent: "#ea1e2a", accentText: "#d01436" },
       tools: ["Adobe CC"],
       image: "images/corehi/tote.jpg",
       hero: "bleed",
@@ -1048,7 +1048,7 @@ window.SITE = {
       deliverables: { en: "Poster, lettering, versions and social posts", pt: "Pôster, lettering, versões e posts pras redes", es: "Póster, lettering, versiones y posts para redes" },
       tags: { en: ["GigPoster", "Lettering", "Music"], pt: ["PôsterDeShow", "Lettering", "Música"], es: ["PósterDeConcierto", "Lettering", "Música"] },
       // The poster's own colours: cream paper, navy ink, red and cyan faces; the title in the poster's cyan (Felipe, Oct 28 2026)
-      theme: { bg: "#f6f5ec", fg: "#14143a", mute: "#6d6d7e", line: "#dedbcc", panel: "#ecead9", accent: "#ec163c", title: "#00adef" },
+      theme: { bg: "#f6f5ec", fg: "#14143a", mute: "#6d6d7e", line: "#dedbcc", panel: "#ecead9", accent: "#ec163c", accentText: "#c8102e", title: "#00adef" },
       tools: ["Adobe CC"],
       // Cover: the signed poster framed on Felipe's wall (Felipe, Oct 28 2026); the old lettering cover is kept as cover.jpg
       image: "images/dirty-projectors/cover-signed.jpg",
@@ -1259,7 +1259,7 @@ window.SITE = {
       deliverables: { en: "Poster, skyline illustration, signed limited screen print", pt: "Pôster, ilustração da cidade, serigrafia limitada e assinada", es: "Póster, ilustración de la ciudad, serigrafía limitada y firmada" },
       tags: { en: ["GigPoster", "Illustration", "ScreenPrint", "Music"], pt: ["PôsterDeShow", "Ilustração", "Serigrafia", "Música"], es: ["PósterDeConcierto", "Ilustración", "Serigrafía", "Música"] },
       // The poster's own colours: dark slate ink, white, the pink of the windows (Felipe, Oct 29 2026)
-      theme: { bg: "#26353a", fg: "#f1f1f3", mute: "#93a1a6", line: "#3c4c52", panel: "#2e3e44", accent: "#e01563" },
+      theme: { bg: "#26353a", fg: "#f1f1f3", mute: "#93a1a6", line: "#3c4c52", panel: "#2e3e44", accent: "#e01563", accentText: "#ff5c94" },
       tools: ["Adobe CC"],
       // Cover: Felipe's night sky with the band's logo, slate matched to the page (#253231 -> #273639 ~ #26353a), a little shorter
       image: "images/explosions-in-the-sky/cover-night.jpg",

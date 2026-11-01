@@ -1003,7 +1003,7 @@
     return html;
   }
 
-  // A project can bring its own colours: theme: { bg, fg, mute, line, panel, accent, title }. White page otherwise.
+  // A project can bring its own colours: theme: { bg, fg, mute, line, panel, accent, accentText, title }. White page otherwise.
   // `title` colours only the big project name (Dirty Projectors: the poster's cyan, Felipe Oct 28 2026).
   const THEME_VARS = { bg: "--bg", fg: "--fg", mute: "--mute", line: "--line", panel: "--panel", accent: "--blue", title: "--title" };
   function applyTheme(t) {
@@ -1015,6 +1015,9 @@
     // …but blue on black is 2.8:1: focus rings and small accent text there take the page ink (--ai-ink in style.css)
     const dark = plain && /^#(000(000)?|1[0-9a-f]{5})$/i.test(t.bg || "");
     dark ? root.style.setProperty("--ai-ink", t.fg || "#fff") : root.style.removeProperty("--ai-ink");
+    // accentText: a stronger tone of the accent used only for text, where the accent itself is under 4.5:1 on the page
+    // (Felipe, Nov 1 2026: Explosions, Dirty Projectors, CoreHi); fills, bars and the cursor keep the accent
+    t && t.accentText ? root.style.setProperty("--ai-t", t.accentText) : root.style.removeProperty("--ai-t");
     root.classList.toggle("themed", !!t);
   }
 
@@ -1586,13 +1589,16 @@
       ball.style.translate = tag.style.translate = `${ptr.x}px ${ptr.y}px`;
       ball.classList.add("on");
       hover = onBlue ? null : e.target.closest(".logo");
-      // Over a film roll or a 360° viewer the ball becomes the drag handle (on a 360° viewer, in the project's accent colour)
+      // Over a film roll or a 360° viewer the ball keeps its 11px and the chip beside it reads "← Drag →" (Felipe, Nov 1 2026:
+      // the 92px drag circle goes, same pattern as "View"); on a 360° viewer the ball and chip take the project's accent
       const spin = !onBlue && !!e.target.closest(".spin canvas");
       const drag = spin || !onBlue && !!e.target.closest(".roll-track");
-      if (drag !== ball.classList.contains("drag")) { ball.dataset.label = `← ${T("drag")} →`; ball.classList.toggle("drag", drag); }
+      ball.classList.toggle("drag", drag);
       ball.classList.toggle("accent", spin);
       // Over a row of the work list a small "view" label rides beside the ball; the ball itself keeps its size (Felipe, Oct 29 2026)
-      tag.classList.toggle("on", !onBlue && !!e.target.closest(".index a"));
+      const label = drag ? `← ${T("drag")} →` : T("viewProject");
+      if (tag.textContent !== label) tag.textContent = label;
+      tag.classList.toggle("on", drag || !onBlue && !!e.target.closest(".index a"));
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });

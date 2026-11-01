@@ -1,0 +1,25 @@
+# Hidden preview for a draft branch: pushing rascunho/<name> uploads a Worker version (never the production deploy)
+# reachable at https://<name>-bellintani-work.fbellintani.workers.dev (CLAUDE.md, preview before going live).
+name: Preview draft
+
+on:
+  push:
+    branches: ['rascunho/**']
+  workflow_dispatch:
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: c216143adc87c8c0a6cfaed0a4ba990c
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Upload preview version
+        run: |
+          ALIAS="${GITHUB_REF_NAME#rascunho/}"
+          npx -y wrangler@4 versions upload --preview-alias "$ALIAS"
+          echo "Preview: https://${ALIAS}-bellintani-work.fbellintani.workers.dev" >> "$GITHUB_STEP_SUMMARY"
