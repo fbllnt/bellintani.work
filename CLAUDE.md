@@ -48,7 +48,9 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Waiting on Felipe (review pages sent Nov 1 2026): disciplines per project (https://claude.ai/artifact/AWkQFkV3ufA2RzECATBCcY;
   don't change `disciplines` until he pastes the result), image alt texts (96 suggestions, PT/EN, https://claude.ai/artifact/Ybs93J9e4GiaXaoij2LWsc;
   then add an optional `alt: { en, pt, es }` per image), research ideas GRID button / fixed list caption / drawn rules /
-  Ikeda-style poster data (demos at https://claude.ai/artifact/GeTAyFHSdo44frEKWHhT24; poster data must come from him).
+  Ikeda-style poster data (demos at https://claude.ai/artifact/GeTAyFHSdo44frEKWHhT24). Felipe chose (Nov 1 2026): NO GRID
+  button, NO Ikeda poster data; YES running caption under the work list (`.list-cap`, replaces the bottom corners while the
+  list is on screen) and YES drawn rules on the project sheet and chapters (`.fx-lines`), both on draft `rascunho/cursor-tons`.
   Still open: whether the ♪ leaves the work-list invite line; ← → keys between projects, cover-to-project transition.
   Research: `../pesquisa-sites-minimalistas-2026-10-29.md`; audit: `notas/auditoria-bellintani-2026-10-29.md` in the project files.
 
