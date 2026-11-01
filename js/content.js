@@ -28,8 +28,8 @@ window.SITE = {
   homeTrack: { id: "73mlvsfJM2qwlDUJxeaatI", name: "Daft Punk Is Playing at My House", by: "LCD Soundsystem" },
   // Services follow the tagline/subline and the kinds of work shown (Oct 27 2026 review)
   services: {
-    en: ["Branding & identity", "Campaigns & advertising", "Art direction", "Motion & film", "Digital & social", "Vibe coding & AI workflows"],
-    pt: ["Branding & identidade", "Campanhas & publicidade", "Direção de arte", "Motion & filme", "Digital & social", "Vibe coding & workflows com IA"], es: ["Branding & identidad", "Campañas & publicidad", "Dirección de arte", "Motion & cine", "Digital & social", "Vibe coding & workflows con IA"],
+    en: ["Branding & identity", "Campaigns & advertising", "Art direction", "Video & TV", "Digital & social", "Vibe coding & AI workflows"],
+    pt: ["Branding & identidade", "Campanhas & publicidade", "Direção de arte", "Video & TV", "Digital & social", "Vibe coding & workflows com IA"], es: ["Branding & identidad", "Campañas & publicidad", "Dirección de arte", "Video & TV", "Digital & social", "Vibe coding & workflows con IA"],
   },
 
   // About, run as film end credits (content from LinkedIn).
@@ -237,6 +237,11 @@ window.SITE = {
       track: { id: "4NexI5goFxDd1zXcLF2x6x", name: "Do Leme ao Pontal", by: "Tim Maia" },
       type: "branding",
       client: "Globo",
+      // Ficha técnica (Felipe, Nov 1 2026: credit Plau and Estúdio Sílvia Girão here, never in highlighted text)
+      credits: [
+        { role: "Type design", name: "Plau" },
+        { role: { en: "Signage", pt: "Sinalização", es: "Señalización" }, name: "Estúdio Sílvia Girão" },
+      ],
       year: "2014 — 2018",
       role: { en: "Lead Designer / Head of Art / Illustrator / Senior Multidisciplinary Designer", pt: "Lead Designer / Head of Art / Ilustrador / Designer multidisciplinar sênior", es: "Lead Designer / Head of Art / Ilustrador / Diseñador multidisciplinario sénior" },
       scope: { en: "Branding // Rebrand // Motion", pt: "Branding // Rebranding // Motion", es: "Branding // Rebranding // Motion" },
@@ -488,14 +493,14 @@ window.SITE = {
           text: { en: "Pros submitted their business names on a landing page and the public voted for the 50 most unforgettable. 1,340 names came in, more than 460 in the first six hours.", pt: "Os profissionais inscreveram o nome das suas empresas numa landing page, e o público votou nos 50 mais inesquecíveis. Chegaram 1.340 nomes, mais de 460 nas primeiras seis horas.", es: "Los profesionales inscribieron el nombre de su empresa en una landing page y el público votó por los 50 más inolvidables. Llegaron 1.340 nombres, más de 460 en las primeras seis horas." } },
         { chapter: { en: "02 · Key visual", pt: "02 · Key visual", es: "02 · Key visual" }, kicker: { en: "The logo, born in Flora", pt: "Um logo que nasceu no Flora", es: "Un logo que nació en Flora" },
           head: { en: "A trade-shop badge, *re-lettered by AI.*", pt: "Um selo de oficina, *com lettering refeito por IA.*", es: "Un sello de taller, *con lettering rehecho por IA.*" },
-          text: { en: "Twenty-odd directions on one Flora canvas. The winner started as a vintage badge, re-lettered with Nano Banana Pro, then redrawn by hand as vector with a crossed hammer and wrench.", pt: "Umas vinte direções num canvas só do Flora. A vencedora começou como um selo vintage, ganhou lettering novo com o Nano Banana Pro e depois foi redesenhada à mão em vetor, com martelo e chave cruzados.", es: "Unas veinte direcciones en un solo canvas de Flora. La ganadora arrancó como un sello vintage, recibió lettering nuevo con Nano Banana Pro y después se redibujó a mano en vector, con martillo y llave cruzados." },
-          pills: ["*Nano Banana Pro", "*Topaz Upscaler", "Adobe CC"] },
+          text: { en: "Twenty-odd directions on one Flora canvas. The winner started as a vintage badge, re-lettered with AI, then redrawn by hand as vector with a crossed hammer and wrench.", pt: "Umas vinte direções num canvas só do Flora. A vencedora começou como um selo vintage, ganhou lettering novo com IA e depois foi redesenhada à mão em vetor, com martelo e chave cruzados.", es: "Unas veinte direcciones en un solo canvas de Flora. La ganadora arrancó como un sello vintage, recibió lettering nuevo con IA y después se redibujó a mano en vector, con martillo y llave cruzados." },
+          pills: ["*Flora.AI", "Adobe CC"] },
         { src: "images/top50/lockups.png", ar: "2000/831", col: 1, span: 12, caption: { en: "Main and stacked lockups", pt: "Assinaturas principal e empilhada", es: "Firmas principal y apilada" } },
         // Process steps as one narrower strip, with breathing room on both sides
         { strip: [1, 2, 3, 4, 5].map(k => ({ src: `images/top50/logo-step-${k}.jpg`, ar: "960/735" })), narrow: true, col: 1, span: 12 },
         { src: "images/top50/type-gin.png", ar: "16/9", col: 1, span: 6, caption: { en: "Gin, for headlines and the countdown", pt: "Gin, para títulos e a contagem regressiva", es: "Gin, para títulos y la cuenta regresiva" } },
         { src: "images/top50/type-citrus.png", ar: "16/9", col: 7, span: 6, caption: { en: "Citrus Gothic, the everyday voice", pt: "Citrus Gothic, a voz do dia a dia", es: "Citrus Gothic, la voz del día a día" } },
-        { chapter: { en: "03 · The van", pt: "03 · A van", es: "03 · La van" }, kicker: { en: "Photo → Nano Banana Pro → Topaz → Seedance", pt: "Foto → Nano Banana Pro → Topaz → Seedance", es: "Foto → Nano Banana Pro → Topaz → Seedance" },
+        { chapter: { en: "03 · The van", pt: "03 · A van", es: "03 · La van" }, kicker: { en: "Photo → Flora.AI → film", pt: "Foto → Flora.AI → filme", es: "Foto → Flora.AI → video" },
           head: { en: "No van was wrapped in the *making of this campaign.*", pt: "Nenhuma van foi envelopada durante *a produção desta campanha.*", es: "Ninguna van fue rotulada durante *la producción de esta campaña.*" },
           text: { en: "A real white van became the plate: repainted in Housecall navy, wrapped with the crest and tagline, then put in motion, all in Flora.", pt: "Uma van branca de verdade virou a base: ganhou o azul Housecall, foi envelopada com o brasão e a assinatura e depois entrou em movimento, tudo no Flora.", es: "Una van blanca de verdad fue la base: se repintó con el azul Housecall, se rotuló con el escudo y el eslogan y después se puso en movimiento, todo en Flora." } },
         // Process steps as one narrower strip, with breathing room on both sides
@@ -517,7 +522,7 @@ window.SITE = {
         { src: "images/top50/voting-open.jpg", ar: "2000/1045", col: 1, span: 12, caption: { en: "Voting has opened", pt: "A votação está aberta", es: "La votación está abierta" } },
         { src: "images/top50/vote-for.jpg", ar: "2000/1045", col: 1, span: 6, caption: { en: "Finalist kit: “We've been selected — vote for…”", pt: "Kit dos finalistas: “Fomos selecionados — vote em…”", es: "Kit de finalistas: “Fuimos seleccionados — vota por…”" } },
         { src: "images/top50/email-made-it.jpg", ar: "2000/666", col: 7, span: 6, caption: { en: "Email header for the 50 finalists", pt: "Header de e-mail para os 50 finalistas", es: "Header de email para los 50 finalistas" } },
-        { chapter: { en: "05 · Films", pt: "05 · Filmes", es: "05 · Videos" }, kicker: "Seedance",
+        { chapter: { en: "05 · Films", pt: "05 · Filmes", es: "05 · Videos" }, kicker: "Flora.AI",
           head: { en: "The van, *in motion.*", pt: "A van, *em movimento.*", es: "La van, *en movimiento.*" },
           text: { en: "The shot list was written as one cinematic prompt and cut in four; stills from the shoot were resized for Stories.", pt: "A decupagem virou um prompt cinematográfico só, cortado em quatro; os stills da produção foram adaptados pra Stories.", es: "La lista de planos se convirtió en un solo prompt cinematográfico, cortado en cuatro; los stills de la producción se adaptaron para Stories." } },
         { video: "images/top50/film-van.mp4", webm: "images/top50/film-van.webm", poster: "images/top50/film-van-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Film — the van in motion", pt: "Filme — a van em movimento", es: "Video — la van en movimiento" } },
