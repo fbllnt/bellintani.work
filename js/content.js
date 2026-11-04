@@ -57,16 +57,6 @@ window.SITE = {
         "Adidas", "Globo", "Meta", "Pernod Ricard", "Diageo", "Absolut", "Gatorade", "Nissan", "Land Rover", "Nokia", "Philips",
         "FIAT", "TIM", "Banco do Brasil", "Velo / Vuse", "Qiddiya", "JBS", "Housecall Pro", "ANTI Creative Finance", "SCRV.ag",
       ] },
-      // Disciplines rewritten from the work on the site (Felipe, Oct 30 2026: leaner, more accurate). Logo and graphic
-      // design fold into identity; content strategy and interaction design into digital; video production into motion.
-      // `key` ties each discipline to the projects' `disciplines` lists (the project sheet lights up the ones used)
-      { head: { en: "Disciplines", pt: "Disciplinas", es: "Disciplinas" }, flow: true, rows: [
-        { key: "strategy", en: "Brand strategy & positioning", pt: "Estratégia e posicionamento de marca", es: "Estrategia y posicionamiento de marca" }, { key: "identity", en: "Brand identity & design systems", pt: "Identidade de marca e sistemas de design", es: "Identidad de marca y sistemas de diseño" },
-        { key: "artdir", en: "Art direction", pt: "Direção de arte", es: "Dirección de arte" }, { key: "campaigns", en: "Advertising & campaigns", pt: "Publicidade e campanhas", es: "Publicidad y campañas" },
-        { key: "motion", en: "Motion & TV openings", pt: "Motion e aberturas de TV", es: "Motion y aperturas de TV" }, { key: "type", en: "Typography & lettering", pt: "Tipografia e lettering", es: "Tipografía y lettering" },
-        { key: "posters", en: "Illustration & posters", pt: "Ilustração e pôsteres", es: "Ilustración y pósteres" }, { key: "digital", en: "Digital, social & UX", pt: "Digital, social e UX", es: "Digital, social y UX" },
-        { key: "ai", en: "AI production & vibe coding", pt: "Produção com IA e vibe coding", es: "Producción con IA y vibe coding" },
-      ] },
       { head: { en: "Education", pt: "Formação", es: "Formación" }, rows: [
         { role: { en: "MBA, Data-Driven Marketing and AI", pt: "MBA, Marketing Orientado a Dados e IA", es: "MBA, Marketing Basado en Datos e IA" }, name: "USP / Esalq", years: "2026 — 2027" },
         { role: { en: "Master's, Branding", pt: "Mestrado, Branding", es: "Maestría, Branding" }, name: "ESPM", years: "2022 — 2024" },
@@ -157,7 +147,6 @@ window.SITE = {
     // Curated work order (Oct 28 2026): brand and campaign work first, alternating disciplines; Logofolio last. Navigation follows this list.
     {
       title: "Seja ANTI",
-      disciplines: ["artdir", "campaigns", "posters", "digital", "ai"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "59WN2psjkt1tyaxjspN8fp", name: "Killing In The Name", by: "Rage Against The Machine" },
       type: "campaign",
       client: "ANTI Creative Finance",
@@ -233,7 +222,6 @@ window.SITE = {
     },
     {
       title: "Globo",
-      disciplines: ["identity", "artdir", "motion", "type", "posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "4NexI5goFxDd1zXcLF2x6x", name: "Do Leme ao Pontal", by: "Tim Maia" },
       type: "branding",
       client: "Globo",
@@ -405,7 +393,6 @@ window.SITE = {
     },
     {
       title: "SCRV*",
-      disciplines: ["strategy", "identity", "artdir", "motion", "type", "posters", "digital", "ai"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "0LrwgdLsFaWh9VXIjBRe8t", name: "Changes", by: "David Bowie" },
       type: "branding",
       client: "SCRV.ag",
@@ -457,7 +444,6 @@ window.SITE = {
     },
     {
       title: "HOUSECALL PRO",
-      disciplines: ["identity", "campaigns", "motion", "type", "digital", "ai"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "4w3tQBXhn5345eUXDGBWZG", name: "9 to 5", by: "Dolly Parton" },
       type: "campaign",
       client: "Housecall Pro",
@@ -533,7 +519,6 @@ window.SITE = {
     },
     {
       title: "XP Inc.",
-      disciplines: ["identity", "artdir", "campaigns"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "5W3cjX2J3tjhG8zb6u0qHn", name: "Harder, Better, Faster, Stronger", by: "Daft Punk" },
       type: "campaign",
       client: "XP Inc.",
@@ -585,7 +570,6 @@ window.SITE = {
     },
     {
       title: "Cinema Especial",
-      disciplines: ["motion", "posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "2WWG2WjVJuJRVmgAxzbkad", name: "Cinema Paradiso", by: "Ennio Morricone" },
       type: "motion",
       client: "TV Globo",
@@ -652,7 +636,6 @@ window.SITE = {
     // Gig poster for Cine Joia (Felipe, Oct 27 2026); material from Drive "07. OUTROS/CINE JOIA & POSTERS/JOIA#04 - DIRTY PROJECTORS"
     {
       title: "PopStar",
-      disciplines: ["identity", "artdir", "motion"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "5I0WMWBGRuHiAwNa6yjm9r", name: "Lucky Star", by: "Madonna" },
       type: "motion",
       client: "TV Globo",
@@ -697,7 +680,6 @@ window.SITE = {
     },
     {
       title: "THURA",
-      disciplines: ["strategy", "identity"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       hidden: true, // Felipe, Oct 28 2026: off the site, everything kept (remove this line to bring it back)
       track: { id: "6aBUnkXuCEQQHAlTokv9or", name: "This Must Be the Place", by: "Talking Heads" },
       type: "branding",
@@ -767,7 +749,6 @@ window.SITE = {
     },
     {
       title: "Tela Quente",
-      disciplines: ["identity", "motion", "posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "6ZFbXIJkuI1dVNWvzJzown", name: "Time", by: "Hans Zimmer" },
       type: "motion",
       client: "TV Globo",
@@ -826,7 +807,6 @@ window.SITE = {
     },
     {
       title: "CoreHi",
-      disciplines: ["strategy", "identity", "type"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "5BXBi5pLeJhblMVH2ltjpl", name: "Computer Love", by: "Kraftwerk" },
       type: "branding",
       client: "CoreHuman Intelligence",
@@ -897,7 +877,6 @@ window.SITE = {
     },
     {
       title: "Adidas 60",
-      disciplines: ["artdir", "campaigns", "motion", "ai"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "04HOx7AhRXimqJETzRRAS9", name: "Filho Maravilha (Fio Maravilha)", by: "Jorge Ben Jor" },
       type: "motion",
       client: "Adidas",
@@ -945,7 +924,6 @@ window.SITE = {
     },
     {
       title: "DJ Shadow",
-      disciplines: ["posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       // Approved by Felipe on the preview and published (Oct 29 2026). The hands poster was rejected at the time
       // (Felipe): only the silhouette line is shown, the black & white one first.
       track: { id: "1a9maLxqpx3cxjY1lTj62B", name: "Midnight In A Perfect World", by: "DJ Shadow" },
@@ -1037,7 +1015,6 @@ window.SITE = {
     },
     {
       title: "Dirty Projectors",
-      disciplines: ["type", "posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "0uX0CZRfsZlFPihkuIMMFp", name: "Gun Has No Trigger", by: "Dirty Projectors" },
       type: "poster",
       client: "Cine Joia",
@@ -1099,7 +1076,6 @@ window.SITE = {
     },
     {
       title: "Globoplay",
-      disciplines: ["identity", "motion"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "3iSmEacr24vUxitXq3e6cN", name: "Televisão", by: "Titãs" },
       type: "branding",
       client: "Globo",
@@ -1156,7 +1132,6 @@ window.SITE = {
     },
     {
       title: "DMA",
-      disciplines: ["identity", "campaigns"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "2VEZx7NWsZ1D0eJ4uv5Fym", name: "Digital Love", by: "Daft Punk" },
       type: "branding",
       client: "JBS",
@@ -1247,7 +1222,6 @@ window.SITE = {
     },
     {
       title: "Explosions in the Sky",
-      disciplines: ["posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       // Approved by Felipe on the preview and published (Oct 29 2026)
       track: { id: "3HBcQ5GenzAlBhCIgDGL3x", name: "Your Hand in Mine", by: "Explosions in the Sky" },
       type: "poster",
@@ -1259,7 +1233,7 @@ window.SITE = {
       deliverables: { en: "Poster, skyline illustration, signed limited screen print", pt: "Pôster, ilustração da cidade, serigrafia limitada e assinada", es: "Póster, ilustración de la ciudad, serigrafía limitada y firmada" },
       tags: { en: ["GigPoster", "Illustration", "ScreenPrint", "Music"], pt: ["PôsterDeShow", "Ilustração", "Serigrafia", "Música"], es: ["PósterDeConcierto", "Ilustración", "Serigrafía", "Música"] },
       // The poster's own colours: dark slate ink, white, the pink of the windows (Felipe, Oct 29 2026)
-      theme: { bg: "#26353a", fg: "#f1f1f3", mute: "#93a1a6", line: "#3c4c52", panel: "#2e3e44", accent: "#e01563", accentText: "#ff5c94" },
+      theme: { bg: "#26353a", fg: "#f1f1f3", mute: "#93a1a6", line: "#3c4c52", panel: "#2e3e44", accent: "#e01563", accentText: "#ff6699" },
       tools: ["Adobe CC"],
       // Cover: Felipe's night sky with the band's logo, slate matched to the page (#253231 -> #273639 ~ #26353a), a little shorter
       image: "images/explosions-in-the-sky/cover-night.jpg",
@@ -1332,7 +1306,6 @@ window.SITE = {
     // Logofolio stays the last project.
     {
       title: "Logofolio",
-      disciplines: ["identity"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "6hHc7Pks7wtBIW8Z6A0iFq", name: "Blue Monday", by: "New Order" },
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca", es: "Diseño de logotipo // Identidad de marca" },
       summary: {

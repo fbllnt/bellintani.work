@@ -3,9 +3,8 @@
 // Local preview: `node tools/build-pages.mjs`, then serve the folder.
 //
 // Each page is the normal site (same body and scripts) with its own title, description, canonical address and
-// link preview (the project cover). `<base href="/">` keeps every relative path working one folder down, and a
-// small script opens the project on load (the site routes by #p-<slug>). Links inside a project page that go
-// elsewhere (#work, #p-other) resolve to the home page through the base, so they load it as usual.
+// link preview (the project cover). The shared `<base href="/">` keeps relative assets
+// working after in-page navigation; the pathname opens the matching project on load.
 import fs from "node:fs";
 import vm from "node:vm";
 
@@ -56,7 +55,6 @@ for (const p of projects) {
   };
 
   let html = index;
-  html = swap(html, /<meta charset="utf-8">/, `<meta charset="utf-8">\n<base href="/">`);
   html = swap(html, /<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`);
   html = swap(html, /<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(desc)}">`);
   html = swap(html, /<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${url}">`);
@@ -67,10 +65,7 @@ for (const p of projects) {
   // The cover replaces the site card; its size differs, so the fixed 1200×630 is dropped
   html = swap(html, /<meta property="og:image" content="[^"]*">\n<meta property="og:image:width" content="\d+">\n<meta property="og:image:height" content="\d+">/,
     `<meta property="og:image" content="${image}">\n<meta property="og:image:alt" content="${esc(en(p.title))}">`);
-  html = swap(html, /<\/script>\n(<link rel="preconnect")/, `</script>\n<script type="application/ld+json">${JSON.stringify(ld)}</script>\n$1`);
-  // Open the project on arrival (keeps any #p-… already in the address)
-  html = swap(html, /<script src="js\/content\.js/, `<script>if(!location.hash)history.replaceState(null,"","/p/${slug}/#p-${slug}")</script>\n<script src="js/content.js`);
-
+  html = swap(html, /<\/script>\n(<link rel="preconnect")/, `</script>\n<script id="project-schema" type="application/ld+json">${JSON.stringify(ld)}</script>\n$1`);
   fs.mkdirSync(`${root}p/${slug}`, { recursive: true });
   fs.writeFileSync(`${root}p/${slug}/index.html`, html);
 }

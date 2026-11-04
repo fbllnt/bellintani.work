@@ -194,8 +194,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @media (max-width:760px){ .services{grid-template-columns:1fr} }
 
 .foot{padding-top:clamp(90px,14vw,200px);padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
-.big{font:900 clamp(64px,17vw,300px)/.8 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:flex-start;gap:.08em}
-.big{max-width:100%;overflow-wrap:anywhere;display:inline-block}
+.big{font:900 clamp(64px,17vw,300px)/.8 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-decoration:none;max-width:100%;overflow-wrap:anywhere;display:inline-block}
 .big > span:first-child{display:inline;text-wrap:balance}
 .big .arr{display:inline-block;vertical-align:top;margin-left:.08em}
 /* A single rule in the text colour closes the page under Let's talk */
@@ -362,8 +361,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .jrow.wrap-m > .fig{flex:0 0 calc(50% - var(--gap) / 2)}
   .jrow.wrap-m > .fig:nth-child(odd):last-child{flex-basis:100%}
   .row-third,.row-quarter{grid-template-columns:1fr 1fr}
-  .index a{grid-template-columns:2.2em minmax(0,1fr)}
-  .index .k{display:none}
   /* Scroll cue centred on phones, raised above the bottom corners so it never sits on Instagram or Vamos conversar */
   .cue{bottom:calc(52px + env(safe-area-inset-bottom,0px))}
 }
@@ -716,7 +713,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 .globo-palette-head{display:flex;justify-content:space-between;gap:16px;color:var(--mute);font-size:clamp(10px,.8vw,13px);letter-spacing:.07em;margin-bottom:16px;text-transform:uppercase}
 .globo-palette-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
 .globo-palette-card{min-width:0;outline-offset:5px}
-.globo-palette-swatch{height:clamp(130px,16vw,260px);position:relative;overflow:hidden;isolation:isolate;background-size:180% 180%;background-position:0% 50%;animation:globo-functional-flow 19s ease-in-out infinite alternate;transition:filter .6s ease}
+.globo-palette-swatch{height:clamp(130px,16vw,260px);position:relative;overflow:hidden;isolation:isolate;background-size:180% 180%;background-position:5% 50%;animation:globo-functional-flow 24s ease-in-out infinite alternate;transition:filter .6s ease}
 .globo-palette-card.news .globo-palette-swatch{background-image:linear-gradient(120deg,#305d9e 8%,#3894ad 45%,#6ac4a0 85%,#305d9e 115%)}
 .globo-palette-card.sport .globo-palette-swatch{background-image:linear-gradient(120deg,#6cbb56 5%,#a9d448 43%,#ffe330 85%,#6cbb56 115%);animation-delay:-6s}
 .globo-palette-card.entertainment .globo-palette-swatch{background-image:linear-gradient(120deg,#e91367 5%,#f65a70 40%,#f59a30 85%,#e91367 115%);animation-delay:-12s}
@@ -724,7 +721,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 .globo-palette-meta{display:flex;justify-content:space-between;gap:8px;padding:9px 0;color:var(--fg);font-size:clamp(10px,.85vw,13px);text-transform:uppercase}
 .globo-palette-meta span:last-child{color:var(--mute);transition:transform .3s ease}
 .globo-palette-card:is(:hover,:focus-visible) .globo-palette-meta span:last-child{transform:translate(3px,-3px)}
-@keyframes globo-functional-flow{from{background-position:5% 50%}to{background-position:95% 50%}}
+@keyframes globo-functional-flow{from{background-position:calc(5% + var(--globo-pos-x,0%)) calc(50% + var(--globo-pos-y,0%))}to{background-position:calc(95% + var(--globo-pos-x,0%)) calc(50% + var(--globo-pos-y,0%))}}
 @media(max-width:760px){.globo-palette-head span:last-child{display:none}.globo-palette-grid{grid-template-columns:1fr;gap:12px}.globo-palette-swatch{height:clamp(96px,28vw,170px)}}
 @media(prefers-reduced-motion:reduce){.globo-palette-swatch{animation:none;transform:none}.globo-palette-meta span:last-child{transition:none}}
 
@@ -797,8 +794,17 @@ button.arw.close .arw-i{width:14px;height:14px}
   .corners .c-bl{bottom:calc(20px + env(safe-area-inset-bottom,0px))}
 }
 @media(max-width:390px){.corners .c-tl{font-size:11px}.corners .c-tr{font-size:11px;gap:6px}.corners .c-bl{font-size:11px;gap:10px}.lang{padding:0 .45em}}
+/* Keep the larger case-home link clear of the menu on narrow screens. */
+@media(max-width:560px){
+  .corners .c-tr{left:var(--side-l);right:var(--side-r);top:calc(54px + env(safe-area-inset-top,0px));justify-content:space-between;gap:10px}
+  .corners .c-tr > a::before,.corners .c-tr > button::before{content:"";position:absolute;inset:-8px 0}
+  /* The long case sheet runs behind the fixed bottom corners even at scroll 0. */
+  .in-case .corners :is(.c-bl,.c-br){opacity:0;pointer-events:none}
+  .in-case .corners :is(.c-bl,.c-br):focus-within{opacity:1;pointer-events:auto}
+}
 /* Listening panel: full portfolio soundtrack, original embedded Spotify playback preserved. */
 .music{width:min(420px,calc(100vw - var(--side-l) - var(--side-r)));top:calc(52px + env(safe-area-inset-top,0px));padding:14px;max-height:min(78svh,720px);display:flex;flex-direction:column;gap:10px;box-shadow:0 16px 46px rgba(0,0,0,.16)}
+@media(max-width:560px){.music{top:calc(88px + env(safe-area-inset-top,0px))}}
 .music-head{font-size:12px;padding:0 0 4px}
 .music-head button{font-size:23px;min-width:30px;min-height:30px;text-align:center}
 /* Close draws the same line cross as the logo close-up's, and takes the accent on hover like the arrows (Felipe, Oct 29 2026) */
@@ -862,17 +868,13 @@ button.arw.close .arw-i{width:14px;height:14px}
    before SCREEN blending, so only the white mark remains and the actual case background shows. */
 .popstar-invert .ph img{filter:grayscale(1) invert(1) contrast(700%);mix-blend-mode:screen}
 
-/* Globo palette swatches: no overlays (pointer pull and drift are set below). */
-.globo-palette-swatch{position:relative;isolation:isolate}
-
-
 /* Editorial polish: PopStar identity sequence, one specimen at a time.
    Screen compositing keeps the original white linework while letting the case's
    own background replace the black pixels. Source JPEGs remain unchanged. */
 .loose > .flip.flip-wide{width:100%;max-width:100%;align-self:stretch;margin-block:clamp(12px,2vw,28px) clamp(44px,6vw,100px);--n:2}
 .flip-wide .fig{width:100%;background:transparent!important}
-.flip-wide .fig .ph{background:var(--bg)!important;isolation:isolate;aspect-ratio:16/9}
-.flip-wide .fig .ph > img{filter:grayscale(1) invert(1) contrast(700%)!important;mix-blend-mode:screen!important;object-fit:contain;transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .45s cubic-bezier(.2,.8,.2,1);background:transparent!important}
+.flip-wide .fig .ph{background:var(--bg)!important;isolation:isolate;aspect-ratio:16/9;translate:var(--px,0px) var(--py,0px);transition:translate .45s cubic-bezier(.2,.8,.2,1)}
+.flip-wide .fig .ph > img{filter:grayscale(1) invert(1) contrast(700%)!important;mix-blend-mode:screen!important;object-fit:contain;background:transparent!important}
 /* The site's arrow group (← 01 / 08 →), centred over the centred thumbnails (Felipe, Oct 29 2026) */
 .flip-wide .flip-controls{justify-content:center;margin-top:16px;border-top:1px solid var(--line);padding-top:6px}
 .flip-wide .flip-thumbs{display:flex;justify-content:center;gap:12px;margin-top:8px}
@@ -927,7 +929,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 
 /* Keep the PopStar preview on the themed canvas, never on the JPG black matte. */
 .case .flip-wide .fig .ph{background-color:var(--bg)!important;isolation:isolate}
-@media(hover:none),(prefers-reduced-motion:reduce){.flip-wide .fig .ph > img{--px:0px!important;--py:0px!important;transition:none}}
+@media(hover:none),(prefers-reduced-motion:reduce){.flip-wide .fig .ph{--px:0px!important;--py:0px!important;transition:none}}
 
 /* CoreHi: interactive identity specimen, restrained and accessible. */
 .corehi-interactive .ph{isolation:isolate;cursor:pointer;outline-offset:4px}
@@ -945,7 +947,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 
 /* Editorial introduction: description and project numbers share one aligned block. */
 /* Project sheet (Felipe, Oct 29 2026, after Studio Up and tacto): the facts stay pinned in cols 1-4 while the summary,
-   numbers and the full discipline list (this project's lit, the rest faded) read in cols 6-12 */
+   numbers read in cols 6-12 */
 .case-sheet{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(32px,4vw,56px) var(--gap);align-items:start;margin:clamp(28px,4vw,56px) 0 clamp(44px,6vw,88px);padding-top:14px;border-top:1px solid var(--fg)}
 .case-sheet > .case-meta{grid-column:1 / 5;position:sticky;top:calc(var(--side) + 48px);display:flex;flex-direction:column;gap:clamp(16px,1.8vw,24px);margin:0;padding:0;border:0}
 .case-sheet-main{grid-column:6 / 13;display:flex;flex-direction:column;gap:clamp(40px,5vw,80px);min-width:0}
@@ -955,10 +957,6 @@ button.arw.close .arw-i{width:14px;height:14px}
 .case-sheet .case-stats li{padding:0}
 .case-sheet .case-stats b{font-size:clamp(44px,5vw,88px);line-height:.95}
 .case-sheet .case-stats span{line-height:1.45}
-.case-disc{display:grid;gap:12px}
-.case-disc ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);border-top:1px solid var(--line)}
-.case-disc li{padding:10px 0;border-bottom:1px solid var(--line);font:500 clamp(13px,1vw,16px)/1.25 var(--sans);letter-spacing:-.01em;color:var(--mute);opacity:.45}
-.case-disc li.on{color:var(--fg);opacity:1}
 @media(max-width:760px){
  .case-sheet{gap:36px var(--gap)}
  .case-sheet > .case-meta{grid-column:1 / -1;position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px var(--gap)}
@@ -966,7 +964,6 @@ button.arw.close .arw-i{width:14px;height:14px}
  .case-sheet .case-meta :is(.wide,.live){grid-column:1 / -1}
  .case-sheet-main{grid-column:1 / -1;gap:36px}
  .case-sheet .case-stats b{font-size:clamp(40px,11vw,78px)}
- .case-disc ul{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 /* Editorial rhythm audit: space between rules, titles, and supporting text. */
@@ -981,15 +978,3 @@ button.arw.close .arw-i{width:14px;height:14px}
  :root{--chap-pad:28px}
  .case-gallery .chap{row-gap:15px}
 }
-
-/* Globo: organic colour movement, without dots, concentric rings or cursor effects. */
-.globo-palette-swatch,
-.globo-palette-swatch:hover{
-  animation:globo-functional-flow 24s ease-in-out infinite alternate;
-  background-position:var(--globo-pos-x,50%) var(--globo-pos-y,50%)!important;
-  transition:background-position .2s ease;
-}
-@media(prefers-reduced-motion:reduce){
- .globo-palette-swatch{animation:none!important}
-}
-
