@@ -940,7 +940,7 @@ window.SITE = {
       theme: { bg: "#f0efe8", fg: "#111111", mute: "#6c6b66", line: "#dcdbd2", panel: "#e6e5dd", accent: "#1a2bff" },
       tools: ["Adobe CC"],
       // Black-and-white applications, revised November 4, 2026.
-      image: "images/dj-shadow/mockup-wall-bw-v2.jpg",
+      image: "images/dj-shadow/mockup-wall-muted-v3.jpg",
       hero: "bleed",
       heroAr: "3/2",
       summary: {
