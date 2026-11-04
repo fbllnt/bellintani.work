@@ -319,7 +319,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .chap-h em{font-style:normal;color:var(--ai-t,var(--blue))}
 .pills{grid-column:5 / 13;list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .pills li{padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--mute)}
-.pills li.on{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:400}
+.pills li.on{background:var(--control-accent,var(--ai,var(--blue)));border-color:var(--control-accent,var(--ai,var(--blue)));color:var(--control-ink,var(--bg));font-weight:400}
 /* Before → after (a rename): the old name struck through, the new one in the accent colour */
 .swap-ba{display:grid;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
 .swap-ba p{margin:0;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--gap);align-items:baseline}
@@ -608,8 +608,8 @@ button.arw.close .arw-i{width:14px;height:14px}
   font-family:Figtree,sans-serif;font-weight:700;font-size:clamp(17px,1.5vw,22px);letter-spacing:-.01em;color:var(--mute);transition:color .2s,border-color .2s}
 .rooms-tabs button .mono{font-size:12px;font-weight:400;letter-spacing:0}
 .rooms-tabs button:hover{color:var(--fg)}
-.rooms-tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--ai,var(--blue))}
-.rooms-tabs button[aria-selected="true"] .mono{color:var(--ai-ink,var(--ai,var(--blue)))}
+.rooms-tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--control-accent,var(--ai,var(--blue)))}
+.rooms-tabs button[aria-selected="true"] .mono{color:var(--fg)}
 .rooms-tabs button:focus-visible{outline:2px solid var(--ai-ink,var(--ai,var(--blue)));outline-offset:2px}
 .rooms-stage .ph{cursor:pointer;touch-action:pan-y}
 .rooms-stage .ph > img{transition:none;user-select:none}

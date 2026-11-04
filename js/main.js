@@ -926,6 +926,51 @@
     });
   }
 
+  // Highlights follow the image they describe; neutral controls keep the page ink.
+  // Sampling is local, small and runs only after an image has loaded.
+  function setupControlColors() {
+    const luminance = rgb => rgb.map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((sum, v, i) => sum + v * [.2126, .7152, .0722][i], 0);
+    const paint = (control, image) => {
+      const apply = () => {
+        if (!control.isConnected || !image.naturalWidth) return;
+        try {
+          const canvas = document.createElement("canvas"); canvas.width = canvas.height = 32;
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
+          ctx.drawImage(image, 0, 0, 32, 32);
+          const pixels = ctx.getImageData(0, 0, 32, 32).data, bins = new Map();
+          for (let i = 0; i < pixels.length; i += 4) {
+            const rgb = [pixels[i], pixels[i + 1], pixels[i + 2]], hi = Math.max(...rgb), lo = Math.min(...rgb);
+            if (pixels[i + 3] < 200 || hi - lo < 35 || hi < 65 || lo > 220) continue;
+            const key = rgb.map(v => Math.floor(v / 32)).join(",");
+            const bin = bins.get(key) || { sum: [0, 0, 0], count: 0, score: 0 };
+            bin.count++; bin.score += (hi - lo) / 255;
+            rgb.forEach((v, j) => bin.sum[j] += v); bins.set(key, bin);
+          }
+          const winner = [...bins.values()].sort((a, b) => b.score - a.score)[0];
+          if (!winner) return; // Monochrome pieces retain the project's palette.
+          const rgb = winner.sum.map(v => Math.round(v / winner.count));
+          control.style.setProperty("--control-accent", `rgb(${rgb.join(" ")})`);
+          control.style.setProperty("--control-ink", luminance(rgb) > .179 ? "#000" : "#fff");
+        } catch { /* External or unreadable media keeps the project colour. */ }
+      };
+      image.addEventListener("load", apply, { signal: caseAbort.signal });
+      if (image.complete) apply();
+    };
+    caseEl.querySelectorAll(".pills li.on").forEach(control => {
+      const rgb = getComputedStyle(control).backgroundColor.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+      if (rgb?.length === 3) control.style.setProperty("--control-ink", luminance(rgb) > .179 ? "#000" : "#fff");
+    });
+    const images = [...caseEl.querySelectorAll(".case-gallery img")];
+    caseEl.querySelectorAll(".pills").forEach(pills => {
+      const image = images.find(img => pills.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_FOLLOWING);
+      if (image) pills.querySelectorAll("li.on").forEach(control => paint(control, image));
+    });
+    caseEl.querySelectorAll(".rooms").forEach(box => {
+      const image = box.querySelector(".rooms-stage img");
+      if (image) paint(box, image);
+    });
+  }
+
   function setupRooms(p) {
     let i = 0;
     p.gallery.forEach(it => { if (!it.rooms) return;
@@ -1108,6 +1153,7 @@
     syncPageMeta(p);
     observe();
     setupVideos();
+    setupControlColors();
     setupEmbeds();
     setupDrift();
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
