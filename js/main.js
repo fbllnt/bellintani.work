@@ -1452,9 +1452,66 @@
   const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
   }), { rootMargin: "0px 0px -10% 0px" }) : null;
-  // Rules that open the project sheet and each chapter draw left to right as they come in, like the About's (Felipe, Nov 1 2026)
-  if (!reduced) caseEl.classList.add("fx-lines");
-  const observe = () => caseEl.querySelectorAll(".fig, .logos, .ltext, .chap, .case-sheet").forEach(f => io ? io.observe(f) : f.classList.add("in"));
+  // Animate only existing editorial borders. Each edge follows its own position,
+  // rather than the intersection of a potentially screen-tall parent block.
+  const ruleSelector = ".ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .index, .index a, .services, .services li, .social";
+  let homeRules = [], caseRules = [], rulesRaf = 0;
+  const collectRules = root => {
+    if (reduced) return [];
+    return [...root.querySelectorAll(ruleSelector)].flatMap(el => {
+      const cs = getComputedStyle(el), edges = [];
+      for (const edge of ["top", "bottom"]) {
+        const width = cs.getPropertyValue(`border-${edge}-width`);
+        const color = cs.getPropertyValue(`border-${edge}-color`);
+        if (parseFloat(width) > 0 && cs.getPropertyValue(`border-${edge}-style`) !== "none" && color !== "transparent" && !color.endsWith(", 0)")) {
+          edges.push(edge);
+          el.style.setProperty(`--rule-${edge}-color`, color);
+          el.style.setProperty(`--rule-${edge}-width`, width);
+        }
+      }
+      if (!edges.length) return [];
+      el.classList.add("scroll-rule", ...edges.map(edge => `scroll-rule-${edge}`));
+      return [{ el, edges }];
+    });
+  };
+  const updateRules = () => {
+    rulesRaf = 0;
+    const inCase = document.body.classList.contains("in-case");
+    const rules = inCase ? caseRules : homeRules;
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+    const progressAt = y => {
+      // Lines near the end of a short page must still finish before scrolling stops.
+      const end = Math.max(innerHeight * .6, y + scrollY - maxScroll);
+      return Math.max(0, Math.min(1, (innerHeight * .98 - y) / Math.max(1, innerHeight * .98 - end)));
+    };
+    const measurements = rules.map(rule => ({ ...rule, rect: rule.el.getBoundingClientRect() }));
+    measurements.forEach(({ el, edges, rect }) => {
+      if (!rect.width || !rect.height) return;
+      edges.forEach(edge => {
+        const y = edge === "top" ? rect.top : rect.bottom;
+        const progress = progressAt(y);
+        el.style.setProperty(`--rule-${edge}-progress`, `${(progress * 100).toFixed(2)}%`);
+      });
+    });
+    // Reuse the footer's existing closing rule, without creating another one.
+    if (!inCase && !reduced) {
+      const foot = $("contact"), cs = getComputedStyle(foot);
+      const y = foot.getBoundingClientRect().bottom - parseFloat(cs.paddingBottom);
+      foot.style.setProperty("--closing-rule-progress", progressAt(y));
+    }
+  };
+  const queueRules = () => { if (!reduced && !rulesRaf) rulesRaf = requestAnimationFrame(updateRules); };
+  addEventListener("scroll", queueRules, { passive: true });
+  addEventListener("resize", queueRules);
+  addEventListener("load", queueRules);
+  document.addEventListener("load", queueRules, true);
+  document.fonts?.ready.then(queueRules);
+  const observe = () => {
+    io?.disconnect();
+    caseEl.querySelectorAll(".fig, .logos, .ltext, .chap, .case-sheet").forEach(f => io ? io.observe(f) : f.classList.add("in"));
+    caseRules = collectRules(caseEl);
+    queueRules();
+  };
 
   // Films play muted while on screen and pause when they leave. Every film has Play/Pause and Sound;
   // sound is one film at a time. Pausing by hand keeps it paused until the visitor plays it again.
@@ -1633,16 +1690,8 @@
   addEventListener("hashchange", () => setTimeout(capQueue, 50));
   capQueue();
 
-  // About entrance (Oct 29 2026 audit, pending Felipe's approval): each block's rule draws once it comes into view (CSS .fx-rule); a block
-  // coming in also completes every block above it, so a jump past them (#contact, a fast scroll) never leaves a rule undrawn
-  if ("IntersectionObserver" in window && fxOn) {
-    const rules = [...$("about").querySelectorAll(".ab, .ab-end")];
-    $("about").classList.add("fx-rule");
-    const rio = new IntersectionObserver(es => es.forEach(e => {
-      if (e.isIntersecting || e.boundingClientRect.top < 0) rules.slice(0, rules.indexOf(e.target) + 1).forEach(b => { b.classList.add("in"); rio.unobserve(b); });
-    }), { rootMargin: "0px 0px -15% 0px" });
-    rules.forEach(b => rio.observe(b));
-  }
+  homeRules = collectRules(document.querySelector("main"));
+  queueRules();
 
   // 3. Open: a blue panel grows from the clicked row to the whole screen, turning into the project's
   // background colour as it grows; the page renders underneath and the panel fades away
@@ -1906,3 +1955,4 @@
     document.readyState === "complete" ? back() : addEventListener("load", back, { once: true });
   }
 })();
+
