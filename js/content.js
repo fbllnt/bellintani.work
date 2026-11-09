@@ -50,6 +50,8 @@ window.SITE = {
         { role: "Lead Designer", name: "Globo", years: "2014 — 2018" },
         { role: "Senior Art Director", name: "Lew'Lara\\TBWA", years: "2012 — 2014" },
         { role: "Head of Art", name: "Havas (EuroRSCG 4D)", years: "2010 — 2011" },
+        { role: "Interactive Art Director / Team Lead", name: "AgênciaClick", years: "2008 — 2010" },
+        { role: "Interactive Art Director / Team Lead", name: "Wunderman Thompson", years: "2006 — 2008" },
       ] },
       { head: { en: "Clients", pt: "Clientes", es: "Clientes" }, flow: true, rows: [
         "Adidas", "Globo", "Meta", "Pernod Ricard", "Diageo", "Absolut", "Gatorade", "Nissan", "Land Rover", "Nokia", "Philips",

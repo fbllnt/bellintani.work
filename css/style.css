@@ -477,13 +477,13 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .ab-k{grid-column:1 / 5;margin:0;display:flex;gap:8px;align-items:baseline;font-weight:300}
 .ab-k .placeholder{color:var(--mute)}
 .ab-list{grid-column:5 / 13;margin:0;padding:0;list-style:none}
-.ab-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,5fr) minmax(0,2fr);gap:var(--gap);align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.ab-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,5fr) minmax(0,2fr);gap:var(--gap);align-items:baseline;padding:12px 0}
 .ab-row:first-child{padding-top:0}
 .ab-row > b{font:700 clamp(18px,1.7vw,26px)/1.15 var(--sans);letter-spacing:-.03em}
 .ab-row > span:last-child{text-align:right}
 .ab-row a{text-decoration:none}
 .ab-row.solo{display:block;font:500 clamp(16px,1.4vw,20px)/1.25 var(--sans);letter-spacing:-.02em}
-/* Short items (clients, disciplines, languages) run in columns, still one hairline each */
+/* Short items (clients, disciplines, languages) run in columns; rows have no hairlines, only the section rule on top (Felipe, Nov 9 2026) */
 .ab-list.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap)}
 .ab-list.flow .ab-row.solo:nth-child(-n+3){padding-top:0}
 .ab-end{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--fg);padding-top:14px;margin:0}
