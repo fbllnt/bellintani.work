@@ -73,7 +73,6 @@ window.SITE = {
       ] },
       { head: { en: "Contact", pt: "Contato", es: "Contacto" }, rows: [
         { role: "Email", name: "felipe@bellintani.work", url: "mailto:felipe@bellintani.work" },
-        { role: "WhatsApp", name: "+55 11 91255-2508", url: "https://wa.me/5511912552508" },
         { role: "Instagram", name: "@fbllnt", url: "https://www.instagram.com/fbllnt/" },
         { role: "LinkedIn", name: "in/fbellintani", url: "https://www.linkedin.com/in/fbellintani/" },
       ] },
