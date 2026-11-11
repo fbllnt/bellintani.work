@@ -1022,6 +1022,8 @@
         cap = box.querySelector(".rooms-cap"), count = box.querySelector(".rooms-count"), tabs =[...box.querySelectorAll(".rooms-tabs button")];
       let g = 0, cur = 0, transition = 0, suppressClickUntil = 0;
       const pad2 = n => String(n).padStart(2, "0");
+  // Preview only: ?nav=caixa | pilula | texto picks the look to compare (Felipe, Nov 13 2026); pílula by default
+  const NAV_V = (["caixa", "pilula", "texto"].find(v => new URLSearchParams(location.search).get("nav") === v)) || "pilula";
       const show = (ng, k, d) => {
         const list = it.rooms[ng].items; k = (k + list.length) % list.length;
         if (ng === g && k === cur) return;
@@ -1162,6 +1164,39 @@
 
   // A project's accent for the back-to-list flash; a white or black accent falls back to the site blue, as everywhere
   const accentOf = p => { const a = (p.theme && p.theme.accent) || ""; return !a || /^#(fff(fff)?|000(000)?)$/i.test(a) ? "#1a2bff" : a; };
+  // Small previous / next box at the top right, level with the hashtags (Felipe, Nov 11 2026: "pequeno, discreto,
+  // numa caixinha azul"). The middle shows the count; hovering an arrow rolls it to that project's name and the box
+  // stretches to fit it. Phones and touch keep the count only.
+  const pad2 = n => String(n).padStart(2, "0");
+  // Preview only: ?nav=caixa | pilula | texto picks the look to compare (Felipe, Nov 13 2026); pílula by default
+  const NAV_V = (["caixa", "pilula", "texto"].find(v => new URLSearchParams(location.search).get("nav") === v)) || "pilula";
+  const jump = (i, prev, next) => `
+        <nav class="case-jump mono" data-v="${NAV_V}" aria-label="${esc(T("projectNav"))}">
+          <a class="cj-a prev" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}">${arwSvg("prev")}</a>
+          <span class="cj-slot" aria-hidden="true"><span class="cj-roll">
+            <span class="cj-l cj-prev">${esc(L(prev.title))}</span>
+            <span class="cj-l cj-n"><b>${pad2(i + 1)}</b> / ${pad2(S.projects.length)}</span>
+            <span class="cj-l cj-next">${esc(L(next.title))}</span>
+          </span></span>
+          <a class="cj-a next" href="${href(next)}" aria-label="${esc(T("nextItem"))}: ${esc(L(next.title))}">${arwSvg("next")}</a>
+        </nav>`;
+  function setupJump() {
+    const nav = caseEl.querySelector(".case-jump");
+    if (!nav) return;
+    const slot = nav.querySelector(".cj-slot"), lines = [...nav.querySelectorAll(".cj-l")];
+    const fit = state => { const l = lines[{ prev: 0, n: 1, next: 2 }[state]]; slot.style.width = Math.ceil(l.getBoundingClientRect().width) + "px"; nav.dataset.on = state; };
+    requestAnimationFrame(() => fit("n"));
+    if (!matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+    nav.querySelectorAll(".cj-a").forEach(a => {
+      const st = a.classList.contains("prev") ? "prev" : "next";
+      a.addEventListener("pointerenter", () => fit(st));
+      a.addEventListener("focus", () => fit(st));
+      a.addEventListener("pointerleave", () => fit("n"));
+      a.addEventListener("blur", () => fit("n"));
+      a.addEventListener("click", () => nav.classList.add("go", st));
+    });
+  }
+
   function renderCase(i) {
     clearCase();
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
@@ -1172,7 +1207,10 @@
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
       <h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
-      ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
+      <div class="case-top">
+        ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : "<span></span>"}
+        ${jump(i, prev, next)}
+      </div>
       <section class="case-sheet">
         <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>`
         : Array.isArray(v) ? v.map(t => t[0] === "*" ? `<span class="ai-tool">${esc(t.slice(1))}<sup>${esc(T("aiMark"))}</sup></span>` : esc(t)).join(", ") : esc(v)}</dd></div>`).join("")}${
@@ -1196,6 +1234,7 @@
         </a>
       </nav>`;
     syncPageMeta(p);
+    setupJump();
     observe();
     setupVideos();
     setupControlColors();
@@ -1820,6 +1859,13 @@
       const t = aboutEl.getBoundingClientRect().top;
       return { x: 0, y: t, w: innerWidth, h: contactEl.getBoundingClientRect().bottom - t, done: true };
     };
+    // The blue previous / next box at the top of a project: a blue ball there would vanish, so it turns white
+    const jumpZone = () => {
+      const j = caseEl.querySelector(".case-jump");
+      if (!j || !j.offsetParent) return null;
+      const r = j.getBoundingClientRect();
+      return { x: r.left, y: r.top, w: r.width, h: r.height, done: true, solid: j.dataset.v === "caixa" };
+    };
     const draw = () => {
       let moving = false;
       chain.forEach((p, i) => {
@@ -1834,6 +1880,8 @@
       tiles = tiles.filter((t, i) => t === hover || floods[i]);
       const zones = onBlue ? [{ x: 0, y: 0, w: innerWidth, h: innerHeight, done: true }] : [...floods.filter(Boolean), dark()].filter(Boolean);
       ball.classList.toggle("white", zones.some(z => ptr.x >= z.x && ptr.x <= z.x + z.w && ptr.y >= z.y && ptr.y <= z.y + z.h));
+      const jz = jumpZone();
+      ball.classList.toggle("onjump", !!jz && jz.solid && ptr.x >= jz.x && ptr.x <= jz.x + jz.w && ptr.y >= jz.y && ptr.y <= jz.y + jz.h);
       ctx.strokeStyle = tag.style.background = getComputedStyle(ball).backgroundColor;
       ctx.beginPath(); ctx.moveTo(ptr.x, ptr.y);
       chain.forEach(p => ctx.lineTo(p.x, p.y));

@@ -236,6 +236,37 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-tags{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:clamp(24px,3vw,40px) 0 0;padding:0;color:var(--ai-t,var(--blue))}
 /* One tag pattern (Felipe, Nov 13 2026): every tag is a 1px outlined pill with its text inside, never a solid fill */
 .case-tags li{padding:6px 12px;border:1px solid color-mix(in srgb,currentColor 45%,transparent);border-radius:999px}
+/* Top previous / next (Felipe, Nov 11 2026): a small site-blue box on the right, level with the hashtags */
+.case-top{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;margin:clamp(24px,3vw,40px) 0 0}
+.case-top .case-tags{margin:0;flex:1 1 auto;min-width:0}
+.case-jump{--cj:#1a2bff;--h:30px;flex:none;display:inline-flex;align-items:stretch;height:var(--h);color:var(--cj);font-size:11px;letter-spacing:.04em;text-transform:uppercase;overflow:hidden;
+  clip-path:inset(0 0 0 100%);animation:cjIn .7s var(--ease) .55s forwards}
+@keyframes cjIn{to{clip-path:inset(0 0 0 0)}}
+/* Three looks to compare on the preview (?nav=caixa | pilula | texto): a solid blue box, an outlined pill like the hashtags, bare arrows */
+.case-jump[data-v=caixa]{background:var(--cj);color:#fff}
+.case-jump[data-v=pilula]{--h:30px;color:var(--ai-t,var(--blue));border:1px solid color-mix(in srgb,currentColor 45%,transparent);border-radius:999px;padding:0 4px}
+.case-jump[data-v=texto]{color:var(--ai-t,var(--blue))}
+.case-jump[data-v=texto] .cj-n{color:var(--mute)}
+.case-jump .cj-a{display:flex;align-items:center;justify-content:center;width:var(--h);color:inherit;text-decoration:none;position:relative;z-index:1}
+.case-jump .cj-a .arw-i{width:14px;height:14px;stroke:currentColor;transition:translate .35s var(--over)}
+.case-jump .cj-a.prev:is(:hover,:focus-visible) .arw-i{translate:-3px 0}
+.case-jump .cj-a.next:is(:hover,:focus-visible) .arw-i{translate:3px 0}
+.case-jump .cj-a:focus-visible{outline:2px solid currentColor;outline-offset:-4px}
+.cj-slot{position:relative;display:block;overflow:hidden;height:var(--h);transition:width .45s var(--ease)}
+.cj-roll{display:flex;flex-direction:column;transform:translateY(calc(-1 * var(--h)));transition:transform .45s var(--ease)}
+.cj-l{display:block;height:var(--h);line-height:var(--h);white-space:nowrap;width:max-content;padding:0 4px}
+.cj-n b{font-weight:700}
+.case-jump[data-on=prev] .cj-roll{transform:translateY(0)}
+.case-jump[data-on=next] .cj-roll{transform:translateY(calc(-2 * var(--h)))}
+.case-jump[data-v=texto][data-on] .cj-roll .cj-l:not(.cj-n){color:var(--ai-t,var(--blue))}
+/* On click the arrow shoots off the way it points */
+.case-jump.go.next .cj-a.next .arw-i{animation:cjShootR .4s ease-in forwards}
+.case-jump.go.prev .cj-a.prev .arw-i{animation:cjShootL .4s ease-in forwards}
+@keyframes cjShootR{to{translate:24px 0;opacity:0}}
+@keyframes cjShootL{to{translate:-24px 0;opacity:0}}
+/* Phones: the hashtags keep the full width and the navigation sits under them on the right */
+@media (max-width:560px){ .case-top{flex-wrap:wrap} .case-top .case-tags{flex-basis:100%} .case-jump{margin-left:auto} }
+@media (prefers-reduced-motion:reduce){ .case-jump{animation:none;clip-path:none} .cj-slot,.cj-roll,.case-jump .arw-i{transition:none!important;animation:none!important} }
 .case-meta .swap{max-width:100%}
 .case-meta dt{color:var(--mute);margin-bottom:8px}
 .case-meta dd{margin:0;font-weight:400;line-height:1.45}
@@ -470,6 +501,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .trail{position:fixed;inset:0;width:100vw;height:100vh;z-index:80;pointer-events:none}
 .ball{position:fixed;left:0;top:0;z-index:81;pointer-events:none;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:var(--cur,var(--blue));opacity:0;transition:opacity .2s,scale .35s var(--spring)}
 .ball.white{background:#fff}
+.ball.onjump{background:#fff!important}
 .ball.on{opacity:1}
 .ball.press{scale:.7}
 /* Over a film roll (Lomography) the ball grows into a drag handle with a label */
@@ -743,7 +775,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 @media(prefers-reduced-motion:reduce){.globo-palette-swatch{animation:none;transform:none}.globo-palette-meta span:last-child{transition:none}}
 
 
-/* Project navigation: previous / next at the end of every case (the top one came off, Felipe, Oct 29 2026) */
+/* Project navigation: previous / next at the end of every case (a small top box came back Nov 11 2026: .case-jump) */
 .case-neighbors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:clamp(90px,12vw,180px);padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
 .case-neighbor{display:flex;flex-direction:column;gap:clamp(16px,2.5vw,35px);min-width:0;padding:18px 0 10px;border-top:var(--rule-w) solid var(--fg);text-decoration:none;color:var(--fg)}
 .case-neighbor.next{text-align:right;align-items:flex-end}
