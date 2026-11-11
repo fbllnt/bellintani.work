@@ -566,7 +566,7 @@
     // `goCores`: the palette as bars; hovering or focusing one repaints the big 45° panel at 75 / 25 (CSS :has, no JS).
     if (it.goMarca) return `<section class="go-marca" style="${style}" aria-label="${esc(L({ en: "Logo versions", pt: "Versões do logo", es: "Versiones del logo" }))}">
       ${[["selo", "01", { en: "Primary — the seal", pt: "Primária — o selo", es: "Primaria — el sello" }],
-         ["on", "02", { en: "Primary, complementary — without the ring", pt: "Primária complementar — sem o anel", es: "Primaria complementaria — sin el anillo" }],
+         ["on", "02", { en: "Primary, complementary — without the outer circle", pt: "Primária complementar — sem o círculo de fora", es: "Primaria complementaria — sin el círculo exterior" }],
          ["horizontal", "03", { en: "Secondary — GLOBOON, for narrow spaces and small sizes", pt: "Secundária — GLOBOON, para espaços estreitos e tamanhos pequenos", es: "Secundaria — GLOBOON, para espacios estrechos y tamaños pequeños" }]]
         .map(([k, n, cap]) => `<figure class="go-tile go-${k}"><div class="go-face" role="img" aria-label="${esc(L(cap))}"><i style="-webkit-mask-image:url(images/globo-on/marca/${k}.png);mask-image:url(images/globo-on/marca/${k}.png)"></i></div><figcaption class="mono muted">${n} · ${esc(L(cap))}</figcaption></figure>`).join("")}</section>`;
     if (it.goCores) { const C = [["magenta", "#E71D73", "#FFCC00"], ["laranja", "#E94E1B", "#FFCC00"], ["azul", "#32B3CA", "#28235D"], ["amarelo", "#FFCC00", "#E94E1B"], ["areia", "#A48A7B", "#5E4C40"], ["verde", "#95C11F", "#FFCC00"], ["creme", "#F5F0E0", "#A48A7B"]];
@@ -574,6 +574,11 @@
         <div class="go-panel" aria-hidden="true"><span class="mono">45° · 75 / 25</span><i style="-webkit-mask-image:url(images/globo-on/marca/selo.png);mask-image:url(images/globo-on/marca/selo.png)"></i></div>
         <div class="go-bars mono">${C.map(([n, a, b], k) => `<button type="button" class="go-bar go-c${k}" style="--a:${a};--b:${b}"><span>${a}</span></button>`).join("")}</div>
         <p class="go-hint mono muted">${esc(L({ en: "Six colours and a cream. Point at a colour to repaint the panel: 75% main colour, 25% second, always at 45°.", pt: "Seis cores e um creme. Passe o mouse numa cor para repintar o painel: 75% da cor principal, 25% da segunda, sempre a 45°.", es: "Seis colores y un crema. Pasa el cursor sobre un color para repintar el panel: 75% del color principal, 25% del segundo, siempre a 45°." }))}</p></section>`; }
+    // `goFrames`: the original on-air styleframes as a mosaic (Felipe, Nov 11 2026: "a nice grid with the original
+    // styleframes"). A `big` frame takes 8 columns and two rows beside two small ones (`right` puts it on the right);
+    // the rest sit three to a row. All frames are 16:9 and contained, never cropped. Phones: big frames full width, the rest in pairs.
+    if (it.goFrames) return `<figure class="go-frames" style="${style}"><div class="go-fr-grid">${it.goFrames.map(f =>
+      `<div class="go-fr${f.big ? " big" : ""}${f.right ? " r" : ""}"><img src="${esc(f.src)}" alt="${esc(L(f.alt) || "")}" loading="lazy" decoding="async"></div>`).join("")}</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
     if (it.gradientPalette) return `<section class="globo-palette" aria-label="${esc(L({ en: "Globo functional gradients", pt: "Gradientes funcionais da Globo", es: "Gradientes funcionales de Globo" }))}">
       <div class="globo-palette-head mono"><span>${esc(L({ en: "THREE COLOUR WORLDS", pt: "TRÊS UNIVERSOS DE COR", es: "TRES UNIVERSOS DE COLOR" }))}</span><span>${esc(L({ en: "MOVE THE POINTER OVER THE COLOURS", pt: "PASSA O MOUSE NAS CORES", es: "PASA EL CURSOR SOBRE LOS COLORES" }))}</span></div>
       <div class="globo-palette-grid">
@@ -1125,8 +1130,9 @@
   }
 
   // A project can bring its own colours: theme: { bg, fg, mute, line, panel, accent, accentText, title }. White page otherwise.
+  // `cursor` colours the cursor ball and its trail (Globo On: the cover's dark brown, Felipe Nov 11 2026).
   // `title` colours only the big project name (Dirty Projectors: the poster's cyan, Felipe Oct 28 2026).
-  const THEME_VARS = { bg: "--bg", fg: "--fg", mute: "--mute", line: "--line", panel: "--panel", accent: "--blue", title: "--title" };
+  const THEME_VARS = { bg: "--bg", fg: "--fg", mute: "--mute", line: "--line", panel: "--panel", accent: "--blue", title: "--title", cursor: "--cur" };
   function applyTheme(t) {
     const root = document.documentElement;
     Object.entries(THEME_VARS).forEach(([k, v]) => t && t[k] ? root.style.setProperty(v, t[k]) : root.style.removeProperty(v));

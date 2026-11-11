@@ -458,7 +458,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Blue ball in place of the pointer; the flat trail behind it is drawn on a canvas (mouse only) */
 .has-ball,.has-ball *{cursor:none!important}
 .trail{position:fixed;inset:0;width:100vw;height:100vh;z-index:80;pointer-events:none}
-.ball{position:fixed;left:0;top:0;z-index:81;pointer-events:none;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:var(--blue);opacity:0;transition:opacity .2s,scale .35s var(--spring)}
+.ball{position:fixed;left:0;top:0;z-index:81;pointer-events:none;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:var(--cur,var(--blue));opacity:0;transition:opacity .2s,scale .35s var(--spring)}
 .ball.white{background:#fff}
 .ball.on{opacity:1}
 .ball.press{scale:.7}
@@ -999,7 +999,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 .go-selo .go-face{background:linear-gradient(45deg,#7fbfd0 0%,#28235d 25%,#28235d 100%)}
 .go-on .go-face{background:linear-gradient(45deg,#ffcc00 0%,#e71d73 25%,#e71d73 100%)}
 .go-on .go-face i{width:56%}
-.go-horizontal .go-face{background:#f5f0e0;box-shadow:inset 0 0 0 1px var(--line)}
+.go-horizontal .go-face{background:var(--bg)}
 .go-horizontal .go-face i{width:80%;background:#e71d73}
 .go-tile figcaption{margin-top:6px;font-size:clamp(10px,.8vw,12px);letter-spacing:.04em;text-transform:uppercase}
 .go-cores{width:100%;--a:#E71D73;--b:#FFCC00}
@@ -1024,3 +1024,13 @@ button.arw.close .arw-i{width:14px;height:14px}
 .cover-cycle img+img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 2.6s ease}
 .cover-cycle img.on{opacity:1}
 .word-big.word-img img{display:block;height:.78em;width:auto;margin:.1em 0}
+
+/* Globo On styleframes mosaic (Nov 11 2026): 8-col big frame over two rows beside two 4-col frames; contained, never cropped */
+.go-frames{margin:0}
+.go-fr-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);grid-auto-flow:row dense}
+.go-fr{grid-column:span 4;aspect-ratio:16/9;min-width:0}
+.go-fr.big{grid-column:1/span 8;grid-row:span 2;aspect-ratio:auto}
+.go-fr.big.r{grid-column:5/span 8}
+.go-fr img{display:block;width:100%;height:100%;object-fit:contain}
+.go-frames figcaption{margin-top:6px}
+@media (max-width:600px){.go-fr{grid-column:span 6}.go-fr.big,.go-fr.big.r{grid-column:1/-1;grid-row:auto;aspect-ratio:16/9}}
