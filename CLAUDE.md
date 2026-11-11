@@ -85,7 +85,9 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 ## Content
 
-- Corner links (Oct 27 2026 review): scrolling down past the first screen hides the bottom corners (all four on phones);
+- Lines (Felipe approved Nov 11 2026): every separator is `var(--rule-w) solid var(--fg)` (1px, the section's own ink); the light
+  `--line` grey is only for control outlines (filters, pills, player, logo tiles). Lines draw once on entering view, then stay.
+- Corner links (Oct 27 2026 review; all four on every screen since Nov 11 2026): scrolling down past the first screen hides the corners;
   scrolling up brings them back, so they never sit on the work. Project meta shows Type only when a project has no Scope.
   Chapters are numbered from 01 in every project, Desafio and Identidade aplicada included.
 
