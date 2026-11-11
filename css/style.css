@@ -1037,3 +1037,6 @@ button.arw.close .arw-i{width:14px;height:14px}
 
 /* Globo On (Nov 11 2026): the marked colour bar shows a dot */
 .go-bar.on span::before{content:"● "}
+.go-frames.seq .go-fr-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.go-frames.seq .go-fr{grid-column:auto}
+.go-frames.seq + .go-frames,.go-frames + .go-frames{margin-top:calc(var(--gap) * 3)}
+@media (max-width:600px){.go-frames.seq .go-fr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

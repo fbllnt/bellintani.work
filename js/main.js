@@ -581,8 +581,8 @@
         <p class="go-hint mono muted">${esc(L({ en: "Six colours and a cream. Click a colour to repaint the panel: 75% main colour, 25% second, always at 45°.", pt: "Seis cores e um creme. Clique numa cor para repintar o painel: 75% da cor principal, 25% da segunda, sempre a 45°.", es: "Seis colores y un crema. Haz clic en un color para repintar el panel: 75% del color principal, 25% del segundo, siempre a 45°." }))}</p></section>`; }
     // `goFrames`: the original on-air styleframes as a mosaic (Felipe, Nov 11 2026: "a nice grid with the original
     // styleframes"). A `big` frame takes 8 columns and two rows beside two small ones (`right` puts it on the right);
-    // the rest sit three to a row. All frames are 16:9 and contained, never cropped. Phones: big frames full width, the rest in pairs.
-    if (it.goFrames) return `<figure class="go-frames" style="${style}"><div class="go-fr-grid">${it.goFrames.map(f =>
+    // the rest sit three to a row; `seq` lays a sequence five to a row, in order. All frames are 16:9 and contained, never cropped. Phones: big frames full width, the rest in pairs.
+    if (it.goFrames) return `<figure class="go-frames${it.seq ? " seq" : ""}" style="${style}"><div class="go-fr-grid">${it.goFrames.map(f =>
       `<div class="go-fr${f.big ? " big" : ""}${f.right ? " r" : ""}"><img src="${esc(f.src)}" alt="${esc(L(f.alt) || "")}" loading="lazy" decoding="async"></div>`).join("")}</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
     if (it.gradientPalette) return `<section class="globo-palette" aria-label="${esc(L({ en: "Globo functional gradients", pt: "Gradientes funcionais da Globo", es: "Gradientes funcionales de Globo" }))}">
       <div class="globo-palette-head mono"><span>${esc(L({ en: "THREE COLOUR WORLDS", pt: "TRÊS UNIVERSOS DE COR", es: "TRES UNIVERSOS DE COLOR" }))}</span><span>${esc(L({ en: "MOVE THE POINTER OVER THE COLOURS", pt: "PASSA O MOUSE NAS CORES", es: "PASA EL CURSOR SOBRE LOS COLORES" }))}</span></div>
