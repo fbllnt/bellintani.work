@@ -399,6 +399,10 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .logo > *{position:relative;transition:color .3s var(--ease)}
 .mark{display:block;width:calc(var(--mw,.62) * 100%);aspect-ratio:var(--ar,1.6);background:currentColor;-webkit-mask:no-repeat center / contain;mask:no-repeat center / contain}
 .logos .mark:not(.type){--h:calc(var(--mw,.62) / var(--ar,1.6) * var(--s));--cut:calc(50% + (.5 - var(--f)) / var(--h) * 100%);background:linear-gradient(#000 var(--cut),var(--li) var(--cut));scale:var(--s)}
+/* A logo with an `on` file: the plain file draws above the flood line, the `on` file below it, in the same cell */
+.logos .logo > .mark{grid-area:1/1}
+.logos .mark.has-on{background:linear-gradient(#000 var(--cut),transparent var(--cut))}
+.logos .mark.on{background:linear-gradient(transparent var(--cut),var(--li) var(--cut))}
 .mark.type{background:none;width:auto;aspect-ratio:auto;font:800 clamp(18px,2.2vw,30px)/1 var(--sans);letter-spacing:-.04em;text-align:center}
 .logo .n{position:absolute;top:10px;left:12px;font-size:11px;opacity:.5}
 /* Tiles rise in a quick stagger the first time the wall is on screen (translate, delayed per tile);

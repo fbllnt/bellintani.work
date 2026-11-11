@@ -1324,7 +1324,7 @@ window.SITE = {
         { name: "SavageBrit", src: "images/logos/savage-brit.png" },
         { name: "Thura", src: "images/logos/thura.png" },
         { name: "Soma", src: "images/logos/soma.png" },
-        { name: "Supawvisor of the Month", src: "images/logos/supawvisor.png" },
+        { name: "Supawvisor of the Month", src: "images/logos/supawvisor.png", on: "images/logos/supawvisor-on.png" },
         { name: "Garage Ira", src: "images/logos/garage-ira.png" },
         { name: "Logo", src: "images/logos/logo-p10.png" },
         { name: "Semana", src: "images/logos/semana.png" },
