@@ -20,6 +20,7 @@ jobs:
           node-version: 22
       - name: Upload preview version
         run: |
+          node tools/check-site.mjs
           ALIAS="${GITHUB_REF_NAME#rascunho/}"
           npx -y wrangler@4 versions upload --preview-alias "$ALIAS"
           echo "Preview: https://${ALIAS}-bellintani-work.fbellintani.workers.dev" >> "$GITHUB_STEP_SUMMARY"

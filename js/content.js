@@ -57,16 +57,6 @@ window.SITE = {
         "Adidas", "Globo", "Meta", "Pernod Ricard", "Diageo", "Absolut", "Gatorade", "Nissan", "Land Rover", "Nokia", "Philips",
         "FIAT", "TIM", "Banco do Brasil", "Velo / Vuse", "Qiddiya", "JBS", "Housecall Pro", "ANTI Creative Finance", "SCRV.ag",
       ] },
-      // Disciplines rewritten from the work on the site (Felipe, Oct 30 2026: leaner, more accurate). Logo and graphic
-      // design fold into identity; content strategy and interaction design into digital; video production into motion.
-      // `key` ties each discipline to the projects' `disciplines` lists (the project sheet lights up the ones used)
-      { head: { en: "Disciplines", pt: "Disciplinas", es: "Disciplinas" }, flow: true, rows: [
-        { key: "strategy", en: "Brand strategy & positioning", pt: "Estratégia e posicionamento de marca", es: "Estrategia y posicionamiento de marca" }, { key: "identity", en: "Brand identity & design systems", pt: "Identidade de marca e sistemas de design", es: "Identidad de marca y sistemas de diseño" },
-        { key: "artdir", en: "Art direction", pt: "Direção de arte", es: "Dirección de arte" }, { key: "campaigns", en: "Advertising & campaigns", pt: "Publicidade e campanhas", es: "Publicidad y campañas" },
-        { key: "motion", en: "Motion & TV openings", pt: "Motion e aberturas de TV", es: "Motion y aperturas de TV" }, { key: "type", en: "Typography & lettering", pt: "Tipografia e lettering", es: "Tipografía y lettering" },
-        { key: "posters", en: "Illustration & posters", pt: "Ilustração e pôsteres", es: "Ilustración y pósteres" }, { key: "digital", en: "Digital, social & UX", pt: "Digital, social e UX", es: "Digital, social y UX" },
-        { key: "ai", en: "AI production & vibe coding", pt: "Produção com IA e vibe coding", es: "Producción con IA y vibe coding" },
-      ] },
       { head: { en: "Education", pt: "Formação", es: "Formación" }, rows: [
         { role: { en: "MBA, Data-Driven Marketing and AI", pt: "MBA, Marketing Orientado a Dados e IA", es: "MBA, Marketing Basado en Datos e IA" }, name: "USP / Esalq", years: "2026 — 2027" },
         { role: { en: "Master's, Branding", pt: "Mestrado, Branding", es: "Maestría, Branding" }, name: "ESPM", years: "2022 — 2024" },
@@ -83,7 +73,6 @@ window.SITE = {
       ] },
       { head: { en: "Contact", pt: "Contato", es: "Contacto" }, rows: [
         { role: "Email", name: "felipe@bellintani.work", url: "mailto:felipe@bellintani.work" },
-        { role: "WhatsApp", name: "+55 11 91255-2508", url: "https://wa.me/5511912552508" },
         { role: "Instagram", name: "@fbllnt", url: "https://www.instagram.com/fbllnt/" },
         { role: "LinkedIn", name: "in/fbellintani", url: "https://www.linkedin.com/in/fbellintani/" },
       ] },
@@ -157,7 +146,6 @@ window.SITE = {
     // Curated work order (Oct 28 2026): brand and campaign work first, alternating disciplines; Logofolio last. Navigation follows this list.
     {
       title: "Seja ANTI",
-      disciplines: ["artdir", "campaigns", "posters", "digital", "ai"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "59WN2psjkt1tyaxjspN8fp", name: "Killing In The Name", by: "Rage Against The Machine" },
       type: "campaign",
       client: "ANTI Creative Finance",
@@ -233,7 +221,6 @@ window.SITE = {
     },
     {
       title: "Globo",
-      disciplines: ["identity", "artdir", "motion", "type", "posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "4NexI5goFxDd1zXcLF2x6x", name: "Do Leme ao Pontal", by: "Tim Maia" },
       type: "branding",
       client: "Globo",
@@ -405,7 +392,6 @@ window.SITE = {
     },
     {
       title: "SCRV*",
-      disciplines: ["strategy", "identity", "artdir", "motion", "type", "posters", "digital", "ai"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "0LrwgdLsFaWh9VXIjBRe8t", name: "Changes", by: "David Bowie" },
       type: "branding",
       client: "SCRV.ag",
@@ -520,7 +506,6 @@ window.SITE = {
     },
     {
       title: "HOUSECALL PRO",
-      disciplines: ["identity", "campaigns", "motion", "type", "digital", "ai"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "4w3tQBXhn5345eUXDGBWZG", name: "9 to 5", by: "Dolly Parton" },
       type: "campaign",
       client: "Housecall Pro",
@@ -596,7 +581,6 @@ window.SITE = {
     },
     {
       title: "XP Inc.",
-      disciplines: ["identity", "artdir", "campaigns"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "5W3cjX2J3tjhG8zb6u0qHn", name: "Harder, Better, Faster, Stronger", by: "Daft Punk" },
       type: "campaign",
       client: "XP Inc.",
@@ -631,10 +615,9 @@ window.SITE = {
         { fullWidthIntro: true, chapter: { en: "03 · Chegada / Largada", pt: "03 · Chegada / Largada", es: "03 · Chegada / Largada" }, kicker: { en: "Sport · Campaign extension", pt: "Esporte · Desdobramento de campanha", es: "Deporte · Extensión de campaña" },
           head: { en: "Every finish is *another start.*", pt: "Toda chegada é *uma nova largada.*", es: "Cada llegada es *un nuevo punto de partida.*" },
           text: { en: "A graphic system built around the idea that an athlete's finish line is also a new starting line, from typographic experiments to the swimming and judo campaign executions.", pt: "Um sistema gráfico construído em cima da ideia de que a linha de chegada de um atleta também é uma nova largada, dos estudos tipográficos às peças de natação e judô.", es: "Un sistema gráfico construido sobre la idea de que la meta de un atleta también es un nuevo punto de partida, de los estudios tipográficos a las piezas de natación y judo." } },
-        { src: "images/xp/chegada-largada-01.jpg", ar: "1719/966", col: 1, span: 12, caption: { en: "Largada — hero typography", pt: "Largada — tipografia principal", es: "Largada — tipografía principal" } },
-        { src: "images/xp/chegada-largada-02.jpg", ar: "1719/966", col: 1, span: 12, caption: { en: "Chegada / Largada — three typography explorations", pt: "Chegada / Largada — três estudos tipográficos", es: "Chegada / Largada — tres estudios tipográficos" } },
-        { src: "images/xp/chegada-largada-03.jpg", ar: "1719/966", col: 1, span: 6, caption: { en: "Swimming — Chegada / Largada", pt: "Natação — Chegada / Largada", es: "Natación — Chegada / Largada" } },
-        { src: "images/xp/chegada-largada-04.jpg", ar: "1719/966", col: 7, span: 6, caption: { en: "Judo — Ponto de partida / Ponto final", pt: "Judô — Ponto de partida / Ponto final", es: "Judo — Ponto de partida / Ponto final" } },
+        { src: "images/xp/largada-empurra.gif", ar: "2560/1439", col: 1, span: 12, caption: { en: "Largada — hero typography", pt: "Largada — tipografia principal", es: "Largada — tipografía principal" } },
+        { src: "images/xp/chegada-largada-03-hd.jpg", ar: "1719/966", col: 1, span: 6, caption: { en: "Swimming — Chegada / Largada", pt: "Natação — Chegada / Largada", es: "Natación — Chegada / Largada" } },
+        { src: "images/xp/chegada-largada-04-hd.jpg", ar: "1719/966", col: 7, span: 6, caption: { en: "Judo — Ponto de partida / Ponto final", pt: "Judô — Ponto de partida / Ponto final", es: "Judo — Ponto de partida / Ponto final" } },
         { chapter: { en: "04 · Volleyball", pt: "04 · Vôlei", es: "04 · Vóley" }, grid: "fluxo", kicker: { en: "Athlete stories", pt: "Histórias de atletas", es: "Historias de atletas" },
           head: { en: "Turning a volleyball player into the voice of the LGBTQIA+ community in sport: *XP invests.*", pt: "Transformar um jogador de vôlei na voz da comunidade LGBTQIA+ no esporte: *a XP investe.*", es: "Convertir a un jugador de vóley en la voz de la comunidad LGBTQIA+ en el deporte: *XP invierte.*" } },
         { src: "images/xp/volei-01.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Story frames", pt: "Quadros da história", es: "Cuadros de la historia" } },
@@ -648,7 +631,6 @@ window.SITE = {
     },
     {
       title: "Cinema Especial",
-      disciplines: ["motion", "posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "2WWG2WjVJuJRVmgAxzbkad", name: "Cinema Paradiso", by: "Ennio Morricone" },
       type: "motion",
       client: "TV Globo",
@@ -715,7 +697,6 @@ window.SITE = {
     // Gig poster for Cine Joia (Felipe, Oct 27 2026); material from Drive "07. OUTROS/CINE JOIA & POSTERS/JOIA#04 - DIRTY PROJECTORS"
     {
       title: "PopStar",
-      disciplines: ["identity", "artdir", "motion"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "5I0WMWBGRuHiAwNa6yjm9r", name: "Lucky Star", by: "Madonna" },
       type: "motion",
       client: "TV Globo",
@@ -760,7 +741,6 @@ window.SITE = {
     },
     {
       title: "THURA",
-      disciplines: ["strategy", "identity"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       hidden: true, // Felipe, Oct 28 2026: off the site, everything kept (remove this line to bring it back)
       track: { id: "6aBUnkXuCEQQHAlTokv9or", name: "This Must Be the Place", by: "Talking Heads" },
       type: "branding",
@@ -830,7 +810,6 @@ window.SITE = {
     },
     {
       title: "Tela Quente",
-      disciplines: ["identity", "motion", "posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "6ZFbXIJkuI1dVNWvzJzown", name: "Time", by: "Hans Zimmer" },
       type: "motion",
       client: "TV Globo",
@@ -889,7 +868,6 @@ window.SITE = {
     },
     {
       title: "CoreHi",
-      disciplines: ["strategy", "identity", "type"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "5BXBi5pLeJhblMVH2ltjpl", name: "Computer Love", by: "Kraftwerk" },
       type: "branding",
       client: "CoreHuman Intelligence",
@@ -960,7 +938,6 @@ window.SITE = {
     },
     {
       title: "Adidas 60",
-      disciplines: ["artdir", "campaigns", "motion", "ai"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "04HOx7AhRXimqJETzRRAS9", name: "Filho Maravilha (Fio Maravilha)", by: "Jorge Ben Jor" },
       type: "motion",
       client: "Adidas",
@@ -1008,7 +985,6 @@ window.SITE = {
     },
     {
       title: "DJ Shadow",
-      disciplines: ["posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       // Approved by Felipe on the preview and published (Oct 29 2026). The hands poster was rejected at the time
       // (Felipe): only the silhouette line is shown, the black & white one first.
       track: { id: "1a9maLxqpx3cxjY1lTj62B", name: "Midnight In A Perfect World", by: "DJ Shadow" },
@@ -1016,57 +992,50 @@ window.SITE = {
       client: "Cine Joia",
       year: "2012",
       role: { en: "Graphic Designer", pt: "Designer gráfico", es: "Diseñador gráfico" },
-      scope: { en: "Gig poster // Colour versions", pt: "Pôster de show // Versões de cor", es: "Póster de concierto // Versiones de color" },
+      scope: { en: "Gig poster // Black & white", pt: "Pôster de show // Preto e branco", es: "Póster de concierto // Blanco y negro" },
       sector: { en: "Concert venue, São Paulo", pt: "Casa de shows, São Paulo", es: "Sala de conciertos, São Paulo" },
-      deliverables: { en: "Poster, colour versions and digital pieces", pt: "Pôster, versões de cor e peças digitais", es: "Póster, versiones de color y piezas digitales" },
+      deliverables: { en: "Poster and digital pieces", pt: "Pôster e peças digitais", es: "Póster y piezas digitales" },
       tags: { en: ["GigPoster", "Halftone", "Music"], pt: ["PôsterDeShow", "Retícula", "Música"], es: ["PósterDeConcierto", "Semitono", "Música"] },
       // Felipe (Oct 29 2026): cream page, main type in black. The favourite version is black and white, so highlights
       // follow the colour rule for black/white projects and use the site blue.
       theme: { bg: "#f0efe8", fg: "#111111", mute: "#6c6b66", line: "#dcdbd2", panel: "#e6e5dd", accent: "#1a2bff" },
       tools: ["Adobe CC"],
-      // Cover: the four colour versions wheat-pasted under the Liberdade lanterns (mockup, real artwork composited)
-      image: "images/dj-shadow/mockup-wall-colours.jpg",
+      // Black-and-white applications, revised November 4, 2026.
+      image: "images/dj-shadow/mockup-wall-muted-v3.jpg",
       hero: "bleed",
-      heroAr: "2000/1341",
+      heroAr: "3/2",
       summary: {
-        en: "Poster for DJ Shadow at Cine Joia, São Paulo, 19.10.12, the night of the Chocolate party's 10th anniversary. A figure pressed against frosted glass, in halftone, with the name cut across a circle. Black and white, and in four colours.",
-        pt: "Pôster do DJ Shadow no Cine Joia, São Paulo, 19.10.12, na noite dos 10 anos da festa Chocolate. Uma figura colada num vidro fosco, em retícula, com o nome cortado num círculo. Em preto e branco e em quatro cores.", es: "Póster de DJ Shadow en Cine Joia, São Paulo, 19.10.12, la noche de los 10 años de la fiesta Chocolate. Una figura pegada a un vidrio esmerilado, en semitono, con el nombre cortado en un círculo. En blanco y negro y en cuatro colores.",
+        en: "Poster for DJ Shadow at Cine Joia, São Paulo, 19.10.12, the night of the Chocolate party's 10th anniversary. A figure pressed against frosted glass, in halftone, with the name cut across a circle. In black and white.",
+        pt: "Pôster do DJ Shadow no Cine Joia, São Paulo, 19.10.12, na noite dos 10 anos da festa Chocolate. Uma figura colada num vidro fosco, em retícula, com o nome cortado num círculo. Em preto e branco.", es: "Póster de DJ Shadow en Cine Joia, São Paulo, 19.10.12, la noche de los 10 años de la fiesta Chocolate. Una figura pegada a un vidrio esmerilado, en semitono, con el nombre cortado en un círculo. En blanco y negro.",
       },
       layout: "loose", grid: "trilho",
       gallery: [
         // The black & white version, Felipe's favourite, large and centred right under the cover
         { fullWidthIntro: true, grid: "fluxo", chapter: { en: "01 · The poster", pt: "01 · O pôster", es: "01 · El póster" }, kicker: { en: "Cine Joia presents · 19.10.12", pt: "Cine Joia apresenta · 19.10.12", es: "Cine Joia presenta · 19.10.12" },
           head: { en: "A shadow *behind the glass.*", pt: "Uma sombra *atrás do vidro.*", es: "Una sombra *detrás del vidrio.*" },
-          text: { en: "A figure pressed against frosted glass, one hand raised, drawn only with halftone dots. The name is cut along the diagonal of a circle. Of all the versions, black and white is my favourite.", pt: "Uma figura colada num vidro fosco, com uma mão levantada, desenhada só com pontos de retícula. O nome é cortado na diagonal de um círculo. De todas as versões, a preto e branco é a minha favorita.", es: "Una figura pegada a un vidrio esmerilado, con una mano levantada, dibujada solo con puntos de semitono. El nombre se corta en la diagonal de un círculo. De todas las versiones, la de blanco y negro es mi favorita." } },
+          text: { en: "A figure pressed against frosted glass, one hand raised, drawn only with halftone dots. The name is cut along the diagonal of a circle.", pt: "Uma figura colada num vidro fosco, com uma mão levantada, desenhada só com pontos de retícula. O nome é cortado na diagonal de um círculo.", es: "Una figura pegada a un vidrio esmerilado, con una mano levantada, dibujada solo con puntos de semitono. El nombre se corta en la diagonal de un círculo. " } },
         { src: "images/dj-shadow/poster-bw.jpg", ar: "1428/2000", col: 1, span: 12 },
-        { chapter: { en: "02 · Versions", pt: "02 · Versões", es: "02 · Versiones" }, kicker: { en: "Yellow · cyan · magenta · orange · black", pt: "Amarelo · ciano · magenta · laranja · preto", es: "Amarillo · cian · magenta · naranja · negro" }, grid: "modulos", cols: 5, cell: "5/7", bare: true,
-          head: { en: "One figure, *five colours.*", pt: "Uma figura, *cinco cores.*", es: "Una figura, *cinco colores.*" },
-          text: { en: "The same poster with the circle in yellow, cyan, magenta and orange, and a black version with the figure in negative.", pt: "O mesmo pôster com o círculo em amarelo, ciano, magenta e laranja, e uma versão preta com a figura em negativo.", es: "El mismo póster con el círculo en amarillo, cian, magenta y naranja, y una versión negra con la figura en negativo." } },
-        { src: "images/dj-shadow/poster-silhouette.jpg", ar: "1428/2000" },
-        { src: "images/dj-shadow/version-cyan.jpg", ar: "999/1400" },
-        { src: "images/dj-shadow/version-magenta.jpg", ar: "999/1400" },
-        { src: "images/dj-shadow/version-orange.jpg", ar: "999/1400" },
-        { src: "images/dj-shadow/version-black.jpg", ar: "999/1400" },
+        { chapter: { en: "02 · Negative", pt: "02 · Negativo", es: "02 · Negativo" }, kicker: { en: "Black · white", pt: "Preto · branco", es: "Negro · blanco" }, grid: "fluxo", fullWidthIntro: true,
+          head: { en: "The same shadow, *in reverse.*", pt: "A mesma sombra, *ao contrário.*", es: "La misma sombra, *al revés.*" },
+          text: { en: "The inverted version brings the figure forward in white against a black ground.", pt: "Na versão invertida, a figura aparece em branco sobre o fundo preto.", es: "En la versión invertida, la figura aparece en blanco sobre el fondo negro." } },
+        { src: "images/dj-shadow/version-black.jpg", ar: "999/1400", col: 1, span: 12 },
         { chapter: { en: "03 · Up close", pt: "03 · De perto", es: "03 · De cerca" }, kicker: { en: "Halftone · type", pt: "Retícula · tipografia", es: "Semitono · tipografía" }, grid: "fluxo", fullWidthIntro: true,
           head: { en: "The dot *does the blur.*", pt: "O ponto *faz o desfoque.*", es: "El punto *hace el desenfoque.*" },
           text: { en: "Close up, the shadow is only halftone dots getting bigger and smaller. The name breaks along the diagonal that splits the circle.", pt: "De perto, a sombra é só ponto de retícula aumentando e diminuindo. O nome quebra na diagonal que corta o círculo.", es: "De cerca, la sombra es solo puntos de semitono que crecen y se achican. El nombre se quiebra en la diagonal que divide el círculo." } },
         { src: "images/dj-shadow/detail-x.jpg", ar: "1000/664", col: 1, span: 4 },
         { src: "images/dj-shadow/detail-x2.jpg", ar: "1000/664", col: 5, span: 4 },
         { src: "images/dj-shadow/detail-z.jpg", ar: "1000/664", col: 9, span: 4 },
-        // Mockups: Flora scenes with the real artwork composited on top, so every text is the original; the pasted ones
-        // get torn edges, paste bubbles and creases (Felipe, Oct 29 2026: "muito flat")
-        { chapter: { en: "04 · Liberdade", pt: "04 · Liberdade", es: "04 · Liberdade" }, kicker: { en: "Mockups", pt: "Mockups", es: "Mockups" }, grid: "fluxo", fullWidthIntro: true,
-          head: { en: "Around *the venue.*", pt: "Em volta *da casa.*", es: "Alrededor *de la sala.*" },
-          text: { en: "Cine Joia sits in Liberdade, São Paulo's Japanese quarter. The poster taken out there: at the door of the cinema and wheat-pasted in the rain, under the red lanterns.", pt: "O Cine Joia fica na Liberdade, o bairro japonês de São Paulo. Levei o pôster pra lá: na porta do cinema e em lambe-lambe na chuva, debaixo das lanternas vermelhas.", es: "Cine Joia está en Liberdade, el barrio japonés de São Paulo. Llevé el póster hasta allá: a la puerta del cine y pegado en muro bajo la lluvia, debajo de los farolitos rojos." } },
-        { src: "images/dj-shadow/mockup-cine-joia-bw.jpg", ar: "1611/2000", col: 1, span: 6, caption: { en: "At the door · mockup", pt: "Na porta · mockup", es: "En la puerta · mockup" } },
-        { src: "images/dj-shadow/mockup-night.jpg", ar: "1611/2000", col: 7, span: 6, caption: { en: "In the rain · mockup", pt: "Na chuva · mockup", es: "Bajo la lluvia · mockup" } },
-        // Round die-cut stickers: only the circle and its DJ badge, in the black, magenta and orange "A" versions
-        { chapter: { en: "05 · Stickers", pt: "05 · Adesivos", es: "05 · Stickers" }, kicker: { en: "Die-cut · mockups", pt: "Recorte · mockups", es: "Troquelado · mockups" }, grid: "fluxo", fullWidthIntro: true,
+        // Proposed applications are explicitly labelled as mockups, not historical deliverables.
+        { chapter: { en: "04 · Applications", pt: "04 · Aplicações", es: "04 · Aplicaciones" }, kicker: { en: "T-shirt · vinyl · mockups", pt: "Camiseta · vinil · mockups", es: "Camiseta · vinilo · mockups" }, grid: "fluxo", fullWidthIntro: true,
+          head: { en: "Beyond *the poster.*", pt: "Além *do pôster.*", es: "Más allá *del póster.*" },
+          text: { en: "Two proposed applications of the black-and-white artwork: a concert T-shirt and a vinyl sleeve.", pt: "Duas propostas de aplicação da arte em preto e branco: camiseta de show e capa de vinil.", es: "Dos propuestas de aplicación del arte en blanco y negro: camiseta de concierto y portada de vinilo." } },
+        { src: "images/dj-shadow/mockup-shirt-bw-v2.jpg", ar: "3/2", col: 1, span: 6, caption: { en: "T-shirt · concept mockup", pt: "Camiseta · mockup conceitual", es: "Camiseta · mockup conceptual" } },
+        { src: "images/dj-shadow/mockup-vinyl-bw-v2.jpg", ar: "3/2", col: 7, span: 6, caption: { en: "Vinyl · concept mockup", pt: "Vinil · mockup conceitual", es: "Vinilo · mockup conceptual" } },
+        { chapter: { en: "05 · Stickers", pt: "05 · Adesivos", es: "05 · Stickers" }, kicker: { en: "Wear · mockup", pt: "Desgaste · mockup", es: "Desgaste · mockup" }, grid: "fluxo", fullWidthIntro: true,
           head: { en: "Just *the circle.*", pt: "Só *o círculo.*", es: "Solo *el círculo.*" },
-          text: { en: "The circle on its own, as round die-cut stickers in black, magenta and yellow: on a street box, on the back of a sign in Liberdade and on a skateboard.", pt: "Só o círculo, em adesivos redondos recortados em preto, magenta e amarelo: numa caixa de luz, atrás de uma placa na Liberdade e num skate.", es: "Solo el círculo, en stickers redondos troquelados en negro, magenta y amarillo: en una caja de luz, detrás de un letrero en Liberdade y en un skate." } },
-        { src: "images/dj-shadow/stickers-box.jpg", ar: "1611/2000", col: 1, span: 4, caption: { en: "Street box · mockup", pt: "Caixa de luz · mockup", es: "Caja de luz · mockup" } },
-        { src: "images/dj-shadow/stickers-sign.jpg", ar: "1611/2000", col: 5, span: 4, caption: { en: "Street sign · mockup", pt: "Placa · mockup", es: "Letrero · mockup" } },
-        { src: "images/dj-shadow/stickers-skate.jpg", ar: "1611/2000", col: 9, span: 4, caption: { en: "Skateboard · mockup", pt: "Skate · mockup", es: "Skate · mockup" } },
+          text: { en: "The circle as a black-and-white sticker on a worn club bathroom door. Layers of paper, torn edges and traces of glue.", pt: "O círculo em adesivos preto e branco na porta gasta de um banheiro de casa noturna. Camadas de papel, bordas rasgadas e marcas de cola.", es: "El círculo en stickers blancos y negros sobre la puerta gastada de un baño de club. Capas de papel, bordes rasgados y marcas de pegamento." } },
+        { src: "images/dj-shadow/mockup-sticker-torn-v2.jpg", ar: "1/1", col: 1, span: 5, caption: { en: "Torn sticker · mockup", pt: "Adesivo rasgado · mockup", es: "Sticker rasgado · mockup" } },
+        { src: "images/dj-shadow/mockup-stickers-bathroom-v2.jpg", ar: "3/2", col: 6, span: 7, caption: { en: "Club bathroom · concept mockup", pt: "Banheiro de casa noturna · mockup conceitual", es: "Baño de club · mockup conceptual" } },
         // The night: facts from Cine Joia's own film (YouTube description) and Popload's announcement (Aug 2012; its
         // picture is a different flyer, so it is not shown). Photos: Serjão Carvalho on Flickr, all rights reserved,
         // credited and linked; Felipe to ask him (Oct 29 2026).
@@ -1100,7 +1069,6 @@ window.SITE = {
     },
     {
       title: "Dirty Projectors",
-      disciplines: ["type", "posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "0uX0CZRfsZlFPihkuIMMFp", name: "Gun Has No Trigger", by: "Dirty Projectors" },
       type: "poster",
       client: "Cine Joia",
@@ -1162,7 +1130,6 @@ window.SITE = {
     },
     {
       title: "Globoplay",
-      disciplines: ["identity", "motion"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "3iSmEacr24vUxitXq3e6cN", name: "Televisão", by: "Titãs" },
       type: "branding",
       client: "Globo",
@@ -1219,7 +1186,6 @@ window.SITE = {
     },
     {
       title: "DMA",
-      disciplines: ["identity", "campaigns"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "2VEZx7NWsZ1D0eJ4uv5Fym", name: "Digital Love", by: "Daft Punk" },
       type: "branding",
       client: "JBS",
@@ -1310,7 +1276,6 @@ window.SITE = {
     },
     {
       title: "Explosions in the Sky",
-      disciplines: ["posters"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       // Approved by Felipe on the preview and published (Oct 29 2026)
       track: { id: "3HBcQ5GenzAlBhCIgDGL3x", name: "Your Hand in Mine", by: "Explosions in the Sky" },
       type: "poster",
@@ -1322,7 +1287,7 @@ window.SITE = {
       deliverables: { en: "Poster, skyline illustration, signed limited screen print", pt: "Pôster, ilustração da cidade, serigrafia limitada e assinada", es: "Póster, ilustración de la ciudad, serigrafía limitada y firmada" },
       tags: { en: ["GigPoster", "Illustration", "ScreenPrint", "Music"], pt: ["PôsterDeShow", "Ilustração", "Serigrafia", "Música"], es: ["PósterDeConcierto", "Ilustración", "Serigrafía", "Música"] },
       // The poster's own colours: dark slate ink, white, the pink of the windows (Felipe, Oct 29 2026)
-      theme: { bg: "#26353a", fg: "#f1f1f3", mute: "#93a1a6", line: "#3c4c52", panel: "#2e3e44", accent: "#e01563", accentText: "#ff5c94" },
+      theme: { bg: "#26353a", fg: "#f1f1f3", mute: "#93a1a6", line: "#3c4c52", panel: "#2e3e44", accent: "#e01563", accentText: "#ff6699" },
       tools: ["Adobe CC"],
       // Cover: Felipe's night sky with the band's logo, slate matched to the page (#253231 -> #273639 ~ #26353a), a little shorter
       image: "images/explosions-in-the-sky/cover-night.jpg",
@@ -1395,7 +1360,6 @@ window.SITE = {
     // Logofolio stays the last project.
     {
       title: "Logofolio",
-      disciplines: ["identity"], // read from scope, role and deliverables (Oct 29 2026): Felipe to confirm
       track: { id: "6hHc7Pks7wtBIW8Z6A0iFq", name: "Blue Monday", by: "New Order" },
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca", es: "Diseño de logotipo // Identidad de marca" },
       summary: {
