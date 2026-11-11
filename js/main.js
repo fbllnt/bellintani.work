@@ -78,7 +78,10 @@
   const q = new URLSearchParams(location.search);
 
   // Projects with `hidden: true` in content.js stay off the site in every view (?full included), files untouched.
-  S.projects = S.projects.filter(p => !p.hidden);
+  // A draft (`hidden: true, draft: true`) shows only on the hidden preview hosts (*.workers.dev, local), so Felipe can
+  // review it before it goes live (CLAUDE.md, new projects stay draft until approved).
+  const previewHost = /\.workers\.dev$|^localhost$|^127\./.test(location.hostname);
+  S.projects = S.projects.filter(p => !p.hidden || (p.draft && previewHost));
 
   // ---------- Missing material kept off the site (Felipe, Oct 27 2026) ----------
   // With `showMissing: false` in content.js, the "Falta" placeholders don't show: "?" meta values, todo boxes and a
