@@ -75,36 +75,15 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @keyframes land{to{opacity:1;transform:none}}
 @keyframes rise{from{opacity:0;transform:translateY(var(--y))}to{opacity:1;transform:none}}
 /* Rest state: after the intro, on skip, and with reduced motion */
-/* Scroll cue: appears after the tagline, chevrons pulse downward one after the other */
-.cue{left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:3;padding:8px;color:var(--fg);opacity:0;transition:opacity .4s}
-.cue-old{display:block;width:34px;height:36px;fill:none;stroke:currentColor;stroke-width:4.5;stroke-linecap:square;overflow:visible}
-.cue-old path{animation:cueDrop 1.6s var(--ease) infinite}
-.cue-old path + path{animation-delay:.18s}
-/* Draft variants (rascunho/setas): one shows, picked by data-v */
-.cue > *{display:none}
-.cue[data-v="atual"] .cue-old{display:block}
-.cue[data-v="nenhuma"]{display:none}
-/* texto: the corners' own type, "Trabalhos" + a thin arrow, sitting on their baseline */
-.cue[data-v="texto"]{bottom:calc(20px - 6px + env(safe-area-inset-bottom,0px));font:700 13px/1 var(--sans);letter-spacing:-.01em;text-transform:uppercase;text-decoration:none}
-.cue[data-v="texto"] .cue-txt{display:flex;align-items:center;gap:6px}
-.cue-txt svg{width:12px;height:12px;margin-top:-1px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:square;overflow:visible;animation:cueBob 2.2s var(--ease) infinite}
-/* linha: a 1px rule with a short segment running down it */
-.cue[data-v="linha"]{bottom:calc(20px - 8px + env(safe-area-inset-bottom,0px))}
-.cue[data-v="linha"] .cue-line{display:block;position:relative;width:1px;height:48px;background:color-mix(in srgb,currentColor 18%,transparent);overflow:hidden}
-.cue-line::after{content:"";position:absolute;left:0;top:0;width:1px;height:18px;background:currentColor;animation:cueRun 1.9s var(--ease) infinite}
-/* fina: one thin arrow, the same line weight as the site's other arrows */
-.cue[data-v="fina"]{bottom:calc(20px - 10px + env(safe-area-inset-bottom,0px))}
-.cue[data-v="fina"] .cue-thin{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:square;overflow:visible;animation:cueBob 2.2s var(--ease) infinite}
+/* Scroll cue: one thin arrow bobbing gently, the same line weight as the site's other arrows (Felipe chose it Nov 11 2026; was two heavy chevrons) */
+.cue{left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:3;padding:8px;color:var(--fg);opacity:0;transition:opacity .4s}
+.cue svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:square;overflow:visible;animation:cueBob 2.2s var(--ease) infinite}
 @keyframes cueBob{0%,100%{translate:0 -2px}50%{translate:0 3px}}
-@keyframes cueRun{from{translate:0 -18px}to{translate:0 48px}}
-/* Phones: the bottom corners fill the row, so the cue sits just above them, centred */
-@media (max-width:600px){ .cue[data-v]{bottom:calc(48px + env(safe-area-inset-bottom,0px))} }
-@keyframes cueDrop{0%{opacity:.45;transform:translateY(-3px)}45%{opacity:1}100%{opacity:.45;transform:translateY(4px)}}
 .play .cue{animation:fade .5s ease forwards 5.4s}
 .done .cue{opacity:1}
 .cue.gone{opacity:0!important;pointer-events:none}
 .cue:focus-visible{outline:1px solid currentColor}
-@media (prefers-reduced-motion:reduce){ .cue *,.cue-line::after{animation:none!important} }
+@media (prefers-reduced-motion:reduce){ .cue svg{animation:none} }
 .done .loader,.done .panel,.done .skip{display:none}
 /* Repeat visits: no countdown, the name rises at once and the tagline follows (Felipe, Oct 30 2026) */
 .play.quick .loader,.play.quick .panel,.play.quick .skip{display:none}

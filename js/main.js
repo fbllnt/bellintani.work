@@ -364,7 +364,6 @@
 
   // Scroll cue: jumps to the work list and hides once the visitor has started scrolling
   const cue = $("cue");
-  { const v = new URLSearchParams(location.search).get("seta"); if (/^(texto|linha|fina|atual|nenhuma)$/.test(v || "")) cue.dataset.v = v; }
   if (!S.projects.length) { cue.href = "#services"; cue.setAttribute("aria-label", T("services")); }
   cue.addEventListener("click", e => { e.preventDefault(); $(S.projects.length ? "work" : "services").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); });
   const cueCheck = () => cue.classList.toggle("gone", scrollY > 40);
