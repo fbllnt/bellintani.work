@@ -551,6 +551,19 @@
     }
     if (it.todo) return `<div class="todo${style ? " fig" : ""}" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
     // Globo's functional gradients as living, CSS-only specimens (existing historic source artwork remains above).
+    // Globo On system, drawn on the page instead of brandbook pages (Felipe, Nov 11 2026: "não use nada cru, tirado
+    // direto do brandbook"). `goMarca`: the three logo versions as masks over the brand's own gradients.
+    // `goCores`: the palette as bars; hovering or focusing one repaints the big 45° panel at 75 / 25 (CSS :has, no JS).
+    if (it.goMarca) return `<section class="go-marca" style="${style}" aria-label="${esc(L({ en: "Logo versions", pt: "Versões do logo", es: "Versiones del logo" }))}">
+      ${[["selo", "01", { en: "Primary — the seal", pt: "Primária — o selo", es: "Primaria — el sello" }],
+         ["on", "02", { en: "Primary, complementary — without the ring", pt: "Primária complementar — sem o anel", es: "Primaria complementaria — sin el anillo" }],
+         ["horizontal", "03", { en: "Secondary — GLOBOON, for narrow spaces and small sizes", pt: "Secundária — GLOBOON, para espaços estreitos e tamanhos pequenos", es: "Secundaria — GLOBOON, para espacios estrechos y tamaños pequeños" }]]
+        .map(([k, n, cap]) => `<figure class="go-tile go-${k}"><div class="go-face" role="img" aria-label="${esc(L(cap))}"><i style="-webkit-mask-image:url(images/globo-on/marca/${k}.png);mask-image:url(images/globo-on/marca/${k}.png)"></i></div><figcaption class="mono muted">${n} · ${esc(L(cap))}</figcaption></figure>`).join("")}</section>`;
+    if (it.goCores) { const C = [["magenta", "#E71D73", "#FFCC00"], ["laranja", "#E94E1B", "#FFCC00"], ["azul", "#32B3CA", "#28235D"], ["amarelo", "#FFCC00", "#E94E1B"], ["areia", "#A48A7B", "#5E4C40"], ["verde", "#95C11F", "#FFCC00"], ["creme", "#F5F0E0", "#A48A7B"]];
+      return `<section class="go-cores" style="${style};${C.map(([, a, b], k) => `--a${k}:${a};--b${k}:${b}`).join(";")}" aria-label="${esc(L({ en: "Colour palette", pt: "Paleta de cores", es: "Paleta de colores" }))}">
+        <div class="go-panel" aria-hidden="true"><span class="mono">45° · 75 / 25</span><i style="-webkit-mask-image:url(images/globo-on/marca/selo.png);mask-image:url(images/globo-on/marca/selo.png)"></i></div>
+        <div class="go-bars mono">${C.map(([n, a, b], k) => `<button type="button" class="go-bar go-c${k}" style="--a:${a};--b:${b}"><span>${a}</span></button>`).join("")}</div>
+        <p class="go-hint mono muted">${esc(L({ en: "Six colours and a cream. Point at a colour to repaint the panel: 75% main colour, 25% second, always at 45°.", pt: "Seis cores e um creme. Passe o mouse numa cor para repintar o painel: 75% da cor principal, 25% da segunda, sempre a 45°.", es: "Seis colores y un crema. Pasa el cursor sobre un color para repintar el panel: 75% del color principal, 25% del segundo, siempre a 45°." }))}</p></section>`; }
     if (it.gradientPalette) return `<section class="globo-palette" aria-label="${esc(L({ en: "Globo functional gradients", pt: "Gradientes funcionais da Globo", es: "Gradientes funcionales de Globo" }))}">
       <div class="globo-palette-head mono"><span>${esc(L({ en: "THREE COLOUR WORLDS", pt: "TRÊS UNIVERSOS DE COR", es: "TRES UNIVERSOS DE COLOR" }))}</span><span>${esc(L({ en: "MOVE THE POINTER OVER THE COLOURS", pt: "PASSA O MOUSE NAS CORES", es: "PASA EL CURSOR SOBRE LOS COLORES" }))}</span></div>
       <div class="globo-palette-grid">
