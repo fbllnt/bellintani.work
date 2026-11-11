@@ -514,6 +514,11 @@ window.SITE = {
         { src: "images/top50/van-scene.jpg", ar: "1080/1920", col: 1, span: 4 },
         { src: "images/top50/van-worker.jpg", ar: "1080/1920", col: 5, span: 4 },
         { src: "images/top50/van-branding.jpg", ar: "1080/1920", col: 9, span: 4 },
+        // "Everything to run and grow your business" lettering, still and stop-motion film (Felipe, Nov 11 2026; draft)
+        { chapter: { en: "06 · Everything", pt: "06 · Everything", es: "06 · Everything" }, kicker: { en: "Lettering · stop motion", pt: "Lettering · stop motion", es: "Lettering · stop motion" },
+          head: { en: "Everything to run and *grow your business.*", pt: "Everything to run and *grow your business.*", es: "Everything to run and *grow your business.*" } },
+        { video: "images/top50/everything-stopmotion.mp4", webm: "images/top50/everything-stopmotion.webm", poster: "images/top50/everything-stopmotion-poster.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Stop motion — the line, letter by letter", pt: "Stop motion — a frase, letra por letra", es: "Stop motion — la frase, letra por letra" } },
+        { src: "images/top50/everything-still.jpg", ar: "2000/1116", col: 7, span: 6, caption: { en: "Final frame", pt: "Quadro final", es: "Cuadro final" } },
       ],
     },
     {
@@ -1493,6 +1498,7 @@ window.SITE = {
         { name: "Today by Philips", src: "images/logos/today-philips.png" },
         { name: "Everything", src: "images/logos/everything-script.png" },
         { name: "Everything to run and grow your business", src: "images/logos/everything-stamp.png" },
+        { name: "Everything to run and grow your business, arch", src: "images/logos/everything-arch.png" },
       // Leo Mafra and the flat House Party Orloff removed, and the empty "Logo 38–50" placeholders dropped (Felipe, Oct 27 2026)
       ],
     },
