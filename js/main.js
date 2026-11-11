@@ -127,6 +127,22 @@
   }
 
   // Cover cycles: every 5 s each `.cover-cycle` on the page fades to its next still; a click or Enter jumps ahead.
+  // Globo On pickers (Nov 11 2026): a pill or a bar sets the colour panel; a pill or a tile picks a logo version.
+  // The pills of a chapter drive the first matching block after it; the marks move together.
+  const goPick = (scope, sel, k) => {
+    const box = scope.querySelector(sel); if (!box) return;
+    const mark = (els, attr) => els.forEach(el => { const on = el.dataset.k.toLowerCase() === String(k).toLowerCase(); el.classList.toggle("on", on); if (attr) el.setAttribute("aria-pressed", String(on)); });
+    if (sel === ".go-cores") { const bar = [...box.querySelectorAll(".go-bar")].find(b => b.dataset.k.toLowerCase() === k.toLowerCase());
+      if (bar) { box.style.setProperty("--a", bar.style.getPropertyValue("--a")); box.style.setProperty("--b", bar.style.getPropertyValue("--b")); } mark(box.querySelectorAll(".go-bar"), true); }
+    else { box.classList.add("picked"); mark(box.querySelectorAll(".go-tile")); }
+    const pills = scope.querySelector(`.pills.pick[data-pick="${sel.slice(1)}"]`);
+    if (pills) { pills.querySelectorAll("button").forEach(b => { const on = b.dataset.k.toLowerCase() === String(k).toLowerCase(); b.parentNode.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); }); }
+  };
+  document.addEventListener("click", e => { const t = e.target.closest && e.target.closest(".pills.pick button, .go-bar, .go-tile"); if (!t) return;
+    const scope = t.closest(".case-gallery") || document;
+    if (t.matches(".go-bar")) goPick(scope, ".go-cores", t.dataset.k);
+    else if (t.matches(".go-tile")) goPick(scope, ".go-marca", t.dataset.k);
+    else goPick(scope, "." + t.closest(".pills").dataset.pick, t.dataset.k); });
   const cycleStep = el => { const imgs = [...el.querySelectorAll("img")], k = imgs.findIndex((im, n) => n && im.classList.contains("on"));
     imgs.forEach(im => { if (im !== imgs[0]) im.classList.remove("on"); }); const next = (k < 0 ? 0 : k) + 1; if (next < imgs.length) imgs[next].classList.add("on"); el.dataset.t = Date.now(); };
   document.addEventListener("click", e => { const el = e.target.closest && e.target.closest(".cover-cycle"); if (el) cycleStep(el); });
@@ -550,7 +566,12 @@
     if (it.chapter) return `<section class="chap" style="${style}">
       <p class="chap-k mono"><span>${esc(L(it.chapter))}</span>${it.kicker ? `<span class="muted">${esc(L(it.kicker))}</span>` : ""}</p>
       <h2 class="chap-h">${esc(L(it.head)).replace(/\*(.+?)\*/g, "<em>$1</em>")}</h2>${it.text ? `<p class="body">${esc(L(it.text))}</p>` : ""}${
-        it.pills ? `<ul class="pills mono">${it.pills.map(x => { const t = L(x); return `<li${t[0] === "*" ? ` class="on"` : ""}>${esc(t.replace(/^\*/, ""))}</li>`; }).join("")}</ul>` : ""}</section>`;
+        it.pills ? (it.pick
+          // `pick` (Globo On, Felipe Nov 11 2026: "a marcação não mexe"): the pills become buttons that drive the block below,
+          // "go-cores" repaints the colour panel, "go-marca" picks a logo version. A pill's key is its `pick`, else its text.
+          ? `<ul class="pills pick mono" data-pick="${esc(it.pick)}">${it.pills.map(x => { const t = L(x), v = t.replace(/^\*/, ""), k = (x && x.pick) || v;
+              return `<li${t[0] === "*" ? ` class="on"` : ""}${/^#[0-9a-f]{6}$/i.test(k) ? ` style="--control-accent:${k};--control-ink:${(n => .299 * (n >> 16) + .587 * (n >> 8 & 255) + .114 * (n & 255))(parseInt(k.slice(1), 16)) > 150 ? "#1e1b18" : "#f5f0e0"}"` : ""}><button type="button" data-k="${esc(k)}" aria-pressed="${t[0] === "*"}">${esc(v)}</button></li>`; }).join("")}</ul>`
+          : `<ul class="pills mono">${it.pills.map(x => { const t = L(x); return `<li${t[0] === "*" ? ` class="on"` : ""}>${esc(t.replace(/^\*/, ""))}</li>`; }).join("")}</ul>`) : ""}</section>`;
     // Something the story still needs (an image, a fact, a section): a dashed box saying what is missing
     if (it.episodeLink) {
       const e = it.episodeLink;
@@ -568,12 +589,12 @@
       ${[["selo", "01", { en: "Primary — the seal", pt: "Primária — o selo", es: "Primaria — el sello" }],
          ["on", "02", { en: "Primary, complementary — without the outer circle", pt: "Primária complementar — sem o círculo de fora", es: "Primaria complementaria — sin el círculo exterior" }],
          ["horizontal", "03", { en: "Secondary — GLOBOON, for narrow spaces and small sizes", pt: "Secundária — GLOBOON, para espaços estreitos e tamanhos pequenos", es: "Secundaria — GLOBOON, para espacios estrechos y tamaños pequeños" }]]
-        .map(([k, n, cap]) => `<figure class="go-tile go-${k}"><div class="go-face" role="img" aria-label="${esc(L(cap))}"><i style="-webkit-mask-image:url(images/globo-on/marca/${k}.png);mask-image:url(images/globo-on/marca/${k}.png)"></i></div><figcaption class="mono muted">${n} · ${esc(L(cap))}</figcaption></figure>`).join("")}</section>`;
+        .map(([k, n, cap]) => `<figure class="go-tile go-${k}" data-k="${k}"><div class="go-face" role="img" aria-label="${esc(L(cap))}"><i style="-webkit-mask-image:url(images/globo-on/marca/${k}.png);mask-image:url(images/globo-on/marca/${k}.png)"></i></div><figcaption class="mono muted">${n} · ${esc(L(cap))}</figcaption></figure>`).join("")}</section>`;
     if (it.goCores) { const C = [["magenta", "#E71D73", "#FFCC00"], ["laranja", "#E94E1B", "#FFCC00"], ["azul", "#32B3CA", "#28235D"], ["amarelo", "#FFCC00", "#E94E1B"], ["areia", "#A48A7B", "#5E4C40"], ["verde", "#95C11F", "#FFCC00"], ["creme", "#F5F0E0", "#A48A7B"]];
       return `<section class="go-cores" style="${style};${C.map(([, a, b], k) => `--a${k}:${a};--b${k}:${b}`).join(";")}" aria-label="${esc(L({ en: "Colour palette", pt: "Paleta de cores", es: "Paleta de colores" }))}">
         <div class="go-panel" aria-hidden="true"><span class="mono">45° · 75 / 25</span><i style="-webkit-mask-image:url(images/globo-on/marca/selo.png);mask-image:url(images/globo-on/marca/selo.png)"></i></div>
-        <div class="go-bars mono">${C.map(([n, a, b], k) => `<button type="button" class="go-bar go-c${k}" style="--a:${a};--b:${b}"><span>${a}</span></button>`).join("")}</div>
-        <p class="go-hint mono muted">${esc(L({ en: "Six colours and a cream. Point at a colour to repaint the panel: 75% main colour, 25% second, always at 45°.", pt: "Seis cores e um creme. Passe o mouse numa cor para repintar o painel: 75% da cor principal, 25% da segunda, sempre a 45°.", es: "Seis colores y un crema. Pasa el cursor sobre un color para repintar el panel: 75% del color principal, 25% del segundo, siempre a 45°." }))}</p></section>`; }
+        <div class="go-bars mono">${C.map(([n, a, b], k) => `<button type="button" class="go-bar go-c${k}${k ? "" : " on"}" data-k="${a}" style="--a:${a};--b:${b}" aria-pressed="${!k}"><span>${a}</span></button>`).join("")}</div>
+        <p class="go-hint mono muted">${esc(L({ en: "Six colours and a cream. Click a colour, here or in the tags above, to repaint the panel: 75% main colour, 25% second, always at 45°.", pt: "Seis cores e um creme. Clique numa cor, aqui ou nas etiquetas acima, para repintar o painel: 75% da cor principal, 25% da segunda, sempre a 45°.", es: "Seis colores y un crema. Haz clic en un color, aquí o en las etiquetas de arriba, para repintar el panel: 75% del color principal, 25% del segundo, siempre a 45°." }))}</p></section>`; }
     // `goFrames`: the original on-air styleframes as a mosaic (Felipe, Nov 11 2026: "a nice grid with the original
     // styleframes"). A `big` frame takes 8 columns and two rows beside two small ones (`right` puts it on the right);
     // the rest sit three to a row. All frames are 16:9 and contained, never cropped. Phones: big frames full width, the rest in pairs.
@@ -993,7 +1014,7 @@
       if (rgb?.length === 3) control.style.setProperty("--control-ink", luminance(rgb) > .179 ? "#000" : "#fff");
     });
     const images = [...caseEl.querySelectorAll(".case-gallery img")];
-    caseEl.querySelectorAll(".pills").forEach(pills => {
+    caseEl.querySelectorAll(".pills:not(.pick)").forEach(pills => {
       const image = images.find(img => pills.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_FOLLOWING);
       if (image) pills.querySelectorAll("li.on").forEach(control => paint(control, image));
     });

@@ -1034,3 +1034,14 @@ button.arw.close .arw-i{width:14px;height:14px}
 .go-fr img{display:block;width:100%;height:100%;object-fit:contain}
 .go-frames figcaption{margin-top:6px}
 @media (max-width:600px){.go-fr{grid-column:span 6}.go-fr.big,.go-fr.big.r{grid-column:1/-1;grid-row:auto;aspect-ratio:16/9}}
+
+/* Globo On pickers (Nov 11 2026): pills that work as buttons; the marked bar shows a dot; a picked logo version stays full, the others fade */
+.pills.pick button{all:unset;cursor:pointer;display:block;padding:6px 12px;margin:-6px -12px;border-radius:999px}
+.pills.pick button:focus-visible{outline:1px solid var(--fg);outline-offset:3px}
+.pills.pick li{cursor:pointer;transition:background .3s,border-color .3s,color .3s}
+.pills.pick li:not(.on):hover{border-color:var(--fg);color:var(--fg)}
+.go-bar.on span::before{content:"● "}
+.go-tile{cursor:pointer;transition:opacity .4s}
+.go-marca.picked .go-tile:not(.on){opacity:.35}
+.go-marca.picked .go-tile.on figcaption{color:var(--fg)}
+.pills.pick li.on:has(button[data-k="#F5F0E0"]){border-color:var(--fg)}
