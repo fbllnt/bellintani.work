@@ -1,3 +1,7 @@
+## Atualização aprovada em 4 de novembro de 2026
+
+Felipe pediu remover as disciplinas dos cases. Foram removidas também do Sobre para evitar repetição. Manter serviços na homepage, filtros de trabalhos, hashtags, ficha técnica, introdução, números e materiais. Não restaurar `.case-disc` nem os antigos arrays `disciplines`; esta decisão substitui as referências anteriores abaixo. A navegação agora usa `/p/<slug>/` com History API e aceita os antigos links `#p-`. Executar `node tools/check-site.mjs` antes de publicar.
+
 # Bellintani portfolio — working rules
 
 Static site (HTML/CSS/JS, no build). `main` on GitHub (fbllnt/bellintani.work) is deployed automatically by

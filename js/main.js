@@ -1,6 +1,7 @@
 (() => {
   const S = window.SITE;
-  const homeTitle = document.title; // index.html <title>, restored when a project closes
+  const homeTitle = `${S.name} — Felipe Bellintani, designer & art director`;
+  const SITE_URL = "https://bellintani.work";
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   // One arrow for every previous / next control: a line arrow drawn like the footer's, no circle, nudging its way on
@@ -29,6 +30,30 @@
   const metaDesc = document.querySelector('meta[name="description"]');
   const clip = (s, n = 155) => s.length <= n ? s : s.slice(0, s.lastIndexOf(" ", n - 1)).replace(/[,;:.—-]+$/, "") + "…";
   const setDesc = s => { if (metaDesc) metaDesc.content = s; };
+  const setMeta = (property, content) => {
+    let el = document.querySelector(`meta[property="${property}"]`);
+    if (!el) { el = document.createElement("meta"); el.setAttribute("property", property); document.head.append(el); }
+    el.content = content;
+  };
+  const syncPageMeta = p => {
+    const url = SITE_URL + (p ? href(p) : "/");
+    document.title = p ? `${L(p.title)} — ${S.name}` : homeTitle;
+    setDesc(p ? clip(`${L(p.title)}${p.year ? ` (${p.year})` : ""}. ${L(p.summary) || L(p.scope) || ""}`.trim()) : T("description"));
+    document.querySelector('link[rel="canonical"]').href = url;
+    setMeta("og:url", url); setMeta("og:type", p ? "article" : "website");
+    setMeta("og:title", document.title); setMeta("og:description", metaDesc.content);
+    setMeta("og:locale", LANGS[lang].replace("-", "_"));
+    setMeta("og:image", `${SITE_URL}/${p?.image || "images/og-2611.jpg"}`);
+    setMeta("og:image:alt", p ? L(p.title) : S.name);
+    let schema = document.getElementById("project-schema");
+    if (!p) schema?.remove();
+    else {
+      if (!schema) { schema = document.createElement("script"); schema.id = "project-schema"; schema.type = "application/ld+json"; document.head.append(schema); }
+      schema.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "CreativeWork", "@id": `${url}#work`, name: L(p.title), url, description: L(p.summary) || L(p.scope), image: `${SITE_URL}/${p.image || "images/og-2611.jpg"}`, author: { "@type": "Person", "@id": `${SITE_URL}/#felipe`, name: "Felipe Bellintani" }, isPartOf: { "@id": `${SITE_URL}/#site` } });
+    }
+    document.querySelectorAll('meta[property="og:image:width"],meta[property="og:image:height"]').forEach(el => el.remove());
+    if (!p) { setMeta("og:image:width", "1200"); setMeta("og:image:height", "630"); }
+  };
   if (!/^#p-/.test(location.hash)) setDesc(T("description"));
   document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T(el.dataset.i18n); });
   document.querySelectorAll("[data-i18n-label]").forEach(el => el.setAttribute("aria-label", T(el.dataset.i18nLabel)));
@@ -139,7 +164,12 @@
   tick();
   // Slugs come from the English title so links stay the same in both languages
   S.projects.forEach(p => { p.slug = p.slug || String(p.title.en || p.title).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); });
-  const href = p => `#p-${p.slug}`;
+  const href = p => `/p/${p.slug}/`;
+  const projectFromLocation = () => {
+    const hashSlug = location.hash.match(/^#p-(.+)$/)?.[1];
+    const pathSlug = location.pathname.match(/^\/p\/([^/]+)\/?$/)?.[1];
+    return S.projects.findIndex(p => p.slug === (hashSlug || pathSlug));
+  };
 
   // ---------- Work: index (the only view; Felipe dropped the Grid view, Oct 28 2026) ----------
   const index = $("index");
@@ -342,7 +372,7 @@
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
-  // corners (on phones all four), scrolling up or reaching the top brings them back, so they never sit on the work
+  // corners (all four since Nov 11 2026), scrolling up or reaching the top brings them back, so they never sit on the work
   let lastY = scrollY;
   const calmCheck = () => {
     const y = scrollY, dy = y - lastY;
@@ -353,8 +383,22 @@
   addEventListener("scroll", calmCheck, { passive: true });
 
   // ---------- Project pages ----------
-  // Each job opens at #p-<slug>. The page is rendered in place; the hash keeps it linkable.
+  // Each job has a /p/<slug>/ URL and renders in place. Legacy #p- links still open it.
   const caseEl = $("case"), wipe = $("wipe");
+  // A project owns its timers, observers and window listeners. Release them before
+  // replacing its DOM, so revisiting cases never accumulates detached work.
+  let caseCleanups = [], caseAbort = new AbortController();
+  const ownObserver = observer => { if (observer) caseCleanups.push(() => observer.disconnect()); return observer; };
+  const caseListen = (target, event, listener, options = {}) => target.addEventListener(event, listener, { ...options, signal: caseAbort.signal });
+  const clearCase = () => {
+    caseAbort.abort(); caseAbort = new AbortController();
+    caseCleanups.splice(0).forEach(cleanup => cleanup());
+    io?.disconnect(); embedRO?.disconnect();
+    caseEl.querySelectorAll("video").forEach(v => { v.pause(); v.removeAttribute("src"); v.querySelectorAll("source").forEach(s => s.removeAttribute("src")); v.load(); });
+    // The custom cursor may have been moved into an open logo dialog.
+    cursorTo(document.body);
+    motionFigs = []; scrubEls = [];
+  };
 
   // Loose layout: each item sets its own place on a 12-column grid.
   // { col: 1-12, span: 1-12, shift: "8vh" (push down) or "-14vh" (pull up and overlap the item before),
@@ -659,7 +703,7 @@
     // Measure each file once, then size its mark
     p.logos.forEach((l, k) => {
       if (!l.src) return;
-      const apply = () => { const m = wall.querySelector(`.logo[data-k="${k}"] .mark`); m.style.setProperty("--mw", markWidth(l).toFixed(3)); m.style.setProperty("--ar", l._ar.toFixed(3)); };
+      const apply = () => { if (!wall.isConnected) return; const m = wall.querySelector(`.logo[data-k="${k}"] .mark`); m.style.setProperty("--mw", markWidth(l).toFixed(3)); m.style.setProperty("--ar", l._ar.toFixed(3)); };
       if (l._ar) return apply();
       const im = new Image();
       im.onload = () => { measureLogo(l, im); apply(); };
@@ -755,6 +799,7 @@
       const box = caseEl.querySelectorAll(".flip")[i++], img = box.querySelector(".fig .ph > img"),
         cap = box.querySelector(".flip-cap"), count = box.querySelector(".flip-count"), btns = [...box.querySelectorAll(".flip-thumbs button")];
       let cur = 0, animating = false, visible = false, hover = false, userUntil = 0, lastChange = performance.now();
+      let suppressClickUntil = 0;
       const go = (k, manual = false) => {
         k = (k + it.flip.length) % it.flip.length;
         if (manual) userUntil = performance.now() + 9000;
@@ -762,7 +807,7 @@
         const d = k > cur ? 1 : -1, item = it.flip[k]; cur = k;
         lastChange = performance.now();
         const set = () => {
-          img.src = item.src; img.alt = L(item.caption) || "";
+          img.src = item.src; img.alt = L(item.alt || item.caption) || L(p.title);
           if (cap) cap.textContent = L(item.caption) || "";
           if (count) count.textContent = `${String(k + 1).padStart(2, "0")} / ${String(it.flip.length).padStart(2, "0")}`;
         };
@@ -785,7 +830,7 @@
       main.setAttribute("tabindex", "0");
       main.setAttribute("role", "button");
       main.setAttribute("aria-label", L({ en: "Next gallery image", pt: "Próxima imagem da galeria", es: "Siguiente imagen de la galería" }));
-      main.addEventListener("click", () => go(cur + 1, true));
+      main.addEventListener("click", () => { if (performance.now() >= suppressClickUntil) go(cur + 1, true); });
       // Small, inertial two-axis movement for the PopStar identity slides only.
       // CSS variables keep the artwork intact and return it to center on leave.
       if (it.flipWide && !reduced && matchMedia("(hover: hover) and (pointer: fine)").matches) {
@@ -793,12 +838,12 @@
           const r = main.getBoundingClientRect();
           const x = (e.clientX - r.left) / r.width - .5;
           const y = (e.clientY - r.top) / r.height - .5;
-          img.style.setProperty("--px", (x * 16).toFixed(2) + "px");
-          img.style.setProperty("--py", (y * 12).toFixed(2) + "px");
+          main.style.setProperty("--px", (x * 6).toFixed(2) + "px");
+          main.style.setProperty("--py", (y * 6).toFixed(2) + "px");
         }, { passive: true });
         main.addEventListener("pointerleave", () => {
-          img.style.setProperty("--px", "0px");
-          img.style.setProperty("--py", "0px");
+          main.style.setProperty("--px", "0px");
+          main.style.setProperty("--py", "0px");
         });
       }
 
@@ -807,19 +852,21 @@
         if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1, true); }
         if ((e.key === "Enter" || e.key === " ") && e.target === main) { e.preventDefault(); go(cur + 1, true); }
       });
-      let swipeX = null;
-      main.addEventListener("touchstart", e => { if (e.touches.length === 1) swipeX = e.touches[0].clientX; }, { passive: true });
+      let swipeX = null, swipeY = 0;
+      main.addEventListener("touchstart", e => { if (e.touches.length === 1) { swipeX = e.touches[0].clientX; swipeY = e.touches[0].clientY; } }, { passive: true });
       main.addEventListener("touchend", e => {
         if (swipeX === null || !e.changedTouches.length) return;
-        const dx = e.changedTouches[0].clientX - swipeX; swipeX = null;
-        if (Math.abs(dx) > 38) go(cur + (dx < 0 ? 1 : -1), true);
+        const dx = e.changedTouches[0].clientX - swipeX, dy = e.changedTouches[0].clientY - swipeY; swipeX = null;
+        if (Math.abs(dx) > 38 && Math.abs(dx) > Math.abs(dy)) { suppressClickUntil = performance.now() + 500; go(cur + (dx < 0 ? 1 : -1), true); }
       }, { passive: true });
+      main.addEventListener("touchcancel", () => { swipeX = null; });
       box.addEventListener("pointerenter", () => { hover = true; });
       box.addEventListener("pointerleave", () => { hover = false; });
       const io = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
         visible = entries.some(e => e.isIntersecting && e.intersectionRatio >= .25);
       }, { threshold: [.25] }) : null;
       if (io) io.observe(box); else visible = true;
+      ownObserver(io);
       // Every thumbnail gallery advances, but only while actually visible.
       // Hover/focus/manual navigation pauses it; reduced-motion preferences are honored.
       if (!reduced && it.flip.length > 1) {
@@ -830,8 +877,8 @@
               now < userUntil || animating || now - lastChange < 5200) return;
           go(cur + 1);
         }, 900);
+        caseCleanups.push(() => clearInterval(timer));
       }
-      it.flip.slice(1).forEach(t => { const im = new Image(); im.src = t.src; });
     });
   }
   // coverFlow (cover, and gallery items with `coverFlow: true`): the colour fields lean towards the pointer, each at its own depth (CSS eases the move).
@@ -863,10 +910,8 @@
         if (!stage.isConnected) return;
         x += (targetX - x) * .085;
         y += (targetY - y) * .085;
-        stage.style.setProperty("--globo-x", x.toFixed(2) + "px");
-        stage.style.setProperty("--globo-y", y.toFixed(2) + "px");
-        stage.style.setProperty("--globo-pos-x", (50 + x * .12).toFixed(2) + "%");
-        stage.style.setProperty("--globo-pos-y", (50 + y * .12).toFixed(2) + "%");
+        stage.style.setProperty("--globo-pos-x", (x * .12).toFixed(2) + "%");
+        stage.style.setProperty("--globo-pos-y", (y * .12).toFixed(2) + "%");
         if (Math.abs(targetX-x)>.15 || Math.abs(targetY-y)>.15) raf=requestAnimationFrame(animate);
       };
       const schedule = () => { if (!raf) raf=requestAnimationFrame(animate); };
@@ -881,38 +926,84 @@
     });
   }
 
+  // Highlights follow the image they describe; neutral controls keep the page ink.
+  // Sampling is local, small and runs only after an image has loaded.
+  function setupControlColors() {
+    const luminance = rgb => rgb.map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((sum, v, i) => sum + v * [.2126, .7152, .0722][i], 0);
+    const paint = (control, image) => {
+      const apply = () => {
+        if (!control.isConnected || !image.naturalWidth) return;
+        try {
+          const canvas = document.createElement("canvas"); canvas.width = canvas.height = 32;
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
+          ctx.drawImage(image, 0, 0, 32, 32);
+          const pixels = ctx.getImageData(0, 0, 32, 32).data, bins = new Map();
+          for (let i = 0; i < pixels.length; i += 4) {
+            const rgb = [pixels[i], pixels[i + 1], pixels[i + 2]], hi = Math.max(...rgb), lo = Math.min(...rgb);
+            if (pixels[i + 3] < 200 || hi - lo < 35 || hi < 65 || lo > 220) continue;
+            const key = rgb.map(v => Math.floor(v / 32)).join(",");
+            const bin = bins.get(key) || { sum: [0, 0, 0], count: 0, score: 0 };
+            bin.count++; bin.score += (hi - lo) / 255;
+            rgb.forEach((v, j) => bin.sum[j] += v); bins.set(key, bin);
+          }
+          const winner = [...bins.values()].sort((a, b) => b.score - a.score)[0];
+          if (!winner) return; // Monochrome pieces retain the project's palette.
+          const rgb = winner.sum.map(v => Math.round(v / winner.count));
+          control.style.setProperty("--control-accent", `rgb(${rgb.join(" ")})`);
+          control.style.setProperty("--control-ink", luminance(rgb) > .179 ? "#000" : "#fff");
+        } catch { /* External or unreadable media keeps the project colour. */ }
+      };
+      image.addEventListener("load", apply, { signal: caseAbort.signal });
+      if (image.complete) apply();
+    };
+    caseEl.querySelectorAll(".pills li.on").forEach(control => {
+      const rgb = getComputedStyle(control).backgroundColor.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+      if (rgb?.length === 3) control.style.setProperty("--control-ink", luminance(rgb) > .179 ? "#000" : "#fff");
+    });
+    const images = [...caseEl.querySelectorAll(".case-gallery img")];
+    caseEl.querySelectorAll(".pills").forEach(pills => {
+      const image = images.find(img => pills.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_FOLLOWING);
+      if (image) pills.querySelectorAll("li.on").forEach(control => paint(control, image));
+    });
+    caseEl.querySelectorAll(".rooms").forEach(box => {
+      const image = box.querySelector(".rooms-stage img");
+      if (image) paint(box, image);
+    });
+  }
+
   function setupRooms(p) {
     let i = 0;
     p.gallery.forEach(it => { if (!it.rooms) return;
       const box = caseEl.querySelectorAll(".rooms")[i++], ph = box.querySelector(".rooms-stage .ph"), img = ph.querySelector("img"),
         cap = box.querySelector(".rooms-cap"), count = box.querySelector(".rooms-count"), tabs =[...box.querySelectorAll(".rooms-tabs button")];
-      let g = 0, cur = 0;
+      let g = 0, cur = 0, transition = 0, suppressClickUntil = 0;
       const pad2 = n => String(n).padStart(2, "0");
       const show = (ng, k, d) => {
         const list = it.rooms[ng].items; k = (k + list.length) % list.length;
         if (ng === g && k === cur) return;
         g = ng; cur = k; const t = list[k];
+        const version = ++transition;
         tabs.forEach((b, j) => b.setAttribute("aria-selected", String(j === g)));
         count.textContent = `${pad2(k + 1)} / ${pad2(list.length)}`;
         const set = () => { img.src = t.src; img.alt = L(t.caption) || ""; cap.textContent = L(t.caption) || ""; };
         if (reduced) { set(); return; }
         img.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: `translateX(${-d * 6}%)` }], { duration: 200, easing: "ease-in" }).finished.then(() => {
+          if (!box.isConnected || version !== transition) return;
           set(); img.animate([{ opacity: 0, transform: `translateX(${d * 6}%)` }, { opacity: 1, transform: "none" }], { duration: 460, easing: "cubic-bezier(.11,.82,.39,.92)" });
-        });
-        list.forEach(x => { const im = new Image(); im.src = x.src; });
+        }).catch(() => {});
       };
       const step = d => show(g, cur + d, d);
       tabs.forEach((b, j) => b.addEventListener("click", () => show(j, 0, j > g ? 1 : -1)));
       box.querySelector(".rooms-prev").addEventListener("click", () => step(-1));
       box.querySelector(".rooms-next").addEventListener("click", () => step(1));
-      ph.addEventListener("click", e => step(e.offsetX < ph.clientWidth / 3 ? -1 : 1));
+      ph.addEventListener("click", e => { if (performance.now() >= suppressClickUntil) step(e.offsetX < ph.clientWidth / 3 ? -1 : 1); });
       box.addEventListener("keydown", e => { if (e.key === "ArrowRight") { e.preventDefault(); step(1); } if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); } });
       // Swipe on touch screens
       let x0 = null, y0 = 0;
       ph.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
       ph.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
-        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1); }, { passive: true });
-      it.rooms[0].items.slice(1).forEach(x => { const im = new Image(); im.src = x.src; });
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { suppressClickUntil = performance.now() + 500; step(dx < 0 ? 1 : -1); } }, { passive: true });
+      ph.addEventListener("touchcancel", () => { x0 = null; });
       // A slow, opt-in-by-case slideshow. Only advances while the gallery is on screen;
       // user hover/focus or a hidden browser tab pauses it. Manual controls still work.
       if (it.roomsAuto && !reduced) {
@@ -921,6 +1012,7 @@
           inView = entries.some(entry => entry.isIntersecting);
         }, { threshold: .22 }) : null;
         if (io) io.observe(box); else inView = true;
+        ownObserver(io);
         box.addEventListener("pointerenter", () => { pausedByPointer = true; });
         box.addEventListener("pointerleave", () => { pausedByPointer = false; });
         const timer = setInterval(() => {
@@ -929,6 +1021,7 @@
           const atEnd = cur + 1 >= it.rooms[g].items.length;
           show(atEnd ? (g + 1) % it.rooms.length : g, atEnd ? 0 : cur + 1, 1);
         }, 6000);
+        caseCleanups.push(() => clearInterval(timer));
       }
     });
   }
@@ -951,7 +1044,7 @@
       prev.addEventListener("click", () => go(-1));
       next.addEventListener("click", () => go(1));
       track.addEventListener("scroll", ends, { passive: true });
-      addEventListener("resize", ends);
+      caseListen(window, "resize", ends);
       frames.forEach(f => f.querySelector("img").addEventListener("load", ends));
       ends();
       // Mouse drag pulls the roll sideways (touch already scrolls natively)
@@ -975,6 +1068,7 @@
           frames.forEach(f => f.animate([{ translate: "0" }, { translate: "-72px 0", offset: .45 }, { translate: "0" }], { duration: 1400, delay: 350, easing: "cubic-bezier(.45,0,.2,1)" }));
         }, { threshold: .6 });
         io.observe(track);
+        ownObserver(io);
       }
     });
   }
@@ -1021,12 +1115,10 @@
     root.classList.toggle("themed", !!t);
   }
 
-  // The About's discipline list, keyed: a project sheet shows all of it and lights up the project's own `disciplines`
-  // (after tacto's Expertise list, Felipe, Oct 29 2026)
-  const disc = S.about.credits.find(b => b.rows.some(r => r && r.key));
   // A project's accent for the back-to-list flash; a white or black accent falls back to the site blue, as everywhere
   const accentOf = p => { const a = (p.theme && p.theme.accent) || ""; return !a || /^#(fff(fff)?|000(000)?)$/i.test(a) ? "#1a2bff" : a; };
   function renderCase(i) {
+    clearCase();
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
     applyTheme(p.theme);
     // Type only shows when there is no Scope: the two said the same thing twice (Oct 27 2026 review)
@@ -1044,7 +1136,6 @@
         <div class="case-sheet-main">
           <p class="body case-summary">${esc(L(p.summary) || T("placeholderText"))}${tagFor(p)}</p>
           ${p.stats ? `<ul class="case-stats">${p.stats.map(([n, label]) => `<li><b>${esc(L(n))}</b><span class="mono">${esc(L(label))}</span></li>`).join("")}</ul>` : ""}
-          ${disc && p.disciplines ? `<div class="case-disc"><span class="mono muted">${esc(L(disc.head))} (${pad(p.disciplines.length)} / ${pad(disc.rows.length)})</span><ul>${disc.rows.map(d => `<li${p.disciplines.includes(d.key) ? ` class="on"` : ` aria-hidden="true"`}>${esc(L(d))}</li>`).join("")}</ul></div>` : ""}
         </div>
       </section>
       ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
@@ -1059,10 +1150,10 @@
           <span class="case-neighbor-title">${esc(L(next.title))}</span>
         </a>
       </nav>`;
-    document.title = `${L(p.title)} — ${S.name}`;
-    setDesc(clip(`${L(p.title)}${p.year ? ` (${p.year})` : ""}. ${L(p.summary) || L(p.scope) || ""}`.trim()));
+    syncPageMeta(p);
     observe();
     setupVideos();
+    setupControlColors();
     setupEmbeds();
     setupDrift();
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
@@ -1197,17 +1288,20 @@
     const run = () => { if (!raf && !reduced) { last = 0; raf = requestAnimationFrame(tick); } };
     const start = () => { size(); draw(); cv.classList.add("on"); };
     (document.fonts ? document.fonts.load("700 100px Figtree").catch(() => {}) : Promise.resolve()).then(() => {
+      if (!cv.isConnected) return;
       start();
-      new IntersectionObserver(es => es.forEach(e => { visible = e.isIntersecting; if (visible) run(); }), { rootMargin: "100px 0px" }).observe(cv);
+      if ("IntersectionObserver" in window) ownObserver(new IntersectionObserver(es => es.forEach(e => { visible = e.isIntersecting; if (visible) run(); }), { rootMargin: "100px 0px" })).observe(cv);
+      else { visible = true; run(); }
     });
-    if (window.ResizeObserver) new ResizeObserver(() => { if (cv.clientWidth && Math.round(cv.clientWidth * dpr) !== W) { size(); draw(); } }).observe(cv);
+    if (window.ResizeObserver) ownObserver(new ResizeObserver(() => { if (cv.clientWidth && Math.round(cv.clientWidth * dpr) !== W) { size(); draw(); } })).observe(cv);
+    caseCleanups.push(() => cancelAnimationFrame(raf));
     cv.addEventListener("pointermove", e => {
       if (e.pointerType !== "mouse") return;
       const r = cv.getBoundingClientRect(); hover = true;
       tx = ((e.clientX - r.left) / r.width - .5) * 2; ty = ((e.clientY - r.top) / r.height - .5) * 2;
     });
     cv.addEventListener("pointerleave", () => { hover = false; });
-    addEventListener("scroll", () => { if (visible) push = Math.min(.15, push + Math.abs(scrollY - lastY) / 4000); lastY = scrollY; }, { passive: true });
+    caseListen(window, "scroll", () => { if (visible) push = Math.min(.15, push + Math.abs(scrollY - lastY) / 4000); lastY = scrollY; }, { passive: true });
   }
 
   // 360° viewer: frames drawn on a canvas. Drag (mouse or touch) or arrow keys to turn; a flick keeps it spinning
@@ -1249,10 +1343,12 @@
       raf = requestAnimationFrame(tick);
     };
     const run = () => { if (!raf) raf = requestAnimationFrame(tick); };
-    new IntersectionObserver(es => es.forEach(e => {
+    const observer = "IntersectionObserver" in window ? ownObserver(new IntersectionObserver(es => es.forEach(e => {
       visible = e.isIntersecting;
       if (visible) { load(); run(); }
-    }), { rootMargin: "300px 0px" }).observe(cv);
+    }), { rootMargin: "300px 0px" })) : null;
+    if (observer) observer.observe(cv); else { visible = true; load(); run(); }
+    caseCleanups.push(() => cancelAnimationFrame(raf));
 
     let down = false, sx = 0, sp = 0, lx = 0, lt = 0;
     const perPx = () => count / cv.clientWidth; // one full turn per width dragged
@@ -1356,9 +1452,78 @@
   const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
   }), { rootMargin: "0px 0px -10% 0px" }) : null;
-  // Rules that open the project sheet and each chapter draw left to right as they come in, like the About's (Felipe, Nov 1 2026)
-  if (!reduced) caseEl.classList.add("fx-lines");
-  const observe = () => caseEl.querySelectorAll(".fig, .logos, .ltext, .chap, .case-sheet").forEach(f => io ? io.observe(f) : f.classList.add("in"));
+  // Lines (Nov 11 2026): each existing editorial border draws itself once, left to right, when it comes into view,
+  // then the element gets its real border back, so every line ends up as the same crisp 1px rule.
+  // Both edges' variables are always set on each element: custom properties inherit, and a row inside a ruled
+  // list used to pick up the list's black top line on top of its own (the mixed greys and stubs Felipe saw).
+  const ruleSelector = ".ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .rooms-tabs, .index, .index a, .services, .services li, .social";
+  let homeRules = [], caseRules = [], rulesRaf = 0;
+  const RULE_MS = 950;
+  const collectRules = root => {
+    if (reduced) return [];
+    return [...root.querySelectorAll(ruleSelector)].flatMap(el => {
+      if (el.dataset.ruled) return [];
+      const cs = getComputedStyle(el), edges = [];
+      for (const edge of ["top", "bottom"]) {
+        const width = cs.getPropertyValue(`border-${edge}-width`);
+        const color = cs.getPropertyValue(`border-${edge}-color`);
+        const on = parseFloat(width) > 0 && cs.getPropertyValue(`border-${edge}-style`) !== "none" && color !== "transparent" && !color.endsWith(", 0)");
+        if (on) edges.push(edge);
+        el.style.setProperty(`--rule-${edge}-color`, on ? color : "transparent");
+        el.style.setProperty(`--rule-${edge}-width`, on ? width : "0px");
+        el.style.setProperty(`--rule-${edge}-progress`, "0%");
+      }
+      if (!edges.length) { ["top", "bottom"].forEach(e => ["color", "width", "progress"].forEach(k => el.style.removeProperty(`--rule-${e}-${k}`))); return []; }
+      el.dataset.ruled = "1";
+      el.classList.add("scroll-rule", ...edges.map(edge => `scroll-rule-${edge}`));
+      return [{ el, edges, drawn: new Set() }];
+    });
+  };
+  const settleRule = rule => {
+    rule.done = true;
+    setTimeout(() => {
+      rule.el.classList.remove("scroll-rule", "scroll-rule-top", "scroll-rule-bottom");
+      ["top", "bottom"].forEach(e => ["color", "width", "progress"].forEach(k => rule.el.style.removeProperty(`--rule-${e}-${k}`)));
+    }, RULE_MS);
+  };
+  const updateRules = () => {
+    rulesRaf = 0;
+    const inCase = document.body.classList.contains("in-case");
+    const rules = (inCase ? caseRules : homeRules).filter(r => !r.done);
+    const line = innerHeight * .92;
+    const measurements = rules.map(rule => ({ rule, rect: rule.el.getBoundingClientRect() }));
+    measurements.forEach(({ rule, rect }) => {
+      if (!rect.width && !rect.height) return;
+      rule.edges.forEach(edge => {
+        if (rule.drawn.has(edge)) return;
+        const y = edge === "top" ? rect.top : rect.bottom;
+        // Draw once the line is in the lower part of the screen, or already scrolled past
+        if (y < line) { rule.drawn.add(edge); rule.el.style.setProperty(`--rule-${edge}-progress`, "100%"); }
+      });
+      if (rule.drawn.size === rule.edges.length) settleRule(rule);
+    });
+    if (!inCase && !reduced) {
+      const foot = $("contact"), cs = getComputedStyle(foot);
+      const y = foot.getBoundingClientRect().bottom - parseFloat(cs.paddingBottom);
+      if (!foot.dataset.drawn) {
+        const draw = y < line || scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
+        foot.style.setProperty("--closing-rule-progress", draw ? 1 : 0);
+        if (draw) foot.dataset.drawn = "1";
+      }
+    }
+  };
+  const queueRules = () => { if (!reduced && !rulesRaf) rulesRaf = requestAnimationFrame(updateRules); };
+  addEventListener("scroll", queueRules, { passive: true });
+  addEventListener("resize", queueRules);
+  addEventListener("load", queueRules);
+  document.addEventListener("load", queueRules, true);
+  document.fonts?.ready.then(queueRules);
+  const observe = () => {
+    io?.disconnect();
+    caseEl.querySelectorAll(".fig, .logos, .ltext, .chap, .case-sheet").forEach(f => io ? io.observe(f) : f.classList.add("in"));
+    caseRules = collectRules(caseEl);
+    queueRules();
+  };
 
   // Films play muted while on screen and pause when they leave. Every film has Play/Pause and Sound;
   // sound is one film at a time. Pausing by hand keeps it paused until the visitor plays it again.
@@ -1382,8 +1547,9 @@
     };
     const vio = "IntersectionObserver" in window && !reduced ? new IntersectionObserver(es => es.forEach(e => {
       const v = e.target;
-      if (e.isIntersecting) { if (!v.dataset.held) v.play().catch(() => {}); } else if (fsEl() !== v) v.pause();
+      if (e.isIntersecting && e.intersectionRatio >= .4) { if (!v.dataset.held) v.play().catch(() => {}); } else if (fsEl() !== v) v.pause();
     }), { threshold: .4 }) : null;
+    ownObserver(vio);
     vids.forEach(v => {
       const pp = v.parentElement.querySelector(".playpause");
       const sync = () => { pp.textContent = T(v.paused ? "play" : "pause"); pp.setAttribute("aria-label", `${T(v.paused ? "play" : "pause")} — ${v.getAttribute("aria-label")}`); };
@@ -1423,11 +1589,12 @@
   const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
 
   // Blue cut between pages, same language as the intro
+  let cutTimers = [];
   const cutTo = fn => {
+    cutTimers.forEach(clearTimeout); cutTimers = [];
     if (reduced) { fn(); return; }
     wipe.classList.add("on");
-    setTimeout(() => { fn(); }, 160);
-    setTimeout(() => wipe.classList.remove("on"), 340);
+    cutTimers.push(setTimeout(fn, 160), setTimeout(() => wipe.classList.remove("on"), 340));
   };
 
   let openIdx = -1;
@@ -1443,9 +1610,10 @@
     animate ? cutTo(go) : go();
   };
   const closeCase = target => cutTo(() => {
+    clearCase();
     document.body.classList.remove("in-case");
     fit();
-    caseEl.innerHTML = ""; document.title = homeTitle; setDesc(T("description")); motionFigs = [];
+    caseEl.innerHTML = ""; syncPageMeta(null);
     applyTheme(null);
     // Back to the list (browser back or Work): land on the row of the project just left, its title flashing in that
     // project's colour (Felipe, Oct 30 2026); any other target (#about…) goes where it says
@@ -1453,6 +1621,7 @@
     openIdx = -1;
     if (row && row.offsetParent) {
       row.scrollIntoView({ behavior: "instant", block: "center" });
+      row.focus({ preventScroll: true });
       if (!reduced) {
         row.style.setProperty("--flash", accentOf(S.projects[+row.dataset.i]));
         row.classList.remove("back-here"); void row.offsetWidth; row.classList.add("back-here");
@@ -1462,12 +1631,27 @@
     }
     ($(target) || $("work")).scrollIntoView({ behavior: "instant" });
   });
-  const projectFromHash = () => S.projects.findIndex(p => location.hash === href(p));
-
-  addEventListener("hashchange", () => {
-    const i = projectFromHash();
+  const route = () => {
+    const i = projectFromLocation();
     if (i >= 0) openCase(i);
     else if (document.body.classList.contains("in-case")) closeCase(location.hash.slice(1));
+    else { const target = $(location.hash.slice(1)); target?.scrollIntoView({ behavior: "instant" }); }
+    capQueue(); syncMusic();
+  };
+  const navigate = url => { history.pushState(null, "", url); route(); };
+  addEventListener("popstate", route);
+  addEventListener("hashchange", route);
+  // Real project URLs work without JavaScript and share the project's own preview.
+  // Unmodified clicks stay in the document so the soundtrack keeps playing.
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a[href]");
+    if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target || a.hasAttribute("download")) return;
+    const url = new URL(a.href);
+    if (url.origin !== location.origin) return;
+    const project = S.projects.some(p => url.pathname === href(p));
+    const home = ["#top", "#work", "#about", "#contact"].includes(url.hash);
+    if (!project && !home) return;
+    e.preventDefault(); navigate(project ? url.pathname : "/" + url.hash);
   });
 
   // ---------- Work list motion (chosen by Felipe, Oct 2026) ----------
@@ -1518,21 +1702,15 @@
   addEventListener("hashchange", () => setTimeout(capQueue, 50));
   capQueue();
 
-  // About entrance (Oct 29 2026 audit, pending Felipe's approval): each block's rule draws once it comes into view (CSS .fx-rule); a block
-  // coming in also completes every block above it, so a jump past them (#contact, a fast scroll) never leaves a rule undrawn
-  if ("IntersectionObserver" in window && fxOn) {
-    const rules = [...$("about").querySelectorAll(".ab, .ab-end")];
-    $("about").classList.add("fx-rule");
-    const rio = new IntersectionObserver(es => es.forEach(e => {
-      if (e.isIntersecting || e.boundingClientRect.top < 0) rules.slice(0, rules.indexOf(e.target) + 1).forEach(b => { b.classList.add("in"); rio.unobserve(b); });
-    }), { rootMargin: "0px 0px -15% 0px" });
-    rules.forEach(b => rio.observe(b));
-  }
+  homeRules = collectRules(document.querySelector("main"));
+  queueRules();
 
   // 3. Open: a blue panel grows from the clicked row to the whole screen, turning into the project's
   // background colour as it grows; the page renders underneath and the panel fades away
-  let grown = false;
+  let grown = false, growing = false;
   const grow = (from, i) => {
+    if (growing) return;
+    growing = true;
     const p = S.projects[i], r = from.getBoundingClientRect(), W = innerWidth, H = innerHeight;
     const veil = document.createElement("div");
     veil.className = "veil";
@@ -1544,14 +1722,15 @@
     a.finished
       .then(() => {
         grown = true;
-        location.hash = href(p);
+        navigate(href(p));
         return veil.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 380, delay: 60, easing: "ease-out", fill: "forwards" }).finished;
       })
-      .then(() => veil.remove());
+      .catch(() => {})
+      .finally(() => { veil.remove(); growing = false; grown = false; });
   };
   works.addEventListener("click", e => {
     const a = e.target.closest(".index a");
-    if (!a || !fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    if (!a || !fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
     const i = S.projects.findIndex(p => a.getAttribute("href") === href(p));
     if (i < 0) return;
     e.preventDefault();
@@ -1651,11 +1830,10 @@
   // browsing, even closed: on another project it offers that project's song instead of cutting the one playing.
   const musicBtn = $("music-btn"), music = $("music"), musicFrame = $("music-frame"), musicSwap = $("music-swap");
   let loaded = null, spotifyAPI = null, spotifyController = null, spotifyReady = false, playRequested = false;
-  let playbackConfirmed = false;
   // The track in the player (`mountedId`) can differ from the one picked (`loaded`) while Spotify is still loading;
   // `mounts` numbers each player so a late callback from an older one is ignored.
   let mountedId = null, mounts = 0;
-  const suggested = () => { const i = projectFromHash(); return (i >= 0 && S.projects[i].track) || S.homeTrack; };
+  const suggested = () => { const i = projectFromLocation(); return (i >= 0 && S.projects[i].track) || S.homeTrack; };
   const songOf = t => `${t.name} — ${t.by}`;
   const playNote = $("music-play-note");
   const setPlayNote = (message = "") => { if (playNote) playNote.textContent = message; };
@@ -1665,7 +1843,6 @@
     const mount = ++mounts;
     spotifyReady = false;
     spotifyController = null;
-    playbackConfirmed = false;
     mountedId = loaded.id;
     musicFrame.innerHTML = '<div class="spotify-embed-mount"></div>';
     spotifyAPI.createController(musicFrame.firstElementChild, { uri: uriOf(loaded), width: "100%", height: 80 }, controller => {
@@ -1682,7 +1859,7 @@
           setPlayNote(L({ en: "If audio does not start, your browser may require Play inside Spotify.", pt: "Se o som não começar, talvez o navegador peça o play no próprio Spotify.", es: "Si el audio no empieza, tu navegador puede pedir Play dentro de Spotify." }));
         }
       });
-      controller.addListener("playback_started", () => { if (mount !== mounts) return; playbackConfirmed = true; setPlayNote(""); });
+      controller.addListener("playback_started", () => { if (mount === mounts) setPlayNote(""); });
     });
   };
   // Spotify's official iFrame API enables click-to-play, subject to browser playback policies.
@@ -1698,7 +1875,6 @@
   const loadSong = (t, play = false) => {
     if (!t) return;
     loaded = t;
-    playbackConfirmed = false;
     // Preserve the playback request until the Spotify controller is ready.
     // Only the official player can determine whether a browser permits autoplay.
     playRequested = play;
@@ -1719,7 +1895,7 @@
     }
   };
   const syncMusic = () => {
-    const t = suggested(), i = projectFromHash();
+    const t = suggested(), i = projectFromLocation();
     $("music-title").textContent = T("nowSuggested") + (i >= 0 ? ` · ${L(S.projects[i].title)}` : "");
     const other = !!(loaded && t && loaded.id !== t.id);
     musicSwap.hidden = !other;
@@ -1735,9 +1911,9 @@
   // Just the word, no ♪ (Felipe, Oct 29 2026: "Soundtrack" / "Trilha"), also on phones
   const note = `<span>${esc(T("music"))}</span>`;
   musicBtn.innerHTML = note + note.replace("<span>", '<span aria-hidden="true">');
-  musicBtn.onclick = () => openMusic(music.hidden, true);
+  musicBtn.onclick = () => { openMusic(music.hidden, true); if (!music.hidden) renderSoundtrack(); };
   $("music-close").onclick = () => openMusic(false, true);
-  musicSwap.onclick = () => { loadSong(suggested(), true); syncMusic(); };
+  musicSwap.onclick = () => { loadSong(suggested(), true); syncMusic(); renderSoundtrack(); };
   addEventListener("hashchange", syncMusic);
   addEventListener("keydown", e => { if (e.key === "Escape" && !music.hidden) openMusic(false, true); });
   // isConnected: picking a track re-renders the list, so its click target is gone by now and must not count as outside
@@ -1765,10 +1941,6 @@
     syncMusic();
     renderSoundtrack();
   });
-  const previousOpenMusic = musicBtn.onclick;
-  musicBtn.onclick = () => { previousOpenMusic(); if (!music.hidden) renderSoundtrack(); };
-  const previousSwapMusic = musicSwap.onclick;
-  musicSwap.onclick = () => { previousSwapMusic(); renderSoundtrack(); };
   // Keep the queue highlight aligned when the visitor returns to an open panel.
   listEl.setAttribute("role", "group");
   const workInvite = $("work-music-invite");
@@ -1781,7 +1953,10 @@
   const musicInvite = $("music-invite");
   if (musicInvite) musicInvite.textContent = L({ en: "A SOUNDTRACK FOR EVERY PROJECT. PICK A SONG AND EXPLORE.", pt: "CADA PROJETO TEM A SUA TRILHA. ESCOLHE UMA MÚSICA E VAI FUNDO.", es: "CADA PROYECTO TIENE SU CANCIÓN. ELIGE UNA Y EXPLORA." });
 
-  const first = projectFromHash();
+  const first = projectFromLocation();
+  // Old shared #p- links remain valid, with one canonical address in history.
+  if (first >= 0 && location.hash.startsWith("#p-")) history.replaceState(null, "", href(S.projects[first]));
+  if (first < 0) syncPageMeta(null);
   if (first >= 0) { finish(); openCase(first, false); }
   else if (reduced || resumeY !== null) finish();
   else { const seen = +read("introSeen") || 0; Date.now() - seen < 7 * 864e5 ? quick() : play(); }
@@ -1792,3 +1967,4 @@
     document.readyState === "complete" ? back() : addEventListener("load", back, { once: true });
   }
 })();
+

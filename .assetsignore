@@ -9,3 +9,5 @@ README.md
 .wrangler
 tools
 worker
+.audit-preview
+.openai

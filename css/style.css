@@ -6,6 +6,11 @@
   --gap:clamp(8px,1vw,16px); --tag-x:10px;
   /* One air between a chapter's 1px rule and its first line (Oct 29 2026 audit, "respiro"); 28px on a phone */
   --chap-pad:clamp(24px,2.8vw,48px);
+  /* Lines: one system for the whole site (Felipe, Nov 11 2026: "continuo vendo diferenças nas linhas").
+     Every separator (list rows, section and chapter rules, project sheet, neighbours, tabs) is the same 1px line
+     in the ink colour of its section (written var(--rule-w) solid var(--fg) so it follows each section's own --fg): black on white, white on the black About/footer, the brand ink on themed pages.
+     The light --line grey is kept only for the outlines of small controls (filters, pills, player, logo tiles). */
+  --rule-w:1px;
   --sans:"Figtree","Helvetica Neue",Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   --ease:cubic-bezier(.11,.82,.39,.92);
@@ -75,17 +80,15 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 @keyframes land{to{opacity:1;transform:none}}
 @keyframes rise{from{opacity:0;transform:translateY(var(--y))}to{opacity:1;transform:none}}
 /* Rest state: after the intro, on skip, and with reduced motion */
-/* Scroll cue: appears after the tagline, chevrons pulse downward one after the other */
-.cue{left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:3;padding:8px;color:var(--fg);opacity:0;transition:opacity .4s}
-.cue svg{display:block;width:34px;height:36px;fill:none;stroke:currentColor;stroke-width:4.5;stroke-linecap:square;overflow:visible}
-.cue path{animation:cueDrop 1.6s var(--ease) infinite}
-.cue path + path{animation-delay:.18s}
-@keyframes cueDrop{0%{opacity:.45;transform:translateY(-3px)}45%{opacity:1}100%{opacity:.45;transform:translateY(4px)}}
+/* Scroll cue: one thin arrow bobbing gently, the same line weight as the site's other arrows (Felipe chose it Nov 11 2026; was two heavy chevrons) */
+.cue{left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:3;padding:8px;color:var(--fg);opacity:0;transition:opacity .4s}
+.cue svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:square;overflow:visible;animation:cueBob 2.2s var(--ease) infinite}
+@keyframes cueBob{0%,100%{translate:0 -2px}50%{translate:0 3px}}
 .play .cue{animation:fade .5s ease forwards 5.4s}
 .done .cue{opacity:1}
 .cue.gone{opacity:0!important;pointer-events:none}
 .cue:focus-visible{outline:1px solid currentColor}
-@media (prefers-reduced-motion:reduce){ .cue path{animation:none} }
+@media (prefers-reduced-motion:reduce){ .cue svg{animation:none} }
 .done .loader,.done .panel,.done .skip{display:none}
 /* Repeat visits: no countdown, the name rises at once and the tagline follows (Felipe, Oct 30 2026) */
 .play.quick .loader,.play.quick .panel,.play.quick .skip{display:none}
@@ -132,7 +135,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* While reading (scrolling down), the corners step aside so they never sit on the work; scrolling up brings them back */
 .c-tl,.c-tr,.c-bl,.c-br{transition:opacity .3s,translate .3s}
 .corners.calm .c-bl,.corners.calm .c-br{opacity:0;translate:0 10px;pointer-events:none}
-@media (max-width:760px){ .corners.calm .c-tl,.corners.calm .c-tr{opacity:0;translate:0 -10px;pointer-events:none} }
+/* Top corners also step aside while scrolling down, on every screen (Nov 11 2026: list rules and titles were crossing
+   BELLINTANI — 26 and the menu); scrolling up brings them back */
+.corners.calm .c-tl,.corners.calm .c-tr{opacity:0;translate:0 -10px;pointer-events:none}
 /* Keyboard: a corner holding focus always shows, even mid-intro or stepped aside; skip link appears on its first Tab */
 .corners:focus-within{opacity:1}
 .corners.calm > :focus-within{opacity:1;translate:none;pointer-events:auto}
@@ -158,11 +163,11 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .seg button{color:var(--mute)}
 .seg button[aria-pressed="true"]{color:var(--fg)}
 .seg button[aria-pressed="true"]::before{content:"● ";color:var(--ai-t,var(--blue))}
-.seg button:focus-visible,.replay:focus-visible{outline:1px solid var(--fg)}
+.seg button:focus-visible,.replay:focus-visible{outline:var(--rule-w) solid var(--fg)}
 
 /* Work: index list (the only view) */
-.index{list-style:none;margin:0;padding:0;border-top:1px solid var(--fg)}
-.index a{display:grid;grid-template-columns:3em minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:clamp(14px,1.3vw,22px) 0 clamp(10px,1vw,16px);border-bottom:1px solid var(--line);text-decoration:none}
+.index{list-style:none;margin:0;padding:0;border-top:var(--rule-w) solid var(--fg)}
+.index a{display:grid;grid-template-columns:3em minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:clamp(14px,1.3vw,22px) 0 clamp(10px,1vw,16px);border-bottom:var(--rule-w) solid var(--fg);text-decoration:none}
 .index .t{font:900 clamp(34px,6vw,96px)/.9 var(--sans);letter-spacing:-.045em;text-transform:uppercase;transition:color .3s,transform .6s var(--ease);overflow-wrap:anywhere}
 .index a:hover .t,.index a:focus-visible .t{color:var(--ai-t,var(--blue));transform:translateX(.18em)}
 /* Hover: a thin rule strikes through the title (after tacto, Felipe, Oct 29 2026) */
@@ -177,10 +182,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .fx-cascade .index .t{clip-path:inset(-1em -2em -.08em -2em)}
 .fx-cascade .index .ti{transform:translateY(105%);transition:transform 1s var(--ease) calc(var(--i,0) * 70ms)}
 .fx-cascade .index a > .mono,.fx-cascade .index .k{opacity:0;transition:opacity .6s ease calc(var(--i,0) * 70ms + 250ms)}
-.fx-cascade .index a{border-bottom-color:transparent;background:linear-gradient(var(--line),var(--line)) 0 100%/0 1px no-repeat;transition:background-size 1.1s var(--ease) calc(var(--i,0) * 70ms),padding .5s var(--ease)}
+.fx-cascade .index a{transition:padding .5s var(--ease)}
 .fx-cascade .index.in .ti{transform:none}
 .fx-cascade .index.in a > .mono,.fx-cascade .index.in .k{opacity:1}
-.fx-cascade .index.in a{background-size:100% 1px}
 /* 2. Hover: the title slides further on a spring; number and tags stay put */
 @media (hover:hover) and (pointer:fine){
   .fx-hover .index .t{transition:transform .7s var(--spring)}
@@ -189,17 +193,16 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* 3. Open: the panel that grows from the row to the whole screen */
 .veil{position:fixed;inset:0;z-index:70;background:var(--blue);pointer-events:none}
 
-.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 var(--gap);border-top:1px solid var(--fg);margin:0;padding:0}
-.services li{list-style:none;padding:clamp(14px,1.5vw,22px) 0;font-size:clamp(13px,.95vw,15px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 var(--gap);border-top:var(--rule-w) solid var(--fg);margin:0;padding:0}
+.services li{list-style:none;padding:clamp(14px,1.5vw,22px) 0;font-size:clamp(13px,.95vw,15px);display:flex;justify-content:space-between;gap:10px}
 @media (max-width:760px){ .services{grid-template-columns:1fr} }
 
 .foot{padding-top:clamp(90px,14vw,200px);padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
-.big{font:900 clamp(64px,17vw,300px)/.8 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:flex-start;gap:.08em}
-.big{max-width:100%;overflow-wrap:anywhere;display:inline-block}
+.big{font:900 clamp(64px,17vw,300px)/.8 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-decoration:none;max-width:100%;overflow-wrap:anywhere;display:inline-block}
 .big > span:first-child{display:inline;text-wrap:balance}
 .big .arr{display:inline-block;vertical-align:top;margin-left:.08em}
 /* A single rule in the text colour closes the page under Let's talk */
-.foot::after{content:"";display:block;height:1px;background:var(--fg);margin-top:40px}
+.foot::after{content:"";display:block;height:var(--rule-w);background:var(--fg);margin-top:40px}
 @media (max-width:560px){ .foot .big{font-size:13.5vw} }
 /* PT "CONVERSAR" is the longest word: capped so it and the arrow fit the width (6.4em with the arrow); clip is the safety net */
 @media (min-width:561px){ :lang(pt) .foot .big{font-size:min(17vw,300px,calc((100vw - var(--side-l) - var(--side-r) - 5vw) / 6.5))} }
@@ -207,7 +210,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .big .arr{font-size:.4em;transition:transform .6s var(--ease)}
 .big:hover{color:var(--ai-t,var(--blue))}
 .big:hover .arr{transform:rotate(45deg)}
-.social{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:40px;padding-top:16px;border-top:1px solid var(--line)}
+.social{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:40px;padding-top:16px;border-top:var(--rule-w) solid var(--fg)}
 .social a{text-decoration:none}
 .social #social-foot{display:flex;gap:16px}
 
@@ -225,7 +228,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .case-title .w{display:inline-flex;white-space:nowrap}
 .case-title .w > span{display:inline-block;animation:rise .6s var(--over) both .12s}
 .case-title .sp{width:.22em}
-.case-meta{font-size:12px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(20px,2.2vw,32px) var(--gap);margin:clamp(28px,4vw,56px) 0 0;padding-top:14px;border-top:1px solid var(--fg)}
+.case-meta{font-size:12px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(20px,2.2vw,32px) var(--gap);margin:clamp(28px,4vw,56px) 0 0;padding-top:14px;border-top:var(--rule-w) solid var(--fg)}
 .case-meta div{min-width:0;grid-column:span 2}
 .case-meta .live,.case-meta .wide{grid-column:span 4}
 @media (max-width:1000px){ .case-meta div{grid-column:span 3} .case-meta .live,.case-meta .wide{grid-column:span 6} }
@@ -290,7 +293,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .loose .fig figcaption{margin:6px 0 0}
 .loose .spin-ui{top:10px;bottom:auto;left:var(--tag-x)}
 /* Chapter: numbered opener for a part of the story (label line, headline, short text) */
-.chap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px var(--gap);padding-top:14px;border-top:1px solid var(--fg);margin-top:clamp(64px,8vw,136px);margin-bottom:var(--gap)}
+.chap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px var(--gap);padding-top:14px;border-top:var(--rule-w) solid var(--fg);margin-top:clamp(64px,8vw,136px);margin-bottom:var(--gap)}
 .chap-k{grid-column:1 / 5;grid-row:1 / span 2;margin:0;display:flex;flex-direction:column;gap:4px}
 .chap-h{grid-column:5 / 13;margin:0;font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
 .chap .body{grid-column:5 / 13}
@@ -320,9 +323,9 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .chap-h em{font-style:normal;color:var(--ai-t,var(--blue))}
 .pills{grid-column:5 / 13;list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .pills li{padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--mute)}
-.pills li.on{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:400}
+.pills li.on{background:var(--control-accent,var(--ai,var(--blue)));border-color:var(--control-accent,var(--ai,var(--blue)));color:var(--control-ink,var(--bg));font-weight:400}
 /* Before → after (a rename): the old name struck through, the new one in the accent colour */
-.swap-ba{display:grid;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
+.swap-ba{display:grid;gap:10px;padding-top:14px;border-top:var(--rule-w) solid var(--fg)}
 .swap-ba p{margin:0;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--gap);align-items:baseline}
 .swap-ba b{font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;overflow-wrap:anywhere}
 .swap-ba .old{opacity:.45;text-decoration:line-through;text-decoration-thickness:.08em}
@@ -330,7 +333,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* A word set large with a dictionary-style entry */
 .word-def{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:var(--gap);align-items:end}
 .word-big{margin:0;font:400 min(clamp(72px,15vw,250px),calc(64vw / var(--n,4)))/.9 "Didot","Bodoni 72",Georgia,serif;white-space:nowrap}
-.word-entry{margin:0;display:grid;gap:6px;padding-top:12px;border-top:1px solid var(--line);font:400 clamp(15px,1.25vw,18px)/1.5 var(--mono)}
+.word-entry{margin:0;display:grid;gap:6px;padding-top:12px;border-top:var(--rule-w) solid var(--fg);font:400 clamp(15px,1.25vw,18px)/1.5 var(--mono)}
 .word-entry .mono{color:var(--ai-t,var(--blue))}
 /* Marquee (social carousel): the pieces stand still in a wrapping grid, each one whole at its own proportion */
 .marquee-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:var(--gap)}
@@ -342,7 +345,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .body{font:400 clamp(15px,1.25vw,18px)/1.6 var(--mono);letter-spacing:-.01em;max-width:62ch;margin:0}
 .case-gallery{display:grid;gap:var(--gap)}
 [class^="row-"]{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:var(--gap);align-items:start}
-.case-stats{list-style:none;margin:0 0 clamp(60px,8vw,120px);padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px var(--gap);border-top:1px solid var(--fg)}
+.case-stats{list-style:none;margin:0 0 clamp(60px,8vw,120px);padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px var(--gap);border-top:var(--rule-w) solid var(--fg)}
 .case-stats li{display:grid;gap:6px;padding-top:12px;align-content:start}
 @media (max-width:1000px){ .case-stats{grid-template-columns:repeat(3,minmax(0,1fr))} }
 @media (max-width:560px){ .case-stats{grid-template-columns:repeat(2,minmax(0,1fr))} }
@@ -362,8 +365,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .jrow.wrap-m > .fig{flex:0 0 calc(50% - var(--gap) / 2)}
   .jrow.wrap-m > .fig:nth-child(odd):last-child{flex-basis:100%}
   .row-third,.row-quarter{grid-template-columns:1fr 1fr}
-  .index a{grid-template-columns:2.2em minmax(0,1fr)}
-  .index .k{display:none}
   /* Scroll cue centred on phones, raised above the bottom corners so it never sits on Instagram or Vamos conversar */
   .cue{bottom:calc(52px + env(safe-area-inset-bottom,0px))}
 }
@@ -477,20 +478,20 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Same system as the project chapters: a 1px rule in the ink colour opens each block, label and count in cols 1–4,
    the list in cols 5–12 with hairlines between items. Everything left-aligned. */
 .ab-intro{font:500 clamp(24px,3vw,46px)/1.12 var(--sans);letter-spacing:-.035em;max-width:30ch;margin:clamp(28px,4vw,56px) 0 clamp(64px,10vw,140px);text-wrap:pretty}
-.ab{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px var(--gap);border-top:1px solid var(--fg);padding-top:14px;margin-bottom:clamp(48px,7vw,104px)}
+.ab{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px var(--gap);border-top:var(--rule-w) solid var(--fg);padding-top:14px;margin-bottom:clamp(48px,7vw,104px)}
 .ab-k{grid-column:1 / 5;margin:0;display:flex;gap:8px;align-items:baseline;font-weight:300}
 .ab-k .placeholder{color:var(--mute)}
 .ab-list{grid-column:5 / 13;margin:0;padding:0;list-style:none}
-.ab-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,5fr) minmax(0,2fr);gap:var(--gap);align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.ab-row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,5fr) minmax(0,2fr);gap:var(--gap);align-items:baseline;padding:12px 0}
 .ab-row:first-child{padding-top:0}
 .ab-row > b{font:700 clamp(18px,1.7vw,26px)/1.15 var(--sans);letter-spacing:-.03em}
 .ab-row > span:last-child{text-align:right}
 .ab-row a{text-decoration:none}
 .ab-row.solo{display:block;font:500 clamp(16px,1.4vw,20px)/1.25 var(--sans);letter-spacing:-.02em}
-/* Short items (clients, disciplines, languages) run in columns, still one hairline each */
+/* Short items (clients, disciplines, languages) run in columns; rows have no hairlines, only the section rule on top (Felipe, Nov 9 2026) */
 .ab-list.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap)}
 .ab-list.flow .ab-row.solo:nth-child(-n+3){padding-top:0}
-.ab-end{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--fg);padding-top:14px;margin:0}
+.ab-end{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:var(--rule-w) solid var(--fg);padding-top:14px;margin:0}
 .ab-clock time{font-variant-numeric:tabular-nums}
 @media (max-width:760px){
   .ab-k,.ab-list{grid-column:1 / -1}
@@ -511,18 +512,21 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .foot .big:hover > span:first-child,.foot .big:focus-visible > span:first-child{background-size:100% 100%}
 :is(.about,.foot) :focus-visible{outline-color:var(--fg)}
 :is(.about,.foot) ::selection,:is(.about,.foot)::selection{background:var(--blue);color:#fff}
-/* Entrance (Oct 29 2026 audit, pending Felipe's approval; off with reduced motion): each block's rule draws left to right as it comes into view, its hairlines just after */
-.fx-rule :is(.ab,.ab-end){border-top-color:transparent;background:linear-gradient(var(--fg),var(--fg)) 0 0/0 1px no-repeat border-box;transition:background-size 1.1s var(--ease)}
-.fx-rule .ab-row{border-bottom-color:transparent;background:linear-gradient(var(--line),var(--line)) 0 100%/0 1px no-repeat border-box;transition:background-size .9s var(--ease) .25s}
-.fx-rule :is(.ab,.ab-end).in,.fx-rule .ab.in .ab-row{background-size:100% 1px}
-/* Project rules draw in (Felipe, Nov 1 2026): the sheet's and each chapter's top rule runs left to right once it is in view */
-.fx-lines :is(.chap,.case-sheet){border-top-color:transparent;background:linear-gradient(var(--fg),var(--fg)) 0 0/0 1px no-repeat border-box;transition:background-size 1.1s var(--ease)}
-.fx-lines :is(.chap,.case-sheet).in{background-size:100% 1px}
-/* A chapter inside a pair or trilho has no rule of its own: the wrapper draws the one full-width line (Felipe, Nov 1 2026) */
-.fx-lines .chap.tr{background:none}
-.case.motion.fx-lines .chap{transition:opacity .9s ease,transform 1.2s var(--ease),background-size 1.1s var(--ease) .2s}
+/* Rule entrance: a line draws itself once, left to right, as it comes into view, then the real border takes over
+   (Nov 11 2026: lines no longer follow the scroll position, which left them half drawn and in mixed weights). */
+.scroll-rule{
+  transition:background-size .9s var(--ease);
+  background-image:linear-gradient(var(--rule-top-color,transparent),var(--rule-top-color,transparent)),linear-gradient(var(--rule-bottom-color,transparent),var(--rule-bottom-color,transparent));
+  background-position:0 0,0 100%;
+  background-size:var(--rule-top-progress,0%) var(--rule-top-width,0px),var(--rule-bottom-progress,0%) var(--rule-bottom-width,0px);
+  background-repeat:no-repeat;
+  background-origin:border-box;
+}
+.scroll-rule-top{border-top-color:transparent}
+.scroll-rule-bottom{border-bottom-color:transparent}
+@media (prefers-reduced-motion:no-preference){.foot::after{transform:scaleX(var(--closing-rule-progress,1));transform-origin:left;transition:transform .9s var(--ease)}}
 /* Running caption under the work list (Felipe, Nov 1 2026): replaces the bottom corners while the list is on screen */
-.list-cap{position:fixed;z-index:31;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:16px;padding:10px var(--side-r) calc(12px + env(safe-area-inset-bottom,0px)) var(--side-l);background:var(--bg);border-top:1px solid var(--fg);font-size:11px;line-height:1.3;text-transform:uppercase;letter-spacing:.04em;font-variant-numeric:tabular-nums;opacity:0;translate:0 100%;transition:opacity .3s,translate .4s var(--ease);pointer-events:none}
+.list-cap{position:fixed;z-index:31;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:16px;padding:10px var(--side-r) calc(12px + env(safe-area-inset-bottom,0px)) var(--side-l);background:var(--bg);border-top:var(--rule-w) solid var(--fg);font-size:11px;line-height:1.3;text-transform:uppercase;letter-spacing:.04em;font-variant-numeric:tabular-nums;opacity:0;translate:0 100%;transition:opacity .3s,translate .4s var(--ease);pointer-events:none}
 .list-cap.on{opacity:1;translate:0 0}
 .list-cap .lc-l{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .list-cap .lc-r{color:var(--mute);white-space:nowrap}
@@ -537,7 +541,7 @@ html:has(> body:not(.in-case)){background:linear-gradient(#0a0a0a 50%,#fff 50%)}
 /* Each roll is a horizontal strip of frames sharing one height, two or three in view; it scrolls sideways (arrows, drag, swipe). */
 .rolls{display:grid;gap:clamp(48px,7vw,96px)}
 .film-roll{--h:min(calc((100vw - 32px) / 3.6), 62svh);display:grid;gap:12px}
-.roll-head{display:flex;align-items:center;gap:10px;border-top:1px solid var(--fg);padding-top:10px}
+.roll-head{display:flex;align-items:center;gap:10px;border-top:var(--rule-w) solid var(--fg);padding-top:10px}
 .roll-head h3{margin:0;font:inherit;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
 .roll-count{color:var(--mute);font-size:13px}
 /* Arrows: one control for every previous / next (rooms, rolls, PopStar, logo close-up, project neighbours). A line arrow
@@ -606,13 +610,13 @@ button.arw.close .arw-i{width:14px;height:14px}
 /* The large image and its thumbnails fit on one screen together */
 /* Group tabs read as navigation, not as tags: big numbered labels on one rule, the open one underlined in the accent
    (the site blue on a black / white accent, as every highlight: Felipe, Oct 29 2026) */
-.rooms-tabs{display:flex;flex-wrap:wrap;gap:0 clamp(16px,2.4vw,36px);border-bottom:1px solid var(--line);margin-bottom:var(--gap)}
+.rooms-tabs{display:flex;flex-wrap:wrap;gap:0 clamp(16px,2.4vw,36px);border-bottom:var(--rule-w) solid var(--fg);margin-bottom:var(--gap)}
 .rooms-tabs button{all:unset;cursor:pointer;display:flex;align-items:baseline;gap:8px;padding:10px 0 12px;margin-bottom:-1px;border-bottom:3px solid transparent;
   font-family:Figtree,sans-serif;font-weight:700;font-size:clamp(17px,1.5vw,22px);letter-spacing:-.01em;color:var(--mute);transition:color .2s,border-color .2s}
 .rooms-tabs button .mono{font-size:12px;font-weight:400;letter-spacing:0}
 .rooms-tabs button:hover{color:var(--fg)}
-.rooms-tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--ai,var(--blue))}
-.rooms-tabs button[aria-selected="true"] .mono{color:var(--ai-ink,var(--ai,var(--blue)))}
+.rooms-tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--control-accent,var(--ai,var(--blue)))}
+.rooms-tabs button[aria-selected="true"] .mono{color:var(--fg)}
 .rooms-tabs button:focus-visible{outline:2px solid var(--ai-ink,var(--ai,var(--blue)));outline-offset:2px}
 .rooms-stage .ph{cursor:pointer;touch-action:pan-y}
 .rooms-stage .ph > img{transition:none;user-select:none}
@@ -663,7 +667,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 .loose > .trilho + .trilho{margin-top:clamp(64px,8vw,136px)}
 /* Pair: a chapter or text line in columns 1-4 beside the piece it talks about in 6-12, column 5 left as air (Felipe, Oct 27 2026; Oct 29 2026) */
 .pair{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);align-items:start}
-.pair.ch{padding-top:var(--chap-pad);border-top:1px solid var(--fg);margin-top:clamp(64px,8vw,136px)}
+.pair.ch{padding-top:var(--chap-pad);border-top:var(--rule-w) solid var(--fg);margin-top:clamp(64px,8vw,136px)}
 .pair-text{grid-column:1 / 5;grid-row:1;position:sticky;top:calc(var(--side) + 48px);min-width:0;display:flex;flex-direction:column;gap:14px}
 .pair-fig{grid-column:6 / 13;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end}
 .pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * var(--vh,88svh)))}
@@ -707,16 +711,16 @@ button.arw.close .arw-i{width:14px;height:14px}
   .side-row > .fig:not(.embed){width:min(62%,280px)}
   .chap.cz .chap-h{font-size:clamp(40px,13vw,72px)}
 }
-.trilho{border-top:1px solid var(--fg);padding-top:var(--chap-pad)}
+.trilho{border-top:var(--rule-w) solid var(--fg);padding-top:var(--chap-pad)}
 .tr-side .chap.tr{border-top:0;padding-top:0}
 
 
 /* Globo / living gradients. Original printed design-system assets remain untouched. */
-.globo-palette{width:100%;margin:clamp(24px,3.5vw,56px) 0 0;border-top:1px solid var(--line);padding-top:14px}
+.globo-palette{width:100%;margin:clamp(24px,3.5vw,56px) 0 0;border-top:var(--rule-w) solid var(--fg);padding-top:14px}
 .globo-palette-head{display:flex;justify-content:space-between;gap:16px;color:var(--mute);font-size:clamp(10px,.8vw,13px);letter-spacing:.07em;margin-bottom:16px;text-transform:uppercase}
 .globo-palette-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap)}
 .globo-palette-card{min-width:0;outline-offset:5px}
-.globo-palette-swatch{height:clamp(130px,16vw,260px);position:relative;overflow:hidden;isolation:isolate;background-size:180% 180%;background-position:0% 50%;animation:globo-functional-flow 19s ease-in-out infinite alternate;transition:filter .6s ease}
+.globo-palette-swatch{height:clamp(130px,16vw,260px);position:relative;overflow:hidden;isolation:isolate;background-size:180% 180%;background-position:5% 50%;animation:globo-functional-flow 24s ease-in-out infinite alternate;transition:filter .6s ease}
 .globo-palette-card.news .globo-palette-swatch{background-image:linear-gradient(120deg,#305d9e 8%,#3894ad 45%,#6ac4a0 85%,#305d9e 115%)}
 .globo-palette-card.sport .globo-palette-swatch{background-image:linear-gradient(120deg,#6cbb56 5%,#a9d448 43%,#ffe330 85%,#6cbb56 115%);animation-delay:-6s}
 .globo-palette-card.entertainment .globo-palette-swatch{background-image:linear-gradient(120deg,#e91367 5%,#f65a70 40%,#f59a30 85%,#e91367 115%);animation-delay:-12s}
@@ -724,14 +728,14 @@ button.arw.close .arw-i{width:14px;height:14px}
 .globo-palette-meta{display:flex;justify-content:space-between;gap:8px;padding:9px 0;color:var(--fg);font-size:clamp(10px,.85vw,13px);text-transform:uppercase}
 .globo-palette-meta span:last-child{color:var(--mute);transition:transform .3s ease}
 .globo-palette-card:is(:hover,:focus-visible) .globo-palette-meta span:last-child{transform:translate(3px,-3px)}
-@keyframes globo-functional-flow{from{background-position:5% 50%}to{background-position:95% 50%}}
+@keyframes globo-functional-flow{from{background-position:calc(5% + var(--globo-pos-x,0%)) calc(50% + var(--globo-pos-y,0%))}to{background-position:calc(95% + var(--globo-pos-x,0%)) calc(50% + var(--globo-pos-y,0%))}}
 @media(max-width:760px){.globo-palette-head span:last-child{display:none}.globo-palette-grid{grid-template-columns:1fr;gap:12px}.globo-palette-swatch{height:clamp(96px,28vw,170px)}}
 @media(prefers-reduced-motion:reduce){.globo-palette-swatch{animation:none;transform:none}.globo-palette-meta span:last-child{transition:none}}
 
 
 /* Project navigation: previous / next at the end of every case (the top one came off, Felipe, Oct 29 2026) */
 .case-neighbors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:clamp(90px,12vw,180px);padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
-.case-neighbor{display:flex;flex-direction:column;gap:clamp(16px,2.5vw,35px);min-width:0;padding:18px 0 10px;border-top:1px solid var(--fg);text-decoration:none;color:var(--fg)}
+.case-neighbor{display:flex;flex-direction:column;gap:clamp(16px,2.5vw,35px);min-width:0;padding:18px 0 10px;border-top:var(--rule-w) solid var(--fg);text-decoration:none;color:var(--fg)}
 .case-neighbor.next{text-align:right;align-items:flex-end}
 /* Back from a project: its row flashes in the project's colour */
 .index a.back-here .t{animation:backHere 1.6s ease-in forwards}
@@ -797,8 +801,17 @@ button.arw.close .arw-i{width:14px;height:14px}
   .corners .c-bl{bottom:calc(20px + env(safe-area-inset-bottom,0px))}
 }
 @media(max-width:390px){.corners .c-tl{font-size:11px}.corners .c-tr{font-size:11px;gap:6px}.corners .c-bl{font-size:11px;gap:10px}.lang{padding:0 .45em}}
+/* Keep the larger case-home link clear of the menu on narrow screens. */
+@media(max-width:560px){
+  .corners .c-tr{left:var(--side-l);right:var(--side-r);top:calc(54px + env(safe-area-inset-top,0px));justify-content:space-between;gap:10px}
+  .corners .c-tr > a::before,.corners .c-tr > button::before{content:"";position:absolute;inset:-8px 0}
+  /* The long case sheet runs behind the fixed bottom corners even at scroll 0. */
+  .in-case .corners :is(.c-bl,.c-br){opacity:0;pointer-events:none}
+  .in-case .corners :is(.c-bl,.c-br):focus-within{opacity:1;pointer-events:auto}
+}
 /* Listening panel: full portfolio soundtrack, original embedded Spotify playback preserved. */
 .music{width:min(420px,calc(100vw - var(--side-l) - var(--side-r)));top:calc(52px + env(safe-area-inset-top,0px));padding:14px;max-height:min(78svh,720px);display:flex;flex-direction:column;gap:10px;box-shadow:0 16px 46px rgba(0,0,0,.16)}
+@media(max-width:560px){.music{top:calc(88px + env(safe-area-inset-top,0px))}}
 .music-head{font-size:12px;padding:0 0 4px}
 .music-head button{font-size:23px;min-width:30px;min-height:30px;text-align:center}
 /* Close draws the same line cross as the logo close-up's, and takes the accent on hover like the arrows (Felipe, Oct 29 2026) */
@@ -846,7 +859,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 
 /* PopStar: restrained links to historic broadcaster episodes.
    The broadcaster controls playback, so these intentionally open its own player. */
-.case-episode-link{display:flex;flex-direction:column;gap:10px;padding:clamp(20px,3vw,44px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--fg);text-decoration:none;transition:color .25s ease}
+.case-episode-link{display:flex;flex-direction:column;gap:10px;padding:clamp(20px,3vw,44px) 0;border-top:var(--rule-w) solid var(--fg);border-bottom:var(--rule-w) solid var(--fg);color:var(--fg);text-decoration:none;transition:color .25s ease}
 .case-episode-link + .case-episode-link{border-top:0}
 .case-episode-meta{font-size:11px;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
 .case-episode-title{font:900 clamp(26px,4.2vw,64px)/.95 var(--sans);letter-spacing:-.04em;text-transform:uppercase;display:flex;justify-content:space-between;gap:20px}
@@ -862,19 +875,15 @@ button.arw.close .arw-i{width:14px;height:14px}
    before SCREEN blending, so only the white mark remains and the actual case background shows. */
 .popstar-invert .ph img{filter:grayscale(1) invert(1) contrast(700%);mix-blend-mode:screen}
 
-/* Globo palette swatches: no overlays (pointer pull and drift are set below). */
-.globo-palette-swatch{position:relative;isolation:isolate}
-
-
 /* Editorial polish: PopStar identity sequence, one specimen at a time.
    Screen compositing keeps the original white linework while letting the case's
    own background replace the black pixels. Source JPEGs remain unchanged. */
 .loose > .flip.flip-wide{width:100%;max-width:100%;align-self:stretch;margin-block:clamp(12px,2vw,28px) clamp(44px,6vw,100px);--n:2}
 .flip-wide .fig{width:100%;background:transparent!important}
-.flip-wide .fig .ph{background:var(--bg)!important;isolation:isolate;aspect-ratio:16/9}
-.flip-wide .fig .ph > img{filter:grayscale(1) invert(1) contrast(700%)!important;mix-blend-mode:screen!important;object-fit:contain;transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .45s cubic-bezier(.2,.8,.2,1);background:transparent!important}
+.flip-wide .fig .ph{background:var(--bg)!important;isolation:isolate;aspect-ratio:16/9;translate:var(--px,0px) var(--py,0px);transition:translate .45s cubic-bezier(.2,.8,.2,1)}
+.flip-wide .fig .ph > img{filter:grayscale(1) invert(1) contrast(700%)!important;mix-blend-mode:screen!important;object-fit:contain;background:transparent!important}
 /* The site's arrow group (← 01 / 08 →), centred over the centred thumbnails (Felipe, Oct 29 2026) */
-.flip-wide .flip-controls{justify-content:center;margin-top:16px;border-top:1px solid var(--line);padding-top:6px}
+.flip-wide .flip-controls{justify-content:center;margin-top:16px;border-top:var(--rule-w) solid var(--fg);padding-top:6px}
 .flip-wide .flip-thumbs{display:flex;justify-content:center;gap:12px;margin-top:8px}
 .flip-wide .flip-thumbs button{width:clamp(72px,12vw,150px);aspect-ratio:16/9;background:transparent}
 .flip-wide .flip-thumbs img{filter:grayscale(1) invert(1) contrast(700%)!important;mix-blend-mode:screen!important;object-fit:contain}
@@ -927,7 +936,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 
 /* Keep the PopStar preview on the themed canvas, never on the JPG black matte. */
 .case .flip-wide .fig .ph{background-color:var(--bg)!important;isolation:isolate}
-@media(hover:none),(prefers-reduced-motion:reduce){.flip-wide .fig .ph > img{--px:0px!important;--py:0px!important;transition:none}}
+@media(hover:none),(prefers-reduced-motion:reduce){.flip-wide .fig .ph{--px:0px!important;--py:0px!important;transition:none}}
 
 /* CoreHi: interactive identity specimen, restrained and accessible. */
 .corehi-interactive .ph{isolation:isolate;cursor:pointer;outline-offset:4px}
@@ -945,8 +954,8 @@ button.arw.close .arw-i{width:14px;height:14px}
 
 /* Editorial introduction: description and project numbers share one aligned block. */
 /* Project sheet (Felipe, Oct 29 2026, after Studio Up and tacto): the facts stay pinned in cols 1-4 while the summary,
-   numbers and the full discipline list (this project's lit, the rest faded) read in cols 6-12 */
-.case-sheet{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(32px,4vw,56px) var(--gap);align-items:start;margin:clamp(28px,4vw,56px) 0 clamp(44px,6vw,88px);padding-top:14px;border-top:1px solid var(--fg)}
+   numbers read in cols 6-12 */
+.case-sheet{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(32px,4vw,56px) var(--gap);align-items:start;margin:clamp(28px,4vw,56px) 0 clamp(44px,6vw,88px);padding-top:14px;border-top:var(--rule-w) solid var(--fg)}
 .case-sheet > .case-meta{grid-column:1 / 5;position:sticky;top:calc(var(--side) + 48px);display:flex;flex-direction:column;gap:clamp(16px,1.8vw,24px);margin:0;padding:0;border:0}
 .case-sheet-main{grid-column:6 / 13;display:flex;flex-direction:column;gap:clamp(40px,5vw,80px);min-width:0}
 .case-summary{font-size:clamp(16px,1.35vw,20px);max-width:none}
@@ -955,10 +964,6 @@ button.arw.close .arw-i{width:14px;height:14px}
 .case-sheet .case-stats li{padding:0}
 .case-sheet .case-stats b{font-size:clamp(44px,5vw,88px);line-height:.95}
 .case-sheet .case-stats span{line-height:1.45}
-.case-disc{display:grid;gap:12px}
-.case-disc ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);border-top:1px solid var(--line)}
-.case-disc li{padding:10px 0;border-bottom:1px solid var(--line);font:500 clamp(13px,1vw,16px)/1.25 var(--sans);letter-spacing:-.01em;color:var(--mute);opacity:.45}
-.case-disc li.on{color:var(--fg);opacity:1}
 @media(max-width:760px){
  .case-sheet{gap:36px var(--gap)}
  .case-sheet > .case-meta{grid-column:1 / -1;position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px var(--gap)}
@@ -966,7 +971,6 @@ button.arw.close .arw-i{width:14px;height:14px}
  .case-sheet .case-meta :is(.wide,.live){grid-column:1 / -1}
  .case-sheet-main{grid-column:1 / -1;gap:36px}
  .case-sheet .case-stats b{font-size:clamp(40px,11vw,78px)}
- .case-disc ul{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 /* Editorial rhythm audit: space between rules, titles, and supporting text. */
@@ -982,14 +986,6 @@ button.arw.close .arw-i{width:14px;height:14px}
  .case-gallery .chap{row-gap:15px}
 }
 
-/* Globo: organic colour movement, without dots, concentric rings or cursor effects. */
-.globo-palette-swatch,
-.globo-palette-swatch:hover{
-  animation:globo-functional-flow 24s ease-in-out infinite alternate;
-  background-position:var(--globo-pos-x,50%) var(--globo-pos-y,50%)!important;
-  transition:background-position .2s ease;
-}
-@media(prefers-reduced-motion:reduce){
- .globo-palette-swatch{animation:none!important}
-}
 
+.scroll-rule.scroll-rule-top{border-top-color:transparent}
+.scroll-rule.scroll-rule-bottom{border-bottom-color:transparent}
