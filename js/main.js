@@ -372,7 +372,7 @@
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
-  // corners (on phones all four), scrolling up or reaching the top brings them back, so they never sit on the work
+  // corners (all four since Nov 11 2026), scrolling up or reaching the top brings them back, so they never sit on the work
   let lastY = scrollY;
   const calmCheck = () => {
     const y = scrollY, dy = y - lastY;
@@ -1452,52 +1452,64 @@
   const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
   }), { rootMargin: "0px 0px -10% 0px" }) : null;
-  // Animate only existing editorial borders. Each edge follows its own position,
-  // rather than the intersection of a potentially screen-tall parent block.
-  const ruleSelector = ".ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .index, .index a, .services, .services li, .social";
+  // Lines (Nov 11 2026): each existing editorial border draws itself once, left to right, when it comes into view,
+  // then the element gets its real border back, so every line ends up as the same crisp 1px rule.
+  // Both edges' variables are always set on each element: custom properties inherit, and a row inside a ruled
+  // list used to pick up the list's black top line on top of its own (the mixed greys and stubs Felipe saw).
+  const ruleSelector = ".ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .rooms-tabs, .index, .index a, .services, .services li, .social";
   let homeRules = [], caseRules = [], rulesRaf = 0;
+  const RULE_MS = 950;
   const collectRules = root => {
     if (reduced) return [];
     return [...root.querySelectorAll(ruleSelector)].flatMap(el => {
+      if (el.dataset.ruled) return [];
       const cs = getComputedStyle(el), edges = [];
       for (const edge of ["top", "bottom"]) {
         const width = cs.getPropertyValue(`border-${edge}-width`);
         const color = cs.getPropertyValue(`border-${edge}-color`);
-        if (parseFloat(width) > 0 && cs.getPropertyValue(`border-${edge}-style`) !== "none" && color !== "transparent" && !color.endsWith(", 0)")) {
-          edges.push(edge);
-          el.style.setProperty(`--rule-${edge}-color`, color);
-          el.style.setProperty(`--rule-${edge}-width`, width);
-        }
+        const on = parseFloat(width) > 0 && cs.getPropertyValue(`border-${edge}-style`) !== "none" && color !== "transparent" && !color.endsWith(", 0)");
+        if (on) edges.push(edge);
+        el.style.setProperty(`--rule-${edge}-color`, on ? color : "transparent");
+        el.style.setProperty(`--rule-${edge}-width`, on ? width : "0px");
+        el.style.setProperty(`--rule-${edge}-progress`, "0%");
       }
-      if (!edges.length) return [];
+      if (!edges.length) { ["top", "bottom"].forEach(e => ["color", "width", "progress"].forEach(k => el.style.removeProperty(`--rule-${e}-${k}`))); return []; }
+      el.dataset.ruled = "1";
       el.classList.add("scroll-rule", ...edges.map(edge => `scroll-rule-${edge}`));
-      return [{ el, edges }];
+      return [{ el, edges, drawn: new Set() }];
     });
+  };
+  const settleRule = rule => {
+    rule.done = true;
+    setTimeout(() => {
+      rule.el.classList.remove("scroll-rule", "scroll-rule-top", "scroll-rule-bottom");
+      ["top", "bottom"].forEach(e => ["color", "width", "progress"].forEach(k => rule.el.style.removeProperty(`--rule-${e}-${k}`)));
+    }, RULE_MS);
   };
   const updateRules = () => {
     rulesRaf = 0;
     const inCase = document.body.classList.contains("in-case");
-    const rules = inCase ? caseRules : homeRules;
-    const maxScroll = Math.max(0, document.documentElement.scrollHeight - innerHeight);
-    const progressAt = y => {
-      // Lines near the end of a short page must still finish before scrolling stops.
-      const end = Math.max(innerHeight * .6, y + scrollY - maxScroll);
-      return Math.max(0, Math.min(1, (innerHeight * .98 - y) / Math.max(1, innerHeight * .98 - end)));
-    };
-    const measurements = rules.map(rule => ({ ...rule, rect: rule.el.getBoundingClientRect() }));
-    measurements.forEach(({ el, edges, rect }) => {
-      if (!rect.width || !rect.height) return;
-      edges.forEach(edge => {
+    const rules = (inCase ? caseRules : homeRules).filter(r => !r.done);
+    const line = innerHeight * .92;
+    const measurements = rules.map(rule => ({ rule, rect: rule.el.getBoundingClientRect() }));
+    measurements.forEach(({ rule, rect }) => {
+      if (!rect.width && !rect.height) return;
+      rule.edges.forEach(edge => {
+        if (rule.drawn.has(edge)) return;
         const y = edge === "top" ? rect.top : rect.bottom;
-        const progress = progressAt(y);
-        el.style.setProperty(`--rule-${edge}-progress`, `${(progress * 100).toFixed(2)}%`);
+        // Draw once the line is in the lower part of the screen, or already scrolled past
+        if (y < line) { rule.drawn.add(edge); rule.el.style.setProperty(`--rule-${edge}-progress`, "100%"); }
       });
+      if (rule.drawn.size === rule.edges.length) settleRule(rule);
     });
-    // Reuse the footer's existing closing rule, without creating another one.
     if (!inCase && !reduced) {
       const foot = $("contact"), cs = getComputedStyle(foot);
       const y = foot.getBoundingClientRect().bottom - parseFloat(cs.paddingBottom);
-      foot.style.setProperty("--closing-rule-progress", progressAt(y));
+      if (!foot.dataset.drawn) {
+        const draw = y < line || scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
+        foot.style.setProperty("--closing-rule-progress", draw ? 1 : 0);
+        if (draw) foot.dataset.drawn = "1";
+      }
     }
   };
   const queueRules = () => { if (!reduced && !rulesRaf) rulesRaf = requestAnimationFrame(updateRules); };
