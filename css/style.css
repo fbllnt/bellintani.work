@@ -1010,7 +1010,6 @@ button.arw.close .arw-i{width:14px;height:14px}
 .go-bar{all:unset;cursor:pointer;height:clamp(90px,11vw,170px);background:var(--a);display:flex;align-items:flex-end;padding:8px;color:#f5f0e0;font-size:clamp(9px,.75vw,12px);letter-spacing:.05em;transition:height .4s cubic-bezier(.2,.7,.2,1)}
 .go-bar:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
 .go-c3 span,.go-c6 span{color:#1e1b18}.go-c6{box-shadow:inset 0 0 0 1px var(--line)}
-.go-c5{height:clamp(50px,6vw,90px);align-self:end}
 .go-hint{margin-top:10px;font-size:clamp(10px,.8vw,12px)}
 .go-cores:has(.go-c0:is(:hover,:focus-visible)) .go-panel{--a:var(--a0);--b:var(--b0)}
 .go-cores:has(.go-c1:is(:hover,:focus-visible)) .go-panel{--a:var(--a1);--b:var(--b1)}
@@ -1019,4 +1018,9 @@ button.arw.close .arw-i{width:14px;height:14px}
 .go-cores:has(.go-c4:is(:hover,:focus-visible)) .go-panel{--a:var(--a4);--b:var(--b4)}
 .go-cores:has(.go-c5:is(:hover,:focus-visible)) .go-panel{--a:var(--a5);--b:var(--b5)}
 .go-cores:has(.go-c6:is(:hover,:focus-visible)) .go-panel{--a:var(--a6);--b:var(--b6)}
-@media (max-width:600px){.go-bars{grid-template-columns:repeat(4,minmax(0,1fr))}.go-bar{height:76px}.go-c5{height:44px}}
+@media (max-width:600px){.go-bars{grid-template-columns:repeat(4,minmax(0,1fr))}.go-bar{height:76px}}
+.cover-cycle{position:relative;cursor:pointer;outline-offset:-4px}
+.cover-cycle img{display:block;width:100%;height:auto}
+.cover-cycle img+img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 2.6s ease}
+.cover-cycle img.on{opacity:1}
+.word-big.word-img img{display:block;height:.78em;width:auto;margin:.1em 0}

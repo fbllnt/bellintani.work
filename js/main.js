@@ -126,6 +126,13 @@
       `<i style="--cf-x:${x}%;--cf-y:${y}%;--cf-s:${s}%;--cf-c:${c};--cf-dx:${dx}%;--cf-dy:${dy}%;--cf-t:${t}s;--cf-d:-${(t * n / fields.length).toFixed(1)}s"></i>`).join("")}</div>`;
   }
 
+  // Cover cycles: every 5 s each `.cover-cycle` on the page fades to its next still; a click or Enter jumps ahead.
+  const cycleStep = el => { const imgs = [...el.querySelectorAll("img")], k = imgs.findIndex((im, n) => n && im.classList.contains("on"));
+    imgs.forEach(im => { if (im !== imgs[0]) im.classList.remove("on"); }); const next = (k < 0 ? 0 : k) + 1; if (next < imgs.length) imgs[next].classList.add("on"); el.dataset.t = Date.now(); };
+  document.addEventListener("click", e => { const el = e.target.closest && e.target.closest(".cover-cycle"); if (el) cycleStep(el); });
+  document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.classList && e.target.classList.contains("cover-cycle")) cycleStep(e.target); });
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => document.querySelectorAll(".cover-cycle").forEach(el => { if (!el.dataset.t) el.dataset.t = Date.now(); else if (Date.now() - +el.dataset.t > 4800) cycleStep(el); }), 1000);
+
   // ---------- Project covers ----------
   // Real image if the project has one, otherwise a generated placeholder composition.
   function cover(i, p) {
@@ -133,6 +140,9 @@
     // Films list the WebM first (smaller) with the MP4 as fallback; an item whose WebM came out bigger has no `webm` (Oct 29 2026).
     if (p.coverVideo && !matchMedia("(prefers-reduced-motion: reduce)").matches) return `<video class="cover-vid" poster="${esc(p.image)}" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
         ${p.coverVideo.webm ? `<source src="${esc(p.coverVideo.webm)}" type="video/webm">` : ""}<source src="${esc(p.coverVideo.mp4)}" type="video/mp4"></video>`;
+    // `coverCycle`: more stills of the same cover in other colours, cross-fading slowly in turn over `image`; a click
+    // (or Enter) moves to the next colour at once (Felipe, Nov 11 2026, Globo On).
+    if (p.coverCycle) return `<div class="cover-cycle" role="button" tabindex="0" aria-label="${esc(L({ en: "Change colour", pt: "Trocar a cor", es: "Cambiar el color" }))}"><img src="${esc(p.image)}" alt="" class="on">${p.coverCycle.map(src => `<img src="${esc(src)}" alt="" loading="lazy">`).join("")}</div>`;
     if (p.image) return `<img src="${esc(p.image)}" alt="" loading="lazy">`;
     const [h, s, l] = p.hue || [0, 0, 50];
     const c1 = `hsl(${h} ${s}% ${l}%)`, c2 = `hsl(${(h + 40) % 360} ${s}% ${Math.min(l + 25, 92)}%)`, ink = l < 30 ? "#f2f2f2" : "#111";
@@ -594,7 +604,8 @@
     if (it.soundcloud) return `<figure class="fig sp" style="--sp-h:${+it.h || 166}px;${style}"><div class="ph"><iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(it.soundcloud)}&color=${encodeURIComponent((p.theme && p.theme.accent) || "#1a2bff")}&auto_play=false&hide_related=true&show_comments=false&show_reposts=false&visual=false" title="${esc(L(it.caption) || "SoundCloud")}" loading="lazy" allow="autoplay"></iframe></div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
     if (it.swap) return `<div class="swap-ba" style="${style}">${[["before", "old"], ["after", "new"]].map(([k, c]) =>
       `<p><span class="mono muted">${esc(T(k))}</span><b class="${c}">${esc(L(it.swap[k]))}</b></p>`).join("")}</div>`;
-    if (it.word) return `<div class="word-def" style="${style}"><p class="word-big" style="--n:${[...it.word.glyph].length}"${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""} aria-hidden="true">${esc(it.word.glyph)}</p>
+    // `word.img`: the big word drawn in the brand's own typeface (an image, since the font can't ship with the site)
+    if (it.word) return `<div class="word-def" style="${style}"><p class="word-big${it.word.img ? " word-img" : ""}" style="--n:${[...it.word.glyph].length}"${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""} aria-hidden="true">${it.word.img ? `<img src="${esc(it.word.img)}" alt="">` : esc(it.word.glyph)}</p>
       <p class="word-entry"><b${it.word.lang ? ` lang="${esc(it.word.lang)}"` : ""}>${esc(L(it.word.head))}</b><span class="mono">${esc(L(it.word.note))}</span></p></div>`;
     if (it.marquee) { const imgs = it.marquee.map(m => { const [w, h] = String(m.ar || "1").split("/").map(Number); return `<img src="${esc(m.src)}" width="${w}" height="${h || 1}" alt="" loading="lazy">`; }).join("");
       return `<figure class="fig marquee-fig" style="${style}">${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}
