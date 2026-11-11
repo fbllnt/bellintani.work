@@ -1084,7 +1084,7 @@ window.SITE = {
       coverCycle: ["images/globo-on/onair/logo-02.jpg", "images/globo-on/onair/logo-03.jpg", "images/globo-on/cover-roxo.jpg", "images/globo-on/onair/logo-04.jpg"],
       hero: "bleed",
       heroAr: "1920/1080",
-      theme: { bg: "#f5f0e0", fg: "#1e1b18", mute: "#766e62", line: "#ddd5c0", panel: "#ebe4cf", accent: "#e71d73", accentText: "#c4145f", cursor: "#654f44" },
+      theme: { bg: "#f5f0e0", fg: "#1e1b18", mute: "#766e62", line: "#ddd5c0", panel: "#ebe4cf", accent: "#e71d73", accentText: "#c4145f", cursor: "#a48a7b" },
       summary: {
         en: "A 2016 refresh of Globo On, Globo's channel for Angola and Mozambique: a new mark, a palette with no favourite colour, a voice built on one word, ON, and the on-air package that carries it all.",
         pt: "O refresh de 2016 do Globo On, o canal da Globo para Angola e Moçambique: marca nova, uma paleta sem cor preferida, uma voz construída sobre uma palavra, ON, e o pacote on air que leva tudo isso para a tela.",
