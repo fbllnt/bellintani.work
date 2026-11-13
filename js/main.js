@@ -86,8 +86,10 @@
   // ---------- Missing material kept off the site (Felipe, Oct 27 2026) ----------
   // With `showMissing: false` in content.js, the "Falta" placeholders don't show: "?" meta values, todo boxes and a
   // chapter left with nothing under it. Chapters are renumbered so the count has no gaps. ?missing in the address shows them.
-  if (S.showMissing === false && !q.has("missing")) S.projects.forEach(p => {
+  const trimMissing = p => {
     Object.keys(p).forEach(k => { if (p[k] === "?") delete p[k]; });
+    // A brand's cases are trimmed like a project (cases still "under construction", `{ soon }`, always show)
+    if (Array.isArray(p.cases)) p.cases.filter(c => !c.soon).forEach(trimMissing);
     if (!Array.isArray(p.gallery)) return;
     const g = p.gallery.filter(it => !it.todo);
     p.gallery = g.filter((it, k) => !(it.chapter && !it.text && (!g[k + 1] || g[k + 1].chapter)));
@@ -97,7 +99,8 @@
       const num = String(++n).padStart(2, "0");
       it.chapter = Object.fromEntries(Object.entries(it.chapter).map(([l, v]) => [l, v.replace(/^\d+ · /, `${num} · `)]));
     });
-  });
+  };
+  if (S.showMissing === false && !q.has("missing")) S.projects.forEach(trimMissing);
 
   // Work order (Felipe, Oct 28 2026): fixed, exactly the order of `projects` in content.js (no shuffle).
 
@@ -135,6 +138,16 @@
     imgs.forEach(im => { if (im !== imgs[0]) im.classList.remove("on"); }); const next = (k < 0 ? 0 : k) + 1; if (next < imgs.length) imgs[next].classList.add("on"); el.dataset.t = Date.now(); };
   document.addEventListener("click", e => { const el = e.target.closest && e.target.closest(".cover-cycle"); if (el) cycleStep(el); });
   document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.classList && e.target.classList.contains("cover-cycle")) cycleStep(e.target); });
+  document.addEventListener("click", e => {
+    const b = e.target.closest && e.target.closest(".cover-play"); if (!b || b.querySelector("video")) return;
+    const p = S.projects.find(x => x.coverPlay && x.image === b.querySelector("img").getAttribute("src")); if (!p) return;
+    const v = document.createElement("video");
+    v.className = "cover-play-vid"; v.playsInline = true; v.poster = p.image;
+    v.innerHTML = `${p.coverPlay.webm ? `<source src="${p.coverPlay.webm}" type="video/webm">` : ""}<source src="${p.coverPlay.mp4}" type="video/mp4">`;
+    b.classList.add("playing"); b.appendChild(v);
+    const done = () => { b.classList.remove("playing"); v.remove(); };
+    v.addEventListener("ended", done); v.play().catch(done);
+  });
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => document.querySelectorAll(".cover-cycle").forEach(el => { if (!el.dataset.t) el.dataset.t = Date.now(); else if (Date.now() - +el.dataset.t > 4800) cycleStep(el); }), 1000);
 
   // ---------- Project covers ----------
@@ -144,6 +157,9 @@
     // Films list the WebM first (smaller) with the MP4 as fallback; an item whose WebM came out bigger has no `webm` (Oct 29 2026).
     if (p.coverVideo && !matchMedia("(prefers-reduced-motion: reduce)").matches) return `<video class="cover-vid" poster="${esc(p.image)}" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
         ${p.coverVideo.webm ? `<source src="${esc(p.coverVideo.webm)}" type="video/webm">` : ""}<source src="${esc(p.coverVideo.mp4)}" type="video/mp4"></video>`;
+    // `coverPlay`: the cover stays still, with a small Play tag; a click plays the film once in place, with sound,
+    // then the still comes back (Felipe, Nov 13 2026: "capa estática… se o cara clicar na grande aí ela se mexe")
+    if (p.coverPlay) return `<button type="button" class="cover-play" aria-label="${esc(T("play"))}"><img src="${esc(p.image)}" alt="" loading="lazy"><span class="cover-play-tag mono">▶ ${esc(T("play"))}</span></button>`;
     // `coverCycle`: more stills of the same cover in other colours, cross-fading slowly in turn over `image`; a click
     // (or Enter) moves to the next colour at once (Felipe, Nov 11 2026, Globo On).
     if (p.coverCycle) return `<div class="cover-cycle" role="button" tabindex="0" aria-label="${esc(L({ en: "Change colour", pt: "Trocar a cor", es: "Cambiar el color" }))}"><img src="${esc(p.image)}" alt="" class="on">${p.coverCycle.map(src => `<img src="${esc(src)}" alt="" loading="lazy">`).join("")}</div>`;
@@ -1160,31 +1176,122 @@
     root.classList.toggle("themed", !!t);
   }
 
-  // A project's accent for the back-to-list flash; a white or black accent falls back to the site blue, as everywhere
-  const accentOf = p => { const a = (p.theme && p.theme.accent) || ""; return !a || /^#(fff(fff)?|000(000)?)$/i.test(a) ? "#1a2bff" : a; };
-  function renderCase(i) {
-    clearCase();
-    const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
-    applyTheme(p.theme);
+  // The project sheet: facts pinned left (meta), summary and numbers right. Also used by each case inside a brand (`cases`).
+  function sheetHTML(p) {
     // Type only shows when there is no Scope: the two said the same thing twice (Oct 27 2026 review)
     const meta = [[T("client"), L(p.client)], [T("year"), p.year], [T("scope"), L(p.scope)], [T("role"), L(p.role)], [T("type"), !p.scope && p.type && S.types ? L(S.types[p.type]) : ""], [T("before"), L(p.before)], [T("sector"), L(p.sector)], [T("deliverables"), L(p.deliverables)], [T("tools"), Array.isArray(p.tools) ? p.tools : L(p.tools)]].filter(([, v]) => v);
-    let n = 0;
-    const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
-    caseEl.innerHTML = `
-      <h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
-      ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
+    return `
       <section class="case-sheet">
         <dl class="case-meta mono">${meta.map(([k, v]) => `<div${String(v).length > 40 ? ` class="wide"` : ""}><dt>${k}</dt><dd>${v === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>`
         : Array.isArray(v) ? v.map(t => t[0] === "*" ? `<span class="ai-tool">${esc(t.slice(1))}<sup>${esc(T("aiMark"))}</sup></span>` : esc(t)).join(", ") : esc(v)}</dd></div>`).join("")}${
         (p.credits || []).map(c => `<div><dt>${esc(L(c.role))}</dt><dd>${c.url ? `<a class="swap" href="${esc(c.url)}" target="_blank" rel="noopener"><span>${esc(c.name)} ↗</span><span aria-hidden="true">${esc(c.name)} ↗</span></a>` : esc(c.name)}</dd></div>`).join("")}${
         p.link ? `<div class="live"><dt>${esc(T("live"))}</dt><dd><a class="swap" href="${esc(p.link.url)}" target="_blank" rel="noopener"><span>${esc(p.link.label)} ↗</span><span aria-hidden="true">${esc(p.link.label)} ↗</span></a></dd></div>` : ""}</dl>
         <div class="case-sheet-main">
-          <p class="body case-summary">${esc(L(p.summary) || T("placeholderText"))}${tagFor(p)}</p>
+          <p class="body case-summary">${p.summary === "?" ? `<span class="todo-chip mono">${esc(T("missing"))}</span>` : esc(L(p.summary) || (p.cases ? "" : T("placeholderText")))}${tagFor(p)}</p>
           ${p.stats ? `<ul class="case-stats">${p.stats.map(([n, label]) => `<li><b>${esc(L(n))}</b><span class="mono">${esc(L(label))}</span></li>`).join("")}</ul>` : ""}
         </div>
       </section>
+`;
+  }
+
+  // ---------- A brand with several cases inside (Housecall Pro, Felipe Nov 13 2026) ----------
+  // `cases: [...]` on a project: the page opens on the brand (what Felipe did for it), then a numbered list of its
+  // cases. A row opens its case in place (sheet, cover, gallery); the open row sticks to the top while you read, with
+  // ← → to the brand's other cases and ✕ to close back to the list. Each case has its own address: /p/<brand>/#<case>.
+  const caseSlug = c => c.slug || String(c.title.en || c.title).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  function subCases(i, p) {
+    const real = p.cases.filter(c => !c.soon).length;
+    return `<section class="subs" aria-label="${esc(T("brandCases"))}">
+      <p class="subs-k mono"><span>${esc(T("brandCases"))}</span><span class="muted">(${pad(p.cases.length)})</span></p>
+      <ol class="sub-list">${p.cases.map((c, k) => {
+        if (c.soon) return `<li class="sub soon"><div class="sub-row"><span class="mono">(${pad(k + 1)})</span><span class="sub-t">${esc(L(c.soon))}</span><span class="sub-soon mono">${esc(T("soon"))}</span></div></li>`;
+        const sp = Object.assign({}, c, { theme: c.theme || p.theme }), slug = caseSlug(c);
+        // A case can wear its own material's colours (Felipe, Nov 13 2026: "seguir o padrão de identidade visual do
+        // material dentro do case"): `theme` on the case paints only that case while it is open (.sub.own in style.css)
+        const own = c.theme ? ` own" style="${Object.entries(THEME_VARS).filter(([k]) => c.theme[k] && k !== "cursor").map(([k, v]) => `${v.replace("--", "--c-")}:${esc(c.theme[k])}`).concat(c.theme.accentText ? [`--c-ai-t:${esc(c.theme.accentText)}`] : []).join(";")}` : "";
+        return `<li class="sub${own}" data-slug="${esc(slug)}">
+          <div class="sub-row">
+            <button type="button" class="sub-open" aria-expanded="false" aria-controls="sub-${esc(slug)}">
+              <span class="mono">(${pad(k + 1)})</span><span class="sub-t"><span class="ti">${esc(L(c.title))}</span></span>
+              <span class="sub-k mono"><span>${esc(L(c.scope) || (c.type && S.types ? L(S.types[c.type]) : ""))}</span>${c.year ? `<span class="muted">${esc(c.year)}</span>` : ""}</span>
+              <span class="sub-x" aria-hidden="true"></span>
+            </button>
+            ${real > 1 ? `<span class="sub-step mono">${arw("prev", "sub-prev", "", T("prev"))}<span class="sub-count">${pad(k + 1)} / ${pad(p.cases.length)}</span>${arw("next", "sub-next", "", T("nextItem"))}</span>` : ""}
+          </div>
+          <div class="sub-body" id="sub-${esc(slug)}" hidden>
+            ${sheetHTML(sp)}
+            ${c.image ? `<figure class="fig full cover-fig"${c.heroAr ? ` style="--ar:${esc(c.heroAr)}"` : ""}><div class="ph">${cover(i, sp)}</div></figure>` : ""}
+            <div class="case-gallery">${gallery(i, sp)}</div>
+            <p class="sub-end"><button type="button" class="sub-close mono">${esc(T("closeCase"))} · ${esc(L(c.title))} <span aria-hidden="true">✕</span></button></p>
+          </div>
+        </li>`; }).join("")}
+      </ol>
+    </section>`;
+  }
+  let syncSub = () => {}, stuckCheck = () => {};
+  function setupSubs(p) {
+    const box = caseEl.querySelector(".subs"); if (!box) return;
+    const items = [...box.querySelectorAll(".sub[data-slug]")];
+    const show = (li, on) => {
+      li.classList.toggle("open", on);
+      li.querySelector(".sub-open").setAttribute("aria-expanded", String(on));
+      li.querySelector(".sub-body").hidden = !on;
+    };
+    const top = el => scrollTo({ top: el.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0), behavior: "instant" });
+    // Open the case named in the address (or none), and bring it (or the list) into view
+    syncSub = (move = true) => {
+      const slug = decodeURIComponent(location.hash.slice(1));
+      const li = items.find(x => x.dataset.slug === slug) || null, was = items.find(x => x.classList.contains("open")) || null;
+      if (li === was) return;
+      items.forEach(x => show(x, x === li));
+      // Galleries laid out while hidden measure again now they have a size
+      dispatchEvent(new Event("resize"));
+      // The tab title names the open case
+      const c = li && p.cases.find(x => !x.soon && caseSlug(x) === li.dataset.slug);
+      document.title = `${c ? `${L(c.title)} · ` : ""}${L(p.title)} — ${S.name}`;
+      if (li) { // (after the re-layout settles: rows above can change height on the resize)
+        const land = () => { if (move) scrollTo({ top: li.getBoundingClientRect().top + scrollY + 2, behavior: "instant" }); stuckCheck(); };
+        requestAnimationFrame(() => { inkAlign?.(); land(); setTimeout(land, 120); }); li.querySelector(".sub-open").focus({ preventScroll: true }); }
+      else if (was && move) { top(was); was.querySelector(".sub-open").focus({ preventScroll: true }); }
+      if (!li) stuckCheck();
+    };
+    // The open row sticks just under the top corner links while they show (scrolling up), at the very top otherwise
+    const cnr = () => { const r = document.querySelector(".corners .c-tr")?.getBoundingClientRect();
+      document.documentElement.style.setProperty("--cnr-h", r ? `${Math.ceil(r.bottom + 8)}px` : "0px"); };
+    cnr(); caseListen(window, "resize", cnr);
+    // Once the open row reaches the top it turns into a full-width bar (`.stuck`); back in place it is a list row again
+    const stuck = () => { const li = items.find(x => x.classList.contains("open"));
+      items.forEach(x => { if (x !== li) x.classList.remove("stuck"); });
+      if (!li) return; li.classList.toggle("stuck", li.getBoundingClientRect().top < li.querySelector(".sub-row").getBoundingClientRect().top - 1); };
+    caseListen(window, "scroll", stuck, { passive: true }); caseListen(window, "resize", stuck); stuckCheck = stuck;
+    // Esc closes the open case (unless a full-screen view or dialog has it)
+    caseListen(document, "keydown", e => { if (e.key !== "Escape" || fsEl() || document.querySelector("dialog[open]") || !items.some(x => x.classList.contains("open"))) return; go(""); });
+    const go = slug => { history.pushState(null, "", href(p) + (slug ? "#" + slug : "")); syncSub(); };
+    items.forEach((li, k) => {
+      li.querySelector(".sub-open").addEventListener("click", () => go(li.classList.contains("open") ? "" : li.dataset.slug));
+      li.querySelector(".sub-close").addEventListener("click", () => go(""));
+      const step = d => go(items[(k + d + items.length) % items.length].dataset.slug);
+      li.querySelector(".sub-prev")?.addEventListener("click", () => step(-1));
+      li.querySelector(".sub-next")?.addEventListener("click", () => step(1));
+    });
+    syncSub();
+  }
+
+  // A project's accent for the back-to-list flash; a white or black accent falls back to the site blue, as everywhere
+  const accentOf = p => { const a = (p.theme && p.theme.accent) || ""; return !a || /^#(fff(fff)?|000(000)?)$/i.test(a) ? "#1a2bff" : a; };
+  function renderCase(i) {
+    clearCase();
+    const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
+    applyTheme(p.theme);
+    let n = 0;
+    const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
+    caseEl.innerHTML = `
+      <h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
+      ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
+      ${sheetHTML(p)}
       ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
       <div class="case-gallery">${gallery(i, p)}</div>
+      ${p.cases ? subCases(i, p) : ""}
       <nav class="case-neighbors" aria-label="${esc(T("projectNav"))}">
         <a class="case-neighbor previous" href="${href(prev)}" aria-label="${esc(T("prev"))}: ${esc(L(prev.title))}">
           <span class="cn-k mono muted">${arwSvg("prev")}${esc(T("prev"))} · ${String((i - 1 + S.projects.length) % S.projects.length + 1).padStart(2,"0")}</span>
@@ -1206,7 +1313,10 @@
     setupLogos(p);
     setupScrub();
     setupLomo();
-    if (p.gallery) { setupFlips(p); setupRooms(p); }
+    // Flips and rooms are matched to the page in document order: the brand's own gallery first, then each case's
+    const all = { gallery: [...(p.gallery || []), ...(p.cases || []).flatMap(c => c.gallery || [])] };
+    if (all.gallery.length) { setupFlips(all); setupRooms(all); }
+    if (p.cases) setupSubs(p);
 
     // Selected hero images respond to pointer movement with restrained depth.
     // Exclude artwork with existing interactions, motion, and CoreHi's approved behavior.
@@ -1501,7 +1611,7 @@
   // then the element gets its real border back, so every line ends up as the same crisp 1px rule.
   // Both edges' variables are always set on each element: custom properties inherit, and a row inside a ruled
   // list used to pick up the list's black top line on top of its own (the mixed greys and stubs Felipe saw).
-  const ruleSelector = ".ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .rooms-tabs, .index, .index a, .services, .services li, .social";
+  const ruleSelector = ".sub-list, .sub, .ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .rooms-tabs, .index, .index a, .services, .services li, .social";
   let homeRules = [], caseRules = [], rulesRaf = 0;
   const RULE_MS = 950;
   const collectRules = root => {
@@ -1678,6 +1788,8 @@
   });
   const route = () => {
     const i = projectFromLocation();
+    // Same brand page, another of its cases (or back to its list): no page change
+    if (i >= 0 && i === openIdx && document.body.classList.contains("in-case") && S.projects[i].cases) { syncSub(); return; }
     if (i >= 0) openCase(i);
     else if (document.body.classList.contains("in-case")) closeCase(location.hash.slice(1));
     else { const target = $(location.hash.slice(1)); target?.scrollIntoView({ behavior: "instant" }); }
@@ -1856,9 +1968,11 @@
       ball.classList.toggle("drag", drag);
       ball.classList.toggle("accent", spin);
       // Over a row of the work list a small "view" label rides beside the ball; the ball itself keeps its size (Felipe, Oct 29 2026)
-      const label = drag ? `← ${T("drag")} →` : T("viewProject");
+      // Over a brand's case row the chip reads "View" to open it, "Close" once it is open
+      const sub = !onBlue && e.target.closest(".sub-open"), subOpen = sub && sub.closest(".sub.open");
+      const label = drag ? `← ${T("drag")} →` : subOpen ? T("close") : T("viewProject");
       if (tag.textContent !== label) tag.textContent = label;
-      tag.classList.toggle("on", drag || !onBlue && !!e.target.closest(".index a"));
+      tag.classList.toggle("on", drag || !!sub || !onBlue && !!e.target.closest(".index a"));
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });

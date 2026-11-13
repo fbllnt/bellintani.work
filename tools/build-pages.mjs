@@ -37,7 +37,8 @@ fs.rmSync(root + "p", { recursive: true, force: true });
 for (const p of projects) {
   const slug = slugOf(p), url = `${SITE_URL}/p/${slug}/`;
   const title = `${en(p.title)} — Bellintani`;
-  const summary = en(p.summary) || en(p.scope);
+  // "?" marks text still to come (showMissing): fall back to the scope
+  const summary = (p.summary !== "?" && en(p.summary)) || en(p.scope);
   const desc = clip(`${en(p.title)}${p.year ? ` (${p.year})` : ""}. ${summary}`);
   const image = `${SITE_URL}/${p.image || "images/og-2611.jpg"}`;
   const ld = {

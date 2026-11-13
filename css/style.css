@@ -1050,3 +1050,64 @@ button.arw.close .arw-i{width:14px;height:14px}
 .go-frames.seq .go-fr-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.go-frames.seq .go-fr{grid-column:auto}
 .go-frames.seq + .go-frames,.go-frames + .go-frames{margin-top:calc(var(--gap) * 3)}
 @media (max-width:600px){.go-frames.seq .go-fr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- A brand with several cases inside (Housecall Pro, Felipe Nov 13 2026) ----------
+   The brand page ends on a numbered list of its cases, in the work list's type. A row opens its case in place; while
+   open, the row shrinks and sticks to the top (title, ← n / N →, ✕), so you always know which case you are in. */
+.subs{margin-top:clamp(64px,8vw,136px)}
+.subs-k{display:flex;gap:8px;margin:0 0 14px}
+.sub-list{list-style:none;margin:0;padding:0;border-top:var(--rule-w) solid var(--fg)}
+.sub{border-bottom:var(--rule-w) solid var(--fg)}
+.sub-row{position:relative;display:flex;align-items:center;gap:clamp(12px,2vw,28px);background:var(--bg)}
+/* Open, the row becomes the page's top bar: edge to edge across the window, and while the corner links show (scrolling
+   up) it slides down under them with a band of page colour behind them, so nothing peeks through (Felipe, Nov 13 2026) */
+.sub.open > .sub-row{position:sticky;top:0;z-index:29;transition:top .35s var(--ease),margin .3s var(--ease),padding .3s var(--ease)}
+.sub.open > .sub-row::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--rule-w);background:var(--fg)}
+.sub.stuck > .sub-row{margin-inline:calc(-1 * var(--side-l)) calc(-1 * var(--side-r));padding-inline:var(--side-l) var(--side-r)}
+.sub.stuck > .sub-row::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:var(--cnr-h,0px);background:var(--bg)}
+body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
+.sub-open{flex:1;min-width:0;display:grid;grid-template-columns:3em minmax(0,1fr) auto 1.1em;gap:16px;align-items:baseline;padding:clamp(14px,1.3vw,22px) 0 clamp(10px,1vw,16px);background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.sub.soon .sub-row{display:grid;grid-template-columns:3em minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:clamp(14px,1.3vw,22px) 0 clamp(10px,1vw,16px);color:var(--mute)}
+.sub-t{font:900 clamp(34px,6vw,96px)/.9 var(--sans);letter-spacing:-.045em;text-transform:uppercase;overflow-wrap:anywhere;transition:font-size .45s var(--ease),transform .6s var(--ease),color .3s}
+.sub.open .sub-t{font-size:clamp(22px,2.4vw,40px)}
+.sub-t .ti{display:inline-block;text-decoration:line-through;text-decoration-thickness:max(2px,.035em);text-decoration-color:transparent;transition:text-decoration-color .3s}
+.sub-open:hover .sub-t,.sub-open:focus-visible .sub-t{color:var(--ai-t,var(--blue));transform:translateX(.18em)}
+.sub-open:hover .ti,.sub-open:focus-visible .ti{text-decoration-color:currentColor}
+.sub.open .sub-open:hover .sub-t{transform:none}
+.sub-k{display:flex;flex-direction:column;align-items:flex-end;gap:2px;color:var(--mute);text-align:right}
+.sub.soon .sub-t{color:var(--mute)}
+.sub-soon{justify-self:end;padding:2px 8px;border:var(--rule-w) solid var(--line);color:var(--mute);white-space:nowrap}
+/* + that turns into × when the case is open */
+.sub-x{position:relative;width:1.1em;height:1.1em;align-self:center;transition:transform .45s var(--ease)}
+.sub-x::before,.sub-x::after{content:"";position:absolute;left:0;right:0;top:50%;height:var(--rule-w);background:currentColor}
+.sub-x::after{transform:rotate(90deg)}
+.sub.open .sub-x{transform:rotate(45deg);color:var(--ai-t,var(--blue))}
+.sub.open .sub-x::before,.sub.open .sub-x::after{height:2px;margin-top:-.5px}
+.sub-step{display:none;align-items:center;gap:6px;white-space:nowrap}
+.sub.open .sub-step{display:flex}
+.sub-step .sub-count{min-width:5.5ch;text-align:center}
+.sub-body{padding-bottom:clamp(24px,3vw,48px)}
+/* A case with its own theme (Home Depot, Nov 13 2026): open, it takes its material's colours edge to edge */
+.sub.own.open{--bg:var(--c-bg);--fg:var(--c-fg);--mute:var(--c-mute);--line:var(--c-line);--panel:var(--c-panel);--blue:var(--c-blue);--title:var(--c-title,var(--c-fg));--ai:var(--c-blue);--ai-t:var(--c-ai-t,var(--c-blue));
+  background:var(--bg);color:var(--fg);margin-inline:calc(-1 * var(--side-l)) calc(-1 * var(--side-r));padding-inline:var(--side-l) var(--side-r)}
+.sub-body > .case-sheet{border-top:0;margin-top:clamp(24px,3vw,40px)}
+.sub-body > .case-sheet > .case-meta{position:static}
+.sub-end{display:flex;justify-content:flex-end;margin:clamp(48px,6vw,96px) 0 0}
+.sub-close{background:none;border:var(--rule-w) solid var(--line);color:inherit;padding:8px 14px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.sub-close:hover,.sub-close:focus-visible{background:var(--blue);border-color:var(--blue);color:var(--bg)}
+@media (max-width:700px){
+  .sub-open,.sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr) 1.1em;gap:10px}
+  .sub-open .sub-k{display:none}
+  .sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr) auto}
+  .sub-step .arw-i{width:18px;height:18px}
+  /* phone: arrows and count only, so the case name keeps the width (words stay for screen readers) */
+  .sub-step .arw span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+
+/* A still cover that plays its film on click (Housecall Pro, Nov 13 2026) */
+.cover-play{position:relative;display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.cover-play img,.cover-play-vid{display:block;width:100%;height:100%;object-fit:contain}
+.cover-play-vid{position:absolute;inset:0}
+.cover-play-tag{position:absolute;left:var(--tag-x,16px);top:0;padding:6px 10px;background:var(--fg);color:var(--bg);transition:opacity .3s}
+.cover-play.playing .cover-play-tag{opacity:0}
+.cover-play:hover .cover-play-tag,.cover-play:focus-visible .cover-play-tag{background:var(--ai-t,var(--blue))}
