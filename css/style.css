@@ -1065,6 +1065,7 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 .sub.open .sub-open:hover .sub-t{transform:none}
 .sub-k{display:flex;flex-direction:column;align-items:flex-end;gap:2px;color:var(--mute);text-align:right}
 .sub.soon .sub-t{color:var(--mute)}
+.sub-soon{justify-self:end;padding:2px 8px;border:var(--rule-w) solid var(--line);color:var(--mute);white-space:nowrap}
 /* + that turns into × when the case is open */
 .sub-x{position:relative;width:1.1em;height:1.1em;align-self:center;transition:transform .45s var(--ease)}
 .sub-x::before,.sub-x::after{content:"";position:absolute;left:0;right:0;top:50%;height:var(--rule-w);background:currentColor}
@@ -1081,7 +1082,7 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 .sub-close:hover,.sub-close:focus-visible{background:var(--blue);border-color:var(--blue);color:var(--bg)}
 @media (max-width:700px){
   .sub-open,.sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr) 1.1em;gap:10px}
-  .sub-open .sub-k,.sub.soon .sub-k{display:none}
-  .sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr)}
+  .sub-open .sub-k{display:none}
+  .sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr) auto}
   .sub-step .arw-i{width:18px;height:18px}
 }

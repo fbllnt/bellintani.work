@@ -88,8 +88,8 @@
   // chapter left with nothing under it. Chapters are renumbered so the count has no gaps. ?missing in the address shows them.
   const trimMissing = p => {
     Object.keys(p).forEach(k => { if (p[k] === "?") delete p[k]; });
-    // A brand's cases still waiting for material (`{ todo }`) stay off too; the real ones are trimmed like a project
-    if (Array.isArray(p.cases)) { p.cases = p.cases.filter(c => !c.todo); p.cases.forEach(trimMissing); }
+    // A brand's cases are trimmed like a project (cases still "under construction", `{ soon }`, always show)
+    if (Array.isArray(p.cases)) p.cases.filter(c => !c.soon).forEach(trimMissing);
     if (!Array.isArray(p.gallery)) return;
     const g = p.gallery.filter(it => !it.todo);
     p.gallery = g.filter((it, k) => !(it.chapter && !it.text && (!g[k + 1] || g[k + 1].chapter)));
@@ -1183,11 +1183,11 @@
   // ← → to the brand's other cases and ✕ to close back to the list. Each case has its own address: /p/<brand>/#<case>.
   const caseSlug = c => c.slug || String(c.title.en || c.title).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   function subCases(i, p) {
-    const real = p.cases.filter(c => !c.todo).length;
+    const real = p.cases.filter(c => !c.soon).length;
     return `<section class="subs" aria-label="${esc(T("brandCases"))}">
       <p class="subs-k mono"><span>${esc(T("brandCases"))}</span><span class="muted">(${pad(p.cases.length)})</span></p>
       <ol class="sub-list">${p.cases.map((c, k) => {
-        if (c.todo) return `<li class="sub soon"><div class="sub-row"><span class="mono">(${pad(k + 1)})</span><span class="sub-t">${esc(L(c.todo))}</span><span class="sub-k mono"><span class="todo-chip mono">${esc(T("missing"))}</span></span></div></li>`;
+        if (c.soon) return `<li class="sub soon"><div class="sub-row"><span class="mono">(${pad(k + 1)})</span><span class="sub-t">${esc(L(c.soon))}</span><span class="sub-soon mono">${esc(T("soon"))}</span></div></li>`;
         const sp = Object.assign({}, c, { theme: p.theme }), slug = caseSlug(c);
         return `<li class="sub" data-slug="${esc(slug)}">
           <div class="sub-row">
@@ -1226,6 +1226,9 @@
       items.forEach(x => show(x, x === li));
       // Galleries laid out while hidden measure again now they have a size
       dispatchEvent(new Event("resize"));
+      // The tab title names the open case
+      const c = li && p.cases.find(x => !x.soon && caseSlug(x) === li.dataset.slug);
+      document.title = `${c ? `${L(c.title)} · ` : ""}${L(p.title)} — ${S.name}`;
       if (li) { requestAnimationFrame(() => { inkAlign?.(); if (move) top(li); }); li.querySelector(".sub-open").focus({ preventScroll: true }); }
       else if (was && move) { top(was); was.querySelector(".sub-open").focus({ preventScroll: true }); }
     };
@@ -1233,6 +1236,8 @@
     const cnr = () => { const r = document.querySelector(".corners .c-tr")?.getBoundingClientRect();
       document.documentElement.style.setProperty("--cnr-h", r ? `${Math.ceil(r.bottom + 8)}px` : "0px"); };
     cnr(); caseListen(window, "resize", cnr);
+    // Esc closes the open case (unless a full-screen view or dialog has it)
+    caseListen(document, "keydown", e => { if (e.key !== "Escape" || fsEl() || document.querySelector("dialog[open]") || !items.some(x => x.classList.contains("open"))) return; go(""); });
     const go = slug => { history.pushState(null, "", href(p) + (slug ? "#" + slug : "")); syncSub(); };
     items.forEach((li, k) => {
       li.querySelector(".sub-open").addEventListener("click", () => go(li.classList.contains("open") ? "" : li.dataset.slug));
@@ -1578,7 +1583,7 @@
   // then the element gets its real border back, so every line ends up as the same crisp 1px rule.
   // Both edges' variables are always set on each element: custom properties inherit, and a row inside a ruled
   // list used to pick up the list's black top line on top of its own (the mixed greys and stubs Felipe saw).
-  const ruleSelector = ".ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .rooms-tabs, .index, .index a, .services, .services li, .social";
+  const ruleSelector = ".sub-list, .sub, .ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .rooms-tabs, .index, .index a, .services, .services li, .social";
   let homeRules = [], caseRules = [], rulesRaf = 0;
   const RULE_MS = 950;
   const collectRules = root => {
@@ -1935,9 +1940,11 @@
       ball.classList.toggle("drag", drag);
       ball.classList.toggle("accent", spin);
       // Over a row of the work list a small "view" label rides beside the ball; the ball itself keeps its size (Felipe, Oct 29 2026)
-      const label = drag ? `← ${T("drag")} →` : T("viewProject");
+      // Over a brand's case row the chip reads "View" to open it, "Close" once it is open
+      const sub = !onBlue && e.target.closest(".sub-open"), subOpen = sub && sub.closest(".sub.open");
+      const label = drag ? `← ${T("drag")} →` : subOpen ? T("close") : T("viewProject");
       if (tag.textContent !== label) tag.textContent = label;
-      tag.classList.toggle("on", drag || !onBlue && !!e.target.closest(".index a"));
+      tag.classList.toggle("on", drag || !!sub || !onBlue && !!e.target.closest(".index a"));
       if (hover && tiles[0] !== hover) tiles = [hover, ...tiles.filter(t => t !== hover)];
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
