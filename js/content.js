@@ -626,8 +626,6 @@ window.SITE = {
             { src: "images/hcp-thd/leader-2.jpg", ar: "1520/188", col: 1, span: 12 },
           ],
         },
-        // Holidays (Black Friday, Cyber Monday, New Year's) is not out yet: it must never be online, so it stays a
-        // bare "under construction" row here; the full case lives only on the rascunho/hcp-holidays preview (Felipe, Nov 13 2026)
         {
           // Organic social, Apr 2026 on (Felipe's case pages, Nov 13 2026). It is the Housecall Pro brand itself
           // (Denim + Golden Hour), so it keeps the brand page's colours.
@@ -689,7 +687,6 @@ window.SITE = {
             { src: "images/hcp-social/strip-4.jpg", ar: "2000/400", col: 1, span: 12, caption: { en: "A customer story carousel, all five slides", pt: "Um carrossel de história de cliente, os cinco slides", es: "Un carrusel de historia de cliente, los cinco slides" } },
           ],
         },
-        { soon: { en: "Holidays", pt: "Holidays", es: "Holidays" } },
       ],
     },
     {
