@@ -1103,3 +1103,11 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
   /* phone: arrows and count only, so the case name keeps the width (words stay for screen readers) */
   .sub-step .arw span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 }
+
+/* A still cover that plays its film on click (Housecall Pro, Nov 13 2026) */
+.cover-play{position:relative;display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.cover-play img,.cover-play-vid{display:block;width:100%;height:100%;object-fit:contain}
+.cover-play-vid{position:absolute;inset:0}
+.cover-play-tag{position:absolute;left:var(--tag-x,16px);top:0;padding:6px 10px;background:var(--fg);color:var(--bg);transition:opacity .3s}
+.cover-play.playing .cover-play-tag{opacity:0}
+.cover-play:hover .cover-play-tag,.cover-play:focus-visible .cover-play-tag{background:var(--ai-t,var(--blue))}

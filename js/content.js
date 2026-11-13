@@ -457,17 +457,17 @@ window.SITE = {
       tools: ["Adobe CC", "*Flora.AI", "*Claude Code"],
       // A brand case (Felipe, Nov 13 2026): the page is about what Felipe did for Housecall Pro; its campaigns open
       // inside it from the list of `cases`. Cover = the brand line "Everything to run and grow your business".
-      // The orange cover plays the stop motion as a silent loop (Felipe, Nov 13 2026: "capa laranja animada"); the still is its poster
+      // The orange cover stays still; a click on it plays the stop motion (Felipe, Nov 13 2026). The film also sits small in chapter 01.
       image: "images/top50/everything-still.jpg",
-      coverVideo: { mp4: "images/top50/everything-stopmotion.mp4", webm: "images/top50/everything-stopmotion.webm" },
+      coverPlay: { mp4: "images/top50/everything-stopmotion.mp4", webm: "images/top50/everything-stopmotion.webm" },
       hero: "bleed",
-      heroAr: "16/9",
+      heroAr: "2000/1116",
       summary: "?",
       layout: "loose", grid: "fluxo",
       gallery: [
         { chapter: { en: "01 · The brand", pt: "01 · A marca", es: "01 · La marca" }, kicker: { en: "Lettering · stop motion", pt: "Lettering · stop motion", es: "Lettering · stop motion" },
           head: { en: "Everything to run and *grow your business.*", pt: "Everything to run and *grow your business.*", es: "Everything to run and *grow your business.*" } },
-        { video: "images/top50/everything-stopmotion.mp4", webm: "images/top50/everything-stopmotion.webm", poster: "images/top50/everything-stopmotion-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Stop motion — the line, letter by letter", pt: "Stop motion — a frase, letra por letra", es: "Stop motion — la frase, letra por letra" } },
+        { video: "images/top50/everything-stopmotion.mp4", webm: "images/top50/everything-stopmotion.webm", poster: "images/top50/everything-stopmotion-poster.jpg", ar: "16/9", col: 6, span: 7, caption: { en: "Stop motion — the line, letter by letter", pt: "Stop motion — a frase, letra por letra", es: "Stop motion — la frase, letra por letra" } },
       ],
       cases: [
         {
