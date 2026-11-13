@@ -486,7 +486,8 @@ window.SITE = {
             ["50", { en: "Unforgettable names", pt: "Nomes inesquecíveis", es: "Nombres inolvidables" }],
             ["4", { en: "Press outlets", pt: "Veículos de imprensa", es: "Medios de prensa" }],
           ],
-          image: "images/top50/cover.jpg",
+          // Lettering only, its blue texture taken out so it sits on the page (Felipe, Nov 13 2026)
+          image: "images/top50/cover-lettering.png",
           heroAr: "2000/1047",
           layout: "loose", grid: "fluxo",
           gallery: [
