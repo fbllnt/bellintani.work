@@ -1079,7 +1079,8 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 .sub-x{position:relative;width:1.1em;height:1.1em;align-self:center;transition:transform .45s var(--ease)}
 .sub-x::before,.sub-x::after{content:"";position:absolute;left:0;right:0;top:50%;height:var(--rule-w);background:currentColor}
 .sub-x::after{transform:rotate(90deg)}
-.sub.open .sub-x{transform:rotate(45deg)}
+.sub.open .sub-x{transform:rotate(45deg);color:var(--ai-t,var(--blue))}
+.sub.open .sub-x::before,.sub.open .sub-x::after{height:2px;margin-top:-.5px}
 .sub-step{display:none;align-items:center;gap:6px;white-space:nowrap}
 .sub.open .sub-step{display:flex}
 .sub-step .sub-count{min-width:5.5ch;text-align:center}
