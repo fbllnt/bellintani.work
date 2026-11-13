@@ -1067,8 +1067,7 @@ window.SITE = {
     },
     {
       title: "Globo On",
-      // Draft (Felipe, Nov 11 2026): stays hidden on the live site until he says "aprovado"; preview hosts show it.
-      hidden: true, draft: true,
+      // Published Nov 13 2026 (Felipe: "pode subir").
       type: "branding",
       client: "Globo",
       year: "2016",
@@ -1140,7 +1139,7 @@ window.SITE = {
         { src: "images/globo-on/fique-on-3d-1.jpg", ar: "16/9", col: 1, span: 6 },
         { src: "images/globo-on/fique-on-3d-2.jpg", ar: "16/9", col: 7, span: 6, caption: { en: "White on white — the object before the colour", pt: "Branco sobre branco — o objeto antes da cor", es: "Blanco sobre blanco — el objeto antes del color" } },
         { grid: "fluxo", fullWidthIntro: true, chapter: { en: "08 · On air", pt: "08 · No ar", es: "08 · Al aire" }, kicker: { en: "On air 2016", pt: "On air 2016", es: "On air 2016" },
-          head: { en: "From *You're watching* to *Tomorrow.*", pt: "Do *Você está assistindo* ao *Amanhã.*", es: "De *Estás viendo* a *Mañana.*" },
+          head: { en: "From *You're watching* to *Today.*", pt: "Do *Você está assistindo* ao *Hoje.*", es: "De *Estás viendo* a *Hoy.*" },
           text: { en: "The system on screen: schedule cards with the photo cut by an arc, Luanda and Maputo times side by side, and a FIQUE ON card closing each vignette.", pt: "O sistema na tela: os cards de programação com a foto recortada por um arco, os horários de Luanda e Maputo lado a lado e uma cartela FIQUE ON fechando cada vinheta.", es: "El sistema en pantalla: las tarjetas de programación con la foto cortada por un arco, los horarios de Luanda y Maputo lado a lado y una cartela FIQUE ON que cierra cada viñeta." } },
         { video: "images/globo-on/onair/assistindo-rosa.mp4", webm: "images/globo-on/onair/assistindo-rosa.webm", poster: "images/globo-on/onair/assistindo-rosa-poster.jpg", ar: "16/9", offset: 0, col: 1, span: 12, caption: { en: "You're watching", pt: "Você está assistindo", es: "Estás viendo" } },
         { video: "images/globo-on/onair/assistindo-azul-escuro.mp4", webm: "images/globo-on/onair/assistindo-azul-escuro.webm", poster: "images/globo-on/onair/assistindo-azul-escuro-poster.jpg", ar: "16/9", offset: 0, col: 1, span: 3 },
@@ -1450,7 +1449,7 @@ window.SITE = {
         { name: "SavageBrit", src: "images/logos/savage-brit.png" },
         { name: "Thura", src: "images/logos/thura.png" },
         { name: "Soma", src: "images/logos/soma.png" },
-        { name: "Supawvisor of the Month", src: "images/logos/supawvisor.png" },
+        { name: "Supawvisor of the Month", src: "images/logos/supawvisor.png", on: "images/logos/supawvisor-on.png" },
         { name: "Garage Ira", src: "images/logos/garage-ira.png" },
         { name: "Logo", src: "images/logos/logo-p10.png" },
         { name: "Semana", src: "images/logos/semana.png" },

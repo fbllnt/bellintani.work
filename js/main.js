@@ -709,9 +709,12 @@
     } catch (e) { /* unreadable pixels: fall back to the file's own proportions */ }
   };
   const markSize = l => l._ar ? `--mw:${markWidth(l).toFixed(3)};--ar:${l._ar.toFixed(3)};` : "";
-  const mark = l => l.src
-    ? `<span class="mark" role="img" aria-label="${esc(l.name)}" style="${markSize(l)}-webkit-mask-image:url('${esc(l.src)}');mask-image:url('${esc(l.src)}')"></span>`
-    : `<span class="mark type" aria-hidden="true">${esc(l.name)}</span>`;
+  // `on`: an optional second file for the logo on its colour (hover flood and close-up), e.g. a drawing
+  // whose lines must read the other way round there. On a tile the two files meet at the flood line.
+  const maskOf = (src, cls, label) => `<span class="mark${cls}" ${label ? `role="img" aria-label="${esc(label)}"` : `aria-hidden="true"`} style="%S-webkit-mask-image:url('${esc(src)}');mask-image:url('${esc(src)}')"></span>`;
+  const mark = (l, view) => !l.src ? `<span class="mark type" aria-hidden="true">${esc(l.name)}</span>`
+    : (view && l.on ? maskOf(l.on, "", l.name)
+      : maskOf(l.src, l.on ? " has-on" : "", l.name) + (!view && l.on ? maskOf(l.on, " on") : "")).replaceAll("%S", markSize(l));
   // Real logos come in a fresh order on every visit; placeholders stay at the end
   const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   function logoWall(p) {
@@ -740,7 +743,7 @@
     // Measure each file once, then size its mark
     p.logos.forEach((l, k) => {
       if (!l.src) return;
-      const apply = () => { if (!wall.isConnected) return; const m = wall.querySelector(`.logo[data-k="${k}"] .mark`); m.style.setProperty("--mw", markWidth(l).toFixed(3)); m.style.setProperty("--ar", l._ar.toFixed(3)); };
+      const apply = () => { if (!wall.isConnected) return; wall.querySelectorAll(`.logo[data-k="${k}"] .mark`).forEach(m => { m.style.setProperty("--mw", markWidth(l).toFixed(3)); m.style.setProperty("--ar", l._ar.toFixed(3)); }); };
       if (l._ar) return apply();
       const im = new Image();
       im.onload = () => { measureLogo(l, im); apply(); };
@@ -750,7 +753,7 @@
       cur = k;
       const l = p.logos[k], list = shown();
       dlg.style.setProperty("--lb", l.bg || "var(--blue)"); dlg.style.setProperty("--li", l.ink || "#fff");
-      dlg.querySelector(".lv-mark").innerHTML = l.color ? `<img src="${esc(l.color)}" alt="${esc(l.name)}">` : mark(l);
+      dlg.querySelector(".lv-mark").innerHTML = l.color ? `<img src="${esc(l.color)}" alt="${esc(l.name)}">` : mark(l, true);
       dlg.querySelector(".lv-count").textContent = `${pad(list.indexOf(k) + 1)} / ${pad(list.length)}`;
       dlg.querySelector(".lv-meta").textContent = [l.year, L(l.tag)].filter(Boolean).join(" — ");
       dlg.querySelector(".lv-note").textContent = L(l.note) || "";
