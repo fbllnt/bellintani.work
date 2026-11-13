@@ -72,6 +72,14 @@ for (const p of projects) {
 }
 
 const today = new Date().toISOString().slice(0, 10);
+// A case that lives inside a brand (`cases`) keeps its own old address as a redirect to /p/<brand>/#<case>
+for (const p of projects) for (const c of (p.cases || []).filter(c => !c.soon)) {
+  const cs = slugOf(c), to = `/p/${slugOf(p)}/#${cs}`;
+  if (projects.some(q => slugOf(q) === cs)) continue;
+  fs.mkdirSync(`${root}p/${cs}`, { recursive: true });
+  fs.writeFileSync(`${root}p/${cs}/index.html`, `<!doctype html><meta charset="utf-8"><title>${esc(en(c.title))} — Bellintani</title><link rel="canonical" href="${SITE_URL}${to}"><meta http-equiv="refresh" content="0;url=${to}"><script>location.replace(${JSON.stringify(to)})</script><a href="${to}">${esc(en(c.title))}</a>\n`);
+}
+
 const urls = [`${SITE_URL}/`, ...projects.map(p => `${SITE_URL}/p/${slugOf(p)}/`)];
 fs.writeFileSync(root + "sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -188,7 +188,13 @@
   const projectFromLocation = () => {
     const hashSlug = location.hash.match(/^#p-(.+)$/)?.[1];
     const pathSlug = location.pathname.match(/^\/p\/([^/]+)\/?$/)?.[1];
-    return S.projects.findIndex(p => p.slug === (hashSlug || pathSlug));
+    const slug = hashSlug || pathSlug, k = S.projects.findIndex(p => p.slug === slug);
+    if (k > -1 || !slug) return k;
+    // A case that used to be its own project (Globo On, Globoplay: Nov 13 2026) opens inside its brand
+    const sl = c => c.slug || String(c.title.en || c.title).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const b = S.projects.findIndex(p => Array.isArray(p.cases) && p.cases.some(c => !c.soon && sl(c) === slug));
+    if (b > -1) history.replaceState(null, "", href(S.projects[b]) + "#" + slug);
+    return b;
   };
 
   // ---------- Work: index (the only view; Felipe dropped the Grid view, Oct 28 2026) ----------
@@ -1192,7 +1198,7 @@
       <p class="subs-k mono"><span>${esc(T("brandCases"))}</span><span class="muted">(${pad(p.cases.length)})</span></p>
       <ol class="sub-list">${p.cases.map((c, k) => {
         if (c.soon) return `<li class="sub soon"><div class="sub-row"><span class="mono">(${pad(k + 1)})</span><span class="sub-t">${esc(L(c.soon))}</span><span class="sub-soon mono">${esc(T("soon"))}</span></div></li>`;
-        const sp = Object.assign({}, c, { theme: p.theme }), slug = caseSlug(c);
+        const sp = Object.assign({}, c, { theme: c.theme || p.theme }), slug = caseSlug(c);
         return `<li class="sub" data-slug="${esc(slug)}">
           <div class="sub-row">
             <button type="button" class="sub-open" aria-expanded="false" aria-controls="sub-${esc(slug)}">
@@ -1233,6 +1239,8 @@
       // The tab title names the open case
       const c = li && p.cases.find(x => !x.soon && caseSlug(x) === li.dataset.slug);
       document.title = `${c ? `${L(c.title)} · ` : ""}${L(p.title)} — ${S.name}`;
+      // A case with its own colours (Globo On's cream) takes the page over while it is open
+      applyTheme((c && c.theme) || p.theme);
       if (li) { // (after the re-layout settles: rows above can change height on the resize)
         const land = () => { if (move) scrollTo({ top: li.getBoundingClientRect().top + scrollY + 2, behavior: "instant" }); stuckCheck(); };
         requestAnimationFrame(() => { inkAlign?.(); land(); setTimeout(land, 120); }); li.querySelector(".sub-open").focus({ preventScroll: true }); }
