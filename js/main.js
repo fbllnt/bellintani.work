@@ -1192,8 +1192,11 @@
       <p class="subs-k mono"><span>${esc(T("brandCases"))}</span><span class="muted">(${pad(p.cases.length)})</span></p>
       <ol class="sub-list">${p.cases.map((c, k) => {
         if (c.soon) return `<li class="sub soon"><div class="sub-row"><span class="mono">(${pad(k + 1)})</span><span class="sub-t">${esc(L(c.soon))}</span><span class="sub-soon mono">${esc(T("soon"))}</span></div></li>`;
-        const sp = Object.assign({}, c, { theme: p.theme }), slug = caseSlug(c);
-        return `<li class="sub" data-slug="${esc(slug)}">
+        const sp = Object.assign({}, c, { theme: c.theme || p.theme }), slug = caseSlug(c);
+        // A case can wear its own material's colours (Felipe, Nov 13 2026: "seguir o padrão de identidade visual do
+        // material dentro do case"): `theme` on the case paints only that case while it is open (.sub.own in style.css)
+        const own = c.theme ? ` own" style="${Object.entries(THEME_VARS).filter(([k]) => c.theme[k] && k !== "cursor").map(([k, v]) => `${v.replace("--", "--c-")}:${esc(c.theme[k])}`).concat(c.theme.accentText ? [`--c-ai-t:${esc(c.theme.accentText)}`] : []).join(";")}` : "";
+        return `<li class="sub${own}" data-slug="${esc(slug)}">
           <div class="sub-row">
             <button type="button" class="sub-open" aria-expanded="false" aria-controls="sub-${esc(slug)}">
               <span class="mono">(${pad(k + 1)})</span><span class="sub-t"><span class="ti">${esc(L(c.title))}</span></span>

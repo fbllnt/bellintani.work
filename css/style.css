@@ -1087,6 +1087,9 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 .sub.open .sub-step{display:flex}
 .sub-step .sub-count{min-width:5.5ch;text-align:center}
 .sub-body{padding-bottom:clamp(24px,3vw,48px)}
+/* A case with its own theme (Home Depot, Nov 13 2026): open, it takes its material's colours edge to edge */
+.sub.own.open{--bg:var(--c-bg);--fg:var(--c-fg);--mute:var(--c-mute);--line:var(--c-line);--panel:var(--c-panel);--blue:var(--c-blue);--title:var(--c-title,var(--c-fg));--ai:var(--c-blue);--ai-t:var(--c-ai-t,var(--c-blue));
+  background:var(--bg);color:var(--fg);margin-inline:calc(-1 * var(--side-l)) calc(-1 * var(--side-r));padding-inline:var(--side-l) var(--side-r)}
 .sub-body > .case-sheet{border-top:0;margin-top:clamp(24px,3vw,40px)}
 .sub-body > .case-sheet > .case-meta{position:static}
 .sub-end{display:flex;justify-content:flex-end;margin:clamp(48px,6vw,96px) 0 0}
@@ -1097,4 +1100,6 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
   .sub-open .sub-k{display:none}
   .sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr) auto}
   .sub-step .arw-i{width:18px;height:18px}
+  /* phone: arrows and count only, so the case name keeps the width (words stay for screen readers) */
+  .sub-step .arw span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 }
