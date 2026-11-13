@@ -816,7 +816,7 @@ window.SITE = {
       tags: { en: ["BrandIdentity", "Logo", "Brandbook"], pt: ["IdentidadeDeMarca", "Logo", "Brandbook"], es: ["IdentidadDeMarca", "Logo", "Brandbook"] },
       // White page; the core red is the only accent
       theme: { accent: "#ea1e2a", accentText: "#d01436" },
-      tools: ["Adobe CC"],
+      tools: ["Adobe CC", "*Flora.AI"],
       image: "images/corehi/tote.jpg",
       hero: "bleed",
       heroAr: "16/9",
@@ -871,6 +871,17 @@ window.SITE = {
         { src: "images/corehi/window-manifesto.jpg", ar: "16/9", col: 1, span: 6 },
         { src: "images/corehi/window-core.jpg", ar: "16/9", col: 7, span: 6,
           caption: { en: "The identity in the environment", pt: "A identidade no ambiente", es: "La identidad en el ambiente" } },
+
+        { chapter: { en: "05 · Applied identity", pt: "05 · Identidade aplicada", es: "05 · Identidad aplicada" },
+          kicker: { en: "Stationery · social", pt: "Papelaria · redes", es: "Papelería · redes" },
+          head: { en: "Grey on the outside. Red at the *core.*", pt: "Cinza por fora. Vermelho no *núcleo.*", es: "Gris por fuera. Rojo en el *núcleo.*" },
+          text: { en: "The full name signs the institutional pieces; Core.Hi speaks on social and everywhere else. The logo stays grey, or white over strong colour, and colour only ever goes to the core.", pt: "O nome completo assina as peças institucionais; o Core.Hi fala nas redes e no resto. O logo fica em cinza, ou branco sobre cor forte, e a cor só vai pro núcleo.", es: "El nombre completo firma las piezas institucionales; Core.Hi habla en redes y en todo lo demás. El logo queda en gris, o blanco sobre color fuerte, y el color solo va al núcleo." } },
+        { src: "images/corehi/mockup-stationery.jpg", ar: "2000/1342", col: 1, span: 12,
+          caption: { en: "Mockup — letterhead, envelope and card", pt: "Mockup — papel timbrado, envelope e cartão", es: "Mockup — hoja membretada, sobre y tarjeta" } },
+        { src: "images/corehi/mockup-cards.jpg", ar: "2000/1342", col: 1, span: 7,
+          caption: { en: "Mockup — business cards, the core blind-embossed", pt: "Mockup — cartões de visita, com o núcleo em relevo seco", es: "Mockup — tarjetas de presentación, con el núcleo en relieve seco" } },
+        { src: "images/corehi/mockup-phone.jpg", ar: "1600/1986", col: 8, span: 5,
+          caption: { en: "Mockup — or just, Core.hi!", pt: "Mockup — ou só, Core.hi!", es: "Mockup — o solo, Core.hi!" } },
       ],
     },
     {
