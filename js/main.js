@@ -1212,7 +1212,7 @@
       </ol>
     </section>`;
   }
-  let syncSub = () => {};
+  let syncSub = () => {}, stuckCheck = () => {};
   function setupSubs(p) {
     const box = caseEl.querySelector(".subs"); if (!box) return;
     const items = [...box.querySelectorAll(".sub[data-slug]")];
@@ -1233,13 +1233,21 @@
       // The tab title names the open case
       const c = li && p.cases.find(x => !x.soon && caseSlug(x) === li.dataset.slug);
       document.title = `${c ? `${L(c.title)} · ` : ""}${L(p.title)} — ${S.name}`;
-      if (li) { requestAnimationFrame(() => { inkAlign?.(); if (move) top(li); }); li.querySelector(".sub-open").focus({ preventScroll: true }); }
+      if (li) { // (after the re-layout settles: rows above can change height on the resize)
+        const land = () => { if (move) scrollTo({ top: li.getBoundingClientRect().top + scrollY + 2, behavior: "instant" }); stuckCheck(); };
+        requestAnimationFrame(() => { inkAlign?.(); land(); setTimeout(land, 120); }); li.querySelector(".sub-open").focus({ preventScroll: true }); }
       else if (was && move) { top(was); was.querySelector(".sub-open").focus({ preventScroll: true }); }
+      if (!li) stuckCheck();
     };
     // The open row sticks just under the top corner links while they show (scrolling up), at the very top otherwise
     const cnr = () => { const r = document.querySelector(".corners .c-tr")?.getBoundingClientRect();
       document.documentElement.style.setProperty("--cnr-h", r ? `${Math.ceil(r.bottom + 8)}px` : "0px"); };
     cnr(); caseListen(window, "resize", cnr);
+    // Once the open row reaches the top it turns into a full-width bar (`.stuck`); back in place it is a list row again
+    const stuck = () => { const li = items.find(x => x.classList.contains("open"));
+      items.forEach(x => { if (x !== li) x.classList.remove("stuck"); });
+      if (!li) return; li.classList.toggle("stuck", li.getBoundingClientRect().top < li.querySelector(".sub-row").getBoundingClientRect().top - 1); };
+    caseListen(window, "scroll", stuck, { passive: true }); caseListen(window, "resize", stuck); stuckCheck = stuck;
     // Esc closes the open case (unless a full-screen view or dialog has it)
     caseListen(document, "keydown", e => { if (e.key !== "Escape" || fsEl() || document.querySelector("dialog[open]") || !items.some(x => x.classList.contains("open"))) return; go(""); });
     const go = slug => { history.pushState(null, "", href(p) + (slug ? "#" + slug : "")); syncSub(); };
