@@ -469,8 +469,9 @@ window.SITE = {
       ],
       cases: [
         {
-          slug: "top-50-names",
-          title: "Top 50 Names",
+          // Full name "Top 50 Unforgettable Home Service Brand Names"; under the Housecall Pro umbrella it is just "Top 50" (Felipe, Nov 13 2026)
+          slug: "top-50",
+          title: "Top 50",
           type: "campaign",
           year: "2026",
           scope: { en: "Brand identity // Social // AI production", pt: "Identidade de marca // Social // Produção com IA", es: "Identidad de marca // Social // Producción con IA" },
