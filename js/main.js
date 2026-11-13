@@ -989,17 +989,21 @@
           const winner = [...bins.values()].sort((a, b) => b.score - a.score)[0];
           if (!winner) return; // Monochrome pieces retain the project's palette.
           const rgb = winner.sum.map(v => Math.round(v / winner.count));
-          control.style.setProperty("--control-accent", `rgb(${rgb.join(" ")})`);
-          control.style.setProperty("--control-ink", luminance(rgb) > .179 ? "#000" : "#fff");
+          const colour = `rgb(${rgb.join(" ")})`;
+          if (!control.matches(".pills li")) { control.style.setProperty("--control-accent", colour); return; }
+          // Outline pills: the sampled colour draws the line and the text only when it reads on the page (4.5:1);
+          // otherwise the pill keeps the project accent, so line and text never disagree
+          const bg = getComputedStyle(document.body).backgroundColor.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+          if (bg?.length !== 3) return;
+          const [hi, lo] = [luminance(rgb), luminance(bg)].sort((a, b) => b - a);
+          if ((hi + .05) / (lo + .05) < 4.5) return;
+          control.style.setProperty("--control-line", colour);
+          control.style.setProperty("--control-text", colour);
         } catch { /* External or unreadable media keeps the project colour. */ }
       };
       image.addEventListener("load", apply, { signal: caseAbort.signal });
       if (image.complete) apply();
     };
-    caseEl.querySelectorAll(".pills li.on").forEach(control => {
-      const rgb = getComputedStyle(control).backgroundColor.match(/[\d.]+/g)?.slice(0, 3).map(Number);
-      if (rgb?.length === 3) control.style.setProperty("--control-ink", luminance(rgb) > .179 ? "#000" : "#fff");
-    });
     const images = [...caseEl.querySelectorAll(".case-gallery img")];
     caseEl.querySelectorAll(".pills:not(.all)").forEach(pills => {
       const image = images.find(img => pills.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_FOLLOWING);
