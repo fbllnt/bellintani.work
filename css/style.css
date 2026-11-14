@@ -141,7 +141,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Keyboard: a corner holding focus always shows, even mid-intro or stepped aside; skip link appears on its first Tab */
 .corners:focus-within{opacity:1}
 .corners.calm > :focus-within{opacity:1;translate:none;pointer-events:auto}
-.skip-link{position:fixed;z-index:70;left:var(--side-l);top:calc(20px + env(safe-area-inset-top,0px));padding:10px 12px;background:var(--blue);color:#fff;font:400 12px/1 var(--mono);text-transform:uppercase;text-decoration:none;translate:0 calc(-100% - 40px)}
+.skip-link{position:fixed;z-index:70;left:var(--side-l);top:calc(20px + env(safe-area-inset-top,0px));padding:10px 12px;background:var(--fg);color:var(--bg);font:400 12px/1 var(--mono);text-transform:uppercase;text-decoration:none;translate:0 calc(-100% - 40px)}
 .skip-link:focus{translate:none}
 .case-title:focus,.works:focus{outline:none}
 /* Text swap: second line rolls up into a one-line window on hover */
@@ -210,9 +210,6 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 .big .arr{font-size:.4em;transition:transform .6s var(--ease)}
 .big:hover{color:var(--ai-t,var(--blue))}
 .big:hover .arr{transform:rotate(45deg)}
-.social{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:40px;padding-top:16px;border-top:var(--rule-w) solid var(--fg)}
-.social a{text-decoration:none}
-.social #social-foot{display:flex;gap:16px}
 
 /* ---------- Project page ---------- */
 .case{display:none;background:var(--bg)}
@@ -365,7 +362,7 @@ main,.case{background:var(--bg);position:relative;z-index:3}
   .word-def,.swap-ba p{grid-template-columns:1fr;gap:6px}
   .word-big{font-size:min(28vw,calc(150vw / var(--n,4)))}
   .row-half{grid-template-columns:1fr}
-    .jrow.stack-m{flex-direction:column;align-items:center;width:100%}
+  .jrow.stack-m{flex-direction:column;align-items:center;width:100%}
   .jrow.stack-m > .fig{flex:none;width:min(100%,calc(var(--r) * 115svh))}
   .jrow.wrap-m{flex-wrap:wrap;width:100%}
   .jrow.wrap-m > .fig{flex:0 0 calc(50% - var(--gap) / 2)}

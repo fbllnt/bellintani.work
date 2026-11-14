@@ -199,8 +199,8 @@ window.SITE = {
           head: { en: "From the festival to the *street.*", pt: "Do festival para a *rua.*", es: "Del festival a la *calle.*" } },
         // Free my freela poster removed for now (Felipe, Oct 26 2026); file kept. Backstage film (film-ccsp) moved to
         // 04 Digital, beside the headline (Felipe, Oct 27 2026)
-        { src: "images/anti/poster-skeleton.jpg", ar: "1411/2000", mfull: true, col: 1, span: 6 },
-        { src: "images/anti/poster-anti.jpg", ar: "1411/2000", mfull: true, col: 7, span: 6 },
+        { src: "images/anti/poster-skeleton.jpg", ar: "1411/2000", col: 1, span: 6 },
+        { src: "images/anti/poster-anti.jpg", ar: "1411/2000", col: 7, span: 6 },
         { src: "images/anti/street-posters.jpg", ar: "2000/1121", col: 1, span: 12, caption: { en: "Lambe-lambe posters on the street, São Paulo", pt: "Lambe-lambes nas ruas de São Paulo", es: "Carteles pegados en las calles de São Paulo" } },
         { src: "images/anti/street-wall-night.jpg", ar: "2000/1121", col: 1, span: 12 },
         // Yellow poster wall (street-wall-yellow.jpg) removed by Felipe, Oct 26 2026; file kept
@@ -212,10 +212,10 @@ window.SITE = {
         { chapter: { en: "05 · Films", pt: "05 · Filmes", es: "05 · Videos" }, kicker: { en: "4 films", pt: "4 filmes", es: "4 videos" },
           head: { en: "The same wait, *in motion.*", pt: "A mesma espera, *em movimento.*", es: "La misma espera, *en movimiento.*" } },
         // 2×2, yellow and red on the diagonal; each film starts at a different point so the four never look in sync
-        { video: "images/anti/film-freela.mp4", webm: "images/anti/film-freela.webm", poster: "images/anti/film-freela-poster.jpg", ar: "16/9", mfull: true, offset: 0, col: 1, span: 6, caption: { en: "Film 001 — Free my freela", pt: "Filme 001 — Free my freela", es: "Video 001 — Free my freela" } },
-        { video: "images/anti/film-umavida.mp4", webm: "images/anti/film-umavida.webm", poster: "images/anti/film-umavida-poster.jpg", ar: "16/9", mfull: true, offset: 2.5, col: 7, span: 6, caption: { en: "Film 003 — Uma vida", pt: "Filme 003 — Uma vida", es: "Video 003 — Uma vida" } },
-        { video: "images/anti/film-payday.mp4", webm: "images/anti/film-payday.webm", poster: "images/anti/film-payday-poster.jpg", ar: "16/9", mfull: true, offset: 5, col: 1, span: 6, tight: true, caption: { en: "Film 004 — Payday", pt: "Filme 004 — Payday", es: "Video 004 — Payday" } },
-        { video: "images/anti/film-jab.mp4", webm: "images/anti/film-jab.webm", poster: "images/anti/film-jab-poster.jpg", ar: "16/9", mfull: true, offset: 7.5, col: 7, span: 6, tight: true, caption: { en: "Film 002 — Jab", pt: "Filme 002 — Jab", es: "Video 002 — Jab" } },
+        { video: "images/anti/film-freela.mp4", webm: "images/anti/film-freela.webm", poster: "images/anti/film-freela-poster.jpg", ar: "16/9", offset: 0, col: 1, span: 6, caption: { en: "Film 001 — Free my freela", pt: "Filme 001 — Free my freela", es: "Video 001 — Free my freela" } },
+        { video: "images/anti/film-umavida.mp4", webm: "images/anti/film-umavida.webm", poster: "images/anti/film-umavida-poster.jpg", ar: "16/9", offset: 2.5, col: 7, span: 6, caption: { en: "Film 003 — Uma vida", pt: "Filme 003 — Uma vida", es: "Video 003 — Uma vida" } },
+        { video: "images/anti/film-payday.mp4", webm: "images/anti/film-payday.webm", poster: "images/anti/film-payday-poster.jpg", ar: "16/9", offset: 5, col: 1, span: 6, caption: { en: "Film 004 — Payday", pt: "Filme 004 — Payday", es: "Video 004 — Payday" } },
+        { video: "images/anti/film-jab.mp4", webm: "images/anti/film-jab.webm", poster: "images/anti/film-jab-poster.jpg", ar: "16/9", offset: 7.5, col: 7, span: 6, caption: { en: "Film 002 — Jab", pt: "Filme 002 — Jab", es: "Video 002 — Jab" } },
         { spin: { frames: "images/anti/spin/###.jpg", count: 120 }, ar: "16/9", col: 1, span: 12, caption: { en: "The waiting skeleton, in 360°", pt: "O esqueleto à espera, em 360°", es: "El esqueleto que espera, en 360°" } },
       ],
     },
@@ -258,7 +258,7 @@ window.SITE = {
       gallery: [
         { chapter: { en: "01 · Intro", pt: "01 · Intro", es: "01 · Intro" }, kicker: { en: "2014 — 2018", pt: "2014 — 2018", es: "2014 — 2018" },
           head: { en: "Four years at Brazil's largest *broadcaster.*", pt: "Quatro anos na maior *emissora* do Brasil.", es: "Cuatro años en el *canal* más grande de Brasil." } },
-        { video: "images/globo/nave-mae.mp4", webm: "images/globo/nave-mae.webm", poster: "images/globo/nave-mae-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "The 3D mark, always in motion", pt: "A marca 3D, sempre em movimento", es: "La marca 3D, siempre en movimiento" } },
+        { video: "images/globo/nave-mae.mp4", webm: "images/globo/nave-mae.webm", poster: "images/globo/nave-mae-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "The 3D mark, always in motion", pt: "A marca 3D, sempre em movimento", es: "La marca 3D, siempre en movimiento" } },
         { chapter: { en: "02 · Challenge", pt: "02 · Desafio", es: "02 · Desafío" }, kicker: { en: "Graphic system", pt: "Linguagem gráfica", es: "Sistema gráfico" },
           head: { en: "Circle and gradient, *always moving.*", pt: "Círculo e degradê, *sempre em movimento.*", es: "Círculo y degradado, *siempre en movimiento.*" },
           text: { en: "Join Globo's circle and gradient into a metaphor for endless motion: a flexible device, on film or in print, that speaks for the brand with or without a show on screen.", pt: "Juntar o círculo e o degradê da Globo numa metáfora de movimento sem fim: um recurso flexível, no filme ou no impresso, que fala pela marca com ou sem programa na tela.", es: "Unir el círculo y el degradado de Globo en una metáfora de movimiento sin fin: un recurso flexible, en video o en impresos, que habla por la marca con o sin programa en pantalla." },
@@ -280,7 +280,7 @@ window.SITE = {
           head: { en: "From Globoface to *Globotipo.*", pt: "Da Globoface à *Globotipo.*", es: "De la Globoface a la *Globotipo.*" },
           text: { en: "Globotipo was born on Globoplay, replacing a mix of Swiss, Avant Garde and Futura. The idea was mine: a more modern Futura with rounded corners. It was drawn with the Globo team, especially Mariana Sá, Sérgio Valente and Cristiano Calvé. The June 2016 manual sets three classes, Text, Condensed and Rounded, each in five weights.", pt: "A Globotipo nasceu no Globoplay, no lugar de uma mistura de Swiss, Avant Garde e Futura. A ideia foi minha: uma Futura mais moderna, com cantos arredondados. O desenho saiu junto com o time da Globo, principalmente Mariana Sá, Sérgio Valente e Cristiano Calvé. O manual de junho de 2016 define três classes, Texto, Condensada e Arredondada, cada uma com cinco pesos.", es: "La Globotipo nació en Globoplay, en lugar de una mezcla de Swiss, Avant Garde y Futura. La idea fue mía: una Futura más moderna, con esquinas redondeadas. El diseño salió junto con el equipo de Globo, sobre todo Mariana Sá, Sérgio Valente y Cristiano Calvé. El manual de junio de 2016 define tres clases, Texto, Condensada y Redondeada, cada una con cinco pesos." },
           pills: [{ en: "Text", pt: "Texto", es: "Texto" }, { en: "Condensed", pt: "Condensada", es: "Condensada" }, { en: "*Rounded", pt: "*Arredondada", es: "*Redondeada" }, { en: "5 weights + italics", pt: "5 pesos + itálicos", es: "5 pesos + itálicas" }, { en: "Concept: Felipe Bellintani", pt: "Conceito: Felipe Bellintani", es: "Concepto: Felipe Bellintani" }] },
-        { video: "images/globo/globotipo.mp4", poster: "images/globo/globotipo-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "Globotipo — the making-of", pt: "Globotipo — o making of", es: "Globotipo — el making of" } },
+        { video: "images/globo/globotipo.mp4", poster: "images/globo/globotipo-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Globotipo — the making-of", pt: "Globotipo — o making of", es: "Globotipo — el making of" } },
         { src: "images/globo/globotipo-familia.jpg", ar: "1901/1028", col: 1, span: 12, caption: { en: "Three classes, five weights, roman and italic: 30 fonts", pt: "Três classes, cinco pesos, romanos e itálicos: 30 fontes", es: "Tres clases, cinco pesos, redondas e itálicas: 30 fuentes" } },
         { src: "images/globo/globotipo-caracteres.jpg", ar: "1573/1031", col: 1, span: 6, caption: { en: "Globotipo Rounded, for titles", pt: "Globotipo Arredondada, para títulos", es: "Globotipo Redondeada, para títulos" } },
         { src: "images/globo/globotipo-uso.jpg", ar: "16/9", col: 7, span: 6, caption: { en: "Rounded and Condensed over the brand gradient", pt: "Arredondada e Condensada sobre o degradê da marca", es: "Redondeada y Condensada sobre el degradado de la marca" } },
@@ -301,8 +301,8 @@ window.SITE = {
         { grid: "fluxo", fullWidthIntro: true, chapter: { en: "07 · On air", pt: "07 · No ar", es: "07 · Al aire" }, kicker: { en: "Promos · vignettes", pt: "Chamadas · vinhetas", es: "Promos · viñetas" },
           head: { en: "Entertainment, journalism and *sport.*", pt: "Entretenimento, jornalismo e *esporte.*", es: "Entretenimiento, periodismo y *deporte.*" },
           text: { en: "The system on screen. \"A seguir\" (up next) reveals the show through a circle and closes on the 3D mark. \"Hoje na Globo\" (tonight) gives each show its own gradient: news, drama and sport.", pt: "O sistema na tela. O \"A seguir\" revela o programa num círculo e fecha na marca 3D. O \"Hoje na Globo\" dá a cada programa seu próprio degradê: jornalismo, novela e esporte.", es: "El sistema en pantalla. \"A seguir\" (a continuación) revela el programa dentro de un círculo y cierra con la marca 3D. \"Hoje na Globo\" (hoy en Globo) le da a cada programa su propio degradado: noticias, telenovela y deporte." } },
-        { video: "images/globo/a-seguir-na-globo.mp4", webm: "images/globo/a-seguir-na-globo.webm", poster: "images/globo/a-seguir-na-globo-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "A seguir na Globo — coming up next", pt: "A seguir na Globo", es: "A seguir na Globo — a continuación" } },
-        { video: "images/globo/hoje-na-globo.mp4", webm: "images/globo/hoje-na-globo.webm", poster: "images/globo/hoje-na-globo-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "Hoje na Globo — tonight's line-up in 30 seconds", pt: "Hoje na Globo — a programação da noite em 30 segundos", es: "Hoje na Globo — la programación de la noche en 30 segundos" } },
+        { video: "images/globo/a-seguir-na-globo.mp4", webm: "images/globo/a-seguir-na-globo.webm", poster: "images/globo/a-seguir-na-globo-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "A seguir na Globo — coming up next", pt: "A seguir na Globo", es: "A seguir na Globo — a continuación" } },
+        { video: "images/globo/hoje-na-globo.mp4", webm: "images/globo/hoje-na-globo.webm", poster: "images/globo/hoje-na-globo-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Hoje na Globo — tonight's line-up in 30 seconds", pt: "Hoje na Globo — a programação da noite em 30 segundos", es: "Hoje na Globo — la programación de la noche en 30 segundos" } },
         // "Hoje na Globo" promo, circles version (nova_v1), sent by Felipe Oct 27 2026
         { src: "images/globo/a-seguir-04.jpg", ar: "16/9", col: 4, span: 3 },
         { src: "images/globo/a-seguir-10.jpg", ar: "16/9", col: 7, span: 3 },
@@ -559,8 +559,8 @@ window.SITE = {
           head: { en: "Turning a volleyball player into the voice of the LGBTQIA+ community in sport: *XP invests.*", pt: "Transformar um jogador de vôlei na voz da comunidade LGBTQIA+ no esporte: *a XP investe.*", es: "Convertir a un jugador de vóley en la voz de la comunidad LGBTQIA+ en el deporte: *XP invierte.*" } },
         { src: "images/xp/volei-01.jpg", ar: "16/9", col: 1, span: 6, caption: { en: "Story frames", pt: "Quadros da história", es: "Cuadros de la historia" } },
         { src: "images/xp/volei-02.jpg", ar: "16/9", col: 7, span: 6 },
-        { src: "images/xp/volei-03.jpg", ar: "16/9", col: 1, span: 6, tight: true },
-        { src: "images/xp/volei-04.jpg", ar: "16/9", col: 7, span: 6, tight: true },
+        { src: "images/xp/volei-03.jpg", ar: "16/9", col: 1, span: 6 },
+        { src: "images/xp/volei-04.jpg", ar: "16/9", col: 7, span: 6 },
         { chapter: { en: "05 · Swimming", pt: "05 · Natação", es: "05 · Natación" }, kicker: { en: "Athlete stories", pt: "Histórias de atletas", es: "Historias de atletas" },
           head: { en: "Turning a Brazilian into the first swimmer in history to win an Olympic medal at 32: *XP invests.*", pt: "Transformar um brasileiro no 1º nadador da história a ganhar medalha olímpica aos 32 anos: *a XP investe.*", es: "Convertir a un brasileño en el 1.er nadador de la historia en ganar una medalla olímpica a los 32 años: *XP invierte.*" } },
         { scrub: { frames: "images/xp/natacao-##.jpg", count: 5 }, ar: "16/9", col: 1, span: 12, caption: { en: "Story frames, played by scroll", pt: "Quadros da história, rodando no scroll", es: "Cuadros de la historia, que avanzan con el scroll" } },
@@ -664,7 +664,7 @@ window.SITE = {
           { src: "images/popstar/symbol-tight.jpg", popstarInvert: true, ar: "16/9", caption: { en: "Symbol study", pt: "Estudo do símbolo", es: "Estudio del símbolo" } },
           { src: "images/popstar/logo-tight.jpg", popstarInvert: true, ar: "16/9", caption: { en: "Wordmark construction", pt: "Construção do logotipo", es: "Construcción del logotipo" } }
         ], col: 1, span: 12 },
-        { video: "images/popstar/opening.mp4", poster: "images/popstar/neon.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Original PopStar opening · TV Globo · 2017", pt: "Abertura original do PopStar · TV Globo · 2017", es: "Apertura original de PopStar · TV Globo · 2017" } },
+        { video: "images/popstar/opening.mp4", webm: "images/popstar/opening.webm", poster: "images/popstar/neon.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Original PopStar opening · TV Globo · 2017", pt: "Abertura original do PopStar · TV Globo · 2017", es: "Apertura original de PopStar · TV Globo · 2017" } },
         { chapter: { en: "03 · Showtime", pt: "03 · Hora do show", es: "03 · Hora del show" }, kicker: { en: "The on-screen expression", pt: "A identidade na tela", es: "La identidad en pantalla" },
           head: { en: "From black lines to *neon lights.*", pt: "Do traço preto às *luzes de neon.*", es: "Del trazo negro a las *luces de neón.*" },
           text: { en: "The restrained graphic foundation transforms into a bright stage-world of glowing lines, saturated colour and showtime spectacle.", pt: "A base gráfica contida vira um universo de palco: linhas luminosas, cores saturadas e clima de grande show.", es: "La base gráfica contenida se convierte en un universo de escenario: líneas luminosas, colores saturados y clima de gran show." } },
@@ -727,7 +727,7 @@ window.SITE = {
           text: { en: "Business intelligence, technology and closeness to people. THURA works from data and strategy and finds opportunities for those who sell, buy or invest.", pt: "Inteligência de negócio, tecnologia e proximidade com as pessoas. A THURA parte de dados e estratégia e encontra oportunidades para quem vende, compra ou investe.", es: "Inteligencia de negocio, tecnología y cercanía con las personas. THURA parte de datos y estrategia, y encuentra oportunidades para quien vende, compra o invierte." } },
         { src: "images/thura/campanha-03.jpg", ar: "1120/1400", col: 7, span: 5, caption: { en: "Technology, data and strategy", pt: "Tecnologia, dados e estratégia", es: "Tecnología, datos y estrategia" } },
         { src: "images/thura/assinatura.jpg", ar: "2000/1125", col: 1, span: 12, caption: { en: "Sign-off · Sell. Buy. Invest.", pt: "Assinatura · Vender. Comprar. Investir.", es: "Firma · Vender. Comprar. Invertir." } },
-        { src: "images/thura/grafismo-edificios.jpg", ar: "2000/1125", col: 1, span: 12, tight: true },
+        { src: "images/thura/grafismo-edificios.jpg", ar: "2000/1125", col: 1, span: 12 },
         { chapter: { en: "05 · Strategy", pt: "05 · Estratégia", es: "05 · Estrategia" }, kicker: "Founder-Led Growth",
           head: { en: "From the brand to the *founders.*", pt: "Da marca aos *fundadores.*", es: "De la marca a los *fundadores.*" },
           text: { en: "Beyond naming, positioning and communication, consulting sessions with the founders shaped a Founder-Led Growth approach, with their voices at the heart of growth.", pt: "Além de naming, posicionamento e comunicação, as consultorias com os fundadores deram forma a uma abordagem de Founder-Led Growth, com a voz deles no centro do crescimento.", es: "Además del naming, el posicionamiento y la comunicación, las consultorías con los fundadores le dieron forma a un enfoque de Founder-Led Growth, con su voz en el centro del crecimiento." },
@@ -1096,7 +1096,7 @@ window.SITE = {
       coverCycle: ["images/globo-on/onair/logo-02.jpg", "images/globo-on/onair/logo-03.jpg", "images/globo-on/cover-roxo.jpg", "images/globo-on/onair/logo-04.jpg"],
       hero: "bleed",
       heroAr: "1920/1080",
-      theme: { bg: "#f5f0e0", fg: "#1e1b18", mute: "#766e62", line: "#ddd5c0", panel: "#ebe4cf", accent: "#e71d73", accentText: "#c4145f", cursor: "#1a2bff" },
+      theme: { bg: "#f5f0e0", fg: "#1e1b18", mute: "#716a5e", line: "#ddd5c0", panel: "#ebe4cf", accent: "#e71d73", accentText: "#c4145f", cursor: "#1a2bff" },
       summary: {
         en: "A 2016 refresh of Globo On, Globo's channel for Angola and Mozambique: a new mark, a palette with no favourite colour, a voice built on one word, ON, and the on-air package that carries it all.",
         pt: "O refresh de 2016 do Globo On, o canal da Globo para Angola e Moçambique: marca nova, uma paleta sem cor preferida, uma voz construída sobre uma palavra, ON, e o pacote on air que leva tudo isso para a tela.",
@@ -1107,7 +1107,7 @@ window.SITE = {
         { chapter: { en: "01 · Intro", pt: "01 · Intro", es: "01 · Intro" }, kicker: { en: "Angola · Mozambique · 2016", pt: "Angola · Moçambique · 2016", es: "Angola · Mozambique · 2016" },
           head: { en: "Stay *ON.*", pt: "Fique *ON.*", es: "Quédate *ON.*" },
           text: { en: "Globo On is Globo's channel for Angola and Mozambique, launched in 2015. In 2016, on its first birthday, it got a refresh made with the Globo Internacional team: a new mark, new colours, a new voice and a new on-air package. It all starts with a 60-second film.", pt: "O Globo On é o canal da Globo para Angola e Moçambique, lançado em 2015. Em 2016, no primeiro aniversário, ganhou um refresh feito com a equipe da Globo Internacional: marca nova, cores novas, uma voz nova e um pacote on air novo. Tudo começa num filme de 60 segundos.", es: "Globo On es el canal de Globo para Angola y Mozambique, lanzado en 2015. En 2016, en su primer aniversario, recibió un refresh hecho con el equipo de Globo Internacional: una marca nueva, colores nuevos, una voz nueva y un paquete on air nuevo. Todo empieza con una película de 60 segundos." } },
-        { video: "images/globo-on/filme.mp4", webm: "images/globo-on/filme.webm", poster: "images/globo-on/filme-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "Institutional film — 60s", pt: "Filme institucional — 60s", es: "Película institucional — 60s" } },
+        { video: "images/globo-on/filme-720.mp4", webm: "images/globo-on/filme-720.webm", poster: "images/globo-on/filme-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Institutional film — 60s", pt: "Filme institucional — 60s", es: "Película institucional — 60s" } },
         { chapter: { en: "02 · Challenge", pt: "02 · Desafio", es: "02 · Desafío" }, kicker: { en: "2015 → 2016", pt: "2015 → 2016", es: "2015 → 2016" },
           // Story from Felipe, Nov 11 2026: created from scratch in 2015, refresh at one year old, like Brazil's Viva but
           // nothing there was a rerun; free on open TV to bring in Globo Internacional subscribers.
@@ -1458,7 +1458,7 @@ window.SITE = {
         { chapter: { en: "04 · Launch", pt: "04 · Lançamento", es: "04 · Lanzamiento" }, kicker: { en: "Launch film", pt: "Filme de lançamento", es: "Comercial de lanzamiento" },
           head: { en: "Globo's faces, *in the palm of your hand.*", pt: "Os rostos da Globo *na palma da mão.*", es: "Los rostros de Globo, *en la palma de tu mano.*" },
           text: { en: "In the launch film the network's faces jump onto phones, tablets and laptops, and the Globoplay sign-off closes it.", pt: "No filme de lançamento, os rostos da casa pulam pro celular, pro tablet e pro notebook, e a assinatura do Globoplay fecha o filme.", es: "En el comercial de lanzamiento, los rostros de la casa saltan al celular, a la tablet y a la laptop, y la firma de Globoplay cierra el comercial." } },
-        { video: "images/globoplay/filme.mp4", webm: "images/globoplay/filme.webm", poster: "images/globoplay/filme-poster.jpg", ar: "16/9", mfull: true, col: 1, span: 12, caption: { en: "Launch film — 30s", pt: "Filme de lançamento — 30s", es: "Comercial de lanzamiento — 30s" } },
+        { video: "images/globoplay/filme.mp4", webm: "images/globoplay/filme.webm", poster: "images/globoplay/filme-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Launch film — 30s", pt: "Filme de lançamento — 30s", es: "Comercial de lanzamiento — 30s" } },
         { flip: [
           { src: "images/globoplay/filme-01.jpg", ar: "16/9", caption: { en: "Launch film — 01/06", pt: "Filme de lançamento — 01/06", es: "Comercial de lanzamiento — 01/06" } },
           { src: "images/globoplay/filme-02.jpg", ar: "16/9", caption: { en: "Launch film — 02/06", pt: "Filme de lançamento — 02/06", es: "Comercial de lanzamiento — 02/06" } },

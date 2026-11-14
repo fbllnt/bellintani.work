@@ -49,8 +49,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   Plau, Sinalização = Estúdio Sílvia Girão. Drag cursor on rolls / 360°: the 92px circle goes, the 11px ball shows
   "← Drag →" in the `.ball-tag` chip; `theme.accentText` = a stronger accent tone for text
   only (Explosions #ff5c94, Dirty Projectors #c8102e, CoreHi #d01436). Approved and LIVE Nov 1 2026.
-- Waiting on Felipe (review pages sent Nov 1 2026): disciplines per project (https://claude.ai/artifact/AWkQFkV3ufA2RzECATBCcY;
-  don't change `disciplines` until he pastes the result), image alt texts (96 suggestions, PT/EN, https://claude.ai/artifact/Ybs93J9e4GiaXaoij2LWsc;
+- Waiting on Felipe (review pages sent Nov 1 2026): image alt texts (96 suggestions, PT/EN, https://claude.ai/artifact/Ybs93J9e4GiaXaoij2LWsc;
   then add an optional `alt: { en, pt, es }` per image), research ideas GRID button / fixed list caption / drawn rules /
   Ikeda-style poster data (demos at https://claude.ai/artifact/GeTAyFHSdo44frEKWHhT24). Felipe chose (Nov 1 2026): NO GRID
   button, NO Ikeda poster data; YES running caption under the work list (`.list-cap`, replaces the bottom corners while the
@@ -66,9 +65,8 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Work list hover: the title gets a strike-through line in the project's accent colour (`.index .ti`).
 - Arrows: plain SVG arrows with no circle around them, everywhere (`arw()` / `arwSvg()` at the top of main.js).
 - Project header: title and hashtags only (no "All work", no prev/number/next up there).
-- Project sheet (`.case-sheet`): the facts (meta) pinned in cols 1-4 while the summary, numbers and the full discipline
-  list sit on the right; the discipline list is the About's keyed list (`key` on each row), with the ones used in the
-  project (`disciplines: [...]` on the project) in full ink and the rest faded.
+- Project sheet (`.case-sheet`): the facts (meta) pinned in cols 1-4 while the summary and numbers sit on the right
+  (the discipline list was removed Nov 4 2026, see the note at the top).
 - Project end: the original `case-neighbors` (← previous · next →, two titles side by side). A big "next project"
   page-turn card with the cover was tried Oct 30 2026 and rejected ("Não gostei"): don't bring it back.
 - Closing a project returns to its row in the work list (centred), and the title flashes in the project's accent
@@ -133,8 +131,8 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   never the image inside it, and at most 3px so it never reaches a neighbour (`case-depth`, CoreHi). Living gradients
   are drawn as a `coverFlow` colour layer over the still, never by zooming the image (Globo cover; a gallery item can reuse it with `coverFlow: true`).
 - Gallery images get breathing room: they sit inside their frame with the `--breathe` margin of white page around them (no grey frames: Felipe said "sem cinza").
-- No image may cover part of another: gallery items don't drift on scroll, and `unstack()` in main.js pushes
-  down any item a negative `shift` pulls over an earlier one.
+- No image may cover part of another: gallery items don't drift on scroll, and loose galleries are justified rows
+  (`shift`/`nudge`/`tight`/`speed` are ignored), so nothing can overlap (the old `unstack()` safety net was removed Nov 14 2026).
 - Exception: the cover at the top of each project page runs edge to edge (full width, no side margin), with its
   height following the image's own proportion, so it is not cut either.
 
