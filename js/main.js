@@ -1474,7 +1474,7 @@
   // then the element gets its real border back, so every line ends up as the same crisp 1px rule.
   // Both edges' variables are always set on each element: custom properties inherit, and a row inside a ruled
   // list used to pick up the list's black top line on top of its own (the mixed greys and stubs Felipe saw).
-  const ruleSelector = ".ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .rooms-tabs, .index, .index a, .services, .services li";
+  const ruleSelector = ".ab, .ab-row, .ab-end, .chap:not(.tr), .pair.ch, .trilho, .case-sheet, .case-meta, .case-stats, .roll-head, .word-entry, .swap-ba, .globo-palette, .case-neighbor, .case-episode-link, .rooms-tabs, .index, .index a, .services, .services li, .social";
   let homeRules = [], caseRules = [], rulesRaf = 0;
   const RULE_MS = 950;
   const collectRules = root => {
