@@ -2095,6 +2095,8 @@
   const openMusic = (on, focus) => {
     if (on && !loaded && suggested()) loadSong(suggested());
     music.hidden = !on; musicBtn.setAttribute("aria-expanded", String(on));
+    const invite = $("work-music-invite");
+    if (invite) invite.setAttribute("aria-expanded", String(on));
     syncMusic();
     if (focus) (on ? $("music-close") : musicBtn).focus({ preventScroll: true });
   };
@@ -2136,7 +2138,7 @@
   const workInvite = $("work-music-invite");
   if (workInvite) {
     workInvite.textContent = L({ en: "♪ EXPLORE THE WORK WITH MY CURATED SOUNDTRACK ↗", pt: "♪ VEJA OS PROJETOS OUVINDO A TRILHA QUE EU ESCOLHI ↗", es: "♪ EXPLORA LOS PROYECTOS CON LA BANDA SONORA QUE ELEGÍ ↗" });
-    workInvite.addEventListener("click", () => { openMusic(true); renderSoundtrack(); $("music-close").focus({ preventScroll: true }); });
+    workInvite.addEventListener("click", () => { openMusic(music.hidden, true); if (!music.hidden) renderSoundtrack(); });
   }
   // Spotify's API (~256 KB) loads only on the way to the music: first hover, focus or touch of ♪ or the invite
   [musicBtn, workInvite].forEach(el => el && ["pointerenter", "focus", "touchstart"].forEach(ev => el.addEventListener(ev, ensureSpotifyAPI, { once: true, passive: true })));

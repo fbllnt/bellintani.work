@@ -1160,3 +1160,22 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 
 /* Dirty Projectors: exact artwork blue for chapter headings. */
 :root[style*="#02adef"] .chap-h{color:#02adef}
+
+/* The soundtrack invitation lives on the right edge of WORK, not in the filters.
+   Keeps the same page gutters and typographic grid across screen sizes. */
+.works > .sec-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;column-gap:clamp(20px,3vw,64px);row-gap:16px}
+.works > .sec-head .h2{min-width:0}
+.works > .sec-head .work-music-invite{grid-column:2;grid-row:1;justify-self:end;align-self:end;margin:0 0 clamp(2px,.5vw,10px);max-width:min(520px,48vw);text-align:right;justify-content:flex-end;white-space:normal}
+.works .work-filter-area{display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;min-width:0;margin-bottom:clamp(18px,2.4vw,36px)}
+.works .work-filter-area .work-filters{flex:1 1 auto;min-width:0}
+.works .work-filter-area .work-filter-results{flex:0 0 auto;margin-left:auto;align-self:flex-end}
+@media(max-width:1000px){
+  .works > .sec-head{grid-template-columns:minmax(0,1fr)}
+  .works > .sec-head .work-music-invite{grid-column:1;grid-row:2;justify-self:end;max-width:100%;margin:0}
+}
+@media(max-width:760px){
+  .works .work-filter-area{display:flex;flex-direction:column;align-items:stretch;gap:10px}
+  .works .work-filter-area .work-filters{flex:auto}
+  .works .work-filter-area .work-filter-results{align-self:flex-end}
+  .works > .sec-head .work-music-invite{min-height:44px;align-items:center}
+}
