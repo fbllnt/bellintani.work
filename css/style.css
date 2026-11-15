@@ -601,6 +601,15 @@ button.arw.close .arw-i{width:14px;height:14px}
 .strip > .fig{flex:var(--sar) 1 calc(var(--sar) * 120px);min-width:0}
 .strip > .fig .ph{aspect-ratio:var(--ar)}
 @media (max-width:760px){ .strip > .fig{flex-basis:calc(var(--sar) * 220px)} }
+.strip.patch{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+@media (max-width:760px){ .strip.patch{grid-template-columns:repeat(3,minmax(0,1fr))} }
+.bars{margin:0;width:100%}
+.bars-plot{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:var(--gap);align-items:end;height:clamp(220px,34vw,420px);border-bottom:var(--rule-w) solid var(--fg)}
+.bar{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;position:relative}
+.bar i{display:block;height:var(--h);background:var(--ai,var(--blue));min-height:2px}
+.bar b{font-weight:400;font-size:12px;margin-bottom:6px;text-align:left}
+.bar span{position:absolute;top:100%;left:0;margin-top:6px;font-size:12px;color:var(--mute)}
+.bars figcaption{margin-top:30px;font-size:12px;color:var(--mute)}
 
 /* Flip: a large image with the set as thumbnails below, turned like magazine pages */
 .flip .fig .ph{cursor:pointer}

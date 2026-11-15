@@ -554,7 +554,7 @@
         return;
       }
       // A flip, strip or live page can take the pending text beside it
-      if (pend && (it.flip || it.rooms || it.strip || it.embed || it.yt || it.spotify || it.soundcloud)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
+      if (pend && (it.flip || it.rooms || it.strip || it.bars || it.embed || it.yt || it.spotify || it.soundcloud)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
       closePend();
       // A text line pairs with the piece or flip that follows it
       if (it.text && !side) { pend = { html: `<p class="ltext side">${esc(L(it.text))}</p>`, solo: block(it, p) }; return; }
@@ -655,7 +655,11 @@
         <div class="flip-thumbs" role="group">${it.flip.map((t, k) => `<button type="button" aria-pressed="${!k}" data-k="${k}" aria-label="${esc(L(t.caption) || "")}"><img src="${esc(t.src)}" alt="" loading="lazy"></button>`).join("")}</div></div>`; }
     // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
     // `narrow: true` sets the strip in a little from both sides (desktop), for small process rows
-    if (it.strip) return `<div class="strip${it.narrow ? " narrow" : ""}" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
+    // Bars: a small column chart in the case accent, { bars: [[label, n], …], unit: { en, pt }, note: { en, pt } }
+    if (it.bars) { const max = Math.max(...it.bars.map(b => b[1])) || 1;
+      return `<figure class="bars"><div class="bars-plot">${it.bars.map(([l, n]) => `<div class="bar" style="--h:${(n / max * 100).toFixed(1)}%"><b class="mono">${n}</b><i></i><span class="mono">${esc(L(l))}</span></div>`).join("")}</div>${it.unit ? `<figcaption class="mono">${esc(L(it.unit))}</figcaption>` : ""}</figure>`; }
+    // `patch: true` lays same-size posts out as an even wall (6 across, 3 on a phone) instead of one row
+    if (it.strip) return `<div class="strip${it.narrow ? " narrow" : ""}${it.patch ? " patch" : ""}" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
       return fig(s, p, `--sar:${(w / (h || 1)).toFixed(4)}`); }).join("")}</div>`;
     return fig(it, p);
   }
