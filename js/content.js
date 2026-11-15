@@ -765,7 +765,7 @@ window.SITE = {
           title: "The Home Depot Pilot",
           type: "campaign",
           year: "2026",
-          theme: { bg: "#edebe7", fg: "#1c1d1f", mute: "#5f5f5f", line: "#c9c5be", panel: "#e2dfd9", accent: "#f96302", accentText: "#b84400" },
+          theme: { bg: "#edebe7", fg: "#1c1d1f", mute: "#5f5f5f", line: "#c9c5be", panel: "#e2dfd9", accent: "#f96302" },
           scope: { en: "Paid launch creative // Meta // Yahoo", pt: "Criação da campanha de lançamento // Meta // Yahoo", es: "Creatividad de lanzamiento // Meta // Yahoo" },
           role: { en: "Lead designer on the paid creative: concept, imagery, layout system, production", pt: "Designer líder da mídia paga: conceito, imagem, sistema de layout, produção", es: "Diseñador líder de la pauta paga: concepto, imagen, sistema de layout, producción" },
           deliverables: { en: "30 ad units in 10 formats and 3 concepts: Meta feed and stories, Yahoo billboard, display and mobile", pt: "30 peças em 10 formatos e 3 conceitos: feed e stories na Meta, billboard no Yahoo, display e mobile", es: "30 piezas en 10 formatos y 3 conceptos: feed y stories en Meta, billboard en Yahoo, display y mobile" },
