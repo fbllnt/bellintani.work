@@ -1574,7 +1574,7 @@ window.SITE = {
         { src: "images/dma/mockup-stationery-2500.jpg", ar: "2500/1581", col: 1, span: 12, caption: { en: "Stationery on the desk", pt: "Papelaria na mesa", es: "Papelería en la mesa" } },
         { src: "images/dma/letter-pink-2.jpg", ar: "1831/979", col: 1, span: 6 },
         { src: "images/dma/letter-cyan-2.jpg", ar: "1968/1052", col: 7, span: 6 },
-        { src: "images/dma/cracha-cordao.jpg", ar: "1600/2133", col: 1, span: 6, caption: { en: "Badge", pt: "Crachá", es: "Credencial" } },
+        { src: "images/dma/cracha-pessoa.jpg", ar: "1600/1986", col: 1, span: 6, caption: { en: "Badge", pt: "Crachá", es: "Credencial" } },
         { src: "images/dma/mockup-tote-final.jpg", ar: "2000/2000", col: 7, span: 6, caption: { en: "Tote bag", pt: "Sacola", es: "Bolsa" } },
         { src: "images/dma/totes-4.jpg", ar: "1996/691", col: 1, span: 12, caption: { en: "Bags", pt: "Sacolas", es: "Bolsas" } },
         { src: "images/dma/mockup-stickers.jpg", ar: "2000/1493", col: 1, span: 12, caption: { en: "Stickers and pins", pt: "Adesivos e bottons", es: "Stickers y pines" } },
