@@ -863,8 +863,8 @@ window.SITE = {
             ["4", { en: "Customer stories in October, one a week, five slides each", pt: "Histórias de cliente em outubro, uma por semana, cinco slides cada", es: "Historias de cliente en octubre, una por semana, cinco slides cada una" }],
             ["1 → 5", { en: "One calendar row, a five-slide carousel", pt: "Uma linha do calendário, um carrossel de cinco slides", es: "Una fila del calendario, un carrusel de cinco slides" }],
           ],
-          image: "images/hcp-social/faq-cover.jpg",
-          heroAr: "2800/500",
+          image: "images/hcp-social/faq-grid.jpg",
+          heroAr: "1992/1652",
           layout: "loose", grid: "fluxo",
           gallery: [
             { chapter: { en: "01 · Brief", pt: "01 · Briefing", es: "01 · Brief" }, kicker: { en: "Facebook · Instagram · LinkedIn", pt: "Facebook · Instagram · LinkedIn", es: "Facebook · Instagram · LinkedIn" },
