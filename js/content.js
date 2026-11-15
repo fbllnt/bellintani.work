@@ -762,7 +762,7 @@ window.SITE = {
           // The Home Depot × Housecall Pro: paid launch creative for the Pro Business Hub app (Felipe's Behance panels, Nov 13 2026).
           // It wears the material's own look: the panels' warm grey page, near-black ink and Home Depot orange.
           slug: "the-home-depot-pilot",
-          title: "The Home Depot Pilot",
+          title: "The Home Depot (Pilot)",
           type: "campaign",
           year: "2026",
           theme: { bg: "#edebe7", fg: "#1c1d1f", mute: "#5f5f5f", line: "#c9c5be", panel: "#e2dfd9", accent: "#f96302" },
