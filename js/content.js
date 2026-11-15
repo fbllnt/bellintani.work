@@ -1749,7 +1749,6 @@ window.SITE = {
         { name: "Today by Philips", src: "images/logos/today-philips.png" },
         { name: "Everything", src: "images/logos/everything-script.png" },
         { name: "Everything to run and grow your business", src: "images/logos/everything-stamp.png" },
-        { name: "Everything to run and grow your business, arch", src: "images/logos/everything-arch.png" },
       // Leo Mafra and the flat House Party Orloff removed, and the empty "Logo 38–50" placeholders dropped (Felipe, Oct 27 2026)
       ],
     },
