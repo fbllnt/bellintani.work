@@ -1092,7 +1092,32 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 .sub-end{display:flex;justify-content:flex-end;margin:clamp(48px,6vw,96px) 0 0}
 .sub-close{background:none;border:var(--rule-w) solid var(--line);color:inherit;padding:8px 14px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
 .sub-close:hover,.sub-close:focus-visible{background:var(--blue);border-color:var(--blue);color:var(--bg)}
+/* Hierarchy (Felipe, Nov 15 2026: "que a pessoa perceba que são sub-cases dentro de um mesmo caso"): the list is headed
+   by the brand (GLOBO / CASES (03)); the open bar names its parent above the title (GLOBO / CASE 02 DE 03) and carries a
+   track with one segment per case, the open one filled in the case colour, each segment a way to jump to that case. */
+.subs-sl{color:var(--mute)}
+.sub-row{flex-wrap:wrap;row-gap:0}
+.sub-row > .sub-open{flex:1 1 0}
+.sub-row > .sub-step{flex:none}
+.sub-crumb{display:none;gap:.6em;margin:0 0 .5em;font:500 11px/1.2 var(--mono);letter-spacing:.04em;color:var(--ai-t,var(--blue))}
+.sub-crumb > span:nth-child(2){color:var(--mute)}
+.sub.open .sub-crumb{display:flex}
+.sub-track{display:none;flex-basis:100%;gap:6px;padding:0 0 12px}
+.sub.open .sub-track{display:flex}
+.sub-seg{flex:1;min-width:0;display:block;padding:8px 0 0;background:none;border:0;border-top:3px solid var(--line);color:var(--mute);font:500 10px/1.2 var(--mono);letter-spacing:.04em;text-transform:uppercase;text-align:left;cursor:pointer;transition:border-color .35s var(--ease),color .35s}
+.sub-seg.on{border-top-color:var(--ai-t,var(--blue));color:var(--fg);cursor:default}
+.sub-seg:not(.on):not(.soon):hover,.sub-seg:not(.on):not(.soon):focus-visible{border-top-color:var(--fg);color:var(--fg)}
+.sub-seg.soon{cursor:default;border-top-style:dashed}
+.sub-seg-t{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* The case comes in from below as it opens, so the jump from list to case reads as going one level in */
+@keyframes subIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.sub.open > .sub-body{animation:subIn .6s var(--ease) both}
+@media (prefers-reduced-motion:reduce){.sub.open > .sub-body{animation:none}}
 @media (max-width:700px){
+  .sub-seg-t{font-size:9px}
+  /* On a phone the bar keeps only the arrows (the crumb already says "case 02 de 03"); the words stay for screen readers */
+  .sub-step .arw > span,.sub-step .sub-count{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .sub-crumb{white-space:nowrap;font-size:10px}
   .sub-open,.sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr) 1.1em;gap:10px}
   .sub-open .sub-k{display:none}
   .sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr) auto}

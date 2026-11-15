@@ -87,7 +87,7 @@ window.SITE = {
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
       client: "Client", year: "Year", scope: "Scope", role: "Role", type: "Type", before: "Before", after: "After", sector: "Sector", deliverables: "Deliverables", tools: "Tools & AI", openSite: "Open the site", aiMark: "AI", live: "Live",
-      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", brandCases: "Cases", closeCase: "Close", soon: "Under construction", scrollToPlay: "Scroll to play ↓", aboutNav: "About", scrollDown: "Scroll down to see the work", overview: "Overview", camera: "Camera", film: "Film", drag: "Drag", aboutTitle: "About",
+      dragToRotate: "⟷ Drag to rotate", play: "Play", pause: "Pause", soundOn: "Sound on", soundOff: "Sound off", fullscreen: "Full screen", all: "All", filter: "Filter by sector", close: "Close", prev: "Previous", nextItem: "Next", brandCases: "Cases", caseOf: "Case {n} of {t}", closeCase: "Close", soon: "Under construction", scrollToPlay: "Scroll to play ↓", aboutNav: "About", scrollDown: "Scroll down to see the work", overview: "Overview", camera: "Camera", film: "Film", drag: "Drag", aboutTitle: "About",
       logoHint: "Click the logo to close · ← → to browse", logoHintTouch: "Tap the logo to close · Swipe to browse",
       placeholder: "Placeholder", missing: "Missing", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
@@ -100,7 +100,7 @@ window.SITE = {
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Ver",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
       client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", type: "Tipo", before: "Antes", after: "Depois", sector: "Setor", deliverables: "Entregas", tools: "Ferramentas & IA", openSite: "Abrir o site", aiMark: "IA", live: "No ar",
-      dragToRotate: "⟷ Arrasta pra girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", brandCases: "Cases", closeCase: "Fechar", soon: "Em construção", scrollToPlay: "Desce pra assistir ↓", aboutNav: "Sobre", scrollDown: "Desce pra ver os trabalhos", overview: "Visão geral", camera: "Câmera", film: "Filme", drag: "Arrasta", aboutTitle: "Sobre",
+      dragToRotate: "⟷ Arrasta pra girar", play: "Play", pause: "Pausar", soundOn: "Com som", soundOff: "Sem som", fullscreen: "Tela cheia", all: "Todos", filter: "Filtrar por setor", close: "Fechar", prev: "Anterior", nextItem: "Próximo", brandCases: "Cases", caseOf: "Case {n} de {t}", closeCase: "Fechar", soon: "Em construção", scrollToPlay: "Desce pra assistir ↓", aboutNav: "Sobre", scrollDown: "Desce pra ver os trabalhos", overview: "Visão geral", camera: "Câmera", film: "Filme", drag: "Arrasta", aboutTitle: "Sobre",
       logoHint: "Clica no logo pra fechar · ← → pra navegar", logoHintTouch: "Toca no logo pra fechar · Arrasta pro lado pra navegar",
       placeholder: "Provisório", missing: "Falta", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Aqui entra a história do projeto: o briefing, a ideia e o que saiu dele.",
@@ -113,7 +113,7 @@ window.SITE = {
       skip: "Saltar intro →", replay: "↻ Ver intro de nuevo", index: "Lista", grid: "Cuadrícula", view: "Vista",
       gotProject: "( ¿Tienes un proyecto? )", allWork: "← Todos los trabajos", next: "( Siguiente proyecto )", about: "( Sobre mí )",
       client: "Cliente", year: "Año", scope: "Alcance", role: "Rol", type: "Tipo", before: "Antes", after: "Después", sector: "Sector", deliverables: "Entregables", tools: "Herramientas & IA", openSite: "Abrir el sitio", aiMark: "IA", live: "En línea",
-      dragToRotate: "⟷ Arrastra para girar", play: "Play", pause: "Pausa", soundOn: "Con sonido", soundOff: "Sin sonido", fullscreen: "Pantalla completa", all: "Todos", filter: "Filtrar por sector", close: "Cerrar", prev: "Anterior", nextItem: "Siguiente", brandCases: "Casos", closeCase: "Cerrar", soon: "En construcción", scrollToPlay: "Desliza para ver ↓", aboutNav: "Sobre mí", scrollDown: "Desliza para ver los trabajos", overview: "Visión general", camera: "Cámara", film: "Película", drag: "Arrastra", aboutTitle: "Sobre mí",
+      dragToRotate: "⟷ Arrastra para girar", play: "Play", pause: "Pausa", soundOn: "Con sonido", soundOff: "Sin sonido", fullscreen: "Pantalla completa", all: "Todos", filter: "Filtrar por sector", close: "Cerrar", prev: "Anterior", nextItem: "Siguiente", brandCases: "Casos", caseOf: "Caso {n} de {t}", closeCase: "Cerrar", soon: "En construcción", scrollToPlay: "Desliza para ver ↓", aboutNav: "Sobre mí", scrollDown: "Desliza para ver los trabajos", overview: "Visión general", camera: "Cámara", film: "Película", drag: "Arrastra", aboutTitle: "Sobre mí",
       logoHint: "Haz clic en el logo para cerrar · ← → para navegar", logoHintTouch: "Toca el logo para cerrar · Desliza para navegar",
       placeholder: "Provisional", missing: "Falta", selectedWork: "Trabajos seleccionados",
       placeholderText: "Texto provisional. Reemplázalo con la historia del proyecto: el brief, la idea y lo que se hizo.",
@@ -246,14 +246,19 @@ window.SITE = {
         [100, 106, 72, "#2d3377", -14, -8, 17],
         [56, 104, 52, "#8178a4", 16, -12, 15],
       ],
-      summary: "?",
+      // Intro of the brand page (Felipe, Nov 15 2026: suggestion based on his LinkedIn, Lead Designer 2014-2018)
+      summary: {
+        en: "Four years at Globo, 2014 to 2018, as Lead Designer for branding and identity: from the brand itself to entertainment, news and sports products and events, in Brazil and abroad. Three cases tell the story: Globo's rebrand, Globo On and Globoplay.",
+        pt: "Quatro anos na Globo, de 2014 a 2018, como Lead Designer de branding e identidade: da própria marca a produtos e eventos de entretenimento, jornalismo e esporte, no Brasil e em outros países. Três cases contam essa história: o rebranding da Globo, o Globo On e o Globoplay.",
+        es: "Cuatro años en Globo, de 2014 a 2018, como Lead Designer de branding e identidad: desde la propia marca hasta productos y eventos de entretenimiento, periodismo y deportes, en Brasil y en otros países. Tres casos cuentan esta historia: el rebranding de Globo, Globo On y Globoplay.",
+      },
       layout: "loose", grid: "fluxo",
       gallery: [],
       cases: [
         {
-          // The 2016 graphic system (was the "Globo" project until Nov 13 2026)
-          slug: "globo",
-          title: "Globo",
+          // The 2016 graphic system (was the "Globo" project until Nov 13 2026; "Globo Rebranding" inside the brand, Felipe Nov 15 2026)
+          slug: "rebranding",
+          title: "Globo Rebranding",
           type: "branding",
           client: "Globo",
           // Ficha técnica (Felipe, Nov 1 2026: credit Plau and Estúdio Sílvia Girão here, never in highlighted text)
@@ -269,8 +274,9 @@ window.SITE = {
           tags: { en: ["Branding", "Rebrand", "Motion"], pt: ["Branding", "Rebranding", "Motion"], es: ["Branding", "Rebranding", "Motion"] },
           tools: ["Adobe CC"],
           summary: {
-            en: "Four years at Globo, Brazil's largest broadcaster. A key role in its rebrand: design system, colours and gradients, type family, on-air studies, show identities, openings and vignettes.",
-            pt: "Quatro anos na Globo, a maior emissora do Brasil, com papel central no rebranding: sistema de design, cores e degradês, família tipográfica, estudos on air, identidades de programas, aberturas e vinhetas.", es: "Cuatro años en Globo, el canal más grande de Brasil, con un papel central en el rebranding: sistema de diseño, colores y degradados, familia tipográfica, estudios on air, identidades de programas, aperturas y viñetas.",
+            en: "Globo's rebrand, Brazil's largest broadcaster: the new design system, brand volume rules, colours and gradients, the new type family and the materials behind the new brandbook. Around it, on-air studies, show identities, openings and vignettes.",
+            pt: "O rebranding da Globo, a maior emissora do Brasil: o novo sistema de design, as regras de volume da marca, cores e degradês, a nova família tipográfica e o material que alimentou o novo brandbook. Em volta dele, estudos on air, identidades de programas, aberturas e vinhetas.",
+            es: "El rebranding de Globo, el canal más grande de Brasil: el nuevo sistema de diseño, las reglas de volumen de la marca, colores y degradados, la nueva familia tipográfica y el material que alimentó el nuevo brandbook. A su alrededor, estudios on air, identidades de programas, aperturas y viñetas.",
           },
           layout: "loose", grid: "trilho",
           gallery: [

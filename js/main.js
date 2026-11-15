@@ -1195,18 +1195,21 @@
   function subCases(i, p) {
     const real = p.cases.filter(c => !c.soon).length;
     return `<section class="subs" aria-label="${esc(T("brandCases"))}">
-      <p class="subs-k mono"><span>${esc(T("brandCases"))}</span><span class="muted">(${pad(p.cases.length)})</span></p>
+      <p class="subs-k mono"><span>${esc(L(p.title))}</span><span class="subs-sl" aria-hidden="true">/</span><span>${esc(T("brandCases"))}</span><span class="muted">(${pad(p.cases.length)})</span></p>
       <ol class="sub-list">${p.cases.map((c, k) => {
         if (c.soon) return `<li class="sub soon"><div class="sub-row"><span class="mono">(${pad(k + 1)})</span><span class="sub-t">${esc(L(c.soon))}</span><span class="sub-soon mono">${esc(T("soon"))}</span></div></li>`;
         const sp = Object.assign({}, c, { theme: c.theme || p.theme }), slug = caseSlug(c);
         return `<li class="sub" data-slug="${esc(slug)}">
           <div class="sub-row">
             <button type="button" class="sub-open" aria-expanded="false" aria-controls="sub-${esc(slug)}">
-              <span class="mono">(${pad(k + 1)})</span><span class="sub-t"><span class="ti">${esc(L(c.title))}</span></span>
+              <span class="mono">(${pad(k + 1)})</span><span class="sub-t"><span class="sub-crumb mono"><span>${esc(L(p.title))}</span><span aria-hidden="true">/</span><span>${esc(T("caseOf").replace("{n}", pad(k + 1)).replace("{t}", pad(p.cases.length)))}</span></span><span class="ti">${esc(L(c.title))}</span></span>
               <span class="sub-k mono"><span>${esc(L(c.scope) || (c.type && S.types ? L(S.types[c.type]) : ""))}</span>${c.year ? `<span class="muted">${esc(c.year)}</span>` : ""}</span>
               <span class="sub-x" aria-hidden="true"></span>
             </button>
             ${real > 1 ? `<span class="sub-step mono">${arw("prev", "sub-prev", "", T("prev"))}<span class="sub-count">${pad(k + 1)} / ${pad(p.cases.length)}</span>${arw("next", "sub-next", "", T("nextItem"))}</span>` : ""}
+            ${real > 1 ? `<span class="sub-track mono">${p.cases.map((o, j) => o.soon
+              ? `<span class="sub-seg soon"><span class="sub-seg-t">${pad(j + 1)} ${esc(L(o.soon))}</span></span>`
+              : `<button type="button" class="sub-seg${j === k ? " on" : ""}" data-go="${esc(caseSlug(o))}"${j === k ? ` aria-current="true"` : ""}><span class="sub-seg-t">${pad(j + 1)} ${esc(L(o.title))}</span></button>`).join("")}</span>` : ""}
           </div>
           <div class="sub-body" id="sub-${esc(slug)}" hidden>
             ${sheetHTML(sp)}
@@ -1265,6 +1268,8 @@
       const step = d => go(items[(k + d + items.length) % items.length].dataset.slug);
       li.querySelector(".sub-prev")?.addEventListener("click", () => step(-1));
       li.querySelector(".sub-next")?.addEventListener("click", () => step(1));
+      // The segment track under the open bar: one segment per case of the brand, the open one filled
+      li.querySelectorAll(".sub-seg[data-go]").forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
     });
     syncSub();
   }
