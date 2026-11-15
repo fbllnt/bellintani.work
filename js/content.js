@@ -1576,7 +1576,7 @@ window.SITE = {
         { src: "images/dma/letter-pink-2.jpg", ar: "1831/979", col: 1, span: 6 },
         { src: "images/dma/letter-cyan-2.jpg", ar: "1968/1052", col: 7, span: 6 },
         { src: "images/dma/mockup-badge.jpg", ar: "1600/1986", col: 1, span: 6, caption: { en: "Mockup — badge", pt: "Mockup — crachá", es: "Mockup — credencial" } },
-        { src: "images/dma/mockup-tote-quadrados.jpg", ar: "1600/1986", col: 7, span: 6, caption: { en: "Mockup — tote bag", pt: "Mockup — sacola", es: "Mockup — bolsa" } },
+        { src: "images/dma/mockup-tote-bege.jpg", ar: "2000/2000", col: 7, span: 6, caption: { en: "Mockup — tote bag", pt: "Mockup — sacola", es: "Mockup — bolsa" } },
         { src: "images/dma/totes-4.jpg", ar: "1996/691", col: 1, span: 12, caption: { en: "Bags", pt: "Sacolas", es: "Bolsas" } },
         { src: "images/dma/mockup-stickers.jpg", ar: "2000/1493", col: 1, span: 12, caption: { en: "Mockup — stickers and pins", pt: "Mockup — adesivos e bottons", es: "Mockup — stickers y pines" } },
         { src: "images/dma/stickers-pins.jpg", ar: "1944/1014", col: 1, span: 12, caption: { en: "Stickers and pins", pt: "Adesivos e bottons", es: "Stickers y pines" } },
