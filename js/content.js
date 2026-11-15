@@ -1446,7 +1446,7 @@ window.SITE = {
       deliverables: { en: "Poster, lettering, versions and social posts", pt: "Pôster, lettering, versões e posts pras redes", es: "Póster, lettering, versiones y posts para redes" },
       tags: { en: ["GigPoster", "Lettering", "Music"], pt: ["PôsterDeShow", "Lettering", "Música"], es: ["PósterDeConcierto", "Lettering", "Música"] },
       // The poster's own colours: cream paper, navy ink, red and cyan faces; the title in the poster's cyan (Felipe, Oct 28 2026)
-      theme: { bg: "#f6f5ec", fg: "#14143a", mute: "#6d6d7e", line: "#dedbcc", panel: "#ecead9", accent: "#ec163c", accentText: "#c8102e", title: "#00adef" },
+      theme: { bg: "#f6f5ec", fg: "#00002e", mute: "#6d6d7e", line: "#dedbcc", panel: "#ecead9", accent: "#ec163c", accentText: "#ec163c", title: "#02adef" },
       tools: ["Adobe CC"],
       // Cover: the signed poster framed on Felipe's wall (Felipe, Oct 28 2026); the old lettering cover is kept as cover.jpg
       image: "images/dirty-projectors/cover-signed.jpg",
