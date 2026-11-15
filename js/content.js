@@ -1269,7 +1269,7 @@ window.SITE = {
           kicker: { en: "Colour · typography · expression", pt: "Cor · tipografia · expressão", es: "Color · tipografía · expresión" },
           head: { en: "Quiet by default. Colour at the *core.*", pt: "Contido por fora. Cor no *núcleo.*", es: "Contenido por fuera. Color en el *núcleo.*" },
           text: { en: "A restrained grey foundation makes room for energy where it matters. The palette gives the core a voice, while Nexa and Bodoni Moda balance system and personality.", pt: "Uma base contida, em cinzas, abre espaço pra energia onde ela faz diferença. A paleta dá voz ao núcleo, e Nexa e Bodoni Moda equilibram sistema e personalidade.", es: "Una base contenida, en grises, abre espacio a la energía donde hace la diferencia. La paleta le da voz al núcleo, y Nexa y Bodoni Moda equilibran sistema y personalidad." } },
-        { src: "images/corehi/palette.jpg", ar: "2000/516", col: 1, span: 12,
+        { src: "images/corehi/palette-8.jpg", ar: "2500/496", col: 1, span: 12,
           caption: { en: "The palette: restraint meets energy", pt: "A paleta: contenção e energia", es: "La paleta: contención y energía" } },
         { flip: [
           { src: "images/corehi/colour-red.jpg", ar: "16/9", caption: { en: "Core red", pt: "Vermelho do núcleo", es: "Rojo núcleo" } },
@@ -1293,7 +1293,7 @@ window.SITE = {
           kicker: { en: "Stationery · social", pt: "Papelaria · redes", es: "Papelería · redes" },
           head: { en: "Grey on the outside. Red at the *core.*", pt: "Cinza por fora. Vermelho no *núcleo.*", es: "Gris por fuera. Rojo en el *núcleo.*" },
           text: { en: "The full name signs the institutional pieces; Core.Hi speaks on social and everywhere else. The logo stays grey, or white over strong colour, and colour only ever goes to the core.", pt: "O nome completo assina as peças institucionais; o Core.Hi fala nas redes e no resto. O logo fica em cinza, ou branco sobre cor forte, e a cor só vai pro núcleo.", es: "El nombre completo firma las piezas institucionales; Core.Hi habla en redes y en todo lo demás. El logo queda en gris, o blanco sobre color fuerte, y el color solo va al núcleo." } },
-        { src: "images/corehi/mockup-stationery.jpg", ar: "2000/1342", col: 1, span: 12,
+        { src: "images/corehi/mockup-stationery-1logo.jpg", ar: "2000/1342", col: 1, span: 12,
           caption: { en: "Mockup — letterhead, envelope and card", pt: "Mockup — papel timbrado, envelope e cartão", es: "Mockup — hoja membretada, sobre y tarjeta" } },
         { src: "images/corehi/mockup-cards.jpg", ar: "2000/1342", col: 1, span: 12,
           caption: { en: "Mockup — business cards, the core blind-embossed", pt: "Mockup — cartões de visita, com o núcleo em relevo seco", es: "Mockup — tarjetas de presentación, con el núcleo en relieve seco" } },
