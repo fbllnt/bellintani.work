@@ -2,7 +2,7 @@
 // Text in two languages is written as { en: "…", pt: "…" }. Plain strings are the same in both.
 window.SITE = {
   name: "Bellintani",
-  year: "26",
+  year: "27",
   email: "felipe@bellintani.work",
   social: [
     { label: "Instagram", url: "https://www.instagram.com/fbllnt/" },
