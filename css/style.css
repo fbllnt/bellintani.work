@@ -1157,3 +1157,6 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 .cover-play-tag{position:absolute;left:var(--tag-x,16px);top:0;padding:6px 10px;background:var(--fg);color:var(--bg);transition:opacity .3s}
 .cover-play.playing .cover-play-tag{opacity:0}
 .cover-play:hover .cover-play-tag,.cover-play:focus-visible .cover-play-tag{background:var(--ai-t,var(--blue))}
+
+/* Dirty Projectors: exact artwork blue for chapter headings. */
+:root[style*="#02adef"] .chap-h{color:#02adef}
