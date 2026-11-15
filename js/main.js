@@ -554,7 +554,7 @@
         return;
       }
       // A flip, strip or live page can take the pending text beside it
-      if (pend && (it.flip || it.rooms || it.strip || it.embed || it.yt || it.spotify || it.soundcloud)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
+      if (pend && (it.flip || it.roll || it.rooms || it.strip || it.bars || it.embed || it.yt || it.spotify || it.soundcloud)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
       closePend();
       // A text line pairs with the piece or flip that follows it
       if (it.text && !side) { pend = { html: `<p class="ltext side">${esc(L(it.text))}</p>`, solo: block(it, p) }; return; }
@@ -649,13 +649,27 @@
         <figure class="fig rooms-stage" style="--ar:${esc(it.ar || "16/10")}"><div class="ph" tabindex="0"><img src="${esc(f.src)}" alt="${esc(L(f.caption) || "")}" draggable="false"></div></figure>
         <div class="rooms-bar mono"><p class="rooms-cap muted" aria-live="polite">${esc(L(f.caption) || "")}</p>
           <span class="arw-nav">${arw("prev", "rooms-prev", T("prev"))}<span class="arw-count rooms-count">01 / ${String(n0).padStart(2, "0")}</span>${arw("next", "rooms-next", T("nextItem"))}</span></div></div>`; }
+    // Roll: one carousel as a sideways film roll (the Lomography roll markup), arrows + drag/swipe, and with `auto: true`
+    // it moves by itself one slide at a time while on screen: { roll: [{ src, ar }], name: { en, pt }, caption, auto }
+    if (it.roll) return `<section class="film-roll roll-inline"${it.auto ? ' data-auto="1"' : ""} style="${style}" aria-label="${esc(L(it.name) || L(p.title))}">
+        <header class="roll-head mono"><h3>${esc(L(it.name) || "")}</h3><span class="roll-count">${pad(it.roll.length)}</span>
+          <span class="roll-hint" aria-hidden="true">${arwSvg("prev")}${esc(T("drag"))}${arwSvg("next")}</span>
+          <span class="arw-nav roll-arrows">${arw("prev", "roll-prev", T("prev"))}${arw("next", "roll-next", T("nextItem"))}</span></header>
+        <div class="roll-track" tabindex="0">${it.roll.map((ph, k) => { const [w, h] = String(ph.ar || "4/5").split("/").map(Number);
+          return `<figure class="roll-frame" style="--ar:${(w / h).toFixed(4)}"><img src="${esc(ph.src)}" alt="${esc(L(ph.alt || ph.caption) || `${L(it.name) || L(p.title)} ${k + 1}`)}" loading="lazy" draggable="false"><figcaption class="mono">${pad(k + 1)} / ${pad(it.roll.length)}</figcaption></figure>`; }).join("")}</div>
+        <div class="roll-bar" aria-hidden="true"><i></i></div>${it.caption ? `<p class="roll-cap mono muted">${esc(L(it.caption))}</p>` : ""}
+      </section>`;
     if (it.flip) { const f = it.flip[0];
       return `<div class="flip${it.flipWide ? " flip-wide" : ""}" style="${style}${it.cols ? `;--n:${+it.cols}` : ""}"${speed}>${fig({ ...f, caption: undefined }, p, `--ar:${esc(f.ar)}`)}
         ${it.flipWide ? `<div class="flip-controls arw-nav mono">${arw("prev", "flip-prev", T("prev"))}<span class="arw-count flip-count">01 / ${String(it.flip.length).padStart(2, "0")}</span>${arw("next", "flip-next", T("nextItem"))}</div>` : `<p class="flip-cap mono muted" aria-live="polite">${esc(L(f.caption) || "")}</p>`}
         <div class="flip-thumbs" role="group">${it.flip.map((t, k) => `<button type="button" aria-pressed="${!k}" data-k="${k}" aria-label="${esc(L(t.caption) || "")}"><img src="${esc(t.src)}" alt="" loading="lazy"></button>`).join("")}</div></div>`; }
     // Strip: a row of items sharing one height (each takes width in proportion to its ratio), like posters on a wall
     // `narrow: true` sets the strip in a little from both sides (desktop), for small process rows
-    if (it.strip) return `<div class="strip${it.narrow ? " narrow" : ""}" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
+    // Bars: a small column chart in the case accent, { bars: [[label, n], …], unit: { en, pt }, note: { en, pt } }
+    if (it.bars) { const max = Math.max(...it.bars.map(b => b[1])) || 1;
+      return `<figure class="bars"><div class="bars-plot">${it.bars.map(([l, n]) => `<div class="bar" style="--h:${(n / max * 100).toFixed(1)}%"><b class="mono">${n}</b><i></i><span class="mono">${esc(L(l))}</span></div>`).join("")}</div>${it.unit ? `<figcaption class="mono">${esc(L(it.unit))}</figcaption>` : ""}</figure>`; }
+    // `patch: true` lays same-size posts out as an even wall (6 across, 3 on a phone) instead of one row
+    if (it.strip) return `<div class="strip${it.narrow ? " narrow" : ""}${it.patch ? " patch" : ""}" style="${style}"${speed}>${it.strip.map(s => { const [w, h] = String(s.ar || "1").split("/").map(Number);
       return fig(s, p, `--sar:${(w / (h || 1)).toFixed(4)}`); }).join("")}</div>`;
     return fig(it, p);
   }
@@ -1123,6 +1137,25 @@
       track.addEventListener("pointerup", drop);
       track.addEventListener("pointercancel", drop);
       track.addEventListener("click", e => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+      // `data-auto`: one slide at a time every few seconds while on screen, back to the first after the last;
+      // a hover, a drag, an arrow or keyboard focus pauses it for a while
+      if (roll.dataset.auto && !reduced && "IntersectionObserver" in window) {
+        let seen = false, hold = false, until = 0;
+        const pause = () => { until = performance.now() + 8000; };
+        [prev, next].forEach(b => b.addEventListener("click", pause));
+        track.addEventListener("pointerdown", pause);
+        track.addEventListener("touchstart", pause, { passive: true });
+        roll.addEventListener("pointerenter", () => { hold = true; });
+        roll.addEventListener("pointerleave", () => { hold = false; });
+        const vio = new IntersectionObserver(([en]) => { seen = en.isIntersecting; }, { threshold: .5 });
+        vio.observe(track); ownObserver(vio);
+        const timer = setInterval(() => {
+          if (!roll.isConnected) { clearInterval(timer); return; }
+          if (!seen || hold || document.hidden || roll.contains(document.activeElement) || performance.now() < until || roll.classList.contains("fits")) return;
+          if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 4) track.scrollTo({ left: 0, behavior: "smooth" }); else go(1);
+        }, 3200);
+        caseCleanups.push(() => clearInterval(timer));
+      }
       // The first time a roll comes into view it slides a little to the side and back, so it reads as something that moves
       if (!reduced && "IntersectionObserver" in window) {
         const io = new IntersectionObserver(([en]) => {

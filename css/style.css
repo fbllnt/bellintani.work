@@ -588,6 +588,10 @@ button.arw.close .arw-i{width:14px;height:14px}
 .roll-frame img{display:block;height:var(--h);width:auto;aspect-ratio:var(--ar);object-fit:contain;pointer-events:none;-webkit-user-drag:none}
 .roll-frame figcaption{font-size:11px;color:var(--mute)}
 @media (max-width:700px){ .film-roll{--h:min(calc((100vw - 32px) / 2.3), 55svh)} }
+/* A carousel roll inside a case (beside the chapter text, cols 6-12): about two and a half slides in view */
+.roll-inline{--h:min(calc((100vw - 64px) * 7 / 12 / 1.9), 62svh);width:100%}
+.roll-cap{margin:0;font-size:12px}
+@media (max-width:760px){ .roll-inline{--h:min(calc((100vw - 32px) / 1.3), 60svh)} }
 
 /* Content motion: frames rise tilted in 3D and flatten as they enter (scroll-linked), photos drift inside them, text lines rise */
 .case.motion .case-gallery .fig .ph{transform-origin:50% 100%}/* will-change is set by main.js only on pieces near the screen */
@@ -601,6 +605,15 @@ button.arw.close .arw-i{width:14px;height:14px}
 .strip > .fig{flex:var(--sar) 1 calc(var(--sar) * 120px);min-width:0}
 .strip > .fig .ph{aspect-ratio:var(--ar)}
 @media (max-width:760px){ .strip > .fig{flex-basis:calc(var(--sar) * 220px)} }
+.strip.patch{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+@media (max-width:760px){ .strip.patch{grid-template-columns:repeat(3,minmax(0,1fr))} }
+.bars{margin:0;width:100%}
+.bars-plot{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:var(--gap);align-items:end;height:clamp(220px,34vw,420px);border-bottom:var(--rule-w) solid var(--fg)}
+.bar{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;position:relative}
+.bar i{display:block;height:var(--h);background:var(--ai,var(--blue));min-height:2px}
+.bar b{font-weight:400;font-size:12px;margin-bottom:6px;text-align:left}
+.bar span{position:absolute;top:100%;left:0;margin-top:6px;font-size:12px;color:var(--mute)}
+.bars figcaption{margin-top:30px;font-size:12px;color:var(--mute)}
 
 /* Flip: a large image with the set as thumbnails below, turned like magazine pages */
 .flip .fig .ph{cursor:pointer}
@@ -678,7 +691,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 .pair-text{grid-column:1 / 5;grid-row:1;position:sticky;top:calc(var(--side) + 48px);min-width:0;display:flex;flex-direction:column;gap:14px}
 .pair-fig{grid-column:6 / 13;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:flex-end}
 .pair-fig > .fig{width:min(100%,calc(var(--r,1.7778) * var(--vh,88svh)))}
-.pair-fig > :is(.flip,.strip,.embed,.mods,.yt){width:100%}
+.pair-fig > :is(.flip,.strip,.embed,.mods,.yt,.film-roll){width:100%}
 .pair .chap.tr{border-top:0;padding-top:0}
 /* A featured editorial row: the chapter leads across the page and the live landing page plus vertical film share the full width. */
 .pair.feature-wide .pair-text{grid-column:1 / -1;grid-row:1;position:static}
