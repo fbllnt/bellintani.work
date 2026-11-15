@@ -83,6 +83,16 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Icon: Figtree Black "B" centred with a small ® (favicon.svg, apple-touch-icon.png, images/icon-512.png; avatars in the
   project files folder avatar-b/).
 
+## Brand pages with cases inside (sub-cases; Felipe, Nov 13-15 2026)
+
+- A project with `cases: [...]` (Housecall Pro; Globo = Globo Rebranding, Globo On, Globoplay) opens on the brand
+  (cover, intro `summary`, fact sheet), then the list "BRAND / CASES (0N)". A row opens its case in place.
+- The open case's bar (sticky, edge to edge once it reaches the top) shows the crumb "BRAND / CASE 02 DE 03" above the
+  title, then ← n / N →, then the ✕ alone at the far right, a little apart, in the case colour. Under it, a track with one
+  clickable segment per case (the open one filled in the case accent). Scope and year are NOT in the bar (they are in
+  the case's fact sheet). On phones the bar keeps only the arrows and the ✕. This is the rule for every job with sub-cases.
+- Top menu (Nov 15 2026): Início/Home, Trabalhos/Work, Sobre/About, Trilha/Soundtrack, EN/PT. Home goes to the top of the home.
+
 ## Content
 
 - Lines (Felipe approved Nov 11 2026): every separator is `var(--rule-w) solid var(--fg)` (1px, the section's own ink); the light

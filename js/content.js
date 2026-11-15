@@ -83,7 +83,7 @@ window.SITE = {
   // Interface labels
   ui: {
     en: {
-      work: "Work", backHome: "← Home", services: "Services", letsTalk: "Let's talk",
+      homeNav: "Home", work: "Work", backHome: "← Home", services: "Services", letsTalk: "Let's talk",
       skip: "Skip intro →", replay: "↻ Replay intro", index: "Index", grid: "Grid", view: "View",
       gotProject: "( Got a project? )", allWork: "← All work", next: "( Next project )", about: "( About )",
       client: "Client", year: "Year", scope: "Scope", role: "Role", type: "Type", before: "Before", after: "After", sector: "Sector", deliverables: "Deliverables", tools: "Tools & AI", openSite: "Open the site", aiMark: "AI", live: "Live",
@@ -96,7 +96,7 @@ window.SITE = {
       description: "Bellintani — Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad of a 7-year-old princess, music freak, amateur photographer, and whatever comes next.",
     },
     pt: {
-      work: "Trabalhos", backHome: "← Início", services: "Serviços", letsTalk: "Vamos conversar",
+      homeNav: "Início", work: "Trabalhos", backHome: "← Início", services: "Serviços", letsTalk: "Vamos conversar",
       skip: "Pular intro →", replay: "↻ Rever intro", index: "Lista", grid: "Grade", view: "Ver",
       gotProject: "( Tem um projeto? )", allWork: "← Todos os trabalhos", next: "( Próximo projeto )", about: "( Sobre )",
       client: "Cliente", year: "Ano", scope: "Escopo", role: "Função", type: "Tipo", before: "Antes", after: "Depois", sector: "Setor", deliverables: "Entregas", tools: "Ferramentas & IA", openSite: "Abrir o site", aiMark: "IA", live: "No ar",
@@ -109,7 +109,7 @@ window.SITE = {
       description: "Bellintani — Designer multidisciplinar, diretor de arte, criativo hiperfocado (valeu, TDAH), pai de uma princesa de 7 anos, viciado em música, fotógrafo amador e o que mais vier.",
     },
     es: {
-      work: "Trabajos", backHome: "← Inicio", services: "Servicios", letsTalk: "Hablemos",
+      homeNav: "Inicio", work: "Trabajos", backHome: "← Inicio", services: "Servicios", letsTalk: "Hablemos",
       skip: "Saltar intro →", replay: "↻ Ver intro de nuevo", index: "Lista", grid: "Cuadrícula", view: "Vista",
       gotProject: "( ¿Tienes un proyecto? )", allWork: "← Todos los trabajos", next: "( Siguiente proyecto )", about: "( Sobre mí )",
       client: "Cliente", year: "Año", scope: "Alcance", role: "Rol", type: "Tipo", before: "Antes", after: "Después", sector: "Sector", deliverables: "Entregables", tools: "Herramientas & IA", openSite: "Abrir el sitio", aiMark: "IA", live: "En línea",

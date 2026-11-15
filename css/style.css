@@ -1099,6 +1099,15 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 .sub-row{flex-wrap:wrap;row-gap:0}
 .sub-row > .sub-open{flex:1 1 0}
 .sub-row > .sub-step{flex:none}
+/* Open bar = crumb, title, ← n / N → and the ✕ alone at the far right, a little apart (Felipe, Nov 15 2026: rule for
+   every job with cases inside). Scope and year leave the bar: they are already in the case's fact sheet. */
+.sub.open .sub-open{grid-template-columns:3em minmax(0,1fr)}
+.sub.open .sub-open > .sub-k,.sub.open .sub-open > .sub-x{display:none}
+.sub-shut{display:none;flex:none;align-items:center;justify-content:center;margin-left:clamp(12px,2vw,32px);padding:8px;background:none;border:0;color:var(--ai-t,var(--blue));font-size:clamp(18px,1.6vw,26px);cursor:pointer}
+.sub.open .sub-shut{display:flex}
+.sub-shut .sub-x{transform:rotate(45deg)}
+.sub-shut .sub-x::before,.sub-shut .sub-x::after{height:2px;margin-top:-.5px}
+.sub-shut:hover .sub-x,.sub-shut:focus-visible .sub-x{transform:rotate(135deg)}
 .sub-crumb{display:none;gap:.6em;margin:0 0 .5em;font:500 11px/1.2 var(--mono);letter-spacing:.04em;color:var(--ai-t,var(--blue))}
 .sub-crumb > span:nth-child(2){color:var(--mute)}
 .sub.open .sub-crumb{display:flex}
@@ -1120,6 +1129,7 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
   .sub-crumb{white-space:nowrap;font-size:10px}
   .sub-open,.sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr) 1.1em;gap:10px}
   .sub-open .sub-k{display:none}
+  .sub.open .sub-open{grid-template-columns:2.2em minmax(0,1fr)}
   .sub.soon .sub-row{grid-template-columns:2.2em minmax(0,1fr) auto}
   .sub-step .arw-i{width:18px;height:18px}
 }

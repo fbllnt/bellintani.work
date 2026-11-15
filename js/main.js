@@ -1207,6 +1207,7 @@
               <span class="sub-x" aria-hidden="true"></span>
             </button>
             ${real > 1 ? `<span class="sub-step mono">${arw("prev", "sub-prev", "", T("prev"))}<span class="sub-count">${pad(k + 1)} / ${pad(p.cases.length)}</span>${arw("next", "sub-next", "", T("nextItem"))}</span>` : ""}
+            <button type="button" class="sub-shut" aria-label="${esc(T("closeCase"))} · ${esc(L(c.title))}"><span class="sub-x" aria-hidden="true"></span></button>
             ${real > 1 ? `<span class="sub-track mono">${p.cases.map((o, j) => o.soon
               ? `<span class="sub-seg soon"><span class="sub-seg-t">${pad(j + 1)} ${esc(L(o.soon))}</span></span>`
               : `<button type="button" class="sub-seg${j === k ? " on" : ""}" data-go="${esc(caseSlug(o))}"${j === k ? ` aria-current="true"` : ""}><span class="sub-seg-t">${pad(j + 1)} ${esc(L(o.title))}</span></button>`).join("")}</span>` : ""}
@@ -1265,6 +1266,7 @@
     items.forEach((li, k) => {
       li.querySelector(".sub-open").addEventListener("click", () => go(li.classList.contains("open") ? "" : li.dataset.slug));
       li.querySelector(".sub-close").addEventListener("click", () => go(""));
+      li.querySelector(".sub-shut").addEventListener("click", () => go(""));
       const step = d => go(items[(k + d + items.length) % items.length].dataset.slug);
       li.querySelector(".sub-prev")?.addEventListener("click", () => step(-1));
       li.querySelector(".sub-next")?.addEventListener("click", () => step(1));
