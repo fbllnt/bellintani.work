@@ -1576,7 +1576,7 @@ window.SITE = {
         { src: "images/dma/badge-pink-chest-20261115.jpg", ar: "1/1", col: 1, span: 6, caption: { en: "Badge", pt: "Crachá", es: "Credencial" } },
         { src: "images/dma/tote-flora-20261115.jpg", ar: "2000/2000", col: 7, span: 6, caption: { en: "Tote bag", pt: "Sacola", es: "Bolsa" } },
         { src: "images/dma/totes-4.jpg", ar: "1996/691", col: 1, span: 12, caption: { en: "Bags", pt: "Sacolas", es: "Bolsas" } },
-        { src: "images/dma/laptop-stickers-bands-20261115.jpg", ar: "1536/1024", col: 1, span: 12, caption: { en: "Stickers", pt: "Adesivos", es: "Stickers" } },
+        { src: "images/dma/macbook-pro-stickers-20261115.jpg", ar: "1536/1024", col: 1, span: 12, caption: { en: "Stickers", pt: "Adesivos", es: "Stickers" } },
         { src: "images/dma/stickers-pins.jpg", ar: "1944/1014", col: 1, span: 12, caption: { en: "Stickers and pins", pt: "Adesivos e bottons", es: "Stickers y pines" } },
         { src: "images/dma/mockup-deskpad.jpg", ar: "2000/1116", col: 1, span: 12, caption: { en: "Desk mat, 90 × 40 cm", pt: "Mousepad, 90 × 40 cm", es: "Mousepad, 90 × 40 cm" } },
         { src: "images/dma/gamer-pads.jpg", ar: "2000/930", col: 1, span: 12, caption: { en: "Desk mats", pt: "Mousepads", es: "Mousepads" } },
