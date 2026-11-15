@@ -83,7 +83,7 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 ## Brand pages with cases inside (sub-cases; Felipe, Nov 13-15 2026)
 
-- A project with `cases: [...]` (Housecall Pro; Globo = Globo Rebranding, Globo On, Globoplay) opens on the brand
+- A project with `cases: [...]` (Housecall Pro; Globo = Rebranding, Globo On, Globoplay) opens on the brand
   (cover, intro `summary`, fact sheet), then the list "BRAND / CASES (0N)". A row opens its case in place.
 - The open case's bar (sticky, edge to edge once it reaches the top) shows the crumb "BRAND / CASE 02 DE 03" above the
   title, then ← n / N →, then the ✕ alone at the far right, a little apart, in the case colour. Under it, a track with one

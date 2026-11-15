@@ -232,20 +232,11 @@ window.SITE = {
       sector: { en: "TV broadcaster", pt: "Emissora de TV", es: "Canal de TV" },
       tags: { en: ["Branding", "OnAir", "Motion", "Streaming"], pt: ["Branding", "OnAir", "Motion", "Streaming"], es: ["Branding", "OnAir", "Motion", "Streaming"] },
       tools: ["Adobe CC"],
-      image: "images/globo/cover.jpg",
+      // Cover (Felipe, Nov 15 2026): the 3D mark film, large, above the cases; the gradient still went to the Rebranding case
+      image: "images/globo/nave-mae-poster.jpg",
+      coverVideo: { mp4: "images/globo/nave-mae.mp4", webm: "images/globo/nave-mae.webm" },
       hero: "bleed",
-      heroAr: "2500/1562",
-      // The cover gradient never stops moving: colours sampled from cover.jpg drift slowly over it.
-      coverFlow: [
-        [6, 40, 75, "#e68ba4", 16, 12, 13],
-        [4, 104, 70, "#bf338f", 14, -10, 16],
-        [30, 52, 58, "#ece0d2", 22, -14, 11],
-        [52, 44, 52, "#6dd8cf", -18, 16, 12],
-        [68, 6, 62, "#36a6bd", -14, 14, 14],
-        [102, 32, 72, "#26569c", -12, 10, 13],
-        [100, 106, 72, "#2d3377", -14, -8, 17],
-        [56, 104, 52, "#8178a4", 16, -12, 15],
-      ],
+      heroAr: "16/9",
       // Intro of the brand page (Felipe, Nov 15 2026: suggestion based on his LinkedIn, Lead Designer 2014-2018)
       summary: {
         en: "Four years at Globo, 2014 to 2018, as Lead Designer for branding and identity: from the brand itself to entertainment, news and sports products and events, in Brazil and abroad. Three cases tell the story: Globo's rebrand, Globo On and Globoplay.",
@@ -256,9 +247,22 @@ window.SITE = {
       gallery: [],
       cases: [
         {
-          // The 2016 graphic system (was the "Globo" project until Nov 13 2026; "Globo Rebranding" inside the brand, Felipe Nov 15 2026)
+          // The 2016 graphic system (was the "Globo" project until Nov 13 2026; just "Rebranding" inside the brand, Felipe Nov 15 2026)
           slug: "rebranding",
-          title: "Globo Rebranding",
+          title: { en: "Rebranding", pt: "Rebranding", es: "Rebranding" },
+          // Each case keeps its own cover (Felipe, Nov 15 2026): the living gradient that was the Globo page's cover
+          image: "images/globo/cover.jpg",
+          heroAr: "2500/1562",
+          coverFlow: [
+            [6, 40, 75, "#e68ba4", 16, 12, 13],
+            [4, 104, 70, "#bf338f", 14, -10, 16],
+            [30, 52, 58, "#ece0d2", 22, -14, 11],
+            [52, 44, 52, "#6dd8cf", -18, 16, 12],
+            [68, 6, 62, "#36a6bd", -14, 14, 14],
+            [102, 32, 72, "#26569c", -12, 10, 13],
+            [100, 106, 72, "#2d3377", -14, -8, 17],
+            [56, 104, 52, "#8178a4", 16, -12, 15],
+          ],
           type: "branding",
           client: "Globo",
           // Ficha técnica (Felipe, Nov 1 2026: credit Plau and Estúdio Sílvia Girão here, never in highlighted text)
@@ -434,7 +438,7 @@ window.SITE = {
           coverCycle: ["images/globo-on/onair/logo-02.jpg", "images/globo-on/onair/logo-03.jpg", "images/globo-on/cover-roxo.jpg", "images/globo-on/onair/logo-04.jpg"],
           hero: "bleed",
           heroAr: "1920/1080",
-          theme: { bg: "#f5f0e0", fg: "#1e1b18", mute: "#716a5e", line: "#ddd5c0", panel: "#ebe4cf", accent: "#e71d73", accentText: "#c4145f", cursor: "#1a2bff" },
+          theme: { bg: "#faf7ee", fg: "#1e1b18", mute: "#716a5e", line: "#e2dbc8", panel: "#f0eadb", accent: "#e71d73", accentText: "#c4145f", cursor: "#1a2bff" },
           summary: {
             en: "A 2016 refresh of Globo On, Globo's channel for Angola and Mozambique: a new mark, a palette with no favourite colour, a voice built on one word, ON, and the on-air package that carries it all.",
             pt: "O refresh de 2016 do Globo On, o canal da Globo para Angola e Moçambique: marca nova, uma paleta sem cor preferida, uma voz construída sobre uma palavra, ON, e o pacote on air que leva tudo isso para a tela.",

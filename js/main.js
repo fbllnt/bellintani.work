@@ -1227,7 +1227,7 @@
           </div>
           <div class="sub-body" id="sub-${esc(slug)}" hidden>
             ${sheetHTML(sp)}
-            ${c.image ? `<figure class="fig full cover-fig"${c.heroAr ? ` style="--ar:${esc(c.heroAr)}"` : ""}><div class="ph">${cover(i, sp)}</div></figure>` : ""}
+            ${c.image ? `<figure class="fig full cover-fig"${c.heroAr ? ` style="--ar:${esc(c.heroAr)}"` : ""}><div class="ph">${cover(i, sp)}${sp.coverFlow && !reduced ? coverFlow(sp.coverFlow) : ""}</div></figure>` : ""}
             <div class="case-gallery">${gallery(i, sp)}</div>
             <p class="sub-end"><button type="button" class="sub-close mono">${esc(T("closeCase"))} · ${esc(L(c.title))} <span aria-hidden="true">✕</span></button></p>
           </div>
