@@ -1707,6 +1707,7 @@ window.SITE = {
     // Logofolio stays the last project.
     {
       title: "Logofolio",
+      tools: ["*AI"],
       track: { id: "6hHc7Pks7wtBIW8Z6A0iFq", name: "Blue Monday", by: "New Order" },
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca", es: "Diseño de logotipo // Identidad de marca" },
       summary: {
