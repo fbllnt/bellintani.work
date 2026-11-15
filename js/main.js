@@ -263,6 +263,7 @@
   const selectWorkFilter = id => {
     if (!filterCategories.some(f => f.id === id)) return;
     selectedFilter = id;
+    try { sessionStorage.setItem("workFilter", id); } catch (e) {}
     let visible = 0;
     [...index.children].forEach((li, i) => {
       const show = id === "all" || categoryFor(S.projects[i]).includes(id);
@@ -280,9 +281,16 @@
     if (btn) selectWorkFilter(btn.dataset.filter);
   });
   // A language switch reloads the page: the filter picked before it comes back with the scroll position
-  selectWorkFilter("all"); if (resumeFilter) selectWorkFilter(resumeFilter);
+  let savedWorkFilter = null;
+  try { savedWorkFilter = sessionStorage.getItem("workFilter"); } catch (e) {}
+  selectWorkFilter("all");
+  if (resumeFilter || savedWorkFilter) selectWorkFilter(resumeFilter || savedWorkFilter);
 
   const works = document.querySelector(".works");
+  const syncSkipLink = inCase => {
+    const skip = $("skip-link");
+    if (skip) skip.setAttribute("href", inCase ? location.pathname + "#case" : "/#work");
+  };
   // Skip link (first Tab stop): to the work list, or to the project title on a project page, without touching the hash
   $("skip-link")?.addEventListener("click", e => {
     e.preventDefault();
@@ -1779,6 +1787,7 @@
     const go = () => {
       renderCase(i);
       document.body.classList.add("in-case");
+      syncSkipLink(true);
       scrollTo({ top: 0, behavior: "instant" });
       caseEl.querySelector(".case-title").focus({ preventScroll: true });
     };
@@ -1788,6 +1797,7 @@
   const closeCase = target => cutTo(() => {
     clearCase();
     document.body.classList.remove("in-case");
+    syncSkipLink(false);
     fit();
     caseEl.innerHTML = ""; syncPageMeta(null);
     applyTheme(null);
@@ -2147,4 +2157,3 @@
     document.readyState === "complete" ? back() : addEventListener("load", back, { once: true });
   }
 })();
-

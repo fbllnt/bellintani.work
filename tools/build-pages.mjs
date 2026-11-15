@@ -56,6 +56,8 @@ for (const p of projects) {
   };
 
   let html = index;
+  // The root base URL would send a bare #case back to the homepage.
+  html = swap(html, /id="skip-link" href="#work"/, `id="skip-link" href="/p/${slug}/#case"`);
   html = swap(html, /<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`);
   html = swap(html, /<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(desc)}">`);
   html = swap(html, /<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${url}">`);
