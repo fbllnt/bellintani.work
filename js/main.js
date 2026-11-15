@@ -426,11 +426,8 @@
     motionFigs = []; scrubEls = [];
   };
 
-  // Loose layout: each item sets its own place on a 12-column grid.
-  // { col: 1-12, span: 1-12, shift: "8vh" (push down) or "-14vh" (pull up and overlap the item before),
-  //   nudge: "-4vw" (slide sideways to overlap a neighbour in the same row), tight: true (sit close to the row
-  //   above, for a set of the same kind of content), speed: -0.1…0.1 (scroll drift),
-  //   z: stacking order (default: later items on top) }.
+  // Loose layout: each item sets its own place on a 12-column grid: { col: 1-12, span: 1-12 }.
+  // (The old `shift`, `nudge`, `tight`, `speed` and `z` fields no longer do anything: nothing may overlap or drift.)
   // Text lines can sit between images: { text: { en, pt }, col, span }.
   // A chapter opens a part of the story: { chapter: { en, pt } ("01 · Intro"), kicker, head, text, col, span }.
   // A row of same-height items (posters, vertical films): { strip: [{ src | video…, ar }, …], col, span }.
@@ -441,7 +438,7 @@
   // Layout rule (Felipe, Oct 26 2026): content always fills the width, with one gap (--gap) between everything.
   // Consecutive images and films become justified rows: each takes width in proportion to its own ratio, so a row
   // shares one height, runs margin to margin and nothing is cropped. A new row starts at `col: 1`, at `span` 9+ or
-  // when the spans pass 12; `shift`, `nudge` and `tight` are ignored. Every other block runs full width.
+  // when the spans pass 12. Every other block runs full width.
   // On phones a row of landscape pieces stacks one per line; a row of portraits stays side by side.
   // A mosaic sets `mwrap: true` on its pieces: on phones its rows wrap two to a line instead of stacking.
   // Grids (Felipe, Oct 27 2026): each project picks one of five ways to fill the same 12 columns, by its content.
@@ -1306,7 +1303,6 @@
     setupVideos();
     setupControlColors();
     setupEmbeds();
-    setupDrift();
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
     caseEl.querySelectorAll("canvas[data-tunnel]").forEach(setupTunnel);
     setupLogos(p);
@@ -1526,29 +1522,6 @@
     });
   }
 
-  // No overlaps: nothing may hide part of an image, so items no longer drift on scroll, and an item that a
-  // negative shift pulls over an earlier one is pushed down until it clears it (a column gap apart).
-  let unstackRaf = 0;
-  const unstack = () => {
-    unstackRaf = 0;
-    caseEl.querySelectorAll(".loose").forEach(g => {
-      const items = [...g.children], gap = parseFloat(getComputedStyle(g).columnGap) || 12;
-      items.forEach(el => { el.style.marginTop = ""; });
-      items.forEach((el, i) => {
-        const r = el.getBoundingClientRect();
-        if (!r.height) return;
-        let push = 0;
-        for (let j = 0; j < i; j++) {
-          const o = items[j].getBoundingClientRect();
-          if (o.height && Math.min(r.right, o.right) - Math.max(r.left, o.left) > 1 && r.bottom > o.top) push = Math.max(push, o.bottom + gap - r.top);
-        }
-        if (push > .5) el.style.marginTop = `${(parseFloat(getComputedStyle(el).marginTop) + push).toFixed(1)}px`;
-      });
-    });
-  };
-  const queueUnstack = () => { if (!unstackRaf) unstackRaf = requestAnimationFrame(unstack); };
-  addEventListener("resize", queueUnstack);
-  function setupDrift() { queueUnstack(); document.fonts && document.fonts.ready.then(queueUnstack); }
 
   // Content motion (after unifiersofjapan.framer.website): as a frame comes up from the bottom of the screen
   // it rises tilted back in 3D and flattens into place, tied to the scroll (it reverses going back up).
