@@ -138,6 +138,16 @@
     imgs.forEach(im => { if (im !== imgs[0]) im.classList.remove("on"); }); const next = (k < 0 ? 0 : k) + 1; if (next < imgs.length) imgs[next].classList.add("on"); el.dataset.t = Date.now(); };
   document.addEventListener("click", e => { const el = e.target.closest && e.target.closest(".cover-cycle"); if (el) cycleStep(el); });
   document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.classList && e.target.classList.contains("cover-cycle")) cycleStep(e.target); });
+  document.addEventListener("click", e => {
+    const b = e.target.closest && e.target.closest(".cover-play"); if (!b || b.querySelector("video")) return;
+    const p = S.projects.find(x => x.coverPlay && x.image === b.querySelector("img").getAttribute("src")); if (!p) return;
+    const v = document.createElement("video");
+    v.className = "cover-play-vid"; v.playsInline = true; v.poster = p.image;
+    v.innerHTML = `${p.coverPlay.webm ? `<source src="${p.coverPlay.webm}" type="video/webm">` : ""}<source src="${p.coverPlay.mp4}" type="video/mp4">`;
+    b.classList.add("playing"); b.appendChild(v);
+    const done = () => { b.classList.remove("playing"); v.remove(); };
+    v.addEventListener("ended", done); v.play().catch(done);
+  });
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => document.querySelectorAll(".cover-cycle").forEach(el => { if (!el.dataset.t) el.dataset.t = Date.now(); else if (Date.now() - +el.dataset.t > 4800) cycleStep(el); }), 1000);
 
   // ---------- Project covers ----------
@@ -147,6 +157,9 @@
     // Films list the WebM first (smaller) with the MP4 as fallback; an item whose WebM came out bigger has no `webm` (Oct 29 2026).
     if (p.coverVideo && !matchMedia("(prefers-reduced-motion: reduce)").matches) return `<video class="cover-vid" poster="${esc(p.image)}" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
         ${p.coverVideo.webm ? `<source src="${esc(p.coverVideo.webm)}" type="video/webm">` : ""}<source src="${esc(p.coverVideo.mp4)}" type="video/mp4"></video>`;
+    // `coverPlay`: the cover stays still, with a small Play tag; a click plays the film once in place, with sound,
+    // then the still comes back (Felipe, Nov 13 2026: "capa estática… se o cara clicar na grande aí ela se mexe")
+    if (p.coverPlay) return `<button type="button" class="cover-play" aria-label="${esc(T("play"))}"><img src="${esc(p.image)}" alt="" loading="lazy"><span class="cover-play-tag mono">▶ ${esc(T("play"))}</span></button>`;
     // `coverCycle`: more stills of the same cover in other colours, cross-fading slowly in turn over `image`; a click
     // (or Enter) moves to the next colour at once (Felipe, Nov 11 2026, Globo On).
     if (p.coverCycle) return `<div class="cover-cycle" role="button" tabindex="0" aria-label="${esc(L({ en: "Change colour", pt: "Trocar a cor", es: "Cambiar el color" }))}"><img src="${esc(p.image)}" alt="" class="on">${p.coverCycle.map(src => `<img src="${esc(src)}" alt="" loading="lazy">`).join("")}</div>`;
@@ -1196,7 +1209,10 @@
       <ol class="sub-list">${p.cases.map((c, k) => {
         if (c.soon) return `<li class="sub soon"><div class="sub-row"><span class="mono">(${pad(k + 1)})</span><span class="sub-t">${esc(L(c.soon))}</span><span class="sub-soon mono">${esc(T("soon"))}</span></div></li>`;
         const sp = Object.assign({}, c, { theme: c.theme || p.theme }), slug = caseSlug(c);
-        return `<li class="sub" data-slug="${esc(slug)}">
+        // A case can wear its own material's colours (Felipe, Nov 13 2026: "seguir o padrão de identidade visual do
+        // material dentro do case"): `theme` on the case paints only that case while it is open (.sub.own in style.css)
+        const own = c.theme ? ` own" style="${Object.entries(THEME_VARS).filter(([k]) => c.theme[k] && k !== "cursor").map(([k, v]) => `${v.replace("--", "--c-")}:${esc(c.theme[k])}`).concat(c.theme.accentText ? [`--c-ai-t:${esc(c.theme.accentText)}`] : []).join(";")}` : "";
+        return `<li class="sub${own}" data-slug="${esc(slug)}">
           <div class="sub-row">
             <button type="button" class="sub-open" aria-expanded="false" aria-controls="sub-${esc(slug)}">
               <span class="mono">(${pad(k + 1)})</span><span class="sub-t"><span class="sub-crumb mono"><span>${esc(L(p.title))}</span><span aria-hidden="true">/</span><span>${esc(T("caseOf").replace("{n}", pad(k + 1)).replace("{t}", pad(p.cases.length)))}</span></span><span class="ti">${esc(L(c.title))}</span></span>
