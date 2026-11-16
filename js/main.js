@@ -12,8 +12,8 @@
     text && dir !== "prev" ? `<span>${esc(text)}</span>` : ""}${arwSvg(dir)}${text && dir === "prev" ? `<span>${esc(text)}</span>` : ""}</button>`;
 
   // ---------- Language (EN-US / PT-BR; ES hidden for now) ----------
-  // Saved choice first, then the visitor's country (geo cookie set by worker/index.js: Brazil → PT, anywhere else → EN),
-  // then the browser's language when there is no cookie (local preview). L() picks the current language from
+  // The visitor's saved choice, else English (Felipe, Nov 16 2026: English first; the worker's geo cookie is no longer read).
+  // L() picks the current language from
   // { en, pt, es } values, falling back to English. Spanish stays in content.js but is off (Felipe, Oct 29 2026): to bring
   // it back, add es to LANGS, its button in index.html, and the SPANISH countries → "es" rule below.
   const store = (k, v) => { try { v === undefined ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} };

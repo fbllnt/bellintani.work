@@ -1729,12 +1729,10 @@ window.SITE = {
         { episodeLink: { url: "https://www.setlist.fm/setlist/explosions-in-the-sky/2013/sesc-belenzinho-sao-paulo-brazil-73d84299.html", title: { en: "See what they played", pt: "Ver o que eles tocaram", es: "Ver lo que tocaron" }, detail: { en: "Setlist · Sesc Belenzinho, 22 May 2013", pt: "Setlist · Sesc Belenzinho, 22 de maio de 2013", es: "Setlist · Sesc Belenzinho, 22 de mayo de 2013" } } },
       ],
     },
-    // Ramón: year and concept supplied by Felipe. Preview only; credits pending.
+    // Ramón: year and concept supplied by Felipe. Live since Nov 16 2026 (Felipe: "Publish both"); credits still pending.
     {
       "title": "Ramón Vasconcelos",
       "slug": "ramon-vasconcelos",
-      "hidden": true,
-      "draft": true,
       "type": "branding",
       "client": "Ramón Vasconcelos",
       "year": "2018",
@@ -1790,12 +1788,10 @@ window.SITE = {
         "accent": "#000000"
       }
     },
-    // Carbono: draft, year confirmed by Felipe. Placement provisional until review.
+    // Carbono: year confirmed by Felipe. Live since Nov 16 2026 (Felipe: "Publish both"), placed before Logofolio.
     {
       "title": "Carbono",
       "slug": "carbono",
-      "hidden": true,
-      "draft": true,
       "type": "branding",
       "client": "Carbono",
       "year": "2025",
