@@ -5,7 +5,7 @@ window.SITE = {
   year: "27",
   email: "felipe@bellintani.work",
   social: [
-    { label: "Instagram", url: "https://www.instagram.com/fbllnt/" },
+    { label: "Instagram", url: "https://www.instagram.com/bllnt_/" },
     { label: "LinkedIn", url: "https://www.linkedin.com/in/fbellintani/" },
   ],
   tagline: {
@@ -73,7 +73,7 @@ window.SITE = {
       ] },
       { head: { en: "Contact", pt: "Contato", es: "Contacto" }, rows: [
         { role: "Email", name: "felipe@bellintani.work", url: "mailto:felipe@bellintani.work" },
-        { role: "Instagram", name: "@fbllnt", url: "https://www.instagram.com/fbllnt/" },
+        { role: "Instagram", name: "@bllnt_", url: "https://www.instagram.com/bllnt_/" },
         { role: "LinkedIn", name: "in/fbellintani", url: "https://www.linkedin.com/in/fbellintani/" },
       ] },
     ],
