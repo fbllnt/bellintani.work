@@ -1438,8 +1438,6 @@ window.SITE = {
   "title": "DISORD/AIR",
   "slug": "disorder",
   "track": {"id":"3SKH53SPQbEnZR4cJPVaz2", "name":"Messy", "by":"Lola Young"},
-  "hidden": true,
-  "draft": true,
   "type": "branding",
   "year": "2024",
   "client": {"en":"Personal digital project","pt":"Projeto pessoal digital","es":"Proyecto personal digital"},
