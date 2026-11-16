@@ -1316,10 +1316,11 @@ body.in-case:has(.rv-case) .corners>*{color:#fff}
 .rv-boards .rv-board-grid button > span{font-size:10px;margin-top:6px}
 @media (max-width:760px){ .rv-boards .rv-board-grid button{grid-column:span 6} }
 
-/* Cursor (Felipe, Nov 16 2026): always the inverse of what is under it, white on black and black on white */
-.ball,.ball.white{background:#fff!important;mix-blend-mode:difference}
-.trail{mix-blend-mode:difference}
-.ball-tag{background:#fff!important;color:#000!important;mix-blend-mode:difference}
+/* Cursor in Ramón's case only (Felipe, Nov 16 2026): its black and white sections could hide the ball, so there it is
+   always the inverse of what is under it (white on black, black on white). Everywhere else the cursor keeps its own colour. */
+body.in-case:has(#case.ramon-case) .ball,body.in-case:has(#case.ramon-case) .ball.white{background:#fff!important;mix-blend-mode:difference}
+body.in-case:has(#case.ramon-case) .trail{mix-blend-mode:difference}
+body.in-case:has(#case.ramon-case) .ball-tag{background:#fff!important;color:#000!important;mix-blend-mode:difference}
 
 /* Grid check (Nov 16 2026): word specimens split their own width in whole columns (--wc, --ws set by main.js), and a
    device narrower than its slot sits flush left on the column line instead of centred */

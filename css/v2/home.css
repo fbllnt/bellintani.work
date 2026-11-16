@@ -10,3 +10,24 @@
 /* Cover films get the same tag as every other film: Pause / Play (they also stop when off screen) */
 .cover-ctl{all:unset;position:absolute;left:var(--tag-x);top:0;z-index:1;cursor:pointer;padding:6px 9px;background:var(--fg);color:var(--bg);font:400 11px/1 var(--mono);text-transform:uppercase}
 .cover-ctl:focus-visible{outline:2px solid var(--ai,var(--blue));outline-offset:2px}
+
+/* Grid view of the work list (Felipe, Nov 16 2026): List / Grid switch in the filter row, styled as the filter pills;
+   medium 16:9 cards, 3 per row (2 on tablets, 1 on phones); cover contained on the panel colour, never cropped or zoomed */
+.work-view{display:inline-flex;gap:6px;margin-left:auto}
+.grid{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--gap) * 3) var(--gap)}
+.works.as-grid .grid{display:grid}
+.works.as-grid .index{display:none}
+.grid .card{display:grid;gap:10px;min-width:0;color:var(--fg);text-decoration:none}
+.grid .card[hidden]{display:none}
+.grid .card .ph{position:relative;aspect-ratio:16/9;background:var(--panel);overflow:hidden}
+.grid .card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.grid .card .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.grid .card .row b{font:900 clamp(18px,1.6vw,26px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;transition:color .25s}
+.grid .card .row .mono{font-size:11px;white-space:nowrap}
+.grid .card:hover .row b,.grid .card:focus-visible .row b{color:var(--blue)}
+@media (max-width:1000px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:560px){ .grid{grid-template-columns:1fr;row-gap:calc(var(--gap) * 2.5)} .work-view{margin-left:0} }
+/* Logofolio has no cover photo: its card shows six marks from the wall, 3 by 2, black on the panel colour */
+.grid .card .card-logos{position:absolute;inset:12%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12% 10%}
+.grid .card .card-logos img{position:static;width:100%;height:100%;object-fit:contain}
+

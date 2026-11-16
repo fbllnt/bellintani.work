@@ -222,6 +222,22 @@
   index.innerHTML = S.projects.map((p, i) => `<li><a href="${href(p)}" data-i="${i}">
     <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono"><span class="k-top">${p.year ? `<span class="k-year">${esc(p.year)}</span>` : ""}${Array.isArray(p.tools) && p.tools.some(tool => typeof tool === "string" && tool.startsWith("*")) ? `<span class="k-ai" aria-label="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}" title="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}">${esc(T("aiMark"))}</span>` : ""}</span><span class="k-scope">${esc(L(p.scope))}</span>${tagFor(p)}</span></a></li>`).join("");
 
+  // Grid view (Felipe, Nov 16 2026: "bring back the grid option for the home, 16:9 medium size"; removed Oct 28 2026):
+  // medium 16:9 cards, 3 per row, cover contained on the panel colour (never cropped), title and year. The visitor's
+  // choice is remembered; the filters drive both views.
+  const grid = $("grid");
+  grid.innerHTML = S.projects.map((p, i) => `<a class="card" href="${href(p)}" data-i="${i}"><div class="ph">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" decoding="async">`
+      : p.logos ? `<span class="card-logos">${p.logos.slice(0, 6).map(l => `<img src="${esc(l.src)}" alt="" loading="lazy" decoding="async">`).join("")}</span>` : ""}</div>
+    <div class="row"><b>${esc(L(p.title))}</b>${p.year ? `<span class="mono muted">${esc(p.year)}</span>` : ""}</div></a>`).join("");
+  const worksSec = document.querySelector(".works"), vList = $("view-list"), vGrid = $("view-grid");
+  const setView = asGrid => {
+    worksSec.classList.toggle("as-grid", asGrid);
+    vList.setAttribute("aria-pressed", String(!asGrid)); vGrid.setAttribute("aria-pressed", String(asGrid));
+    try { localStorage.setItem("view", asGrid ? "grid" : "list"); } catch (e) {}
+  };
+  vList.onclick = () => setView(false); vGrid.onclick = () => setView(true);
+  try { if (localStorage.getItem("view") === "grid") setView(true); } catch (e) {}
+
   // Curated, multi-discipline work filters. AI is based on the explicit *tool
   // convention in content.js, never on a project's year or aesthetic.
   const filterCategories = [
@@ -274,7 +290,7 @@
     let visible = 0;
     [...index.children].forEach((li, i) => {
       const show = id === "all" || categoryFor(S.projects[i]).includes(id);
-      li.hidden = !show;
+      li.hidden = !show; if (grid.children[i]) grid.children[i].hidden = !show;
       if (show) visible++;
     });
     filterBar.querySelectorAll("button[data-filter]").forEach(btn => {
