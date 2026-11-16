@@ -1263,7 +1263,7 @@
       const loader=ownObserver(new IntersectionObserver(entries=>{
         if(!entries.some(entry=>entry.isIntersecting))return;
         loader.disconnect();
-        import('./disorder-logo-3d.js?v=20261116disorder06').then(({createLogo})=>{
+        import('./disorder-logo-3d.js?v=20261116disorder07').then(({createLogo})=>{
           if(logoSignal.aborted)return;
           logo3d=createLogo(logoHost,{signal:logoSignal,onFailure:()=>{motion.hidden=true;}});
           if(logo3d)motion.hidden=false;

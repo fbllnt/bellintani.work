@@ -49,7 +49,7 @@ export function createLogo(host, { signal, onFailure } = {}) {
   for (let i = 0; i < CONTOURS.length; i += 2) {
     const shape = trace(CONTOURS[i], THREE.Shape);
     shape.holes.push(trace(CONTOURS[i + 1], THREE.Path));
-    const geometry = new THREE.ExtrudeGeometry(shape, { depth: 28, bevelEnabled: false, steps: 1, curveSegments: 32 });
+    const geometry = new THREE.ExtrudeGeometry(shape, { depth: 35, bevelEnabled: false, steps: 1, curveSegments: 32 });
     geometry.computeBoundingBox();
     const center = geometry.boundingBox.getCenter(new THREE.Vector3());
     geometry.translate(-center.x, -center.y, -center.z);
@@ -59,16 +59,17 @@ export function createLogo(host, { signal, onFailure } = {}) {
   }
   let disposed = false, paused = false, visible = false, lost = false;
   let frame = 0, last = 0, elapsed = 0;
-  // Both pieces settle on the original front every 12 seconds. Separate timing
-  // windows give each its own rhythm while keeping the complete loop seamless.
-  const turn = (phase, start, end) => {
-    const t = THREE.MathUtils.clamp((phase - start) / (end - start), 0, 1);
-    return (t * t * (3 - 2 * t)) * Math.PI * 2;
+  // Alternating coin-like turns: 2.45s per piece, 150ms between turns.
+  // The active piece starts briskly and slows to rest; the other stays front-facing.
+  // Disjoint windows prevent simultaneous motion, including across the loop seam.
+  const turn = (time, start) => {
+    const t = THREE.MathUtils.clamp((time - start) / 2.45, 0, 1);
+    return (1 - Math.pow(1 - t, 3)) * Math.PI * 2;
   };
   const render = () => {
-    const phase = (elapsed % 12) / 12;
-    meshes[0].rotation.y = turn(phase, .12, .66);
-    meshes[1].rotation.y = turn(phase, .28, .9);
+    const time = elapsed % 5.2;
+    meshes[0].rotation.y = turn(time, 0);
+    meshes[1].rotation.y = turn(time, 2.6);
     renderer.render(scene, camera);
   };
   const resize = () => {
