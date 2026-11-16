@@ -1939,7 +1939,7 @@ window.SITE = {
         { name: "Wings", src: "images/logos/wings.png" },
         { name: "D", src: "images/logos/d-mark.png" },
         { name: "Veeludo", src: "images/logos/veeludo.png" },
-        { name: "coore.hi", src: "images/logos/coore-hi.png" },
+        { name: "CoreHi", src: "images/logos/corehi.png" },
         { name: "JBS Sem Fronteiras", src: "images/logos/jbs-sem-fronteiras.png" },
         { name: "Autoesporte", src: "images/logos/autoesporte.png" },
         { name: "Educação", src: "images/logos/educacao.png" },
