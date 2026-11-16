@@ -121,6 +121,9 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   two or three photos in view, arrows + drag/swipe, no full-screen view. Camera = the `camera` field of each photo.
   Drag cues: "← Arraste →" in each roll head, a position bar under it, a one-time slide on entering view, and the
   cursor ball grows into a labelled drag handle over a roll. Cover = Super Sampler losangeles-01.
+- Logofolio sizing (Nov 16 2026): `markWidth()` in main.js balances each mark by its measured ink box and density; the weight
+  correction applies after the size cap (heavy marks down to 70%, light up to 130%, never past capW/capH), so wide heavy
+  wordmarks like GBR no longer read too big. Use `scale` only as a last correction by eye.
 - Logos project (`layout: "logos"`): every logo file must be pure black #000000 on a transparent background
   (PNG or SVG, trimmed). Check each upload and correct off-blacks such as #231F20 before adding it.
 - Typefaces: Figtree (display) and JetBrains Mono (small copy / body). White page, black type, blue accents.
@@ -131,6 +134,17 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   section's tokens in style.css. Links there hover as white on a blue band, since blue type on black is 2.7:1. The black
   footer (Let's talk) and the rule-draw entrance come from the Oct 29 2026 audit (approved and live). The About end line
   shows a live São Paulo clock (`.ab-clock`).
+
+## Case system for bespoke layouts (Felipe approved Nov 16 2026)
+
+A project may have its own layout (Ramón `layout: "ramon"`, Carbono `layout: "carbono"`, Disorder) and keep its custom
+pieces, but the frame around them is shared, so every case reads as one portfolio (style.css, "Case system" block at the end):
+- Chapter headline = `.chap-h` size and style (Figtree Black, uppercase, clamp(30px, 4.4vw, 72px)); phones clamp(30px, 8vw, 44px).
+- At most one oversized poster headline per case (Carbono "Beyond the frame"), the cartaz move.
+- Labels, kickers and captions: JetBrains Mono 11px uppercase (10px on phones); captions sit 6px under the piece.
+- Chapter bar: background `--bg`, one `--rule-w` line under it, active chapter underlined in the project accent; never a filled block.
+- Sticky text never shares a grid column with the next block (it slid over Carbono's "One image" block).
+New bespoke layouts start from these rules; vary the pieces, not the frame.
 
 ## Images: never crop (Felipe, Oct 24 2026)
 
