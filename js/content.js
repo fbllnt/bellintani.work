@@ -2427,10 +2427,6 @@ window.SITE.ramon = {
       "caption": "09"
     },
     {
-      "src": "images/ramon/identity-09b.jpg",
-      "caption": "09b"
-    },
-    {
       "src": "images/ramon/identity-10.jpg",
       "caption": "10"
     }
@@ -2447,6 +2443,12 @@ window.SITE.ramon = {
     "gif": "images/ramon/photography-loop.gif"
   },
   "copy": {
+    "boardsLabel": { "en": "Boards", "pt": "Pranchas", "es": "Láminas" },
+    "boardsHint": { "en": "boards on view · select any image to enlarge", "pt": "pranchas abertas · clique em qualquer imagem para ampliar", "es": "láminas a la vista · selecciona una imagen para ampliarla" },
+    "viewBoard": { "en": "Enlarge", "pt": "Ampliar", "es": "Ampliar" },
+    "openHint": { "en": "Select a photo to enlarge", "pt": "Clique na foto para ampliar", "es": "Selecciona una foto para ampliarla" },
+    "photoInvite": { "en": "Select any photograph to see it up close, browse the sequence or visit Ramón’s portfolio.", "pt": "Clique em qualquer fotografia para ver de perto, navegar pela sequência ou visitar o portfólio do Ramón.", "es": "Selecciona una fotografía para verla de cerca, recorrer la secuencia o visitar el portafolio de Ramón." },
+    "visitShort": { "en": "Ramón’s website", "pt": "Site do Ramón", "es": "Sitio de Ramón" },
     "nav": {
       "en": "Explore the case",
       "pt": "Explore o case",
