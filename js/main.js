@@ -294,7 +294,7 @@
   // Skip link (first Tab stop): to the work list, or to the project title on a project page, without touching the hash
   $("skip-link")?.addEventListener("click", e => {
     e.preventDefault();
-    const to = document.body.classList.contains("in-case") ? $("case").querySelector(".case-title, .rv-brand, .cb-brand") : works;
+    const to = document.body.classList.contains("in-case") ? $("case").querySelector(".case-title, .cb-brand") : works;
     if (!to) return;
     to.setAttribute("tabindex", "-1"); to.scrollIntoView({ behavior: "instant" }); to.focus({ preventScroll: true });
   });
@@ -1442,7 +1442,7 @@
     let n = 0;
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
-      ${p.layout === "ramon" ? window.RamonCase.hero({ L, esc, arwSvg, data: S.ramon }) : p.layout === "carbono" ? window.CarbonoCase.hero({ L, esc, arwSvg, data: S.carbono }) : `<h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
+      ${p.layout === "carbono" ? window.CarbonoCase.hero({ L, esc, arwSvg, data: S.carbono }) : `<h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
       ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}`}
       ${sheetHTML(p)}
       ${["logos", "disorder", "ramon", "carbono"].includes(p.layout) ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
@@ -1900,7 +1900,7 @@
       document.body.classList.add("in-case");
       syncSkipLink(true);
       scrollTo({ top: 0, behavior: "instant" });
-      caseEl.querySelector(".case-title, .rv-brand, .cb-brand").focus({ preventScroll: true });
+      caseEl.querySelector(".case-title, .cb-brand").focus({ preventScroll: true });
     };
     if (grown) { grown = false; go(); return; }
     animate ? cutTo(go) : go();

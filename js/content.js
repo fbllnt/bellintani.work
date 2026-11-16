@@ -2447,21 +2447,6 @@ window.SITE.ramon = {
     "gif": "images/ramon/photography-loop.gif"
   },
   "copy": {
-    "location": {
-      "en": "Photography / Toronto / 2018",
-      "pt": "Fotografia / Toronto / 2018",
-      "es": "Fotografía / Toronto / 2018"
-    },
-    "hero": {
-      "en": "A name.\nA lens.\nA click.",
-      "pt": "Um nome.\nUma lente.\nUm clique.",
-      "es": "Un nombre.\nUna lente.\nUn clic."
-    },
-    "heroNote": {
-      "en": "The accent in Ramón becomes a camera. His pictures do the talking.",
-      "pt": "O acento de Ramón vira câmera. As fotografias fazem o resto.",
-      "es": "El acento de Ramón se convierte en cámara. Las fotografías hacen el resto."
-    },
     "nav": {
       "en": "Explore the case",
       "pt": "Explore o case",
@@ -2488,9 +2473,9 @@ window.SITE.ramon = {
       "es": "Aplicaciones"
     },
     "ideaHead": {
-      "en": "It was there.\nIn his own name.",
-      "pt": "Estava ali.\nNo próprio nome.",
-      "es": "Estaba ahí.\nEn su propio nombre."
+      "en": "The name becomes a camera.",
+      "pt": "O nome vira câmera.",
+      "es": "El nombre se convierte en cámara."
     },
     "ideaText": {
       "en": "Ramón’s accent becomes the element over the camera. Below it, the O becomes the lens. Name, shutter and photograph meet in one sign.",
@@ -2518,9 +2503,9 @@ window.SITE.ramon = {
       "es": "Alternar blanco / negro"
     },
     "systemHead": {
-      "en": "A signature that\nknows when to be quiet.",
-      "pt": "Uma assinatura que\nsabe ficar em silêncio.",
-      "es": "Una firma que\nsabe guardar silencio."
+      "en": "Black. White. Ramón.",
+      "pt": "Preto. Branco. Ramón.",
+      "es": "Blanco. Negro. Ramón."
     },
     "systemText": {
       "en": "The circle and the accent work alone or with the name. Black and white give the identity a consistent presence, without competing with the photographs.",
@@ -2543,9 +2528,9 @@ window.SITE.ramon = {
       "es": "Firma completa"
     },
     "photoHead": {
-      "en": "The identity is black & white.\nThe world isn’t.",
-      "pt": "A identidade é preto e branco.\nO mundo, não.",
-      "es": "La identidad es blanco y negro.\nEl mundo, no."
+      "en": "The photographs bring the colour.",
+      "pt": "A cor vem das fotografias.",
+      "es": "El color viene de las fotografías."
     },
     "photoText": {
       "en": "His portraits, food and architecture photographs bring the colour. A quick sequence puts the quiet signature beside the range of his work.",
@@ -2593,9 +2578,9 @@ window.SITE.ramon = {
       "es": "Explora la fotografía de Ramón"
     },
     "appHead": {
-      "en": "From a small sign\nto something you can hold.",
-      "pt": "De um pequeno sinal\na algo que se pode tocar.",
-      "es": "De un pequeño signo\na algo que puedes tocar."
+      "en": "The identity on paper.",
+      "pt": "A identidade no papel.",
+      "es": "La identidad en papel."
     },
     "appText": {
       "en": "The identity moves onto paper: business cards, envelopes, letterhead and a print folio. Three new material studies explore the contrast of white ink, black stock and textured paper.",
