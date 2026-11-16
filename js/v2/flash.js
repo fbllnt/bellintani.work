@@ -1,5 +1,5 @@
 /* Hero flash (Felipe, Nov 16 2026): the first screen shows the whole portfolio as a fast, glowing flicker behind white type.
-   Frames are small JPEGs in images/flash/ (one to three per project), swapped about every 85 ms like a GIF, but sharper and
+   Frames are small JPEGs in images/flash/ (one to three per project), swapped about every 55 ms like a GIF, but sharper and
    lighter than a real GIF. The flash fades out as the page scrolls and stops completely once gone.
    Full bleed (object-fit: cover) by Felipe's explicit request: the one place on the site where images fill the frame.
    API: window.V2Flash.init({ stage, frames, reduced }) -> { destroy }.
@@ -7,7 +7,7 @@
    - html.flash-on while the flash is visible: the first screen and the corner menu switch to white type (css/v2/flash.css).
    - Reduced motion or Save-Data: one still frame, no flicker; it still fades on scroll. Pauses when the tab is hidden. */
 (() => {
-  const STEP = 85; // ms per frame
+  const STEP = 55; // ms per frame (Felipe: faster)
 
   function init({ stage, frames, reduced }) {
     const noop = { destroy() {} };
@@ -16,9 +16,9 @@
     const root = document.documentElement;
     const box = document.createElement("div");
     box.className = "flash"; box.setAttribute("aria-hidden", "true");
-    box.innerHTML = `<img class="fl-img" alt="" decoding="async"><img class="fl-glow" alt="" decoding="async"><i class="fl-shade"></i><i class="fl-grain"></i>`;
+    box.innerHTML = `<img class="fl-img" alt="" decoding="async">`;
     stage.prepend(box);
-    const img = box.querySelector(".fl-img"), glow = box.querySelector(".fl-glow");
+    const img = box.querySelector(".fl-img");
 
     // Load frames in order; the flicker only uses frames that are ready, so it starts after the first few arrive
     const ready = [];
@@ -32,7 +32,7 @@
     };
 
     let k = 0, last = 0, raf = 0, opacity = 1, started = false;
-    function show(src) { img.src = src; glow.src = src; }
+    function show(src) { img.src = src; }
     function tick(t) {
       raf = 0;
       if (document.hidden || opacity <= 0.01 || still) return;
