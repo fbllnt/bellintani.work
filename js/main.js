@@ -294,7 +294,7 @@
   // Skip link (first Tab stop): to the work list, or to the project title on a project page, without touching the hash
   $("skip-link")?.addEventListener("click", e => {
     e.preventDefault();
-    const to = document.body.classList.contains("in-case") ? $("case").querySelector(".case-title") : works;
+    const to = document.body.classList.contains("in-case") ? $("case").querySelector(".case-title, .rv-brand, .cb-brand") : works;
     if (!to) return;
     to.setAttribute("tabindex", "-1"); to.scrollIntoView({ behavior: "instant" }); to.focus({ preventScroll: true });
   });
@@ -1276,6 +1276,8 @@
   }
 
   function gallery(i, p) {
+    if (p.layout === "carbono") return window.CarbonoCase.render({ L, esc, arwSvg, data: S.carbono });
+    if (p.layout === "ramon") return window.RamonCase.render({ L, esc, arwSvg, data: S.ramon });
     if (p.layout === "disorder") return disorderGallery(p);
     if (p.layout === "lomo" && p.photos) return lomoGallery(p);
     if (p.layout === "logos" && p.logos) return logoWall(p);
@@ -1435,13 +1437,15 @@
     clearCase();
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
     applyTheme(p.theme);
+    caseEl.classList.toggle("ramon-case", p.layout === "ramon");
+    caseEl.classList.toggle("carbono-case", p.layout === "carbono");
     let n = 0;
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
-      <h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
-      ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
+      ${p.layout === "ramon" ? window.RamonCase.hero({ L, esc, arwSvg, data: S.ramon }) : p.layout === "carbono" ? window.CarbonoCase.hero({ L, esc, arwSvg, data: S.carbono }) : `<h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
+      ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}`}
       ${sheetHTML(p)}
-      ${["logos", "disorder"].includes(p.layout) ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
+      ${["logos", "disorder", "ramon", "carbono"].includes(p.layout) ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
       <div class="case-gallery">${gallery(i, p)}</div>
       ${p.cases ? subCases(i, p) : ""}
       <nav class="case-neighbors" aria-label="${esc(T("projectNav"))}">
@@ -1463,6 +1467,13 @@
     caseEl.querySelectorAll("canvas[data-tunnel]").forEach(setupTunnel);
     setupLogos(p);
     setupDisorder();
+    if (["ramon", "carbono"].includes(p.layout)) {
+      const measureCorners = () => { const r = document.querySelector(".corners .c-tr")?.getBoundingClientRect();
+        document.documentElement.style.setProperty("--cnr-h", r ? `${Math.ceil(r.bottom + 8)}px` : "0px"); };
+      measureCorners(); caseListen(window, "resize", measureCorners);
+    }
+    if (p.layout === "carbono") caseCleanups.push(window.CarbonoCase.setup({ root: caseEl, data: S.carbono, L, reduced }));
+    if (p.layout === "ramon") caseCleanups.push(window.RamonCase.setup({ root: caseEl, data: S.ramon, L, reduced }));
     setupScrub();
     setupLomo();
     // Flips and rooms are matched to the page in document order: the brand's own gallery first, then each case's
@@ -1889,7 +1900,7 @@
       document.body.classList.add("in-case");
       syncSkipLink(true);
       scrollTo({ top: 0, behavior: "instant" });
-      caseEl.querySelector(".case-title").focus({ preventScroll: true });
+      caseEl.querySelector(".case-title, .rv-brand, .cb-brand").focus({ preventScroll: true });
     };
     if (grown) { grown = false; go(); return; }
     animate ? cutTo(go) : go();

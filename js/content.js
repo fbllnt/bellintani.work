@@ -1763,6 +1763,67 @@ window.SITE = {
         { episodeLink: { url: "https://www.setlist.fm/setlist/explosions-in-the-sky/2013/sesc-belenzinho-sao-paulo-brazil-73d84299.html", title: { en: "See what they played", pt: "Ver o que eles tocaram", es: "Ver lo que tocaron" }, detail: { en: "Setlist · Sesc Belenzinho, 22 May 2013", pt: "Setlist · Sesc Belenzinho, 22 de maio de 2013", es: "Setlist · Sesc Belenzinho, 22 de mayo de 2013" } } },
       ],
     },
+    // Ramón: year and concept supplied by Felipe. Preview only; credits pending.
+    {
+      "title": "Ramón Vasconcelos",
+      "slug": "ramon-vasconcelos",
+      "hidden": true,
+      "draft": true,
+      "type": "branding",
+      "client": "Ramón Vasconcelos",
+      "year": "2018",
+      "role": "?",
+      "scope": {
+        "en": "Visual identity",
+        "pt": "Identidade visual",
+        "es": "Identidad visual"
+      },
+      "sector": {
+        "en": "Photography · Toronto",
+        "pt": "Fotografia · Toronto",
+        "es": "Fotografía · Toronto"
+      },
+      "tags": {
+        "en": [
+          "Branding",
+          "Photography",
+          "Identity"
+        ],
+        "pt": [
+          "Branding",
+          "Fotografia",
+          "Identidade"
+        ],
+        "es": [
+          "Branding",
+          "Fotografía",
+          "Identidad"
+        ]
+      },
+      "tools": [
+        "*FLORA"
+      ],
+      "image": "images/ramon/identity-01_black.jpg",
+      "layout": "ramon",
+      "gallery": [],
+      "summary": {
+        "en": "A visual identity for Toronto-based photographer Ramón Vasconcelos. The idea starts in his name: the accent becomes the element above the camera, joining the shutter click to the lens. A black-and-white signature leaves the colour to his photographs.",
+        "pt": "Uma identidade visual para Ramón Vasconcelos, fotógrafo que vive em Toronto. A ideia começa no nome: o acento vira o elemento sobre a câmera, unindo o clique à lente. Uma assinatura em preto e branco deixa a cor por conta das fotografias.",
+        "es": "Una identidad visual para Ramón Vasconcelos, fotógrafo que vive en Toronto. La idea nace en el nombre: el acento se convierte en el elemento sobre la cámara, uniendo el clic con la lente. Una firma en blanco y negro deja el color a las fotografías."
+      },
+      "link": {
+        "label": "ramonvasconcelos.com",
+        "url": "https://ramonvasconcelos.com/"
+      },
+      "theme": {
+        "bg": "#ffffff",
+        "fg": "#000000",
+        "mute": "#595959",
+        "line": "#dddddd",
+        "panel": "#ffffff",
+        "accent": "#000000"
+      }
+    },
     // Carbono: draft, year confirmed by Felipe. Placement provisional until review.
     {
       "title": "Carbono",
@@ -1808,7 +1869,7 @@ window.SITE = {
           "Promoción"
         ]
       },
-      "image": "images/carbono/page-01.jpg",
+      "image": "images/carbono/clean-01.jpg",
       "hero": "bleed",
       "heroAr": "16/9",
       "hue": [
@@ -1830,482 +1891,9 @@ window.SITE = {
         "pt": "Um novo respiro para a comunicação da Carbono em social e promoção. “Reoxigenar” conecta o Carbono Box, as cores terrosas, a fotografia de produto e uma tipografia que se abre, se repete e se desmonta. O sistema se desdobra em feeds, carrosséis e na promoção “Quebra Tudo”.",
         "es": "Un nuevo aire para la comunicación de Carbono en redes y promoción. “Reoxigenar” conecta el Carbono Box, los colores terrosos, la fotografía de producto y una tipografía que se abre, se repite y se desarma. El sistema se extiende a feeds, carruseles y la promoción “Quebra Tudo”."
       },
-      "layout": "loose",
+      "layout": "carbono",
       "grid": "trilho",
-      "gallery": [
-        {
-          "chapter": {
-            "en": "01 · Concept",
-            "pt": "01 · Conceito",
-            "es": "01 · Concepto"
-          },
-          "head": {
-            "en": "Open the window. *Let it breathe.*",
-            "pt": "Abrir a janela. *Reoxigenar.*",
-            "es": "Abrir la ventana. *Renovar el aire.*"
-          },
-          "text": {
-            "en": "Rescue, revitalise, give new meaning. The starting point is to bring Carbono’s own character back into its communication. A window opens to make room for what comes next.",
-            "pt": "Resgatar, revitalizar, ressignificar. O ponto de partida é trazer a cara da Carbono de volta à comunicação. Uma janela se abre para dar espaço ao que vem a seguir.",
-            "es": "Rescatar, revitalizar, resignificar. El punto de partida es devolver el carácter de Carbono a su comunicación. Una ventana se abre para dar espacio a lo que viene."
-          },
-          "grid": "trilho"
-        },
-        {
-          "rooms": [
-            {
-              "name": {
-                "en": "Reoxigenar",
-                "pt": "Reoxigenar",
-                "es": "Reoxigenar"
-              },
-              "items": [
-                {
-                  "src": "images/carbono/page-03.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Reoxigenar · typographic rhythm",
-                    "pt": "Reoxigenar · ritmo tipográfico",
-                    "es": "Reoxigenar · ritmo tipográfico"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-04.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "The concept: renewal and new energy",
-                    "pt": "O conceito: renovação e novo ânimo",
-                    "es": "El concepto: renovación y nueva energía"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-05.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Shall we open the window?",
-                    "pt": "Vamos abrir a janela?",
-                    "es": "¿Abrimos la ventana?"
-                  }
-                }
-              ]
-            }
-          ],
-          "ar": "16/9",
-          "col": 6,
-          "span": 7
-        },
-        {
-          "chapter": {
-            "en": "02 · Visual system",
-            "pt": "02 · Sistema visual",
-            "es": "02 · Sistema visual"
-          },
-          "head": {
-            "en": "One box. *Many openings.*",
-            "pt": "Uma caixa. *Muitas aberturas.*",
-            "es": "Una caja. *Muchas aperturas.*"
-          },
-          "text": {
-            "en": "The cut corner of the Carbono Box becomes a frame for the system. It stretches, opens and holds words, colours and products. Earthy tones connect the graphics to the furniture.",
-            "pt": "O canto cortado do Carbono Box vira moldura para o sistema. A caixa se estica, se abre e recebe palavras, cores e produtos. Os tons terrosos aproximam o grafismo do mobiliário.",
-            "es": "La esquina recortada del Carbono Box se convierte en marco del sistema. La caja se estira, se abre y contiene palabras, colores y productos. Los tonos terrosos acercan los gráficos al mobiliario."
-          },
-          "grid": "trilho"
-        },
-        {
-          "rooms": [
-            {
-              "name": "Carbono Box",
-              "items": [
-                {
-                  "src": "images/carbono/page-02.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Carbono Box · negative mark",
-                    "pt": "Carbono Box · marca negativa",
-                    "es": "Carbono Box · marca negativa"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-06.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Vertical opening",
-                    "pt": "Abertura vertical",
-                    "es": "Apertura vertical"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-07.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Motion study · the first window opens",
-                    "pt": "Estudo de movimento · a primeira janela se abre",
-                    "es": "Estudio de movimiento · se abre la primera ventana"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-08.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Horizontal opening",
-                    "pt": "Abertura horizontal",
-                    "es": "Apertura horizontal"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-09.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "The frame meets typography",
-                    "pt": "A moldura encontra a tipografia",
-                    "es": "El marco encuentra la tipografía"
-                  }
-                }
-              ]
-            },
-            {
-              "name": {
-                "en": "Colour",
-                "pt": "Cor",
-                "es": "Color"
-              },
-              "items": [
-                {
-                  "src": "images/carbono/page-10.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Colour studies",
-                    "pt": "Estudos de cor",
-                    "es": "Estudios de color"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-11.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Earthy colour palette",
-                    "pt": "Paleta de tons terrosos",
-                    "es": "Paleta de tonos terrosos"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-12.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "A palette drawn from the product",
-                    "pt": "Uma paleta que vem do produto",
-                    "es": "Una paleta que nace del producto"
-                  }
-                }
-              ]
-            }
-          ],
-          "ar": "16/9",
-          "col": 6,
-          "span": 7
-        },
-        {
-          "chapter": {
-            "en": "03 · Social",
-            "pt": "03 · Social",
-            "es": "03 · Redes"
-          },
-          "head": {
-            "en": "A feed with *Carbono’s character.*",
-            "pt": "Um feed com *a cara da Carbono.*",
-            "es": "Un feed con *el carácter de Carbono.*"
-          },
-          "text": {
-            "en": "Photography, typography and graphic elements share the same language. Paired posts extend an image from one tile to the next; the grid connects products, people and collection announcements. Browse the before-and-after studies and their individual posts.",
-            "pt": "Fotografia, tipografia e elementos gráficos passam a falar a mesma língua. Posts casados levam uma imagem de um quadro ao outro; o grid conecta produtos, pessoas e chamadas de coleção. Navegue pelos estudos de antes e depois e pelas peças de cada feed.",
-            "es": "Fotografía, tipografía y elementos gráficos comparten un mismo lenguaje. Los posts conectados extienden una imagen de un cuadro a otro; la cuadrícula conecta productos, personas y anuncios de colección. Recorre los estudios de antes y después y sus publicaciones."
-          },
-          "grid": "trilho"
-        },
-        {
-          "rooms": [
-            {
-              "name": {
-                "en": "Feed 01",
-                "pt": "Feed 01",
-                "es": "Feed 01"
-              },
-              "items": [
-                {
-                  "src": "images/carbono/page-14.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Instagram · communication direction",
-                    "pt": "Instagram · direção da comunicação",
-                    "es": "Instagram · dirección de comunicación"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-15.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Feed 01 · before and after",
-                    "pt": "Feed 01 · antes e depois",
-                    "es": "Feed 01 · antes y después"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-16.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Feed 01 · paired posts",
-                    "pt": "Feed 01 · posts casados",
-                    "es": "Feed 01 · publicaciones conectadas"
-                  }
-                }
-              ]
-            },
-            {
-              "name": {
-                "en": "Feed 02",
-                "pt": "Feed 02",
-                "es": "Feed 02"
-              },
-              "items": [
-                {
-                  "src": "images/carbono/page-21.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Feed 02 · before and after",
-                    "pt": "Feed 02 · antes e depois",
-                    "es": "Feed 02 · antes y después"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-22.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Feed 02 · grid and paired posts",
-                    "pt": "Feed 02 · grid e posts casados",
-                    "es": "Feed 02 · cuadrícula y publicaciones conectadas"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-23.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Product and invitation across three posts",
-                    "pt": "Produto e convite em três posts",
-                    "es": "Producto e invitación en tres publicaciones"
-                  }
-                }
-              ]
-            }
-          ],
-          "ar": "16/9",
-          "col": 6,
-          "span": 7
-        },
-        {
-          "chapter": {
-            "en": "04 · Movement",
-            "pt": "04 · Movimento",
-            "es": "04 · Movimiento"
-          },
-          "head": {
-            "en": "More space. *More possibilities.*",
-            "pt": "Mais espaço. *Mais possibilidades.*",
-            "es": "Más espacio. *Más posibilidades.*"
-          },
-          "text": {
-            "en": "The plus sign separates into corners, opening a space for the product. Motion studies and carousel layouts carry the same idea: the furniture can move beyond the frame.",
-            "pt": "O sinal de mais se separa em cantos e abre espaço para o produto. Os estudos de movimento e os layouts de carrossel seguem a mesma ideia: o móvel pode ir além da moldura.",
-            "es": "El signo de más se separa en esquinas y abre espacio para el producto. Los estudios de movimiento y los layouts de carrusel siguen la misma idea: el mueble puede ir más allá del marco."
-          },
-          "grid": "trilho"
-        },
-        {
-          "rooms": [
-            {
-              "name": {
-                "en": "Transitions",
-                "pt": "Transições",
-                "es": "Transiciones"
-              },
-              "items": [
-                {
-                  "src": "images/carbono/page-18.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Plus sign · transition study",
-                    "pt": "Sinal de mais · estudo de transição",
-                    "es": "Signo de más · estudio de transición"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-19.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Opening a new space",
-                    "pt": "Abrindo um novo espaço",
-                    "es": "Abriendo un nuevo espacio"
-                  }
-                }
-              ]
-            },
-            {
-              "name": {
-                "en": "Carousel",
-                "pt": "Carrossel",
-                "es": "Carrusel"
-              },
-              "items": [
-                {
-                  "src": "images/carbono/carousel-original.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Carousel · original artwork",
-                    "pt": "Carrossel · arte original",
-                    "es": "Carrusel · arte original"
-                  }
-                }
-              ]
-            }
-          ],
-          "ar": "16/9",
-          "col": 6,
-          "span": 7
-        },
-        {
-          "chapter": {
-            "en": "05 · Promotion",
-            "pt": "05 · Promoção",
-            "es": "05 · Promoción"
-          },
-          "head": {
-            "en": "*Quebra Tudo.*",
-            "pt": "*Quebra Tudo.*",
-            "es": "*Quebra Tudo.*"
-          },
-          "text": {
-            "en": "A promotional identity that breaks its own type apart. Letters, rules and an asterisk shift into different compositions, then come together across tags, posts and reel storyboards.",
-            "pt": "Uma identidade promocional que desmonta a própria tipografia. Letras, fios e asterisco mudam de posição e se reorganizam em tags, posts e estudos de reel.",
-            "es": "Una identidad promocional que desarma su propia tipografía. Letras, líneas y asterisco cambian de posición y se reorganizan en etiquetas, publicaciones y estudios de reel."
-          },
-          "grid": "trilho"
-        },
-        {
-          "rooms": [
-            {
-              "name": {
-                "en": "Identity",
-                "pt": "Identidade",
-                "es": "Identidad"
-              },
-              "items": [
-                {
-                  "src": "images/carbono/page-24.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Quebra Tudo · campaign line",
-                    "pt": "Quebra Tudo · chamada da campanha",
-                    "es": "Quebra Tudo · frase de campaña"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-25.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Promotional identity · main composition",
-                    "pt": "Identidade promocional · composição principal",
-                    "es": "Identidad promocional · composición principal"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-29.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Logo variations and promotional tags",
-                    "pt": "Variações de marca e tags promocionais",
-                    "es": "Variaciones de marca y etiquetas promocionales"
-                  }
-                }
-              ]
-            },
-            {
-              "name": {
-                "en": "Typography",
-                "pt": "Tipografia",
-                "es": "Tipografía"
-              },
-              "items": [
-                {
-                  "src": "images/carbono/page-26.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Type in motion · composition studies",
-                    "pt": "Tipografia em movimento · estudos de composição",
-                    "es": "Tipografía en movimiento · estudios de composición"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-27.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Type and product · layout variations",
-                    "pt": "Tipografia e produto · variações de layout",
-                    "es": "Tipografía y producto · variaciones de layout"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-28.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Type, colour and product",
-                    "pt": "Tipografia, cor e produto",
-                    "es": "Tipografía, color y producto"
-                  }
-                }
-              ]
-            },
-            {
-              "name": {
-                "en": "Posts & reel",
-                "pt": "Posts & reel",
-                "es": "Publicaciones y reel"
-              },
-              "items": [
-                {
-                  "src": "images/carbono/page-17.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Quebra Tudo · paired posts",
-                    "pt": "Quebra Tudo · posts casados",
-                    "es": "Quebra Tudo · publicaciones conectadas"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-30.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Post sequence · typographic states",
-                    "pt": "Sequência de posts · estados da tipografia",
-                    "es": "Secuencia de publicaciones · estados tipográficos"
-                  }
-                },
-                {
-                  "src": "images/carbono/page-31.jpg",
-                  "ar": "16/9",
-                  "caption": {
-                    "en": "Quebra Tudo · reel storyboard",
-                    "pt": "Quebra Tudo · storyboard do reel",
-                    "es": "Quebra Tudo · storyboard del reel"
-                  }
-                }
-              ]
-            }
-          ],
-          "ar": "16/9",
-          "col": 6,
-          "span": 7
-        }
-      ]
+      "gallery": []
     },
     // Logofolio stays the last project.
     {
@@ -2377,6 +1965,7 @@ window.SITE = {
         { name: "Heineken Two Door Cinema Club", src: "images/logos/heineken-two-door-cinema-club.svg" },
         { name: "Símbolo circular", src: "images/logos/symbol-circle-bar.svg" },
         { name: "Símbolo hexagonal com raio", src: "images/logos/lightning-hexagon.svg", scale: .9 },
+        { name: "GBR", src: "images/logos/gbr.svg" },
         { name: "Hackathon", src: "images/logos/hackathon.svg" },
         { name: "Swift Good 4 You", src: "images/logos/swift-good-4you.svg" },
         { name: "O Mundo dos Esquecidos", src: "images/logos/mundo-dos-esquecidos.png" },
@@ -2683,4 +2272,860 @@ window.SITE.disorder = {
       "text": ""
     }
   ]
+};
+
+window.SITE.ramon = {
+  "photos": [
+    {
+      "category": "PORTRAITS",
+      "title": "RV Portraits retratos",
+      "width": 1709,
+      "height": 2560,
+      "src": "images/ramon/photo-01.jpg",
+      "alt": {
+        "en": "Photograph by Ramón Vasconcelos",
+        "pt": "Fotografia de Ramón Vasconcelos",
+        "es": "Fotografía de Ramón Vasconcelos"
+      }
+    },
+    {
+      "category": "PORTRAITS",
+      "title": "",
+      "width": 1709,
+      "height": 2560,
+      "src": "images/ramon/photo-04.jpg",
+      "alt": {
+        "en": "Photograph by Ramón Vasconcelos",
+        "pt": "Fotografia de Ramón Vasconcelos",
+        "es": "Fotografía de Ramón Vasconcelos"
+      }
+    },
+    {
+      "category": "PORTRAITS",
+      "title": "",
+      "width": 1709,
+      "height": 2560,
+      "src": "images/ramon/photo-05.jpg",
+      "alt": {
+        "en": "Photograph by Ramón Vasconcelos",
+        "pt": "Fotografia de Ramón Vasconcelos",
+        "es": "Fotografía de Ramón Vasconcelos"
+      }
+    },
+    {
+      "category": "PORTRAITS",
+      "title": "",
+      "width": 1704,
+      "height": 2560,
+      "src": "images/ramon/photo-07.jpg",
+      "alt": {
+        "en": "Photograph by Ramón Vasconcelos",
+        "pt": "Fotografia de Ramón Vasconcelos",
+        "es": "Fotografía de Ramón Vasconcelos"
+      }
+    },
+    {
+      "category": "PORTRAITS",
+      "title": "",
+      "width": 1709,
+      "height": 2560,
+      "src": "images/ramon/photo-08.jpg",
+      "alt": {
+        "en": "Photograph by Ramón Vasconcelos",
+        "pt": "Fotografia de Ramón Vasconcelos",
+        "es": "Fotografía de Ramón Vasconcelos"
+      }
+    },
+    {
+      "category": "PORTRAITS",
+      "title": "",
+      "width": 1704,
+      "height": 2560,
+      "src": "images/ramon/photo-15.jpg",
+      "alt": {
+        "en": "Photograph by Ramón Vasconcelos",
+        "pt": "Fotografia de Ramón Vasconcelos",
+        "es": "Fotografía de Ramón Vasconcelos"
+      }
+    },
+    {
+      "category": "FOOD PHOTOGRAPHY",
+      "title": "RV Food",
+      "width": 1709,
+      "height": 2560,
+      "src": "images/ramon/photo-02.jpg",
+      "alt": {
+        "en": "Photograph by Ramón Vasconcelos",
+        "pt": "Fotografia de Ramón Vasconcelos",
+        "es": "Fotografía de Ramón Vasconcelos"
+      }
+    },
+    {
+      "category": "ARCHITECTURE/INTERIOR DESIGN",
+      "title": "Architecture",
+      "width": 717,
+      "height": 1080,
+      "src": "images/ramon/photo-03.jpg",
+      "alt": {
+        "en": "Photograph by Ramón Vasconcelos",
+        "pt": "Fotografia de Ramón Vasconcelos",
+        "es": "Fotografía de Ramón Vasconcelos"
+      }
+    },
+    {
+      "category": "PORTRAITS",
+      "title": "",
+      "width": 1709,
+      "height": 2560,
+      "src": "images/ramon/photo-09.jpg",
+      "alt": {
+        "en": "Photograph by Ramón Vasconcelos",
+        "pt": "Fotografia de Ramón Vasconcelos",
+        "es": "Fotografía de Ramón Vasconcelos"
+      }
+    }
+  ],
+  "boards": [
+    {
+      "src": "images/ramon/identity-01_black.jpg",
+      "caption": "01 · black"
+    },
+    {
+      "src": "images/ramon/identity-02_white.jpg",
+      "caption": "02 · white"
+    },
+    {
+      "src": "images/ramon/identity-03_black.jpg",
+      "caption": "03 · black"
+    },
+    {
+      "src": "images/ramon/identity-04_black.jpg",
+      "caption": "04 · black"
+    },
+    {
+      "src": "images/ramon/identity-04_white.jpg",
+      "caption": "04 · white"
+    },
+    {
+      "src": "images/ramon/identity-05.jpg",
+      "caption": "05"
+    },
+    {
+      "src": "images/ramon/identity-06.jpg",
+      "caption": "06"
+    },
+    {
+      "src": "images/ramon/identity-07.jpg",
+      "caption": "07"
+    },
+    {
+      "src": "images/ramon/identity-08.jpg",
+      "caption": "08"
+    },
+    {
+      "src": "images/ramon/identity-09.jpg",
+      "caption": "09"
+    },
+    {
+      "src": "images/ramon/identity-09b.jpg",
+      "caption": "09b"
+    },
+    {
+      "src": "images/ramon/identity-10.jpg",
+      "caption": "10"
+    }
+  ],
+  "assets": {
+    "symbol": "images/ramon/symbol.png",
+    "wordmark": "images/ramon/wordmark.png",
+    "signature": "images/ramon/signature.png",
+    "mockups": [
+      "images/ramon/mockup-1.jpg",
+      "images/ramon/mockup-2.jpg",
+      "images/ramon/mockup-3.jpg"
+    ],
+    "gif": "images/ramon/photography-loop.gif"
+  },
+  "copy": {
+    "location": {
+      "en": "Photography / Toronto / 2018",
+      "pt": "Fotografia / Toronto / 2018",
+      "es": "Fotografía / Toronto / 2018"
+    },
+    "hero": {
+      "en": "A name.\nA lens.\nA click.",
+      "pt": "Um nome.\nUma lente.\nUm clique.",
+      "es": "Un nombre.\nUna lente.\nUn clic."
+    },
+    "heroNote": {
+      "en": "The accent in Ramón becomes a camera. His pictures do the talking.",
+      "pt": "O acento de Ramón vira câmera. As fotografias fazem o resto.",
+      "es": "El acento de Ramón se convierte en cámara. Las fotografías hacen el resto."
+    },
+    "nav": {
+      "en": "Explore the case",
+      "pt": "Explore o case",
+      "es": "Explora el proyecto"
+    },
+    "idea": {
+      "en": "The idea",
+      "pt": "A ideia",
+      "es": "La idea"
+    },
+    "system": {
+      "en": "The identity",
+      "pt": "A identidade",
+      "es": "La identidad"
+    },
+    "photography": {
+      "en": "Photography",
+      "pt": "Fotografia",
+      "es": "Fotografía"
+    },
+    "applications": {
+      "en": "Applications",
+      "pt": "Aplicações",
+      "es": "Aplicaciones"
+    },
+    "ideaHead": {
+      "en": "It was there.\nIn his own name.",
+      "pt": "Estava ali.\nNo próprio nome.",
+      "es": "Estaba ahí.\nEn su propio nombre."
+    },
+    "ideaText": {
+      "en": "Ramón’s accent becomes the element over the camera. Below it, the O becomes the lens. Name, shutter and photograph meet in one sign.",
+      "pt": "O acento de Ramón vira o elemento sobre a câmera. Abaixo dele, o O se transforma em lente. Nome, clique e fotografia se encontram num só sinal.",
+      "es": "El acento de Ramón se convierte en el elemento sobre la cámara. Debajo, la O se transforma en lente. Nombre, clic y fotografía se encuentran en un solo signo."
+    },
+    "accent": {
+      "en": "Accent",
+      "pt": "Acento",
+      "es": "Acento"
+    },
+    "click": {
+      "en": "Click",
+      "pt": "Clique",
+      "es": "Clic"
+    },
+    "lens": {
+      "en": "Lens",
+      "pt": "Lente",
+      "es": "Lente"
+    },
+    "invert": {
+      "en": "Switch black / white",
+      "pt": "Alternar preto / branco",
+      "es": "Alternar blanco / negro"
+    },
+    "systemHead": {
+      "en": "A signature that\nknows when to be quiet.",
+      "pt": "Uma assinatura que\nsabe ficar em silêncio.",
+      "es": "Una firma que\nsabe guardar silencio."
+    },
+    "systemText": {
+      "en": "The circle and the accent work alone or with the name. Black and white give the identity a consistent presence, without competing with the photographs.",
+      "pt": "O círculo e o acento funcionam sozinhos ou com o nome. O preto e o branco mantêm a identidade presente, sem disputar espaço com as fotografias.",
+      "es": "El círculo y el acento funcionan solos o con el nombre. El blanco y negro mantienen la identidad presente, sin competir con las fotografías."
+    },
+    "wordmark": {
+      "en": "Wordmark",
+      "pt": "Logotipo",
+      "es": "Logotipo"
+    },
+    "symbol": {
+      "en": "Camera symbol",
+      "pt": "Símbolo da câmera",
+      "es": "Símbolo de la cámara"
+    },
+    "signature": {
+      "en": "Full signature",
+      "pt": "Assinatura completa",
+      "es": "Firma completa"
+    },
+    "photoHead": {
+      "en": "The identity is black & white.\nThe world isn’t.",
+      "pt": "A identidade é preto e branco.\nO mundo, não.",
+      "es": "La identidad es blanco y negro.\nEl mundo, no."
+    },
+    "photoText": {
+      "en": "His portraits, food and architecture photographs bring the colour. A quick sequence puts the quiet signature beside the range of his work.",
+      "pt": "Retratos, gastronomia e arquitetura trazem a cor. Uma sequência rápida coloca a assinatura discreta ao lado da variedade do trabalho dele.",
+      "es": "Retratos, gastronomía y arquitectura aportan el color. Una secuencia rápida pone la firma discreta junto a la variedad de su trabajo."
+    },
+    "phone": {
+      "en": "Mobile portfolio · layout study",
+      "pt": "Portfólio mobile · estudo de layout",
+      "es": "Portafolio móvil · estudio de layout"
+    },
+    "photoCredit": {
+      "en": "Photographs: Ramón Vasconcelos · from his portfolio",
+      "pt": "Fotografias: Ramón Vasconcelos · do seu portfólio",
+      "es": "Fotografías: Ramón Vasconcelos · de su portafolio"
+    },
+    "sequence": {
+      "en": "Colour in motion",
+      "pt": "Cor em movimento",
+      "es": "Color en movimiento"
+    },
+    "viewPhoto": {
+      "en": "View photograph",
+      "pt": "Ver fotografia",
+      "es": "Ver fotografía"
+    },
+    "pause": {
+      "en": "Pause sequence",
+      "pt": "Pausar sequência",
+      "es": "Pausar secuencia"
+    },
+    "play": {
+      "en": "Play sequence",
+      "pt": "Reproduzir sequência",
+      "es": "Reproducir secuencia"
+    },
+    "gif": {
+      "en": "Download the GIF",
+      "pt": "Baixar o GIF",
+      "es": "Descargar el GIF"
+    },
+    "visit": {
+      "en": "Explore Ramón’s photography",
+      "pt": "Explore a fotografia do Ramón",
+      "es": "Explora la fotografía de Ramón"
+    },
+    "appHead": {
+      "en": "From a small sign\nto something you can hold.",
+      "pt": "De um pequeno sinal\na algo que se pode tocar.",
+      "es": "De un pequeño signo\na algo que puedes tocar."
+    },
+    "appText": {
+      "en": "The identity moves onto paper: business cards, envelopes, letterhead and a print folio. Three new material studies explore the contrast of white ink, black stock and textured paper.",
+      "pt": "A identidade vai para o papel: cartões, envelopes, papel timbrado e pasta para fotografias. Três novos estudos de aplicação exploram o contraste da tinta branca, do papel preto e das texturas.",
+      "es": "La identidad pasa al papel: tarjetas, sobres, papel membretado y una carpeta para fotografías. Tres nuevos estudios de aplicación exploran el contraste de la tinta blanca, el papel negro y las texturas."
+    },
+    "mockupNote": {
+      "en": "New application studies · made with FLORA",
+      "pt": "Novos estudos de aplicação · feitos com FLORA",
+      "es": "Nuevos estudios de aplicación · creados con FLORA"
+    },
+    "paper": {
+      "en": "Stationery set",
+      "pt": "Conjunto de papelaria",
+      "es": "Conjunto de papelería"
+    },
+    "cards": {
+      "en": "Cards & envelope",
+      "pt": "Cartões & envelope",
+      "es": "Tarjetas y sobre"
+    },
+    "folio": {
+      "en": "Photographic print folio",
+      "pt": "Pasta para fotografias",
+      "es": "Carpeta para fotografías"
+    },
+    "originals": {
+      "en": "Original identity boards",
+      "pt": "Pranchas originais da identidade",
+      "es": "Láminas originales de la identidad"
+    },
+    "originalNote": {
+      "en": "2018 source artwork · 2× upscaled in FLORA",
+      "pt": "Artes originais de 2018 · ampliadas 2× no FLORA",
+      "es": "Artes originales de 2018 · ampliadas 2× en FLORA"
+    },
+    "close": {
+      "en": "Close",
+      "pt": "Fechar",
+      "es": "Cerrar"
+    },
+    "next": {
+      "en": "Next",
+      "pt": "Próxima",
+      "es": "Siguiente"
+    },
+    "prev": {
+      "en": "Previous",
+      "pt": "Anterior",
+      "es": "Anterior"
+    }
+  }
+};
+
+window.SITE.carbono = {
+  "boards": [
+    {
+      "src": "images/carbono/clean-03.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Reoxigenar · typographic rhythm",
+        "pt": "Reoxigenar · ritmo tipográfico",
+        "es": "Reoxigenar · ritmo tipográfico"
+      }
+    },
+    {
+      "src": "images/carbono/clean-04.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "The concept: renewal and new energy",
+        "pt": "O conceito: renovação e novo ânimo",
+        "es": "El concepto: renovación y nueva energía"
+      }
+    },
+    {
+      "src": "images/carbono/clean-05.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Shall we open the window?",
+        "pt": "Vamos abrir a janela?",
+        "es": "¿Abrimos la ventana?"
+      }
+    },
+    {
+      "src": "images/carbono/clean-02.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Carbono Box · negative mark",
+        "pt": "Carbono Box · marca negativa",
+        "es": "Carbono Box · marca negativa"
+      }
+    },
+    {
+      "src": "images/carbono/clean-06.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Vertical opening",
+        "pt": "Abertura vertical",
+        "es": "Apertura vertical"
+      }
+    },
+    {
+      "src": "images/carbono/clean-07.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Motion study · the first window opens",
+        "pt": "Estudo de movimento · a primeira janela se abre",
+        "es": "Estudio de movimiento · se abre la primera ventana"
+      }
+    },
+    {
+      "src": "images/carbono/clean-08.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Horizontal opening",
+        "pt": "Abertura horizontal",
+        "es": "Apertura horizontal"
+      }
+    },
+    {
+      "src": "images/carbono/clean-09.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "The frame meets typography",
+        "pt": "A moldura encontra a tipografia",
+        "es": "El marco encuentra la tipografía"
+      }
+    },
+    {
+      "src": "images/carbono/clean-10.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Colour studies",
+        "pt": "Estudos de cor",
+        "es": "Estudios de color"
+      }
+    },
+    {
+      "src": "images/carbono/clean-11.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Earthy colour palette",
+        "pt": "Paleta de tons terrosos",
+        "es": "Paleta de tonos terrosos"
+      }
+    },
+    {
+      "src": "images/carbono/clean-12.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "A palette drawn from the product",
+        "pt": "Uma paleta que vem do produto",
+        "es": "Una paleta que nace del producto"
+      }
+    },
+    {
+      "src": "images/carbono/clean-14.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Instagram · communication direction",
+        "pt": "Instagram · direção da comunicação",
+        "es": "Instagram · dirección de comunicación"
+      }
+    },
+    {
+      "src": "images/carbono/clean-15.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Feed 01 · before and after",
+        "pt": "Feed 01 · antes e depois",
+        "es": "Feed 01 · antes y después"
+      }
+    },
+    {
+      "src": "images/carbono/clean-16.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Feed 01 · paired posts",
+        "pt": "Feed 01 · posts casados",
+        "es": "Feed 01 · publicaciones conectadas"
+      }
+    },
+    {
+      "src": "images/carbono/clean-21.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Feed 02 · before and after",
+        "pt": "Feed 02 · antes e depois",
+        "es": "Feed 02 · antes y después"
+      }
+    },
+    {
+      "src": "images/carbono/clean-22.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Feed 02 · grid and paired posts",
+        "pt": "Feed 02 · grid e posts casados",
+        "es": "Feed 02 · cuadrícula y publicaciones conectadas"
+      }
+    },
+    {
+      "src": "images/carbono/clean-23.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Product and invitation across three posts",
+        "pt": "Produto e convite em três posts",
+        "es": "Producto e invitación en tres publicaciones"
+      }
+    },
+    {
+      "src": "images/carbono/clean-18.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Plus sign · transition study",
+        "pt": "Sinal de mais · estudo de transição",
+        "es": "Signo de más · estudio de transición"
+      }
+    },
+    {
+      "src": "images/carbono/clean-19.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Opening a new space",
+        "pt": "Abrindo um novo espaço",
+        "es": "Abriendo un nuevo espacio"
+      }
+    },
+    {
+      "src": "images/carbono/carousel-clean.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Carousel · original artwork",
+        "pt": "Carrossel · arte original",
+        "es": "Carrusel · arte original"
+      }
+    },
+    {
+      "src": "images/carbono/clean-24.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Quebra Tudo · campaign line",
+        "pt": "Quebra Tudo · chamada da campanha",
+        "es": "Quebra Tudo · frase de campaña"
+      }
+    },
+    {
+      "src": "images/carbono/clean-25.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Promotional identity · main composition",
+        "pt": "Identidade promocional · composição principal",
+        "es": "Identidad promocional · composición principal"
+      }
+    },
+    {
+      "src": "images/carbono/clean-29.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Logo variations and promotional tags",
+        "pt": "Variações de marca e tags promocionais",
+        "es": "Variaciones de marca y etiquetas promocionales"
+      }
+    },
+    {
+      "src": "images/carbono/clean-26.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Type in motion · composition studies",
+        "pt": "Tipografia em movimento · estudos de composição",
+        "es": "Tipografía en movimiento · estudios de composición"
+      }
+    },
+    {
+      "src": "images/carbono/clean-27.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Type and product · layout variations",
+        "pt": "Tipografia e produto · variações de layout",
+        "es": "Tipografía y producto · variaciones de layout"
+      }
+    },
+    {
+      "src": "images/carbono/clean-28.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Type, colour and product",
+        "pt": "Tipografia, cor e produto",
+        "es": "Tipografía, color y producto"
+      }
+    },
+    {
+      "src": "images/carbono/clean-17.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Quebra Tudo · paired posts",
+        "pt": "Quebra Tudo · posts casados",
+        "es": "Quebra Tudo · publicaciones conectadas"
+      }
+    },
+    {
+      "src": "images/carbono/clean-30.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Post sequence · typographic states",
+        "pt": "Sequência de posts · estados da tipografia",
+        "es": "Secuencia de publicaciones · estados tipográficos"
+      }
+    },
+    {
+      "src": "images/carbono/clean-31.jpg",
+      "ar": "16/9",
+      "caption": {
+        "en": "Quebra Tudo · reel storyboard",
+        "pt": "Quebra Tudo · storyboard do reel",
+        "es": "Quebra Tudo · storyboard del reel"
+      }
+    }
+  ],
+  "assets": {
+    "wordmark": "images/carbono/wordmark.svg",
+    "symbol": "images/carbono/symbol.svg",
+    "sofa": "images/carbono/sofa.png",
+    "promo": "images/carbono/quebra-tudo.svg",
+    "feeds": [
+      "images/carbono/feed-before.jpg",
+      "images/carbono/feed-after.jpg",
+      "images/carbono/feed-02n.jpg"
+    ],
+    "carousel": "images/carbono/carousel-clean.jpg",
+    "reel": "images/carbono/qt-reel.mp4",
+    "webm": "images/carbono/qt-reel.webm",
+    "poster": "images/carbono/qt-reel-poster.jpg"
+  },
+  "palette": [
+    "#39452d",
+    "#9d582a",
+    "#ca9d50",
+    "#b39a6d",
+    "#e9d9bd",
+    "#59432c",
+    "#7b7150",
+    "#a59a70",
+    "#aaa491",
+    "#d1c9bb"
+  ],
+  "copy": {
+    "eyebrow": {
+      "en": "Social & promotion / 2025",
+      "pt": "Social & promoção / 2025",
+      "es": "Redes y promoción / 2025"
+    },
+    "hero": {
+      "en": "Shall we\nopen the\nwindow?",
+      "pt": "Vamos\nabrir a\njanela?",
+      "es": "¿Abrimos\nla\nventana?"
+    },
+    "heroNote": {
+      "en": "A new breath for Carbono.",
+      "pt": "Um novo respiro para a Carbono.",
+      "es": "Un nuevo aire para Carbono."
+    },
+    "idea": {
+      "en": "Reoxigenar",
+      "pt": "Reoxigenar",
+      "es": "Reoxigenar"
+    },
+    "system": {
+      "en": "The system",
+      "pt": "O sistema",
+      "es": "El sistema"
+    },
+    "social": {
+      "en": "Social",
+      "pt": "Social",
+      "es": "Redes"
+    },
+    "promo": {
+      "en": "Quebra Tudo",
+      "pt": "Quebra Tudo",
+      "es": "Quebra Tudo"
+    },
+    "nav": {
+      "en": "Explore Carbono",
+      "pt": "Explore a Carbono",
+      "es": "Explora Carbono"
+    },
+    "ideaHead": {
+      "en": "Rescue. Revitalise.\nGive new meaning.",
+      "pt": "Resgatar. Revitalizar.\nRessignificar.",
+      "es": "Rescatar. Revitalizar.\nResignificar."
+    },
+    "ideaText": {
+      "en": "“Reoxigenar” is the starting point: bring Carbono’s own character back into its communication. The window opens. Typography echoes. There is room for what comes next.",
+      "pt": "“Reoxigenar” é o ponto de partida: trazer a cara da Carbono de volta à comunicação. A janela se abre. A tipografia se repete. Tem espaço para o que vem a seguir.",
+      "es": "“Reoxigenar” es el punto de partida: devolver el carácter de Carbono a su comunicación. La ventana se abre. La tipografía se repite. Hay espacio para lo que viene."
+    },
+    "systemHead": {
+      "en": "One corner.\nA whole system.",
+      "pt": "Um canto.\nUm sistema inteiro.",
+      "es": "Una esquina.\nTodo un sistema."
+    },
+    "systemText": {
+      "en": "The cut corner of the Carbono Box becomes a frame, a colour field and an invitation. Earthy colours connect the graphics to the furniture. Try the palette.",
+      "pt": "O canto cortado do Carbono Box vira moldura, campo de cor e convite. Os tons terrosos aproximam o grafismo do mobiliário. Experimente a paleta.",
+      "es": "La esquina recortada del Carbono Box se convierte en marco, campo de color e invitación. Los tonos terrosos acercan los gráficos al mobiliario. Prueba la paleta."
+    },
+    "palette": {
+      "en": "Change the background colour",
+      "pt": "Mudar a cor de fundo",
+      "es": "Cambiar el color de fondo"
+    },
+    "paletteStudy": {
+      "en": "Colour study · original product image",
+      "pt": "Estudo de cor · imagem original do produto",
+      "es": "Estudio de color · imagen original del producto"
+    },
+    "socialHead": {
+      "en": "A grid with\nroom to breathe.",
+      "pt": "Um grid com\nespaço para respirar.",
+      "es": "Una cuadrícula con\nespacio para respirar."
+    },
+    "socialText": {
+      "en": "Products, people and typography share the same language. Change the view to compare the original feed and the two visual directions.",
+      "pt": "Produtos, pessoas e tipografia passam a falar a mesma língua. Alterne a visualização para comparar o feed original e os dois caminhos visuais.",
+      "es": "Productos, personas y tipografía comparten un mismo lenguaje. Cambia la vista para comparar el feed original y las dos propuestas visuales."
+    },
+    "before": {
+      "en": "Before",
+      "pt": "Antes",
+      "es": "Antes"
+    },
+    "after1": {
+      "en": "After / 01",
+      "pt": "Depois / 01",
+      "es": "Después / 01"
+    },
+    "after2": {
+      "en": "After / 02",
+      "pt": "Depois / 02",
+      "es": "Después / 02"
+    },
+    "connected": {
+      "en": "One image.\nMore than one post.",
+      "pt": "Uma imagem.\nMais de um post.",
+      "es": "Una imagen.\nMás de una publicación."
+    },
+    "connectedText": {
+      "en": "The furniture continues from one tile to the next. Graphic elements make the connection; the product keeps the leading role.",
+      "pt": "O móvel continua de um quadro para o outro. Os elementos gráficos fazem a conexão; o produto segue como protagonista.",
+      "es": "El mueble continúa de un cuadro a otro. Los elementos gráficos crean la conexión; el producto sigue siendo protagonista."
+    },
+    "carouselHead": {
+      "en": "Beyond\nthe frame.",
+      "pt": "Além da\nmoldura.",
+      "es": "Más allá\ndel marco."
+    },
+    "carouselText": {
+      "en": "The plus sign opens into corners. A new space appears. The carousel takes the product beyond the phone.",
+      "pt": "O sinal de mais se abre em cantos. Um novo espaço aparece. O carrossel leva o produto para além do celular.",
+      "es": "El signo de más se abre en esquinas. Aparece un nuevo espacio. El carrusel lleva el producto más allá del teléfono."
+    },
+    "carousel": {
+      "en": "Carousel · original artwork",
+      "pt": "Carrossel · arte original",
+      "es": "Carrusel · arte original"
+    },
+    "promoHead": {
+      "en": "Break the type.\nKeep the identity.",
+      "pt": "Desmontar a tipografia.\nManter a identidade.",
+      "es": "Desarmar la tipografía.\nMantener la identidad."
+    },
+    "promoText": {
+      "en": "“Quebra Tudo” turns the promotional line into a graphic identity. Letters, rules and the asterisk break apart and come together in posts, tags and the original reel.",
+      "pt": "“Quebra Tudo” transforma a chamada promocional em identidade gráfica. Letras, fios e asterisco se desmontam e se reorganizam em posts, tags e no reel original.",
+      "es": "“Quebra Tudo” convierte la frase promocional en identidad gráfica. Letras, líneas y asterisco se desarman y se reorganizan en publicaciones, etiquetas y el reel original."
+    },
+    "reel": {
+      "en": "Original promotional reel",
+      "pt": "Reel promocional original",
+      "es": "Reel promocional original"
+    },
+    "play": {
+      "en": "Play",
+      "pt": "Reproduzir",
+      "es": "Reproducir"
+    },
+    "pause": {
+      "en": "Pause",
+      "pt": "Pausar",
+      "es": "Pausar"
+    },
+    "sound": {
+      "en": "Sound on",
+      "pt": "Ativar som",
+      "es": "Activar sonido"
+    },
+    "fullscreen": {
+      "en": "Full screen",
+      "pt": "Tela cheia",
+      "es": "Pantalla completa"
+    },
+    "originals": {
+      "en": "Explore the original boards",
+      "pt": "Explore as pranchas originais",
+      "es": "Explora las láminas originales"
+    },
+    "originalNote": {
+      "en": "Concept, colour, feeds, transitions and promotion.",
+      "pt": "Conceito, cor, feeds, transições e promoção.",
+      "es": "Concepto, color, feeds, transiciones y promoción."
+    },
+    "view": {
+      "en": "View artwork",
+      "pt": "Ver peça",
+      "es": "Ver pieza"
+    },
+    "close": {
+      "en": "Close",
+      "pt": "Fechar",
+      "es": "Cerrar"
+    },
+    "prev": {
+      "en": "Previous",
+      "pt": "Anterior",
+      "es": "Anterior"
+    },
+    "next": {
+      "en": "Next",
+      "pt": "Próxima",
+      "es": "Siguiente"
+    }
+  }
 };
