@@ -655,7 +655,7 @@ button.arw.close .arw-i{width:14px;height:14px}
 
 /* ---------- Suggested music (Felipe, Oct 27 2026) ---------- */
 /* "♪ Music" in the corner menu; on phones just the note */
-#music-btn{all:unset;cursor:pointer;display:inline-grid;overflow:hidden;height:1.05em;line-height:1.05em;font:inherit;color:inherit}
+#music-btn{all:unset;position:relative;cursor:pointer;display:inline-grid;overflow:hidden;height:1.05em;line-height:1.05em;font:inherit;color:inherit}
 #music-btn:focus-visible{outline:1px solid currentColor;outline-offset:3px}
 /* A small Spotify card that drops down under the corner menu; it sits outside the blended corners so it keeps its colours */
 .music{position:fixed;z-index:31;right:var(--side-r);top:calc(46px + env(safe-area-inset-top,0px));width:min(340px,calc(100vw - var(--side-l) - var(--side-r)));background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:8px;box-sizing:border-box;box-shadow:0 10px 30px rgba(0,0,0,.08);animation:musicIn .35s var(--ease)}
