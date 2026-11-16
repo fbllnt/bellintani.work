@@ -1984,9 +1984,9 @@ window.SITE.disorder = {
       "es": "Detrás de los cascos."
     },
     "deckIntro": {
-      "en": "A bad review. A new name. Nine original pages. Move through the story, one sleeve at a time.",
-      "pt": "Uma crítica ruim. Um novo nome. Nove páginas originais. Passe pela história como quem escolhe o próximo disco.",
-      "es": "Una mala crítica. Un nuevo nombre. Nueve páginas originales. Recorre la historia como quien elige el siguiente disco."
+      "en": "A bad review. A new name. Nine original pages and the review clipping that connects them. Move through the story, one sleeve at a time.",
+      "pt": "Uma crítica ruim. Um novo nome. Nove páginas originais e o recorte da crítica que liga essa história. Passe por ela como quem escolhe o próximo disco.",
+      "es": "Una mala crítica. Un nuevo nombre. Nueve páginas originales y el recorte de la reseña que conecta la historia. Recorre las piezas como quien elige el siguiente disco."
     },
     "mix": {
       "en": "Mix transitions",
@@ -2102,6 +2102,18 @@ window.SITE.disorder = {
       "title": "Uma crítica muda tudo",
       "label": "DAFT PUNK / 05",
       "text": "@disordair"
+    },
+    {
+      "src": "images/disorder/daft-punk/original-review.png",
+      "title": "O recorte original",
+      "label": "DAFT PUNK / RECORTE ORIGINAL",
+      "text": "The two Darlin’ tracks are a daft punky thrash called “Cindy So Loud” (that’s the title and the sole lyric), and a bizarre fuzz-guitar reading of The Beach Boys’",
+      "clipping": true,
+      "source": {
+        "en": "Original review clipping · “a daft punky thrash”",
+        "pt": "Recorte da crítica original · “a daft punky thrash”",
+        "es": "Recorte de la crítica original · “a daft punky thrash”"
+      }
     },
     {
       "src": "images/disorder/daft-punk/06.jpg",
