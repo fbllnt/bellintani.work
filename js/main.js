@@ -1182,7 +1182,7 @@
     const d = S.disorder, t = key => esc(L(d.copy[key]));
     const cards = d.posts.map((post, i) => `<button type="button" class="dis-post" data-post="${i}" data-kind="${post.kind}" aria-label="${esc(L(d.copy.open))}: ${esc(post.title)}"><img src="${post.src}" alt="${esc(post.title)}" loading="lazy" width="800" height="800"><span>${esc(post.title)}<small>${esc(post.by)}</small></span></button>`).join('');
     return `<section class="dis-experience" aria-label="DISORD/AIR">
-      <div class="dis-brand"><div class="dis-logo-loop" role="img" aria-label="DISORD/AIR — ${t('symbol')}"><span class="dis-logo-half dis-logo-top" aria-hidden="true"></span><span class="dis-logo-half dis-logo-bottom" aria-hidden="true"></span></div><button class="dis-logo-motion mono" type="button" aria-pressed="false">${t('pauseLoop')}</button></div>
+      <div class="dis-brand"><div class="dis-logo-loop" role="img" aria-label="DISORD/AIR — ${t('symbol')}"><img src="images/disorder/symbol-cream.png" width="600" height="600" alt="" aria-hidden="true"></div><button class="dis-logo-motion mono" type="button" aria-pressed="false" hidden>${t('pauseLoop')}</button></div>
       <div class="dis-lead"><div class="dis-intro"><p class="mono">01 / ${t('feed')}</p><h2>${t('headline')}</h2><p class="body">${t('intro')}</p><div class="dis-story-invite"><p>${t('storyInvite')}</p><span>${t('storyHelp')}</span><button type="button" data-story>${t('storyCta')}${arwSvg("next")}</button></div><p class="dis-return mono">${t('returnNote')}</p><a class="dis-jump mono" href="#dis-archive">${t('explore')} ↓</a><span class="dis-index mono">@DISORDAIR / MUSIC & CULTURE</span></div>
       <div class="dis-hand"><img class="dis-hand-image" src="images/disorder/hand-phone-transparent.png" width="1086" height="1448" alt="${t('mockup')}"><div class="dis-screen"><div class="dis-status">9:41 <span>● ▰</span></div><div class="dis-island" aria-hidden="true"></div><div class="dis-phone-title">disordair</div><div class="dis-profile"><img src="images/disorder/symbol-cream.png" alt="DISORD/AIR"><div><b>DISORD/AIR</b><p>${t('bio')}</p></div></div><p class="dis-phone-hint">${t('tap')}</p><div class="dis-phone-grid">${d.posts.map((post,i)=>`<button type="button" data-post="${i}" aria-label="${t('open')}: ${esc(post.title)}"><img src="${post.src}" alt="${esc(post.title)}" loading="lazy"></button>`).join('')}</div><button type="button" class="dis-phone-story" data-story aria-label="${t('storyCta')}: Daft Punk"><small>${t('story')}</small><img src="images/disorder/daft-punk/01.jpg" width="1080" height="1350" alt="Uma crítica de merd*. — Daft Punk"><span>${t('storyCta')}${arwSvg("next")}</span></button><div class="dis-phone-bottom" aria-hidden="true">⌂　⌕　⊞　♡</div></div></div></div>
       <section class="dis-deck" tabindex="-1" aria-label="${t('story')}"><div class="dis-deck-copy"><p class="mono">${t('sideB')}</p><h2>${t('readStory')}</h2><p class="body">${t('deckIntro')}</p><label class="dis-mix-label mono"><input class="dis-mix" type="checkbox" checked> ${t('mix')}</label><p class="dis-deck-title"></p><div class="dis-deck-controls"><button class="dis-deck-prev" type="button" aria-label="${t('prev')}">←</button><span class="dis-deck-count mono" aria-live="polite"></span><button class="dis-deck-next" type="button" aria-label="${t('next')}">→</button></div><div class="dis-pages" role="group" aria-label="${t('page')}">${d.story.map((slide,i)=>`<button type="button" class="dis-page" data-page="${i}" aria-current="${i===0}" aria-label="${t('page')} ${i+1}: ${esc(slide.title)}">${String(i+1).padStart(2,'0')}</button>`).join('')}</div><p class="mono dis-swipe-hint">${t('swipe')}</p></div><div class="dis-deck-art"><div class="dis-frame-stack"><img src="${d.story[0].src}" width="1080" height="1350" alt="${esc(d.story[0].title)}"></div><p class="dis-art-source mono" hidden></p><button type="button" class="dis-full-art mono">${t('fullArt')} ↗</button></div></section>
@@ -1255,7 +1255,23 @@
     const swipe=(target,callback)=>{let x=0,y=0;caseListen(target,'touchstart',e=>{x=e.changedTouches[0].clientX;y=e.changedTouches[0].clientY;},{passive:true});caseListen(target,'touchend',e=>{const dx=e.changedTouches[0].clientX-x,dy=e.changedTouches[0].clientY-y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4)callback(dx<0?1:-1);},{passive:true});};
     swipe(stack,n=>paintDeck(deckIndex+n));swipe(content,step);
     el.querySelectorAll('[data-filter]').forEach(button=>caseListen(button,'click',()=>{el.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let count=0;el.querySelectorAll('.dis-grid .dis-post').forEach(card=>{card.hidden=button.dataset.filter!=='all'&&card.dataset.kind!==button.dataset.filter;if(!card.hidden)count++;});el.querySelector('.dis-count').textContent=`${count} / ${d.posts.length}`;}));
-    const motion=el.querySelector('.dis-logo-motion');caseListen(motion,'click',()=>{const paused=motion.getAttribute('aria-pressed')==='true';motion.setAttribute('aria-pressed',String(!paused));el.querySelector('.dis-brand').classList.toggle('is-paused',!paused);motion.textContent=tr(paused?'pauseLoop':'playLoop');});
+    const motion=el.querySelector('.dis-logo-motion'),logoHost=el.querySelector('.dis-logo-loop');
+    let logo3d=null;
+    caseListen(motion,'click',()=>{const paused=motion.getAttribute('aria-pressed')==='true';motion.setAttribute('aria-pressed',String(!paused));logo3d?.setPaused(!paused);motion.textContent=tr(paused?'pauseLoop':'playLoop');});
+    if(!reduced){
+      const logoSignal=caseAbort.signal;
+      const loader=ownObserver(new IntersectionObserver(entries=>{
+        if(!entries.some(entry=>entry.isIntersecting))return;
+        loader.disconnect();
+        import('./disorder-logo-3d.js?v=20261116disorder06').then(({createLogo})=>{
+          if(logoSignal.aborted)return;
+          logo3d=createLogo(logoHost,{signal:logoSignal,onFailure:()=>{motion.hidden=true;}});
+          if(logo3d)motion.hidden=false;
+        }).catch(()=>{motion.hidden=true;});
+      },{rootMargin:'300px'}));
+      loader.observe(logoHost);
+    }
+    caseCleanups.push(()=>logo3d?.dispose());
     paintDeck(0,false);caseCleanups.push(()=>{animations.forEach(a=>a.cancel());if(dialog.open)dialog.close();});
   }
 
