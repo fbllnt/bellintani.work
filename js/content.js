@@ -1847,6 +1847,7 @@ window.SITE = {
 
 window.SITE.disorder = {
   "copy": {
+    "symbol": {"en":"two stacked D forms", "pt":"símbolo com dois D sobrepostos", "es":"símbolo con dos D superpuestas"},
     "feed": {
       "en": "The feed",
       "pt": "O feed",
