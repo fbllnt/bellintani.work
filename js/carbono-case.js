@@ -1,40 +1,56 @@
-/* Carbono: an editorial presentation of original artwork, feeds and motion. */
+/* Carbono's two interactive pieces, as blocks inside the standard loose case (Nov 16 2026: the case moved to the
+   site's system; everything else is ordinary chapters, images, loops and a film).
+   In content.js a gallery item { cbPalette: true } or { cbFeed: true } renders here; data comes from SITE.carbono.
+   - palette: the product on a colour field; the swatches below repaint it (the brand's earthy palette).
+   - feed:    the Instagram feed inside the site's iPhone frame (js/v2/devices.js), with Before / After 01 / After 02.
+   API: window.CarbonoCase = { palette(args), feed(args), setup({ root, data, L, reduced }) -> cleanup } */
 (() => {
-  const pad = n => String(n + 1).padStart(2, '0');
-  const ctx = ({ L, esc, arwSvg, data }) => ({ L, esc, arwSvg, d:data, c:k=>esc(L(data.copy[k])), br:k=>esc(L(data.copy[k])).replaceAll('\n','<br>') });
-  function hero(args) {
-    const {d,c,br,esc}=ctx(args);
-    return `<header class="cb-hero"><p class="cb-eyebrow mono">${c('eyebrow')}</p><h1 class="cb-brand" tabindex="-1"><img src="${esc(d.assets.wordmark)}" alt="Carbono"></h1><div class="cb-hero-line"><p>${br('hero')}</p><div class="cb-window"><img class="cb-window-symbol" src="${esc(d.assets.symbol)}" alt="Carbono Box"><img class="cb-window-sofa" src="${esc(d.assets.sofa)}" alt="Carbono"><span class="mono">${c('heroNote')}</span></div></div></header>`;
+  const pad = n => String(n + 1).padStart(2, "0");
+  const copy = ({ L, esc, data }) => k => esc(L(data.copy[k]));
+
+  function palette(args) {
+    const { esc, data } = args, c = copy(args), first = data.palette[0];
+    return `<figure class="fig cb-palette" data-cb-block="palette"><div class="cb-stage cb-dark" style="background:${esc(first)}">
+      <div class="cb-stage-top mono"><img src="${esc(data.assets.symbol)}" alt="Carbono Box"><span data-cb-hex>${esc(first.toUpperCase())}</span></div>
+      <img class="cb-stage-sofa" src="${esc(data.assets.sofa)}" alt="Carbono" loading="lazy">
+    </div><div class="cb-swatches" role="group" aria-label="${c("palette")}">${data.palette.map((col, i) =>
+      `<button type="button" data-cb-colour="${esc(col)}" style="--swatch:${esc(col)}" aria-label="${esc(col.toUpperCase())}" aria-pressed="${!i}"><span class="mono">${pad(i)}</span></button>`).join("")}</div>
+    <figcaption class="mono muted">${c("paletteStudy")}</figcaption></figure>`;
   }
-  function render(args) {
-    const x=ctx(args),{d,c,br,esc,L,arwSvg}=x, sections=['idea','system','social','promo'];
-    const im=(src,alt,cls='')=>`<img class="${cls}" src="${esc(src)}" alt="${alt}" loading="lazy">`;
-    const art=(src,key,cls='')=>`<button type="button" class="cb-art ${cls}" data-cb-art="${esc(src)}" aria-label="${c('view')}">${im(src,c(key))}</button>`;
-    return `<div class="cb-case"><nav class="cb-nav mono" aria-label="${c('nav')}">${sections.map((s,i)=>`<button type="button" data-cb-jump="${s}"${!i?' aria-current="location"':''}><span>${pad(i)}</span>${c(s)}</button>`).join('')}</nav>
-    <section class="cb-section cb-concept" id="cb-idea" data-cb-section="idea"><p class="mono cb-kicker">01 / ${c('idea')}</p><h2>${br('ideaHead')}</h2><p class="cb-text">${c('ideaText')}</p>${art('images/carbono/clean-03.jpg','idea','cb-concept-art')}</section>
-    <section class="cb-section cb-system" id="cb-system" data-cb-section="system"><p class="mono cb-kicker">02 / ${c('system')}</p><h2>${br('systemHead')}</h2><p class="cb-text">${c('systemText')}</p><div class="cb-palette-stage cb-dark"><div class="cb-palette-brand">${im(d.assets.symbol,'Carbono Box')}<span class="mono" data-cb-colour>#39452D</span></div>${im(d.assets.sofa,'Carbono','cb-palette-sofa')}<span class="cb-palette-note mono">${c('paletteStudy')}</span></div><div class="cb-swatches" role="group" aria-label="${c('palette')}">${d.palette.map((colour,i)=>`<button type="button" data-cb-colour="${colour}" style="--swatch:${colour}" aria-label="${colour}" aria-pressed="${!i}"><span>${pad(i)}</span></button>`).join('')}</div></section>
-    <section class="cb-section cb-social" id="cb-social" data-cb-section="social"><div class="cb-social-copy"><p class="mono cb-kicker">03 / ${c('social')}</p><h2>${br('socialHead')}</h2><p class="cb-text">${c('socialText')}</p><div class="cb-feed-controls mono" role="group" aria-label="${c('social')}">${['before','after1','after2'].map((k,i)=>`<button type="button" data-cb-feed="${i}" aria-pressed="${i===1}">${c(k)}</button>`).join('')}</div></div><figure class="cb-phone-figure"><div class="cb-phone">${im(d.assets.feeds[1],c('after1'))}</div><figcaption class="mono" data-cb-feed-label>${c('after1')}</figcaption></figure><div class="cb-paired"><h3>${br('connected')}</h3><p class="cb-text">${c('connectedText')}</p></div>${art('images/carbono/clean-23.jpg','social','cb-paired-art')}</section>
-    <section class="cb-carousel"><div class="cb-carousel-head"><h2>${br('carouselHead')}</h2><p>${c('carouselText')}</p></div>${art(d.assets.carousel,'carousel')}<p class="mono cb-credit">${c('carousel')}</p></section>
-    <section class="cb-section cb-promo" id="cb-promo" data-cb-section="promo"><p class="mono cb-kicker">04 / ${c('promo')}</p><div class="cb-promo-logo">${im(d.assets.promo,'Quebra Tudo · Carbono')}</div><div class="cb-promo-copy"><h2>${br('promoHead')}</h2><p class="cb-text">${c('promoText')}</p>${art('images/carbono/clean-29.jpg','promo')}</div><figure class="fig cb-reel"><div class="ph"><video muted loop playsinline preload="none" poster="${esc(d.assets.poster)}" aria-label="${c('reel')}"><source src="${esc(d.assets.webm)}" type="video/webm"><source src="${esc(d.assets.reel)}" type="video/mp4"></video><div class="vctl mono"><button type="button" class="playpause">${c('play')}</button><button type="button" class="sound" aria-pressed="false">${c('sound')}</button><button type="button" class="fsbtn" aria-label="${c('fullscreen')}">↗</button></div></div><figcaption class="mono">${c('reel')}</figcaption></figure><div class="cb-promo-pair">${art('images/carbono/clean-26.jpg','promo')}${art('images/carbono/clean-27.jpg','promo')}</div></section>
-    <details class="cb-originals"><summary><span>${c('originals')}</span><span class="mono">${d.boards.length} +</span></summary><p class="mono">${c('originalNote')}</p><div class="cb-board-grid">${d.boards.map((b,i)=>`<button type="button" data-cb-art="${esc(b.src)}" aria-label="${c('view')} ${pad(i)}">${im(b.src,esc(L(b.caption)))}<span class="mono">${pad(i)}</span></button>`).join('')}</div></details>
-    <dialog class="cb-view" aria-label="${c('originals')}"><div class="cb-view-top mono"><span data-cb-count></span><button type="button" data-cb-close>${c('close')} ${arwSvg('close')}</button></div><div class="cb-view-stage"><img alt=""></div><div class="cb-view-bottom mono"><button type="button" data-cb-prev>${arwSvg('prev')}${c('prev')}</button><span data-cb-caption></span><button type="button" data-cb-next>${c('next')}${arwSvg('next')}</button></div></dialog></div>`;
+
+  function feed(args) {
+    const { esc, data } = args, c = copy(args), keys = ["before", "after1", "after2"];
+    const img = `<img src="${esc(data.assets.feeds[1])}" alt="${c("after1")}" loading="lazy" data-cb-feed-img>`;
+    const phone = window.V2Devices ? window.V2Devices.wrap(img, "iphone", { ar: "1200/2596" }) : img;
+    return `<figure class="fig cb-feed has-device" data-cb-block="feed" style="--ar:${window.V2Devices ? window.V2Devices.ratio("iphone") : "1200/2596"}"><div class="ph">${phone}</div>
+      <div class="cb-feed-views mono" role="group" aria-label="${c("social")}">${keys.map((k, i) =>
+        `<button type="button" data-cb-feed="${i}" aria-pressed="${i === 1}">${c(k)}</button>`).join("")}</div>
+      <figcaption class="mono muted" data-cb-feed-label aria-live="polite">${c("after1")}</figcaption></figure>`;
   }
-  function setup({root,data,L,reduced}) {
-    const ac=new AbortController(),signal=ac.signal,all=s=>[...root.querySelectorAll(s)],c=k=>L(data.copy[k]);
-    const dlg=root.querySelector('.cb-view');let index=0;
-    const paint=()=>{const b=data.boards[index],im=dlg.querySelector('img');im.src=b.src;im.alt=L(b.caption);dlg.querySelector('[data-cb-count]').textContent=`${pad(index)} / ${pad(data.boards.length-1)}`;dlg.querySelector('[data-cb-caption]').textContent=L(b.caption);};
-    const step=dir=>{index=(index+dir+data.boards.length)%data.boards.length;paint();};
-    all('[data-cb-art]').forEach(b=>b.addEventListener('click',()=>{index=Math.max(0,data.boards.findIndex(x=>x.src===b.dataset.cbArt));paint();dlg.showModal();},{signal}));
-    dlg.querySelector('[data-cb-close]').addEventListener('click',()=>dlg.close(),{signal});dlg.querySelector('[data-cb-prev]').addEventListener('click',()=>step(-1),{signal});dlg.querySelector('[data-cb-next]').addEventListener('click',()=>step(1),{signal});
-    dlg.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();step(e.key==='ArrowRight'?1:-1);}},{signal});
-    let x=0;dlg.addEventListener('touchstart',e=>{x=e.changedTouches[0].clientX;},{signal,passive:true});dlg.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-x;if(Math.abs(dx)>45)step(dx<0?1:-1);},{signal,passive:true});
-    all('[data-cb-jump]').forEach(b=>b.addEventListener('click',()=>root.querySelector(`#cb-${b.dataset.cbJump}`).scrollIntoView({behavior:reduced?'instant':'smooth',block:'start'}),{signal}));
-    let observer;if(window.IntersectionObserver){observer=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting)all('[data-cb-jump]').forEach(b=>b.dataset.cbJump===e.target.dataset.cbSection?b.setAttribute('aria-current','location'):b.removeAttribute('aria-current'));},{rootMargin:'-15% 0px -60% 0px'});all('[data-cb-section]').forEach(s=>observer.observe(s));}
-    const stage=root.querySelector('.cb-palette-stage');
-    all('.cb-swatches button').forEach(b=>b.addEventListener('click',()=>{const color=b.dataset.cbColour;stage.style.background=color;const rgb=color.slice(1).match(/../g).map(x=>parseInt(x,16));const luminance=rgb.reduce((v,n,i)=>v+n*[.2126,.7152,.0722][i],0);stage.classList.toggle('cb-dark',luminance<145);stage.querySelector('[data-cb-colour]').textContent=color.toUpperCase();all('.cb-swatches button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));},{signal}));
-    data.assets.feeds.forEach(src=>{const im=new Image();im.src=src;});
-    all('[data-cb-feed]').forEach(b=>b.addEventListener('click',()=>{const n=+b.dataset.cbFeed,im=root.querySelector('.cb-phone img');im.src=data.assets.feeds[n];im.alt=c(['before','after1','after2'][n]);root.querySelector('[data-cb-feed-label]').textContent=im.alt;all('[data-cb-feed]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));},{signal}));
-    return()=>{ac.abort();observer?.disconnect();if(dlg.open)dlg.close();};
+
+  function setup({ root, data, L }) {
+    const ac = new AbortController(), signal = ac.signal, all = s => [...root.querySelectorAll(s)];
+    all('[data-cb-block="palette"]').forEach(box => {
+      const stage = box.querySelector(".cb-stage"), hex = box.querySelector("[data-cb-hex]");
+      box.querySelectorAll("[data-cb-colour]").forEach(b => b.addEventListener("click", () => {
+        const col = b.dataset.cbColour, [r, g, bl] = col.slice(1).match(/../g).map(x => parseInt(x, 16));
+        stage.style.background = col;
+        stage.classList.toggle("cb-dark", r * .2126 + g * .7152 + bl * .0722 < 145);
+        hex.textContent = col.toUpperCase();
+        box.querySelectorAll("[data-cb-colour]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      }, { signal }));
+    });
+    all('[data-cb-block="feed"]').forEach(box => {
+      const keys = ["before", "after1", "after2"], im = box.querySelector("[data-cb-feed-img]"), label = box.querySelector("[data-cb-feed-label]");
+      data.assets.feeds.forEach(src => { const p = new Image(); p.src = src; });
+      box.querySelectorAll("[data-cb-feed]").forEach(b => b.addEventListener("click", () => {
+        const n = +b.dataset.cbFeed;
+        im.src = data.assets.feeds[n]; im.alt = L(data.copy[keys[n]]); label.textContent = im.alt;
+        box.querySelectorAll("[data-cb-feed]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      }, { signal }));
+    });
+    return () => ac.abort();
   }
-  window.CarbonoCase={hero,render,setup};
+
+  window.CarbonoCase = { palette, feed, setup };
 })();

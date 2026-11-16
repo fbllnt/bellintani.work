@@ -441,19 +441,7 @@
       return { title: L(p.title), video: film?.video, webm: film?.webm, poster: film?.poster || p.image, images: stills(p) };
     }) });
   }
-  // The tagline and the About intro fill in word by word as they scroll through the screen (Santal)
-  if (window.V2Reveal) window.V2Reveal.init([...document.querySelectorAll('[data-bind="tagline"], #credits-intro')], { reduced });
-  // The B® turns with the first screen's scroll, with its degree counter (Denny Pratama); flat mark without WebGL
-  const m3 = $("mono3d");
-  if (m3 && !reduced) {
-    const host = m3.querySelector(".m3-canvas"), deg = m3.querySelector(".m3-deg");
-    const start = () => import("./v2/monogram.js?v=202611162100").then(({ createMonogram }) => {
-      const m = createMonogram(host, { progress: () => Math.min(1, Math.max(0, scrollY / Math.max(1, innerHeight * .9))),
-        onDegrees: d => { deg.textContent = `${String(d).padStart(3, "0")}°`; } });
-      if (m) m3.classList.add("on");
-    }).catch(() => {});
-    "requestIdleCallback" in window ? requestIdleCallback(start, { timeout: 2500 }) : setTimeout(start, 1200);
-  }
+  // (The turning B® and the word-by-word tagline were tried on Nov 16 2026 and taken out: Felipe kept the v1 home.)
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
   // corners (all four since Nov 11 2026), scrolling up or reaching the top brings them back, so they never sit on the work
   let lastY = scrollY;
@@ -601,7 +589,7 @@
         return;
       }
       // A flip, strip or live page can take the pending text beside it
-      if (pend && (it.flip || it.roll || it.rooms || it.strip || it.bars || it.embed || it.yt || it.spotify || it.soundcloud)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
+      if (pend && (it.flip || it.roll || it.rooms || it.strip || it.bars || it.embed || it.yt || it.spotify || it.soundcloud || it.cbPalette || it.cbFeed)) { pairWith(block(it, p), it.side, !!it.featureWide); return; }
       closePend();
       // A text line pairs with the piece or flip that follows it
       if (it.text && !side) { pend = { html: `<p class="ltext side">${esc(L(it.text))}</p>`, solo: block(it, p) }; return; }
@@ -632,6 +620,9 @@
         <span class="case-episode-title">${esc(L(e.title))}<span aria-hidden="true"> ↗</span></span>
       </a>`;
     }
+    // Carbono's palette and feed pieces (js/carbono-case.js, Nov 16 2026)
+    if (it.cbPalette && window.CarbonoCase) return window.CarbonoCase.palette({ L, esc, data: S.carbono });
+    if (it.cbFeed && window.CarbonoCase) return window.CarbonoCase.feed({ L, esc, data: S.carbono });
     if (it.todo) return `<div class="todo${style ? " fig" : ""}" style="${style}${it.ar ? `;--ar:${esc(it.ar)}` : ""}"><p class="mono"><b>${esc(T("missing"))}</b> ${esc(L(it.todo))}</p></div>`;
     // Globo's functional gradients as living, CSS-only specimens (existing historic source artwork remains above).
     // Globo On system, drawn on the page instead of brandbook pages (Felipe, Nov 11 2026: "não use nada cru, tirado
@@ -1326,7 +1317,6 @@
   }
 
   function gallery(i, p) {
-    if (p.layout === "carbono") return window.CarbonoCase.render({ L, esc, arwSvg, data: S.carbono });
     if (p.layout === "ramon") return window.RamonCase.render({ L, esc, arwSvg, data: S.ramon });
     if (p.layout === "disorder") return disorderGallery(p);
     if (p.layout === "lomo" && p.photos) return lomoGallery(p);
@@ -1488,14 +1478,13 @@
     const p = S.projects[i], next = S.projects[(i + 1) % S.projects.length], prev = S.projects[(i - 1 + S.projects.length) % S.projects.length];
     applyTheme(p.theme);
     caseEl.classList.toggle("ramon-case", p.layout === "ramon");
-    caseEl.classList.toggle("carbono-case", p.layout === "carbono");
     let n = 0;
     const title = L(p.title).split(" ").map(w => `<span class="w">${[...w].map(ch => `<span style="--y:${60 * ++n}px">${esc(ch)}</span>`).join("")}</span>`).join(`<span class="sp"></span>`);
     caseEl.innerHTML = `
-      ${p.layout === "carbono" ? window.CarbonoCase.hero({ L, esc, arwSvg, data: S.carbono }) : `<h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
+      ${`<h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
       ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}`}
       ${sheetHTML(p)}
-      ${["logos", "disorder", "ramon", "carbono"].includes(p.layout) ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
+      ${["logos", "disorder", "ramon"].includes(p.layout) ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
       <div class="case-gallery">${gallery(i, p)}</div>
       ${p.cases ? subCases(i, p) : ""}
       <nav class="case-neighbors" aria-label="${esc(T("projectNav"))}">
@@ -1524,12 +1513,12 @@
     caseEl.querySelectorAll("canvas[data-tunnel]").forEach(setupTunnel);
     setupLogos(p);
     setupDisorder();
-    if (["ramon", "carbono"].includes(p.layout)) {
+    if (p.layout === "ramon") {
       const measureCorners = () => { const r = document.querySelector(".corners .c-tr")?.getBoundingClientRect();
         document.documentElement.style.setProperty("--cnr-h", r ? `${Math.ceil(r.bottom + 8)}px` : "0px"); };
       measureCorners(); caseListen(window, "resize", measureCorners);
     }
-    if (p.layout === "carbono") caseCleanups.push(window.CarbonoCase.setup({ root: caseEl, data: S.carbono, L, reduced }));
+    if (window.CarbonoCase && caseEl.querySelector("[data-cb-block]")) caseCleanups.push(window.CarbonoCase.setup({ root: caseEl, data: S.carbono, L, reduced }));
     if (p.layout === "ramon") caseCleanups.push(window.RamonCase.setup({ root: caseEl, data: S.ramon, L, reduced }));
     setupScrub();
     setupLomo();

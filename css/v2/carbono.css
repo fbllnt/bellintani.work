@@ -1,0 +1,22 @@
+/* Carbono's two custom pieces inside the standard case (js/carbono-case.js). Everything else on the page is the site's system.
+   .cb-palette  the product on a colour field + the swatches that repaint it (the cut corner of the Carbono Box on each swatch)
+   .cb-feed     the feed in the site's iPhone frame + Before / After buttons in the site's control style */
+.cb-palette{margin:0}
+.cb-stage{position:relative;aspect-ratio:16/9;display:grid;grid-template-rows:auto 1fr;padding:clamp(16px,2.4vw,32px);color:#fff;transition:background .45s var(--ease),color .45s var(--ease)}
+.cb-stage:not(.cb-dark){color:#000}
+.cb-stage-top{display:flex;justify-content:space-between;align-items:flex-start;font-size:13px;font-weight:300;text-transform:uppercase}
+.cb-stage-top img{width:clamp(30px,3.6vw,54px);height:auto;filter:invert(1)}
+.cb-stage:not(.cb-dark) .cb-stage-top img{filter:none}
+.cb-stage-sofa{align-self:center;justify-self:center;width:min(70%,900px);height:auto;max-height:100%;object-fit:contain}
+.cb-swatches{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:var(--gap);margin-top:var(--gap)}
+.cb-swatches button{position:relative;aspect-ratio:1;border:0;padding:0;background:var(--swatch);cursor:pointer;clip-path:polygon(0 0,80% 0,100% 20%,100% 100%,0 100%)}
+.cb-swatches button span{position:absolute;clip-path:inset(50%);white-space:nowrap}
+.cb-swatches button[aria-pressed="true"]::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #000}
+.cb-swatches button:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.cb-feed{margin:0;--dev-max-h:78svh}
+.cb-feed-views{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:var(--gap)}
+.cb-feed-views button{font:300 11px/1 var(--mono);text-transform:uppercase;padding:10px 12px;background:none;color:var(--fg);border:1px solid var(--line);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.cb-feed-views button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.cb-feed figcaption{text-align:center}
+@media (max-width:760px){ .cb-swatches{grid-template-columns:repeat(5,minmax(0,1fr))} .cb-stage{aspect-ratio:4/3} }
+@media (prefers-reduced-motion:reduce){ .cb-stage,.cb-feed-views button{transition:none} }

@@ -135,16 +135,38 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
   footer (Let's talk) and the rule-draw entrance come from the Oct 29 2026 audit (approved and live). The About end line
   shows a live São Paulo clock (`.ab-clock`).
 
-## Case system for bespoke layouts (Felipe approved Nov 16 2026)
+## Case system (Felipe, Nov 16 2026: "we can vary but we need a system, consistency")
 
-A project may have its own layout (Ramón `layout: "ramon"`, Carbono `layout: "carbono"`, Disorder) and keep its custom
-pieces, but the frame around them is shared, so every case reads as one portfolio (style.css, "Case system" block at the end):
-- Chapter headline = `.chap-h` size and style (Figtree Black, uppercase, clamp(30px, 4.4vw, 72px)); phones clamp(30px, 8vw, 44px).
-- At most one oversized poster headline per case (Carbono "Beyond the frame"), the cartaz move.
-- Labels, kickers and captions: JetBrains Mono 11px uppercase (10px on phones); captions sit 6px under the piece.
-- Chapter bar: background `--bg`, one `--rule-w` line under it, active chapter underlined in the project accent; never a filled block.
-- Sticky text never shares a grid column with the next block (it slid over Carbono's "One image" block).
-New bespoke layouts start from these rules; vary the pieces, not the frame.
+Every case uses the standard frame; custom pieces live inside it, never instead of it. Carbono was moved onto it on
+Nov 16 2026 (standard header, cover, chapters, loops, device frame; only its palette and feed are custom blocks,
+`{ cbPalette: true }` / `{ cbFeed: true }`, js/carbono-case.js + css/v2/carbono.css). Ramón keeps its own layout for
+now but uses the same values:
+- Opening: case title, tags, fact sheet, cover (a film when the project is motion: `coverVideo`).
+- Chapter label = `.chap-k`: JetBrains Mono 300, 10px, uppercase, "01 · Name" (middle dot, never a slash).
+- Chapter headline = `.chap-h` (Figtree Black, uppercase); one oversized poster moment at most (`grid: "cartaz"`).
+- Body = `.body`: JetBrains Mono 400, clamp(15px, 1.25vw, 18px) / 1.6.
+- Captions = `.fig figcaption`: JetBrains Mono 300, 13px, uppercase, `--mute`, 6px under the piece.
+- Text lines (`{ text }`) are display sub-headlines of 4-8 words, not paragraphs.
+- Between chapters: the standard gap and the 1px rule.
+
+## v2 motion and media tools (Nov 16 2026; references buck.co, santalarch.com, dennypratama.com)
+
+v1 is saved as tag `v1-2026-11-16` (preview branch `rascunho/v1-arquivo`). Each tool is its own file in js/v2/ and
+css/v2/ and stays still with reduced motion.
+- `loop: { frames: [...], fps, ar }` + `caption`: an image sequence plays as a silent loop (motion studies, storyboards,
+  vignette frames). Use it instead of a flip or a row of frames. A loop right next to the film its frames came from
+  repeats it: three do today (Tela Quente opening, Cinema Especial logo, Globoplay launch film), kept until Felipe
+  decides whether they go.
+- `device: "iphone" | "macbook"` on a gallery image or film: CSS device frame, content contained (never cropped). Only
+  for real screen work (stories, feeds, Reels, sites, apps). `ar` stays the content's ratio; main.js swaps in the device
+  ratio for the layout.
+- `fold: N` on a project or sub-case: the first N chapters show, the rest opens with "See the full case" (nothing is
+  removed). Used on the longest cases (Rebranding, Globo On, DMA, DJ Shadow at 4; Carbono at 3).
+- `preview: { video, webm, poster }` (optional) on a project: the loop shown beside the pointer on the work list;
+  without it the list uses `coverVideo`, then the first gallery film, then the cover and first two stills.
+- Home: smooth wheel scroll on desktop (vendored Lenis 1.1.20). A turning 3D B® on the first screen and a word-by-word
+  tagline reveal were tried on Nov 16 2026 and removed: Felipe kept the v1 home ("não gosto dessa home assim"; the rest
+  of v2 approved). Don't bring them back unless he asks.
 
 ## Images: never crop (Felipe, Oct 24 2026)
 

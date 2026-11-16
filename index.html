@@ -31,14 +31,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap">
-<link rel="stylesheet" href="css/style.css?v=202611162100">
+<link rel="stylesheet" href="css/style.css?v=202611162300">
 <!-- v2 (Nov 16 2026): motion and device modules, each in its own file -->
-<link rel="stylesheet" href="js/vendor/lenis-1.1.20/lenis.css?v=202611162100">
-<link rel="stylesheet" href="css/v2/preview.css?v=202611162100">
-<link rel="stylesheet" href="css/v2/reveal.css?v=202611162100">
-<link rel="stylesheet" href="css/v2/devices.css?v=202611162100">
-<link rel="stylesheet" href="css/v2/loops.css?v=202611162100">
-<link rel="stylesheet" href="css/v2/home.css?v=202611162100">
+<link rel="stylesheet" href="js/vendor/lenis-1.1.20/lenis.css?v=202611162300">
+<link rel="stylesheet" href="css/v2/preview.css?v=202611162300">
+<link rel="stylesheet" href="css/v2/devices.css?v=202611162300">
+<link rel="stylesheet" href="css/v2/loops.css?v=202611162300">
+<link rel="stylesheet" href="css/v2/home.css?v=202611162300">
+<link rel="stylesheet" href="css/v2/carbono.css?v=202611162300">
 </head>
 <body>
 <a class="skip-link mono" id="skip-link" href="#work" data-i18n="skipToContent"></a>
@@ -71,8 +71,6 @@
     <h1 class="name" id="name"></h1>
     <div class="tag mono"><b data-bind="tagline"></b><span id="subline"></span></div>
   </div>
-  <!-- v2: the B® turns with the first screen's scroll (js/v2/monogram.js); stays empty without WebGL or with reduced motion -->
-  <div class="mono3d" id="mono3d" aria-hidden="true"><div class="m3-canvas"></div><span class="m3-deg mono">000°</span><span class="m3-k mono" data-i18n="turning"></span></div>
   <button class="skip mono" id="skip" type="button" data-i18n="skip"></button>
   <!-- Scroll cue: one thin arrow, the same line as the site's other arrows (Felipe, Nov 11 2026); fades away once the page moves -->
   <a class="cue" id="cue" href="#work" data-i18n-label="scrollDown"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M5 13l7 7 7-7"/></svg></a>
@@ -119,14 +117,13 @@
 <article class="case gut" id="case" role="main"></article>
 <div class="wipe" id="wipe" aria-hidden="true"></div>
 
-<script src="js/content.js?v=202611162100"></script>
-<script src="js/ramon-case.js?v=202611162100"></script>
-<script src="js/carbono-case.js?v=202611162100"></script>
-<script src="js/vendor/lenis-1.1.20/lenis.min.js?v=202611162100"></script>
-<script src="js/v2/preview.js?v=202611162100"></script>
-<script src="js/v2/reveal.js?v=202611162100"></script>
-<script src="js/v2/devices.js?v=202611162100"></script>
-<script src="js/v2/loops.js?v=202611162100"></script>
-<script src="js/main.js?v=202611162100"></script>
+<script src="js/content.js?v=202611162300"></script>
+<script src="js/ramon-case.js?v=202611162300"></script>
+<script src="js/carbono-case.js?v=202611162300"></script>
+<script src="js/vendor/lenis-1.1.20/lenis.min.js?v=202611162300"></script>
+<script src="js/v2/preview.js?v=202611162300"></script>
+<script src="js/v2/devices.js?v=202611162300"></script>
+<script src="js/v2/loops.js?v=202611162300"></script>
+<script src="js/main.js?v=202611162300"></script>
 </body>
 </html>
