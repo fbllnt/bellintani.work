@@ -447,7 +447,8 @@
   }
   // (The turning B® and the word-by-word tagline were tried on Nov 16 2026 and taken out: Felipe kept the v1 home.)
   // Hero flash: the whole portfolio flickers full bleed behind white type, then fades with the scroll (js/v2/flash.js)
-  if (window.V2Flash && S.flash) window.V2Flash.init({ stage, frames: S.flash, reduced });
+  // Treatment: ?flash=chaos | dither | ascii | mosh to compare (Felipe picks one); chaos by default
+  if (window.V2Flash && S.flash) window.V2Flash.init({ stage, frames: S.flash, reduced, mode: q.get("flash") || S.flashMode || "chaos" });
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
   // corners (all four since Nov 11 2026), scrolling up or reaching the top brings them back, so they never sit on the work
   let lastY = scrollY;

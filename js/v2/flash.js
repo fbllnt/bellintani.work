@@ -11,24 +11,43 @@
 (() => {
   const STEP = 55; // ms per frame (Felipe: faster)
 
-  function init({ stage, frames, reduced }) {
+  // Treatments to compare (Felipe, Nov 16 2026: "give me options"): ?flash=chaos | dither | ascii | mosh
+  const MODES = ["chaos", "dither", "ascii", "mosh"];
+  const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(v => (v + .5) * 16);
+  const RAMP = " .:-=+*#%@";
+
+  function init({ stage, frames, reduced, mode }) {
+    mode = MODES.includes(mode) ? mode : "chaos";
     const noop = { destroy() {} };
     if (!stage || !frames || !frames.length) return noop;
     const still = reduced || !!(navigator.connection && navigator.connection.saveData);
     const root = document.documentElement;
     const box = document.createElement("div");
     box.className = "flash"; box.setAttribute("aria-hidden", "true");
-    box.innerHTML = still ? `<img class="fl-img" alt="" decoding="async">` : `<canvas class="fl-tv"></canvas>`;
+    box.innerHTML = still ? `<img class="fl-img" alt="" decoding="async">` : `<canvas class="fl-tv fl-${mode}"></canvas>`;
+    root.classList.toggle("flash-ink", mode === "dither");
     stage.prepend(box);
     const img = box.querySelector(".fl-img"), cv = box.querySelector(".fl-tv"), g = cv && cv.getContext("2d", { willReadFrequently: true });
     const pics = new Map();
     // The TV: a 640 px wide canvas (400 px on phones) (CSS stretches it full bleed); work buffers are reused every frame
     let W = 0, H = 0, buf = null;
-    const sizeTV = () => { if (!cv) return; W = (innerWidth || 1024) < 760 ? 400 : 640; H = Math.max(240, Math.round(W * (innerHeight || 9) / (innerWidth || 16))); if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; buf = null; } };
+    let cols = 0, rows = 0, cell = null;
+    const sizeTV = () => {
+      if (!cv) return; const phone = (innerWidth || 1024) < 760, ar = (innerHeight || 9) / (innerWidth || 16);
+      if (mode === "ascii") { cols = phone ? 64 : 132; rows = Math.max(20, Math.round(cols * ar * 8 / 14)); W = cols * 8; H = rows * 14;
+        cell = cell || document.createElement("canvas"); cell.width = cols; cell.height = rows; }
+      else { W = mode === "dither" ? (phone ? 220 : 380) : mode === "mosh" ? (phone ? 320 : 480) : (phone ? 400 : 640); H = Math.max(140, Math.round(W * ar)); }
+      if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; buf = null; prev = null; }
+    };
+    let prev = null;
     sizeTV();
     let roll = 0;
+    const cover = (ctx, im, w0, h0) => { const r = Math.max(w0 / im.naturalWidth, h0 / im.naturalHeight), w = im.naturalWidth * r, h = im.naturalHeight * r; ctx.drawImage(im, (w0 - w) / 2, (h0 - h) / 2, w, h); };
     function drawTV(im, burst) {
       if (!g) return;
+      if (mode === "dither") return drawDither(im, burst);
+      if (mode === "ascii") return drawAscii(im, burst);
+      if (mode === "mosh") return drawMosh(im, burst);
       if (burst || !im) { // pure static between cuts
         const d = g.createImageData(W, H), a = d.data;
         for (let i = 0; i < a.length; i += 4) { const v = Math.random() * 255 | 0; a[i] = a[i + 1] = a[i + 2] = v; a[i + 3] = 255; }
@@ -55,6 +74,56 @@
       }
       g.putImageData(buf, 0, 0);
     }
+    // DITHER (pin 1): 1-bit ordered dither, black dots on white in a fine grid; the threshold drifts so it shimmers
+    function drawDither(im, burst) {
+      if (!im) return; cover(g, im, W, H);
+      const d = g.getImageData(0, 0, W, H), a = d.data, jit = (Math.random() - .5) * 40, c = 1.35;
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+        const i = (y * W + x) * 4; let l = (a[i] * .299 + a[i + 1] * .587 + a[i + 2] * .114 - 128) * c + 128 + jit;
+        if (burst && Math.random() < .5) l = Math.random() * 255;
+        const v = l > BAYER[(y & 3) * 4 + (x & 3)] ? 250 : 12; a[i] = a[i + 1] = a[i + 2] = v; a[i + 3] = 255;
+      }
+      g.putImageData(d, 0, 0);
+    }
+    // ASCII: the frame rebuilt from JetBrains Mono characters in its own colours, on black
+    function drawAscii(im, burst) {
+      if (!im) return; const cg = cell.getContext("2d", { willReadFrequently: true }); cover(cg, im, cols, rows);
+      const a = cg.getImageData(0, 0, cols, rows).data;
+      g.fillStyle = "#050505"; g.fillRect(0, 0, W, H); g.font = "700 13px 'JetBrains Mono', ui-monospace, monospace"; g.textBaseline = "top";
+      for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+        const i = (y * cols + x) * 4; let r = a[i], gg = a[i + 1], b = a[i + 2];
+        const l = (r * .299 + gg * .587 + b * .114) / 255; if (l < .06 && !burst) continue;
+        const m = Math.max(r, gg, b) || 1, k = Math.min(1.6, 255 / m); r = Math.min(255, r * k); gg = Math.min(255, gg * k); b = Math.min(255, b * k);
+        g.fillStyle = `rgb(${r | 0},${gg | 0},${b | 0})`;
+        g.fillText(burst ? RAMP[Math.random() * RAMP.length | 0] : RAMP[Math.min(RAMP.length - 1, l * RAMP.length | 0)], x * 8, y * 14);
+      }
+    }
+    // MOSH (pin 2): red and black, horizontal smears, block artefacts, the last frame bleeding into the next
+    function drawMosh(im, burst) {
+      if (!im) return; cover(g, im, W, H);
+      const d = g.getImageData(0, 0, W, H), s2 = d.data;
+      if (!buf || buf.width !== W) buf = g.createImageData(W, H);
+      const o = buf.data, keep = prev && !burst;
+      const bands = []; for (let n = 3 + (Math.random() * 6 | 0); n--;) { const y = Math.random() * H | 0; bands.push([y, y + 2 + (Math.random() * H * .1 | 0), Math.random() * W | 0]); }
+      for (let y = 0; y < H; y++) {
+        let band = null; for (const b of bands) if (y >= b[0] && y < b[1]) band = b;
+        let cr = 0, cg2 = 0, cb = 0;
+        for (let x = 0; x < W; x++) {
+          const i = (y * W + x) * 4; let l = (s2[i] * .299 + s2[i + 1] * .587 + s2[i + 2] * .114) / 255; l = Math.pow(l, 1.7);
+          let r = l * 330, gg = l * 18, b = l * 30;
+          if (Math.random() < .002) { gg = 160 * l + 40; b = 170 * l + 40; } // cyan specks
+          if (band && x >= band[2]) { cr = cr * .93 + r * .07; cg2 = cg2 * .93 + gg * .07; cb = cb * .93 + b * .07; r = cr; gg = cg2; b = cb; } else { cr = r; cg2 = gg; cb = b; }
+          if (keep && Math.random() < .35) { r = r * .5 + prev[i] * .5; gg = gg * .5 + prev[i + 1] * .5; b = b * .5 + prev[i + 2] * .5; }
+          o[i] = r; o[i + 1] = gg; o[i + 2] = b; o[i + 3] = 255;
+        }
+      }
+      // block artefacts: a few 8 px cells flattened to one colour
+      for (let n = 60 + (Math.random() * 120 | 0); n--;) {
+        const bx = (Math.random() * (W / 8) | 0) * 8, by = (Math.random() * (H / 8) | 0) * 8, j = (by * W + bx) * 4, r = o[j], gg = o[j + 1], b = o[j + 2];
+        for (let yy = by; yy < Math.min(H, by + 8); yy++) for (let xx = bx; xx < Math.min(W, bx + 8); xx++) { const q = (yy * W + xx) * 4; o[q] = r; o[q + 1] = gg; o[q + 2] = b; }
+      }
+      g.putImageData(buf, 0, 0); prev = new Uint8ClampedArray(o);
+    }
 
     // Load frames in order; the flicker only uses frames that are ready, so it starts after the first few arrive
     const ready = [];
@@ -76,7 +145,7 @@
         last = t;
         // chaos: most ticks cut to the next frame, some hold it with fresh interference, some flash pure static
         const roll = Math.random();
-        if (roll < .12) show(ready[k], true);
+        if (roll < (mode === "chaos" ? .12 : mode === "mosh" ? .06 : .03)) show(ready[k], true);
         else { if (roll < .82 && ready.length > 1) k = (k + 1) % ready.length; show(ready[k]); }
       }
       raf = requestAnimationFrame(tick);
@@ -120,7 +189,7 @@
 
     return { destroy() {
       ac.abort(); if (typeof offLenis === "function") offLenis(); mo.disconnect(); mo2.disconnect(); mo3.disconnect(); if (raf) cancelAnimationFrame(raf);
-      queue.length = 0; loading = false; box.remove(); root.classList.remove("flash-on");
+      queue.length = 0; loading = false; box.remove(); root.classList.remove("flash-on", "flash-ink");
     } };
   }
 
