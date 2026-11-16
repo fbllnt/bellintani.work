@@ -605,7 +605,7 @@
       return `<section class="go-cores" style="${style};${C.map(([, a, b], k) => `--a${k}:${a};--b${k}:${b}`).join(";")}" aria-label="${esc(L({ en: "Colour palette", pt: "Paleta de cores", es: "Paleta de colores" }))}">
         <div class="go-panel" aria-hidden="true"><span class="mono">45° · 75 / 25</span><i style="-webkit-mask-image:url(images/globo-on/marca/selo.png);mask-image:url(images/globo-on/marca/selo.png)"></i></div>
         <div class="go-bars mono">${C.map(([n, a, b], k) => `<button type="button" class="go-bar go-c${k}${k ? "" : " on"}" data-k="${a}" style="--a:${a};--b:${b}" aria-pressed="${!k}"><span>${a}</span></button>`).join("")}</div>
-        <p class="go-hint mono muted">${esc(L({ en: "Six colours and a cream. Click a colour to repaint the panel: 75% main colour, 25% second, always at 45°.", pt: "Seis cores e um creme. Clique numa cor para repintar o painel: 75% da cor principal, 25% da segunda, sempre a 45°.", es: "Seis colores y un crema. Haz clic en un color para repintar el panel: 75% del color principal, 25% del segundo, siempre a 45°." }))}</p></section>`; }
+        <p class="go-hint mono muted">${esc(L({ en: "Six colours and a cream. Click a colour to repaint the panel: 75% main colour, 25% second, always at 45°.", pt: "Seis cores e um creme. Clica numa cor pra repintar o painel: 75% da cor principal, 25% da segunda, sempre a 45°.", es: "Seis colores y un crema. Haz clic en un color para repintar el panel: 75% del color principal, 25% del segundo, siempre a 45°." }))}</p></section>`; }
     // `goFrames`: the original on-air styleframes as a mosaic (Felipe, Nov 11 2026: "a nice grid with the original
     // styleframes"). A `big` frame takes 8 columns and two rows beside two small ones (`right` puts it on the right);
     // the rest sit three to a row; `seq` lays a sequence five to a row, in order. All frames are 16:9 and contained, never cropped. Phones: big frames full width, the rest in pairs.
@@ -723,13 +723,17 @@
   // wide wordmark, a square badge and a thin script read at a similar weight. Wide marks stop at 80% of the
   // tile, tall ones at 64%, then `size` shrinks them all alike (Felipe: 15% smaller overall). `scale` in
   // content.js is a last correction by eye.
-  const LOGO = { area: .24, dense: .35, weight: .45, compact: .3, maxW: .8, maxH: .64, size: .85 };
+  // Weight correction comes after the width/height cap (Nov 16 2026 audit): before, a wide heavy wordmark (GBR,
+  // Thura, Agro) hit the same cap as a light one and lost its correction, so it read too big and too black.
+  // Heavy marks shrink down to 70%, light ones grow up to 130%, never past capW / capH of the tile.
+  const LOGO = { area: .24, dense: .35, weight: .9, compact: .3, maxW: .8, maxH: .64, capW: .86, capH: .68, lo: .7, hi: 1.3, size: .85 };
   const markWidth = l => {
     const ia = l._ia || l._ar, d = Math.max(.08, l._d || LOGO.dense);
     // Square and round marks (badges, seals, symbols) leave their box's corners empty, so they get a bit more
     const compact = 1 + LOGO.compact * Math.min(ia, 1 / ia);
-    let iw = Math.sqrt(LOGO.area * compact * (LOGO.dense / d) ** LOGO.weight * ia);
-    iw = Math.min(iw, LOGO.maxW, LOGO.maxH * ia) * LOGO.size * (l.scale || 1);
+    let iw = Math.min(Math.sqrt(LOGO.area * compact * ia), LOGO.maxW, LOGO.maxH * ia);
+    const wf = Math.min(LOGO.hi, Math.max(LOGO.lo, (LOGO.dense / d) ** (LOGO.weight / 2)));
+    iw = Math.min(iw * wf, LOGO.capW, LOGO.capH * ia) * LOGO.size * (l.scale || 1);
     return iw / (l._fx || 1);
   };
   const measureLogo = (l, im) => {
@@ -2248,7 +2252,7 @@
   listEl.setAttribute("role", "group");
   const workInvite = $("work-music-invite");
   if (workInvite) {
-    workInvite.textContent = L({ en: "♪ EXPLORE THE WORK WITH MY CURATED SOUNDTRACK ↗", pt: "♪ VEJA OS PROJETOS OUVINDO A TRILHA QUE EU ESCOLHI ↗", es: "♪ EXPLORA LOS PROYECTOS CON LA BANDA SONORA QUE ELEGÍ ↗" });
+    workInvite.textContent = L({ en: "♪ EXPLORE THE WORK WITH MY CURATED SOUNDTRACK ↗", pt: "♪ VÊ OS PROJETOS OUVINDO A TRILHA QUE EU ESCOLHI ↗", es: "♪ EXPLORA LOS PROYECTOS CON LA BANDA SONORA QUE ELEGÍ ↗" });
     workInvite.addEventListener("click", () => { openMusic(music.hidden, true); if (!music.hidden) renderSoundtrack(); });
   }
   // Spotify's API (~256 KB) loads only on the way to the music: first hover, focus or touch of ♪ or the invite

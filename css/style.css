@@ -1292,3 +1292,24 @@ body:has(#corners.on:not(.calm)) :is(.rv-jump,.cb-nav){top:var(--cnr-h,80px)}
 body:has(#corners.on:not(.calm)) :is(.rv-section,.cb-section){scroll-margin-top:calc(var(--cnr-h,80px) + 70px)}
 body.in-case:has(.rv-case,.cb-case) .corners{mix-blend-mode:difference}
 body.in-case:has(.rv-case,.cb-case) .corners>*{color:#fff}
+
+/* Case system for the bespoke layouts (Ramón, Carbono; audit Nov 16 2026). Custom pieces stay, the frame around them is shared:
+   one chapter headline (= .chap-h), one poster moment per case at most (.cb-carousel-head h2), one size for labels and captions,
+   captions 6px under the piece, and one chapter bar drawn with the site's rule line and the project accent, never a filled block. */
+:is(.cb-section, .cb-social-copy, .cb-promo-copy, .rv-section-heading) h2{font:900 clamp(30px,4.4vw,72px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance}
+.cb-carousel-head h2{font:900 clamp(50px,8vw,130px)/.9 var(--sans);letter-spacing:-.06em}
+:is(.cb-eyebrow, .cb-kicker, .rv-section-heading > p, .cb-palette-note, .cb-credit, .cb-board-grid span, .cb-view-bottom > span){font-size:11px}
+:is(.cb-phone-figure, .cb-reel, .rv-phone-figure, .rv-mockup) figcaption, .rv-lockup figcaption{font-size:11px}
+:is(.cb-phone-figure, .cb-reel, .rv-phone-figure, .rv-mockup) figcaption{margin:6px 0 0}
+:is(.cb-nav, .rv-jump){background:var(--bg);color:var(--fg);border-top:0;border-bottom:var(--rule-w) solid var(--fg)}
+:is(.cb-nav, .rv-jump) button{padding:18px 0;font-size:11px;background:none;color:inherit}
+:is(.cb-nav, .rv-jump) button[aria-current]{background:none;color:var(--ai-t,var(--blue));text-decoration:underline;text-underline-offset:6px}
+/* The Social copy sat sticky in the same column as the "One image" block below it and slid over it: it now stays beside the phone */
+.cb-social-copy{position:static;grid-row:1;align-self:start}
+@media (max-width:760px){
+  :is(.cb-section, .cb-social-copy, .cb-promo-copy, .rv-section-heading) h2{font-size:clamp(30px,8vw,44px)}
+  .cb-carousel-head h2{font-size:clamp(50px,14vw,85px)}
+  :is(.cb-eyebrow, .cb-kicker, .rv-section-heading > p, .cb-palette-note, .cb-credit, .cb-board-grid span, .cb-view-bottom > span), :is(.cb-phone-figure, .cb-reel, .rv-phone-figure, .rv-mockup) figcaption, .rv-lockup figcaption{font-size:10px}
+  :is(.cb-nav, .rv-jump) button{padding:12px 4px;font-size:9px}
+  .cb-social-copy{grid-row:auto}
+}

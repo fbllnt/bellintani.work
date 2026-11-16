@@ -1261,7 +1261,7 @@ window.SITE = {
           head: { en: "A complex idea. A simple *hello.*", pt: "Uma ideia complexa. Um simples *oi.*", es: "Una idea compleja. Un simple *hola.*" },
           text: { en: "CoreHuman Intelligence is the full promise. Core.Hi makes it memorable: a shorter, friendlier name that even reads like a greeting. One visual system holds both.", pt: "CoreHuman Intelligence é a promessa completa. Core.Hi é o que fica na cabeça: um nome mais curto e simpático, que soa até como um cumprimento. Um único sistema visual segura os dois.", es: "CoreHuman Intelligence es la promesa completa. Core.Hi es lo que se queda en la cabeza: un nombre más corto y simpático, que hasta suena como un saludo. Un solo sistema visual sostiene a los dos." } },
         { scrub: { frames: "images/corehi/name-##.jpg", count: 4 }, ar: "16/9", col: 1, span: 12,
-          caption: { en: "From the full name to a hello. Scroll to explore.", pt: "Do nome completo a um oi. Role para explorar.", es: "Del nombre completo a un hola. Desplázate para explorar." } },
+          caption: { en: "From the full name to a hello. Scroll to explore.", pt: "Do nome completo a um oi. Rola pra explorar.", es: "Del nombre completo a un hola. Desplázate para explorar." } },
         { src: "images/corehi/core-hi-red.jpg", ar: "16/9", col: 1, span: 12,
           caption: { en: "The compact signature", pt: "A assinatura compacta", es: "La firma compacta" } },
 
@@ -1903,7 +1903,7 @@ window.SITE = {
       scope: { en: "Logo design // Brand identity", pt: "Design de logotipo // Identidade de marca", es: "Diseño de logotipo // Identidad de marca" },
       summary: {
         en: "A wall of marks, from full identities to a single sign, in a new order on every visit. Open any of them to look closer.",
-        pt: "Um mural de marcas, de identidades completas a um símbolo só, numa ordem diferente a cada visita. Abra qualquer uma pra ver de perto.", es: "Un mural de marcas, de identidades completas a un solo símbolo, en un orden distinto en cada visita. Abre cualquiera para verla de cerca.",
+        pt: "Um mural de marcas, de identidades completas a um símbolo só, numa ordem diferente a cada visita. Abre qualquer uma pra ver de perto.", es: "Un mural de marcas, de identidades completas a un solo símbolo, en un orden distinto en cada visita. Abre cualquiera para verla de cerca.",
       },
       hue: [230, 90, 55],
       // The wall: one tile per logo, black on white; hover and the close-up flood in the site blue with the mark in white.
@@ -1966,6 +1966,7 @@ window.SITE = {
         { name: "Símbolo circular", src: "images/logos/symbol-circle-bar.svg" },
         { name: "Símbolo hexagonal com raio", src: "images/logos/lightning-hexagon.svg", scale: .9 },
         { name: "GBR", src: "images/logos/gbr.svg" },
+        { name: "Gatorade crest", src: "images/logos/gatorade-crest.png" },
         { name: "Hackathon", src: "images/logos/hackathon.svg" },
         { name: "Swift Good 4 You", src: "images/logos/swift-good-4you.svg" },
         { name: "O Mundo dos Esquecidos", src: "images/logos/mundo-dos-esquecidos.png" },
@@ -2002,7 +2003,7 @@ window.SITE.disorder = {
     },
     "explore": {
       "en": "Explore the archive",
-      "pt": "Explore o arquivo",
+      "pt": "Explora o arquivo",
       "es": "Explora el archivo"
     },
     "mockup": {
@@ -2157,7 +2158,7 @@ window.SITE.disorder = {
     },
     "storyHelp": {
       "en": "Tap the Daft Punk cover on the phone, or open it here.",
-      "pt": "Clique na capa do Daft Punk no celular ou abra por aqui.",
+      "pt": "Clica na capa do Daft Punk no celular ou abre por aqui.",
       "es": "Toca la portada de Daft Punk en el teléfono o ábrela aquí."
     },
     "returnNote": {
@@ -2446,12 +2447,12 @@ window.SITE.ramon = {
     "boardsLabel": { "en": "Boards", "pt": "Pranchas", "es": "Láminas" },
     "boardsHint": { "en": "boards on view · select any image to enlarge", "pt": "pranchas abertas · clique em qualquer imagem para ampliar", "es": "láminas a la vista · selecciona una imagen para ampliarla" },
     "viewBoard": { "en": "Enlarge", "pt": "Ampliar", "es": "Ampliar" },
-    "openHint": { "en": "Select a photo to enlarge", "pt": "Clique na foto para ampliar", "es": "Selecciona una foto para ampliarla" },
-    "photoInvite": { "en": "Select any photograph to see it up close, browse the sequence or visit Ramón’s portfolio.", "pt": "Clique em qualquer fotografia para ver de perto, navegar pela sequência ou visitar o portfólio do Ramón.", "es": "Selecciona una fotografía para verla de cerca, recorrer la secuencia o visitar el portafolio de Ramón." },
+    "openHint": { "en": "Select a photo to enlarge", "pt": "Clica na foto pra ampliar", "es": "Selecciona una foto para ampliarla" },
+    "photoInvite": { "en": "Select any photograph to see it up close, browse the sequence or visit Ramón’s portfolio.", "pt": "Clica em qualquer fotografia pra ver de perto, navegar pela sequência ou visitar o portfólio do Ramón.", "es": "Selecciona una fotografía para verla de cerca, recorrer la secuencia o visitar el portafolio de Ramón." },
     "visitShort": { "en": "Ramón’s website", "pt": "Site do Ramón", "es": "Sitio de Ramón" },
     "nav": {
       "en": "Explore the case",
-      "pt": "Explore o case",
+      "pt": "Explora o case",
       "es": "Explora el proyecto"
     },
     "idea": {
@@ -2491,7 +2492,7 @@ window.SITE.ramon = {
     },
     "click": {
       "en": "Click",
-      "pt": "Clique",
+      "pt": "Clica",
       "es": "Clic"
     },
     "lens": {
@@ -2576,7 +2577,7 @@ window.SITE.ramon = {
     },
     "visit": {
       "en": "Explore Ramón’s photography",
-      "pt": "Explore a fotografia do Ramón",
+      "pt": "Explora a fotografia do Ramón",
       "es": "Explora la fotografía de Ramón"
     },
     "appHead": {
@@ -2966,7 +2967,7 @@ window.SITE.carbono = {
     },
     "nav": {
       "en": "Explore Carbono",
-      "pt": "Explore a Carbono",
+      "pt": "Explora a Carbono",
       "es": "Explora Carbono"
     },
     "ideaHead": {
@@ -3086,7 +3087,7 @@ window.SITE.carbono = {
     },
     "originals": {
       "en": "Explore the original boards",
-      "pt": "Explore as pranchas originais",
+      "pt": "Explora as pranchas originais",
       "es": "Explora las láminas originales"
     },
     "originalNote": {
