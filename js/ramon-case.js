@@ -45,6 +45,7 @@
       const sync=()=>{play.textContent=c(paused?'play':'pause');play.setAttribute('aria-pressed',String(paused));};
       const step=dir=>{paused=true;indices=indices.map(n=>(n+dir+data.photos.length)%data.photos.length);buttons.forEach((_,i)=>paint(i));next=(indices[0]+1)%data.photos.length;sync();};
       play.addEventListener('click',()=>{paused=!paused;sync();},{signal});
+      strip.addEventListener('click',()=>{paused=true;sync();},{signal});
       box.querySelector('[data-rv-prev]').addEventListener('click',()=>step(-1),{signal});box.querySelector('[data-rv-next]').addEventListener('click',()=>step(1),{signal});
       strip.addEventListener('pointerenter',e=>{if(e.pointerType!=='touch')hovered=true;},{signal});strip.addEventListener('pointerleave',()=>{hovered=false;},{signal});
       strip.addEventListener('focusin',()=>{focused=true;},{signal});strip.addEventListener('focusout',()=>{focused=strip.contains(document.activeElement);},{signal});
