@@ -1435,6 +1435,67 @@ window.SITE = {
       ],
     },
     {
+  "title": "DISORD/AIR",
+  "slug": "disorder",
+  "hidden": true,
+  "draft": true,
+  "type": "branding",
+  "year": "2024",
+  "client": "DISORD/AIR",
+  "scope": {
+    "en": "Music, culture & editorial identity",
+    "pt": "Música, cultura e identidade editorial",
+    "es": "Música, cultura e identidad editorial"
+  },
+  "sector": {
+    "en": "Music & culture",
+    "pt": "Música e cultura",
+    "es": "Música y cultura"
+  },
+  "deliverables": {
+    "en": "Visual identity, Instagram & editorial content",
+    "pt": "Identidade visual, Instagram e conteúdo editorial",
+    "es": "Identidad visual, Instagram y contenido editorial"
+  },
+  "tags": {
+    "en": [
+      "Music",
+      "Editorial",
+      "Identity",
+      "Social"
+    ],
+    "pt": [
+      "Música",
+      "Editorial",
+      "Identidade",
+      "Social"
+    ],
+    "es": [
+      "Música",
+      "Editorial",
+      "Identidad",
+      "Social"
+    ]
+  },
+  "image": "images/disorder/manifesto.jpg",
+  "theme": {
+    "bg": "#f1dabb",
+    "fg": "#12110f",
+    "mute": "#625445",
+    "line": "#bca58a",
+    "panel": "#f1dabb",
+    "accent": "#ff4e23",
+    "accentText": "#a6260a"
+  },
+  "summary": {
+    "en": "An Instagram about music. Daily discoveries, stories behind the artists and a voice of its own. DISORD/AIR brings an editorial identity to the feed: orange, cream, emphatic serif type and music worth sharing.",
+    "pt": "Um Instagram sobre música. Descobertas do dia, histórias por trás dos artistas e uma voz própria. DISORD/AIR leva uma identidade editorial para o feed: laranja, creme, serifas marcantes e música que vale compartilhar.",
+    "es": "Un Instagram sobre música. Descubrimientos diarios, historias de los artistas y una voz propia. DISORD/AIR lleva una identidad editorial al feed: naranja, crema, tipografía con carácter y música para compartir."
+  },
+  "layout": "disorder",
+  "gallery": []
+},
+    {
       title: "Dirty Projectors",
       track: { id: "0uX0CZRfsZlFPihkuIMMFp", name: "Gun Has No Trigger", by: "Dirty Projectors" },
       type: "poster",
@@ -1782,4 +1843,189 @@ window.SITE = {
       ],
     },
   ],
+};
+
+window.SITE.disorder = {
+  "copy": {
+    "feed": {
+      "en": "The feed",
+      "pt": "O feed",
+      "es": "El feed"
+    },
+    "headline": {
+      "en": "Music.\nWith a point of view.",
+      "pt": "Música.\nCom opinião.",
+      "es": "Música.\nCon opinión."
+    },
+    "intro": {
+      "en": "A daily discovery. A story you didn’t know. Explore an Instagram made for people who really listen.",
+      "pt": "Uma descoberta do dia. Uma história que você não conhecia. Explore um Instagram feito para quem gosta de ouvir.",
+      "es": "Un descubrimiento diario. Una historia que no conocías. Explora un Instagram para quienes disfrutan escuchar."
+    },
+    "explore": {
+      "en": "Explore the archive",
+      "pt": "Explore o arquivo",
+      "es": "Explora el archivo"
+    },
+    "mockup": {
+      "en": "Hand holding an iPhone with the interactive DISORD/AIR feed",
+      "pt": "Mão segurando um iPhone com o feed interativo do DISORD/AIR",
+      "es": "Mano sosteniendo un iPhone con el feed interactivo de DISORD/AIR"
+    },
+    "bio": {
+      "en": "Music, culture & discoveries.",
+      "pt": "Música, cultura e descobertas.",
+      "es": "Música, cultura y descubrimientos."
+    },
+    "tap": {
+      "en": "TAP A POST TO EXPLORE",
+      "pt": "TOQUE NUM POST PARA EXPLORAR",
+      "es": "TOCA UN POST PARA EXPLORAR"
+    },
+    "open": {
+      "en": "Open post",
+      "pt": "Abrir post",
+      "es": "Abrir publicación"
+    },
+    "story": {
+      "en": "The Daft Punk story",
+      "pt": "A história do Daft Punk",
+      "es": "La historia de Daft Punk"
+    },
+    "archive": {
+      "en": "Music of the day",
+      "pt": "Música do dia",
+      "es": "Música del día"
+    },
+    "curated": {
+      "en": "SELECTED POSTS / ORIGINAL ARTWORK",
+      "pt": "POSTS SELECIONADOS / ARTES ORIGINAIS",
+      "es": "POSTS SELECCIONADOS / ARTES ORIGINALES"
+    },
+    "filter": {
+      "en": "Filter the archive",
+      "pt": "Filtrar o arquivo",
+      "es": "Filtrar el archivo"
+    },
+    "all": {
+      "en": "All",
+      "pt": "Todos",
+      "es": "Todos"
+    },
+    "discoveries": {
+      "en": "Discoveries",
+      "pt": "Descobertas",
+      "es": "Descubrimientos"
+    },
+    "voice": {
+      "en": "A voice of its own",
+      "pt": "Uma voz própria",
+      "es": "Una voz propia"
+    },
+    "quote": {
+      "en": "“It’s not only what we say, report or convey, but how we do it.”",
+      "pt": "“Não é apenas o que dizemos, noticiamos ou veiculamos, e sim, como fazemos isso.”",
+      "es": "“No es solo lo que decimos, contamos o comunicamos, sino cómo lo hacemos.”"
+    },
+    "source": {
+      "en": "From the original project presentation",
+      "pt": "Da apresentação original do projeto",
+      "es": "De la presentación original del proyecto"
+    },
+    "viewer": {
+      "en": "Post viewer",
+      "pt": "Leitor de posts",
+      "es": "Visor de publicaciones"
+    },
+    "close": {
+      "en": "Close",
+      "pt": "Fechar",
+      "es": "Cerrar"
+    },
+    "prev": {
+      "en": "Previous",
+      "pt": "Anterior",
+      "es": "Anterior"
+    },
+    "next": {
+      "en": "Next",
+      "pt": "Próximo",
+      "es": "Siguiente"
+    },
+    "listen": {
+      "en": "Find on Spotify",
+      "pt": "Buscar no Spotify",
+      "es": "Buscar en Spotify"
+    }
+  },
+  "posts": [
+    {
+      "src": "images/disorder/lola.jpg",
+      "title": "Big Brown Eyes",
+      "by": "Lola Young",
+      "kind": "discovery"
+    },
+    {
+      "src": "images/disorder/dexys.jpg",
+      "title": "Come On Eileen",
+      "by": "Dexys Midnight Runners",
+      "kind": "discovery"
+    },
+    {
+      "src": "images/disorder/dandy.jpg",
+      "title": "The Last High",
+      "by": "The Dandy Warhols",
+      "kind": "discovery"
+    },
+    {
+      "src": "images/disorder/edi-rock.jpg",
+      "title": "Upperhand (Inferno Astral)",
+      "by": "Edi Rock, Ian Thomassen",
+      "kind": "brasil"
+    },
+    {
+      "src": "images/disorder/soulwax.jpg",
+      "title": "Let It Happen [Soulwax Remix]",
+      "by": "Tame Impala & Soulwax",
+      "kind": "discovery"
+    },
+    {
+      "src": "images/disorder/vanusa.jpg",
+      "title": "What To Do",
+      "by": "Vanusa",
+      "kind": "brasil"
+    }
+  ],
+  "story": [
+    {
+      "label": "DAFT PUNK / 01",
+      "title": "UMA CRÍTICA DE MERD*.",
+      "text": "A história por trás do nome (e da formação) do Daft Punk. Texto original em português, adaptado para leitura na web."
+    },
+    {
+      "label": "DAFT PUNK / 02",
+      "title": "Antes dos capacetes.",
+      "text": "Nos anos 80 havia uma banda de pop chamada McCarthy. Tim conhece Letícia em um show em Paris. Ela se muda para Londres e canta no álbum seguinte da banda. Depois, os dois montam uma banda de indie pop chamada Stereolab."
+    },
+    {
+      "label": "DAFT PUNK / 03",
+      "title": "Uma fita. Duas músicas.",
+      "text": "Tim e Letícia criam um selo, Duophonic. Em 1993, Letícia ouve uma demo de adolescentes franceses chamados Darlin’. Como eles só têm duas músicas, ela reúne as faixas com outras bandas na coletânea Shimmies in Super 8."
+    },
+    {
+      "label": "DAFT PUNK / 04",
+      "title": "Uma crítica muda tudo.",
+      "text": "A coletânea recebe críticas ruins. Uma delas, escrita por Dave Jennings na Melody Maker, dá origem à expressão que mais tarde inspiraria o nome Daft Punk. Os três integrantes do Darlin’ eram amigos da escola: Guy-Manuel, Thomas e Laurent."
+    },
+    {
+      "label": "DAFT PUNK / 05",
+      "title": "Daft Punk nasce.",
+      "text": "Depois da separação, Laurent começa a banda Phoenix. Guy-Manuel e Thomas passam a se interessar pela música eletrônica e pela cena house francesa. Formam um duo e voltam à crítica sobre o Darlin’ para escolher o nome."
+    },
+    {
+      "label": "DAFT PUNK / 06",
+      "title": "O foco é a música.",
+      "text": "Em setembro de 1993, os dois conhecem Stuart McMillan, do Slam e do selo Soma. Ele lança o primeiro single do Daft Punk, The New Wave. Em 1994 vem Da Funk. As máscaras passam a esconder as identidades e colocar o foco na música."
+    }
+  ]
 };

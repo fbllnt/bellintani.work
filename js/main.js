@@ -1177,7 +1177,54 @@
     });
   }
 
+  // DISORD/AIR: an explorable editorial feed. Original artwork is contained in every view.
+  function disorderGallery(p) {
+    const d = S.disorder, t = key => esc(L(d.copy[key]));
+    const cards = d.posts.map((post, i) => `<button type="button" class="dis-post" data-post="${i}" data-kind="${post.kind}" aria-label="${esc(L(d.copy.open))}: ${esc(post.title)}"><img src="${post.src}" alt="${esc(post.title)}" loading="lazy" width="800" height="800"><span>${esc(post.title)}<small>${esc(post.by)}</small></span></button>`).join('');
+    return `<section class="dis-experience" aria-label="DISORD/AIR">
+      <div class="dis-lead"><div class="dis-intro"><p class="mono">01 / ${t('feed')}</p><h2>${t('headline')}</h2><p class="body">${t('intro')}</p><a class="dis-jump mono" href="#dis-archive">${t('explore')} ↓</a><span class="dis-index mono">@DISORDAIR / MUSIC & CULTURE</span></div>
+      <div class="dis-hand"><img class="dis-hand-image" src="images/disorder/hand-phone.jpg" width="1500" height="2000" alt="${t('mockup')}"><div class="dis-screen"><div class="dis-status">9:41 <span>● ▰</span></div><div class="dis-island" aria-hidden="true"></div><div class="dis-phone-title">disordair</div><div class="dis-profile"><img src="images/logos/disordair.png" alt="DISORD/AIR"><div><b>DISORD/AIR</b><p>${t('bio')}</p></div></div><p class="dis-phone-hint">${t('tap')}</p><div class="dis-phone-grid">${d.posts.map((post,i)=>`<button type="button" data-post="${i}" aria-label="${t('open')}: ${esc(post.title)}"><img src="${post.src}" alt="${esc(post.title)}" loading="lazy"></button>`).join('')}</div><button type="button" class="dis-phone-story" data-story><small>${t('story')}</small><strong>UMA CRÍTICA<br>DE MERD*.</strong><span>DAFT PUNK →</span></button><div class="dis-phone-bottom" aria-hidden="true">⌂　⌕　⊞　♡</div></div></div></div>
+      <section class="dis-archive" id="dis-archive"><div class="dis-section-head"><p class="mono">02 / ${t('archive')}</p><span class="mono">${t('curated')}</span></div><div class="dis-filters" role="group" aria-label="${t('filter')}"><button type="button" data-filter="all" aria-pressed="true">${t('all')}</button><button type="button" data-filter="discovery" aria-pressed="false">${t('discoveries')}</button><button type="button" data-filter="brasil" aria-pressed="false">Brasil</button><button type="button" data-story>${t('story')} ↗</button></div><div class="dis-grid">${cards}</div><p class="dis-count mono" aria-live="polite">6 / 6</p></section>
+      <section class="dis-voice"><p class="mono">03 / ${t('voice')}</p><blockquote>${t('quote')}</blockquote><p class="mono">DISORD/AIR — ${t('source')}</p></section>
+      <dialog class="dis-dialog" aria-label="${t('viewer')}"><div class="dis-dialog-head"><span class="mono">DISORD/AIR</span><button type="button" class="dis-close" aria-label="${t('close')}">×</button></div><div class="dis-dialog-content"></div><div class="dis-dialog-nav"><button type="button" class="dis-prev" aria-label="${t('prev')}">←</button><span class="mono dis-position" aria-live="polite"></span><button type="button" class="dis-next" aria-label="${t('next')}">→</button></div></dialog>
+    </section>`;
+  }
+  function setupDisorder() {
+    const el = caseEl.querySelector('.dis-experience'); if (!el) return;
+    const d = S.disorder, dialog = el.querySelector('dialog'), content = el.querySelector('.dis-dialog-content');
+    const tr = key => L(d.copy[key]);
+    let selected = 0, story = false, opener;
+    const paint = () => {
+      const post = d.posts[selected];
+      content.innerHTML = story ? `<article class="dis-story" lang="pt-BR"><p class="mono">${esc(d.story[selected].label)}</p><h2>${esc(d.story[selected].title)}</h2><p>${esc(d.story[selected].text)}</p><small>Texto: @fbellintani · Fonte: @patrickhicksmusicstories · Agradecimento: @dehnunes</small></article>` : `<img src="${post.src}" alt="${esc(post.title)}"><div class="dis-record"><h2>${esc(post.title)}</h2><p>${esc(post.by)}</p><a class="mono" href="https://open.spotify.com/search/${encodeURIComponent(post.title+' '+post.by)}" target="_blank" rel="noopener noreferrer">${esc(tr('listen'))} ↗</a></div>`;
+      const total = story ? d.story.length : d.posts.length;
+      el.querySelector('.dis-position').textContent = `${String(selected + 1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+      el.querySelector('.dis-prev').disabled = selected === 0;
+      el.querySelector('.dis-next').disabled = selected === total - 1;
+    };
+    const open = (button, isStory) => { opener = button; story = isStory; selected = isStory ? 0 : +button.dataset.post; paint(); dialog.showModal(); };
+    el.querySelectorAll('[data-post]').forEach(b => caseListen(b,'click',()=>open(b,false)));
+    el.querySelectorAll('[data-story]').forEach(b => caseListen(b,'click',()=>open(b,true)));
+    const step = n => { selected = Math.max(0, Math.min((story ? d.story.length : d.posts.length)-1, selected+n)); paint(); };
+    caseListen(el.querySelector('.dis-prev'),'click',()=>step(-1));
+    caseListen(el.querySelector('.dis-next'),'click',()=>step(1));
+    caseListen(el.querySelector('.dis-close'),'click',()=>dialog.close());
+    caseListen(dialog,'close',()=>opener?.focus({preventScroll:true}));
+    caseListen(dialog,'click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
+    caseListen(dialog,'keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();e.stopPropagation();step(e.key==='ArrowRight'?1:-1);}});
+    let touchX;
+    caseListen(content,'touchstart',e=>{touchX=e.changedTouches[0].clientX;},{passive:true});
+    caseListen(content,'touchend',e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>55)step(dx<0?1:-1);},{passive:true});
+    el.querySelectorAll('[data-filter]').forEach(button=>caseListen(button,'click',()=>{
+      el.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+      let count=0;el.querySelectorAll('.dis-grid .dis-post').forEach(card=>{card.hidden=button.dataset.filter!=='all'&&card.dataset.kind!==button.dataset.filter;if(!card.hidden)count++;});
+      el.querySelector('.dis-count').textContent=`${count} / ${d.posts.length}`;
+    }));
+    caseCleanups.push(()=>{if(dialog.open)dialog.close();});
+  }
+
   function gallery(i, p) {
+    if (p.layout === "disorder") return disorderGallery(p);
     if (p.layout === "lomo" && p.photos) return lomoGallery(p);
     if (p.layout === "logos" && p.logos) return logoWall(p);
     if (p.layout === "loose" && p.gallery && p.gallery.length) return looseGallery(p);
@@ -1342,7 +1389,7 @@
       <h1 class="case-title" tabindex="-1" style="--longest:${Math.max(...L(p.title).split(" ").map(w => [...w].length))}" aria-label="${esc(L(p.title))}"><span class="letters" aria-hidden="true">${title}</span></h1>
       ${p.tags ? `<ul class="case-tags mono">${L(p.tags).map(t => `<li>#${esc(t)}</li>`).join("")}</ul>` : ""}
       ${sheetHTML(p)}
-      ${p.layout === "logos" ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
+      ${["logos", "disorder"].includes(p.layout) ? "" : `<figure class="fig full cover-fig${p.hero === "bleed" ? " bleed" : ""}"${p.heroAr ? ` style="--ar:${esc(p.heroAr)}"` : ""}><div class="ph">${cover(i, p)}${p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div></figure>`}
       <div class="case-gallery">${gallery(i, p)}</div>
       ${p.cases ? subCases(i, p) : ""}
       <nav class="case-neighbors" aria-label="${esc(T("projectNav"))}">
@@ -1363,6 +1410,7 @@
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);
     caseEl.querySelectorAll("canvas[data-tunnel]").forEach(setupTunnel);
     setupLogos(p);
+    setupDisorder();
     setupScrub();
     setupLomo();
     // Flips and rooms are matched to the page in document order: the brand's own gallery first, then each case's
