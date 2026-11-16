@@ -226,14 +226,26 @@
   // medium 16:9 cards, 3 per row, cover contained on the panel colour (never cropped), title and year. The visitor's
   // choice is remembered; the filters drive both views.
   const grid = $("grid");
-  // `cardImage` / `cardVideo` (optional, Nov 16 2026): a cover made for the grid; the video loops silently, the image
-  // is what shows with reduced motion (DISORD/AIR: the 3D symbol turning)
-  const cardMedia = p => p.cardVideo && !matchMedia("(prefers-reduced-motion: reduce)").matches
-    ? `<video muted loop playsinline autoplay preload="metadata" poster="${esc(p.cardVideo.poster || p.cardImage || p.image)}" aria-hidden="true">${p.cardVideo.webm ? `<source src="${esc(p.cardVideo.webm)}" type="video/webm">` : ""}<source src="${esc(p.cardVideo.mp4)}" type="video/mp4"></video>`
-    : p.cardImage || p.image ? `<img src="${esc(p.cardImage || p.image)}" alt="" loading="lazy" decoding="async">` : "";
-  grid.innerHTML = S.projects.map((p, i) => `<a class="card" href="${href(p)}" data-i="${i}"><div class="ph">${p.cardVideo || p.cardImage || p.image ? cardMedia(p)
-      : p.logos ? `<span class="card-logos">${p.logos.slice(0, 6).map(l => `<img src="${esc(l.src)}" alt="" loading="lazy" decoding="async">`).join("")}</span>` : ""}</div>
+  // Card covers (Felipe, Nov 16 2026): the still (cardImage, the cover, or Logofolio's six marks) always shows; every card also
+  // has a silent loop (cardVideo, else images/cards/<slug>.mp4/.webm) stacked on top, invisible until the mouse is over it
+  const cardSlug = p => href(p).split("/").filter(Boolean).pop();
+  const cardStill = p => p.cardImage || p.image ? `<img src="${esc(p.cardImage || p.image)}" alt="" loading="lazy" decoding="async">`
+    : p.logos ? `<span class="card-logos">${p.logos.slice(0, 6).map(l => `<img src="${esc(l.src)}" alt="" loading="lazy" decoding="async">`).join("")}</span>` : "";
+  const cardFilm = p => { const v = p.cardVideo || { mp4: `images/cards/${cardSlug(p)}.mp4`, webm: `images/cards/${cardSlug(p)}.webm` };
+    return `<video class="card-film" muted loop playsinline preload="none" aria-hidden="true">${v.webm ? `<source src="${esc(v.webm)}" type="video/webm">` : ""}<source src="${esc(v.mp4)}" type="video/mp4"></video>`; };
+  grid.innerHTML = S.projects.map((p, i) => `<a class="card" href="${href(p)}" data-i="${i}"><div class="ph">${cardStill(p)}${cardFilm(p)}</div>
     <div class="row"><b>${esc(L(p.title))}</b>${p.year ? `<span class="mono muted">${esc(p.year)}</span>` : ""}</div></a>`).join("");
+  // Card motion (Felipe, Nov 16 2026): every card has a loop that stays still and only moves on mouse over; leaving
+  // pauses it back on its first frame. Touch screens and reduced motion keep the still.
+  if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    const playCard = c => { const v = c?.querySelector("video.card-film"); if (!v || !v.paused) return; v.onplaying = () => c.classList.add("moving"); v.play().catch(() => {}); };
+    const stopCard = c => { const v = c?.querySelector("video.card-film"); c?.classList.remove("moving"); if (v) { v.pause(); v.currentTime = 0; } };
+    grid.addEventListener("pointerover", e => playCard(e.target.closest(".card")));
+    grid.addEventListener("pointerout", e => { const c = e.target.closest(".card"); if (!c || c.contains(e.relatedTarget)) return;
+      stopCard(c); });
+    grid.addEventListener("focusin", e => playCard(e.target.closest(".card")));
+    grid.addEventListener("focusout", e => stopCard(e.target.closest(".card")));
+  }
   const worksSec = document.querySelector(".works"), vList = $("view-list"), vGrid = $("view-grid");
   const setView = asGrid => {
     worksSec.classList.toggle("as-grid", asGrid);
