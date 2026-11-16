@@ -229,7 +229,8 @@
   // Card covers (Felipe, Nov 16 2026): the still (cardImage, the cover, or Logofolio's six marks) always shows; every card also
   // has a silent loop (cardVideo, else images/cards/<slug>.mp4/.webm) stacked on top, invisible until the mouse is over it
   const cardSlug = p => href(p).split("/").filter(Boolean).pop();
-  const cardStill = p => p.cardImage || p.image ? `<img src="${esc(p.cardImage || p.image)}" alt="" loading="lazy" decoding="async">`
+  // the still is the loop's own first frame (images/cards/<slug>.jpg, no logos or text) unless a project sets cardImage
+  const cardStill = p => p.cardImage || !p.logos ? `<img src="${esc(p.cardImage || `images/cards/${cardSlug(p)}.jpg`)}" alt="" loading="lazy" decoding="async">`
     : p.logos ? `<span class="card-logos">${p.logos.slice(0, 6).map(l => `<img src="${esc(l.src)}" alt="" loading="lazy" decoding="async">`).join("")}</span>` : "";
   const cardFilm = p => { const v = p.cardVideo || { mp4: `images/cards/${cardSlug(p)}.mp4`, webm: `images/cards/${cardSlug(p)}.webm` };
     return `<video class="card-film" muted loop playsinline preload="none" aria-hidden="true">${v.webm ? `<source src="${esc(v.webm)}" type="video/webm">` : ""}<source src="${esc(v.mp4)}" type="video/mp4"></video>`; };

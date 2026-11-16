@@ -184,6 +184,7 @@ css/v2/ and stays still with reduced motion.
   leave, loads only when hovered, and never shows on touch or with reduced motion. Loops avoid logos and text and keep a
   clean, sexy look (texture, light, close details); the exception is where the mark itself is the motion (SCRV's asterisk,
   DISORD/AIR's symbol, Logofolio's marks). Source windows used are in the commit that added them.
+  The card's still is that loop's first frame at 1280x720 (images/cards/<slug>.jpg), so covers follow the same rule.
 
 
 - Never cut any part of an image, anywhere on the site (galleries, home cards, sequences, photo tiles,
