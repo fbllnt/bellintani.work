@@ -170,7 +170,7 @@ css/v2/ and stays still with reduced motion.
   tagline reveal were tried on Nov 16 2026 and removed: Felipe kept the v1 home ("não gosto dessa home assim"; the rest
   of v2 approved). A full-bleed flash of every project behind white type (with chaos, mosh, dither and ASCII treatments) was
   also tried that day and set aside for now ("we were better off without it", "not for now"); the full version with all
-  treatments is in commit c33b0b3 (js/v2/flash.js, css/v2/flash.css, images/flash/) if he wants it back. Don't bring these back unless he asks.
+  treatments is in commit 6f8d169 on rascunho/v2 (js/v2/flash.js, css/v2/flash.css, images/flash/) if he wants it back. Don't bring these back unless he asks.
 
 ## Images: never crop (Felipe, Oct 24 2026)
 
