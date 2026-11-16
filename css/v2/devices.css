@@ -1,0 +1,94 @@
+/* Device frames (v2): an iPhone or a MacBook drawn in CSS around a piece of work (markup from js/v2/devices.js,
+   V2Devices.wrap). Every size is a share of the device's own width (container units, cqw), so the frame scales with its
+   column from a phone to a wide screen. The work inside is never cut: it sits on a black screen with object-fit: contain,
+   and when its proportion is known it is kept just inside the iPhone's rounded corners.
+   Size: 100% of the container's width, narrowed and centred when the device would be taller than --dev-max-h (82svh).
+   Set --dev-max-h on the figure (or any parent) to change that cap. Load this file after style.css.
+
+   In the site's figure: <figure class="fig ..." style="--ar:<V2Devices.ratio(kind)>"><div class="ph">DEVICE</div><figcaption>…</figcaption></figure>
+   The .ph loses its own proportion, clipping and panel colour while it holds a device (or add .has-device to the figure). */
+
+.device{
+  --dev-r:1; --dev-h:var(--dev-max-h,82svh);
+  position:relative; display:block; margin-inline:auto;
+  width:min(100%,calc(var(--dev-h) * var(--dev-r)));
+  aspect-ratio:var(--dev-r);
+  container-type:inline-size; isolation:isolate;
+}
+@supports not (height:1svh){ .device{--dev-h:var(--dev-max-h,82vh)} }
+
+/* The screen: black, the work centred inside it. --fw/--fh (set by devices.js from the work's proportion) size the box
+   to the work itself, so a film's .vctl tag hangs from the film's top edge, as everywhere else on the site. */
+.device-screen{position:absolute; z-index:1; overflow:hidden; background:#000}
+.device-fit{position:absolute; inset:0; margin:auto; width:var(--fw,100%); height:var(--fh,100%)}
+.device-fit > :is(img,video,canvas),.device-fit > picture > img,.device-fit > a > img{
+  position:absolute; inset:0; width:100%; height:100%; max-width:none; margin:0; display:block;
+  object-fit:contain; transform:none; background:transparent;
+}
+.device-fit > picture{display:contents}
+.device-fit > a{position:absolute; inset:0; display:block}
+.device-fit > .art{position:absolute; inset:0; width:100%; height:100%; transform:none}
+.device .vctl{z-index:3}
+/* The frame's drawn parts never catch a click meant for the work (the island sits over the screen) */
+.device-body,.device-island,.device-lid,.device-base{pointer-events:none}
+
+/* ---------- iPhone: screen 9/19.5, thin #111 bezel with a lighter metal edge, dynamic island, side buttons ---------- */
+/* width / height of the whole phone = 100 / (3.6 + 92.8 * 19.5/9 + 3.6) */
+.device-iphone{--dev-r:.48015; width:min(98.4%,calc(var(--dev-h) * var(--dev-r)))}/* 98.4%: room for the buttons */
+.device-iphone .device-body{
+  position:absolute; inset:0; border-radius:15.95cqw; background:#111;
+  /* metal edge, then a darker band, then a hairline that lifts the phone off a black page */
+  box-shadow:inset 0 0 0 .5cqw #3d3d41, inset 0 0 0 .75cqw #1a1a1c, 0 0 0 1px rgba(255,255,255,.14);
+}
+.device-iphone .device-screen{left:3.6cqw; top:3.6cqw; width:92.8cqw; height:201.067cqw; border-radius:12.35cqw}
+/* Proportion not known yet (no `ar`, before mount() measures it): the box is the largest screen-shaped one that clears
+   the rounded corners, so whatever the work's shape, object-fit: contain keeps every corner of it visible */
+.device-iphone .device-fit{width:var(--fw,94.552%); height:var(--fh,94.552%)}
+/* A film that reaches the top of the screen: its tag drops just below the dynamic island instead of hiding under it */
+.device-iphone[data-island] .vctl{top:var(--vt,6.62cqw)}
+.device-island{
+  position:absolute; z-index:2; left:50%; top:6.2cqw; width:29.7cqw; height:8.72cqw; margin-left:-14.85cqw;
+  border-radius:99cqw; background:radial-gradient(circle at 82% 50%,#1c2436 0 1.05cqw,transparent 1.25cqw),#000;
+}
+.device-btn{position:absolute; z-index:-1; width:.8cqw; border-radius:.4cqw; background:linear-gradient(90deg,#2a2a2d,#4a4a4e)}
+.device-btn-action{left:-.6cqw; top:36cqw; height:7cqw}
+.device-btn-up{left:-.6cqw; top:50cqw; height:13cqw}
+.device-btn-down{left:-.6cqw; top:66cqw; height:13cqw}
+.device-btn-power{right:-.6cqw; top:56cqw; height:20cqw; background:linear-gradient(270deg,#2a2a2d,#4a4a4e)}
+
+/* ---------- MacBook: screen 16/10 in a dark lid with a small camera notch, aluminium base below ---------- */
+/* width / height of the whole laptop = 100 / (lid 56.375 + base 3.4 - 0.175 overlap) */
+.device-macbook{--dev-r:1.6779}
+.device-lid{
+  position:absolute; left:7cqw; top:0; width:86cqw; height:56.375cqw;
+  border-radius:2.6cqw 2.6cqw .6cqw .6cqw; background:#0e0e10;
+  box-shadow:inset 0 0 0 .22cqw #3a3a3e, inset 0 0 0 .32cqw #151517, 0 0 0 1px rgba(255,255,255,.12);
+}
+.device-macbook .device-screen{left:8.9cqw; top:2.4cqw; width:82.2cqw; height:51.375cqw}
+/* The notch stays in the top bezel and never covers the screen */
+.device-cam{
+  position:absolute; left:50%; top:.32cqw; width:7cqw; height:2.08cqw; margin-left:-3.5cqw;
+  border-radius:0 0 .9cqw .9cqw;
+  background:radial-gradient(circle at 50% 55%,#2a3550 0 .26cqw,#0b0d12 .3cqw .5cqw,transparent .54cqw),#050506;
+}
+.device-base{
+  position:absolute; z-index:2; left:0; top:56.2cqw; width:100cqw; height:3.4cqw;
+  border-radius:.4cqw .4cqw 5cqw 5cqw / .4cqw .4cqw 2.6cqw 2.6cqw;
+  background:linear-gradient(180deg,#f4f5f6 0,#dfe0e2 18%,#c9cacd 55%,#a3a4a8 88%,#8a8b8f 100%);
+  /* the shadow line: a darker lip along the front edge and a soft line under it */
+  box-shadow:inset 0 -.12cqw 0 rgba(0,0,0,.28), 0 .5cqw .7cqw -.45cqw rgba(0,0,0,.45);
+}
+.device-thumb{
+  position:absolute; left:50%; top:0; width:14cqw; height:1.05cqw; margin-left:-7cqw;
+  border-radius:0 0 1.2cqw 1.2cqw / 0 0 1cqw 1cqw; background:linear-gradient(180deg,#a7a8ac,#d3d4d6);
+}
+
+/* ---------- Inside the site's figure ---------- */
+/* .fig .ph normally keeps the piece's proportion (--ar / --mar), clips it and may paint the panel colour:
+   with a device inside, the device sets its own height and its buttons may sit a hair outside the screen frame. */
+figure.fig .ph:has(> .device),figure.fig.has-device .ph{aspect-ratio:auto; height:auto; overflow:visible; background:none}
+/* Same entrance as the site's pieces: the whole device (frame and work together) settles from 97%, never a zoom-in */
+@media (prefers-reduced-motion:no-preference){
+  .fig .ph > .device{transform:scale(.97); transition:transform 1.4s var(--ease)}
+  .fig.in .ph > .device{transform:none}
+}

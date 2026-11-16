@@ -1,0 +1,18 @@
+/* v2 home and case pieces wired by main.js (Nov 16 2026).
+   .mono3d    the turning B® on the first screen (js/v2/monogram.js draws into .m3-canvas); counter in the corner mono type.
+              Hidden until the intro is done and the canvas exists; never shown with reduced motion.
+   .case-fold the chapters after `fold` wait behind one control ("See the full case"), in place. */
+.stage > .mono3d{right:var(--side-r);bottom:clamp(56px,9vh,110px);width:clamp(150px,24vw,360px);aspect-ratio:1;display:grid;grid-template-rows:1fr auto;gap:10px;color:var(--fg);opacity:0;transition:opacity .8s var(--ease);pointer-events:none}
+.stage.done > .mono3d.on{opacity:1}
+.mono3d .m3-canvas{position:relative;width:100%;height:100%;min-height:0}
+.mono3d .m3-canvas canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
+.mono3d .m3-deg{justify-self:end;font-size:clamp(28px,3.4vw,52px);font-weight:300;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.mono3d .m3-k{position:absolute;left:0;bottom:0;font-size:10px;text-transform:uppercase;color:var(--mute)}
+@media (max-width:760px){ .stage > .mono3d{width:clamp(130px,46vw,220px);bottom:clamp(70px,12vh,120px)} }
+@media (prefers-reduced-motion:reduce){ .stage > .mono3d{display:none} }
+
+.case-fold-btn{display:flex;align-items:baseline;gap:16px;width:100%;margin:clamp(40px,6vw,82px) 0 0;padding:18px 0;background:none;border:0;border-top:var(--rule-w) solid var(--fg);border-bottom:var(--rule-w) solid var(--fg);color:var(--fg);font:400 13px/1.2 var(--mono);text-transform:uppercase;text-align:left;cursor:pointer}
+.case-fold-btn > span:last-child{margin-left:auto;transition:translate .4s var(--ease)}
+.case-fold-btn:hover > span:first-child,.case-fold-btn:focus-visible > span:first-child{color:var(--ai-t,var(--ai,var(--blue)))}
+.case-fold-btn:hover > span:last-child{translate:0 4px}
+.case-fold[hidden]{display:none}

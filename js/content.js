@@ -92,7 +92,7 @@ window.SITE = {
       placeholder: "Placeholder", missing: "Missing", selectedWork: "Selected work",
       placeholderText: "Placeholder text. Replace with the project story: the brief, the idea, and what was made.",
       music: "Soundtrack", musicLabel: "Suggested music", nowSuggested: "Suggested soundtrack", musicSwap: "Play this project's song",
-      langLabel: "Language", viewProject: "View", skipToContent: "Skip to content", projectNav: "Project navigation", filterArea: "Filter projects by discipline", filterGroup: "Project categories", soundtrack: "Portfolio soundtrack",
+      fullCase: "See the full case", moreChapters: "{n} more chapters", turning: "Turning B®", langLabel: "Language", viewProject: "View", skipToContent: "Skip to content", projectNav: "Project navigation", filterArea: "Filter projects by discipline", filterGroup: "Project categories", soundtrack: "Portfolio soundtrack",
       description: "Bellintani — Multidisciplinary designer, art director, creative mind, hyperfocused ADHD brain, dad of a 7-year-old princess, music freak, amateur photographer, and whatever comes next.",
     },
     pt: {
@@ -105,7 +105,7 @@ window.SITE = {
       placeholder: "Provisório", missing: "Falta", selectedWork: "Trabalhos selecionados",
       placeholderText: "Texto provisório. Aqui entra a história do projeto: o briefing, a ideia e o que saiu dele.",
       music: "Trilha", musicLabel: "Música sugerida", nowSuggested: "Trilha sugerida", musicSwap: "Tocar a música deste projeto",
-      langLabel: "Idioma", viewProject: "Ver", skipToContent: "Pular para o conteúdo", projectNav: "Navegação entre projetos", filterArea: "Filtrar projetos por disciplina", filterGroup: "Categorias de projeto", soundtrack: "Trilha do portfólio",
+      fullCase: "Ver o case completo", moreChapters: "mais {n} capítulos", turning: "Girando o B®", langLabel: "Idioma", viewProject: "Ver", skipToContent: "Pular para o conteúdo", projectNav: "Navegação entre projetos", filterArea: "Filtrar projetos por disciplina", filterGroup: "Categorias de projeto", soundtrack: "Trilha do portfólio",
       description: "Bellintani — Designer multidisciplinar, diretor de arte, criativo hiperfocado (valeu, TDAH), pai de uma princesa de 7 anos, viciado em música, fotógrafo amador e o que mais vier.",
     },
     es: {
@@ -118,7 +118,7 @@ window.SITE = {
       placeholder: "Provisional", missing: "Falta", selectedWork: "Trabajos seleccionados",
       placeholderText: "Texto provisional. Reemplázalo con la historia del proyecto: el brief, la idea y lo que se hizo.",
       music: "Banda sonora", musicLabel: "Música sugerida", nowSuggested: "Banda sonora sugerida", musicSwap: "Reproducir la canción de este proyecto",
-      langLabel: "Idioma", viewProject: "Ver", skipToContent: "Saltar al contenido", projectNav: "Navegación entre proyectos", filterArea: "Filtrar proyectos por disciplina", filterGroup: "Categorías de proyecto", soundtrack: "Banda sonora del portafolio",
+      fullCase: "Ver el caso completo", moreChapters: "{n} capítulos más", turning: "Girando la B®", langLabel: "Idioma", viewProject: "Ver", skipToContent: "Saltar al contenido", projectNav: "Navegación entre proyectos", filterArea: "Filtrar proyectos por disciplina", filterGroup: "Categorías de proyecto", soundtrack: "Banda sonora del portafolio",
       description: "Bellintani — Diseñador multidisciplinario, director de arte, creativo hiperenfocado (gracias, TDAH), papá de una princesa de 7 años, fanático de la música, fotógrafo aficionado y lo que venga.",
     },
   },
@@ -250,6 +250,7 @@ window.SITE = {
           // The 2016 graphic system (was the "Globo" project until Nov 13 2026; just "Rebranding" inside the brand, Felipe Nov 15 2026)
           slug: "rebranding",
           title: { en: "Rebranding", pt: "Rebranding", es: "Rebranding" },
+          fold: 4, // v2: shorter case, the rest behind "See the full case" (Nov 16 2026)
           // Each case keeps its own cover (Felipe, Nov 15 2026): the living gradient that was the Globo page's cover
           image: "images/globo/cover.jpg",
           heroAr: "2500/1562",
@@ -422,6 +423,7 @@ window.SITE = {
           // Globo On, 2015/2016 (own project Nov 11-13 2026); its cream theme takes over while it is open
           slug: "globo-on",
           title: "Globo On",
+          fold: 4, // v2: shorter case, the rest behind "See the full case" (Nov 16 2026)
           // Published Nov 13 2026 (Felipe: "pode subir").
           type: "branding",
           client: "Globo",
@@ -580,26 +582,12 @@ window.SITE = {
             { chapter: { en: "03 · Brand", pt: "03 · Marca", es: "03 · Marca" }, kicker: { en: "Logo and symbol", pt: "Logo e símbolo", es: "Logo y símbolo" },
               head: { en: "Globo's circle *hits play.*", pt: "O círculo da Globo *aperta o play.*", es: "El círculo de Globo *le da play.*" },
               text: { en: "The symbol joins the Globo circle to a play button. In the vignette, strokes and colour build the full name, which then folds into the symbol.", pt: "O símbolo junta o círculo da Globo com o botão de play. Na vinheta, traços e cor vão montando o nome inteiro, que depois se fecha no símbolo.", es: "El símbolo junta el círculo de Globo con el botón de play. En la viñeta, trazos y color van armando el nombre completo, que después se cierra en el símbolo." } },
-            { flip: [
-              { src: "images/globoplay/logo-01.jpg", ar: "1920/480", caption: { en: "Vignette — 01/06", pt: "Vinheta — 01/06", es: "Viñeta — 01/06" } },
-              { src: "images/globoplay/logo-02.jpg", ar: "1920/480", caption: { en: "Vignette — 02/06", pt: "Vinheta — 02/06", es: "Viñeta — 02/06" } },
-              { src: "images/globoplay/logo-03.jpg", ar: "1920/480", caption: { en: "Vignette — 03/06", pt: "Vinheta — 03/06", es: "Viñeta — 03/06" } },
-              { src: "images/globoplay/logo-04.jpg", ar: "1920/480", caption: { en: "Vignette — 04/06", pt: "Vinheta — 04/06", es: "Viñeta — 04/06" } },
-              { src: "images/globoplay/logo-05.jpg", ar: "1920/480", caption: { en: "Vignette — 05/06, the full logo", pt: "Vinheta — 05/06, o logo inteiro", es: "Viñeta — 05/06, el logo completo" } },
-              { src: "images/globoplay/logo-06.jpg", ar: "1920/480", caption: { en: "Vignette — 06/06, the symbol", pt: "Vinheta — 06/06, o símbolo", es: "Viñeta — 06/06, el símbolo" } }
-            ], cols: 6, col: 1, span: 12 },
+            { loop: { frames: ["images/globoplay/logo-01.jpg", "images/globoplay/logo-02.jpg", "images/globoplay/logo-03.jpg", "images/globoplay/logo-04.jpg", "images/globoplay/logo-05.jpg", "images/globoplay/logo-06.jpg"], fps: 4, ar: "1920/480" }, caption: { en: "Vignette", pt: "Vinheta", es: "Viñeta" }, col: 1, span: 12 }, // v2: was a flip of these frames (Nov 16 2026)
             { chapter: { en: "04 · Launch", pt: "04 · Lançamento", es: "04 · Lanzamiento" }, kicker: { en: "Launch film", pt: "Filme de lançamento", es: "Comercial de lanzamiento" },
               head: { en: "Globo's faces, *in the palm of your hand.*", pt: "Os rostos da Globo *na palma da mão.*", es: "Los rostros de Globo, *en la palma de tu mano.*" },
               text: { en: "In the launch film the network's faces jump onto phones, tablets and laptops, and the Globoplay sign-off closes it.", pt: "No filme de lançamento, os rostos da casa pulam pro celular, pro tablet e pro notebook, e a assinatura do Globoplay fecha o filme.", es: "En el comercial de lanzamiento, los rostros de la casa saltan al celular, a la tablet y a la laptop, y la firma de Globoplay cierra el comercial." } },
             { video: "images/globoplay/filme.mp4", webm: "images/globoplay/filme.webm", poster: "images/globoplay/filme-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Launch film — 30s", pt: "Filme de lançamento — 30s", es: "Comercial de lanzamiento — 30s" } },
-            { flip: [
-              { src: "images/globoplay/filme-01.jpg", ar: "16/9", caption: { en: "Launch film — 01/06", pt: "Filme de lançamento — 01/06", es: "Comercial de lanzamiento — 01/06" } },
-              { src: "images/globoplay/filme-02.jpg", ar: "16/9", caption: { en: "Launch film — 02/06", pt: "Filme de lançamento — 02/06", es: "Comercial de lanzamiento — 02/06" } },
-              { src: "images/globoplay/filme-03.jpg", ar: "16/9", caption: { en: "Launch film — 03/06", pt: "Filme de lançamento — 03/06", es: "Comercial de lanzamiento — 03/06" } },
-              { src: "images/globoplay/filme-04.jpg", ar: "16/9", caption: { en: "Launch film — 04/06", pt: "Filme de lançamento — 04/06", es: "Comercial de lanzamiento — 04/06" } },
-              { src: "images/globoplay/filme-05.jpg", ar: "16/9", caption: { en: "Launch film — 05/06", pt: "Filme de lançamento — 05/06", es: "Comercial de lanzamiento — 05/06" } },
-              { src: "images/globoplay/filme-06.jpg", ar: "16/9", caption: { en: "Launch film — 06/06, the sign-off", pt: "Filme de lançamento — 06/06, a assinatura", es: "Comercial de lanzamiento — 06/06, la firma" } }
-            ], cols: 6, col: 1, span: 12 },
+            { loop: { frames: ["images/globoplay/filme-01.jpg", "images/globoplay/filme-02.jpg", "images/globoplay/filme-03.jpg", "images/globoplay/filme-04.jpg", "images/globoplay/filme-05.jpg", "images/globoplay/filme-06.jpg"], fps: 2, ar: "16/9" }, caption: { en: "Launch film", pt: "Filme de lançamento", es: "Comercial de lanzamiento" }, col: 1, span: 12 }, // v2: was a flip of these frames (Nov 16 2026)
           ],
         },
       ],
@@ -823,9 +811,9 @@ window.SITE = {
             { chapter: { en: "04 · The system", pt: "04 · O sistema", es: "04 · El sistema" }, kicker: { en: "Meta · Yahoo · display · mobile", pt: "Meta · Yahoo · display · mobile", es: "Meta · Yahoo · display · mobile" },
               head: { en: "Three concepts, *ten formats.*", pt: "Três conceitos, *dez formatos.*", es: "Tres conceptos, *diez formatos.*" },
               text: { en: "Win More Jobs, Limited-Time Free Offer, Invoice and Get Paid. One rule carries them all: the photo above, the charcoal panel below, the lockup bottom right.", pt: "Win More Jobs, Limited-Time Free Offer, Invoice and Get Paid. Uma regra leva todos: a foto em cima, o painel grafite embaixo, a assinatura no canto inferior direito.", es: "Win More Jobs, Limited-Time Free Offer, Invoice and Get Paid. Una sola regla los lleva a todos: la foto arriba, el panel grafito abajo, la firma en la esquina inferior derecha." } },
-            { src: "images/hcp-thd/story-1.jpg", ar: "508/904", col: 1, span: 4, caption: { en: "Meta stories 1080 × 1920", pt: "Stories Meta 1080 × 1920", es: "Stories Meta 1080 × 1920" } },
-            { src: "images/hcp-thd/story-2.jpg", ar: "504/904", col: 5, span: 4 },
-            { src: "images/hcp-thd/story-3.jpg", ar: "508/904", col: 9, span: 4 },
+            { device: "iphone", src: "images/hcp-thd/story-1.jpg", ar: "508/904", col: 1, span: 4, caption: { en: "Meta stories 1080 × 1920", pt: "Stories Meta 1080 × 1920", es: "Stories Meta 1080 × 1920" } },
+            { device: "iphone", src: "images/hcp-thd/story-2.jpg", ar: "504/904", col: 5, span: 4 },
+            { device: "iphone", src: "images/hcp-thd/story-3.jpg", ar: "508/904", col: 9, span: 4 },
             { src: "images/hcp-thd/feed-1.jpg", ar: "784/784", col: 1, span: 4, caption: { en: "Meta feed 1080 × 1080", pt: "Feed Meta 1080 × 1080", es: "Feed Meta 1080 × 1080" } },
             { src: "images/hcp-thd/feed-2.jpg", ar: "784/784", col: 5, span: 4 },
             { src: "images/hcp-thd/feed-3.jpg", ar: "784/784", col: 9, span: 4 },
@@ -997,6 +985,7 @@ window.SITE = {
       theme: { bg: "#000000", fg: "#ffffff", mute: "#8e8e8e", line: "#2a2a2a", panel: "#111111", accent: "#ffffff" },
       tools: ["Adobe CC"],
       image: "images/cinema-especial/cover.jpg",
+      coverVideo: { mp4: "images/cinema-especial/opening.mp4", webm: "images/cinema-especial/opening.webm" }, // v2: film-first cover (Nov 16 2026)
       summary: {
         en: "Opening for Cinema Especial, Globo's movie slot. Ink spreads over old film stock, the featured film's hero surfaces from the stains, and the title lands before the Globo mark closes. Style frames shown with The Amazing Spider-Man as the featured film.",
         pt: "Abertura do Cinema Especial, a faixa de filmes da Globo. A tinta se espalha sobre película antiga, o herói do filme da noite surge das manchas e o título entra antes da marca da Globo fechar. Style frames com O Espetacular Homem-Aranha como filme da noite.", es: "Apertura de Cinema Especial, la franja de películas de Globo. La tinta se esparce sobre película antigua, el héroe del filme de la noche surge de las manchas y el título entra antes de que cierre la marca Globo. Style frames con El Sorprendente Hombre Araña como película de la noche.",
@@ -1013,35 +1002,15 @@ window.SITE = {
           head: { en: "Ink sweeps, *the title settles.*", pt: "A tinta varre, *o título pousa.*", es: "La tinta barre, *el título se asienta.*" },
           text: { en: "In the 3-second animation, the ink sweeps across the screen until the title settles.", pt: "Na animação de 3 segundos, a tinta varre a tela até o título pousar.", es: "En la animación de 3 segundos, la tinta barre la pantalla hasta que el título se asienta." } },
         { video: "images/cinema-especial/logo-anim.mp4", webm: "images/cinema-especial/logo-anim.webm", poster: "images/cinema-especial/logo-anim-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Logo animation — 3s", pt: "Animação do logo — 3s", es: "Animación del logo — 3 s" } },
-        { src: "images/cinema-especial/logo-frame-01.jpg", ar: "16/9", span: 2 },
-        { src: "images/cinema-especial/logo-frame-02.jpg", ar: "16/9", span: 2 },
-        { src: "images/cinema-especial/logo-frame-03.jpg", ar: "16/9", span: 2 },
-        { src: "images/cinema-especial/logo-frame-04.jpg", ar: "16/9", span: 2 },
-        { src: "images/cinema-especial/logo-frame-05.jpg", ar: "16/9", span: 2 },
+        { loop: { frames: ["images/cinema-especial/logo-frame-01.jpg", "images/cinema-especial/logo-frame-02.jpg", "images/cinema-especial/logo-frame-03.jpg", "images/cinema-especial/logo-frame-04.jpg", "images/cinema-especial/logo-frame-05.jpg"], fps: 6, ar: "16/9" }, caption: { en: "The sweep, frame by frame", pt: "A varrida, quadro a quadro", es: "El barrido, cuadro a cuadro" }, col: 1, span: 12 }, // v2: was five frames in a row (Nov 16 2026)
         { chapter: { en: "03 · Black & white opening", pt: "03 · Abertura P&B", es: "03 · Apertura en B&N" }, grid: "fluxo", kicker: { en: "Ink · film stock · title", pt: "Tinta · película · título", es: "Tinta · película · título" },
           head: { en: "One base, *any film.*", pt: "Uma base, *qualquer filme.*", es: "Una base, *cualquier película.*" },
           text: { en: "The opening was built first in black and white, with no film inside: paper, ink stains, scratched film stock and the title. That base carries the whole sequence, from Globo Apresenta to the Cinema Especial logo.", pt: "A abertura nasceu em preto e branco, sem filme nenhum dentro: papel, manchas de tinta, película riscada e o título. Essa base segura a sequência inteira, do Globo Apresenta ao logo do Cinema Especial.", es: "La apertura nació en blanco y negro, sin ninguna película adentro: papel, manchas de tinta, película rayada y el título. Esa base sostiene toda la secuencia, desde Globo Apresenta hasta el logo de Cinema Especial." } },
-        { flip: [
-          { src: "images/cinema-especial/base-01.jpg", ar: "16/9", caption: { en: "Black & white base — 01/07", pt: "Base P&B — 01/07", es: "Base en B&N — 01/07" } },
-          { src: "images/cinema-especial/base-02.jpg", ar: "16/9", caption: { en: "Black & white base — 02/07", pt: "Base P&B — 02/07", es: "Base en B&N — 02/07" } },
-          { src: "images/cinema-especial/base-03.jpg", ar: "16/9", caption: { en: "Black & white base — 03/07", pt: "Base P&B — 03/07", es: "Base en B&N — 03/07" } },
-          { src: "images/cinema-especial/base-04.jpg", ar: "16/9", caption: { en: "Black & white base — 04/07", pt: "Base P&B — 04/07", es: "Base en B&N — 04/07" } },
-          { src: "images/cinema-especial/base-05.jpg", ar: "16/9", caption: { en: "Black & white base — 05/07", pt: "Base P&B — 05/07", es: "Base en B&N — 05/07" } },
-          { src: "images/cinema-especial/base-06.jpg", ar: "16/9", caption: { en: "Black & white base — 06/07", pt: "Base P&B — 06/07", es: "Base en B&N — 06/07" } },
-          { src: "images/cinema-especial/base-07.jpg", ar: "16/9", caption: { en: "Black & white base — 07/07", pt: "Base P&B — 07/07", es: "Base en B&N — 07/07" } }
-        ], cols: 7, col: 1, span: 12 },
+        { loop: { frames: ["images/cinema-especial/base-01.jpg", "images/cinema-especial/base-02.jpg", "images/cinema-especial/base-03.jpg", "images/cinema-especial/base-04.jpg", "images/cinema-especial/base-05.jpg", "images/cinema-especial/base-06.jpg", "images/cinema-especial/base-07.jpg"], fps: 3, ar: "16/9" }, caption: { en: "Black & white base", pt: "Base P&B", es: "Base en B&N" }, col: 1, span: 12 }, // v2: was a flip of these frames (Nov 16 2026)
         { chapter: { en: "04 · Colour version", pt: "04 · Versão colorida", es: "04 · Versión a color" }, kicker: { en: "The film of the night", pt: "O filme da noite", es: "La película de la noche" },
           head: { en: "The same base, now *on fire.*", pt: "A mesma base, agora *pegando fogo.*", es: "La misma base, ahora *en llamas.*" },
           text: { en: "Over the same base, the paper turns warm, the ink burns in reds and browns, and the stars of the night's film surface from the stains while CINEMA and ESPECIAL slide in.", pt: "Na mesma base, o papel esquenta, a tinta queima em vermelhos e marrons e os astros do filme da noite surgem das manchas enquanto CINEMA e ESPECIAL deslizam pra dentro.", es: "Sobre la misma base, el papel se calienta, la tinta arde en rojos y marrones, y las estrellas de la película de la noche surgen de las manchas mientras CINEMA y ESPECIAL se deslizan en pantalla." } },
-        { flip: [
-          { src: "images/cinema-especial/color-01.jpg", ar: "16/9", caption: { en: "Colour version — 01/07", pt: "Versão colorida — 01/07", es: "Versión a color — 01/07" } },
-          { src: "images/cinema-especial/color-02.jpg", ar: "16/9", caption: { en: "Colour version — 02/07", pt: "Versão colorida — 02/07", es: "Versión a color — 02/07" } },
-          { src: "images/cinema-especial/color-03.jpg", ar: "16/9", caption: { en: "Colour version — 03/07", pt: "Versão colorida — 03/07", es: "Versión a color — 03/07" } },
-          { src: "images/cinema-especial/color-04.jpg", ar: "16/9", caption: { en: "Colour version — 04/07", pt: "Versão colorida — 04/07", es: "Versión a color — 04/07" } },
-          { src: "images/cinema-especial/color-05.jpg", ar: "16/9", caption: { en: "Colour version — 05/07", pt: "Versão colorida — 05/07", es: "Versión a color — 05/07" } },
-          { src: "images/cinema-especial/color-06.jpg", ar: "16/9", caption: { en: "Colour version — 06/07", pt: "Versão colorida — 06/07", es: "Versión a color — 06/07" } },
-          { src: "images/cinema-especial/color-07.jpg", ar: "16/9", caption: { en: "Colour version — 07/07", pt: "Versão colorida — 07/07", es: "Versión a color — 07/07" } }
-        ], cols: 7, col: 1, span: 12 },
+        { loop: { frames: ["images/cinema-especial/color-01.jpg", "images/cinema-especial/color-02.jpg", "images/cinema-especial/color-03.jpg", "images/cinema-especial/color-04.jpg", "images/cinema-especial/color-05.jpg", "images/cinema-especial/color-06.jpg", "images/cinema-especial/color-07.jpg"], fps: 3, ar: "16/9" }, caption: { en: "Colour version", pt: "Versão colorida", es: "Versión a color" }, col: 1, span: 12 }, // v2: was a flip of these frames (Nov 16 2026)
         { fullWidthIntro: true, chapter: { en: "05 · Opening", pt: "05 · Abertura", es: "05 · Apertura" }, kicker: { en: "Globo's movie slot", pt: "A faixa de filmes da Globo", es: "La franja de películas de Globo" }, grid: "fluxo",
           head: { en: "Ink, old film and the *hero of the night.*", pt: "Tinta, película antiga e o *herói da noite.*", es: "Tinta, película antigua y el *héroe de la noche.*" },
           text: { en: "Ink spreads over old film stock, the featured film's hero surfaces from the stains, and the title lands before the Globo mark closes.", pt: "A tinta se espalha sobre película antiga, o herói do filme da noite surge das manchas e o título entra antes da marca da Globo fechar.", es: "La tinta se esparce sobre película antigua, el héroe del filme de la noche surge de las manchas y el título entra antes de que cierre la marca Globo." } },
@@ -1063,6 +1032,7 @@ window.SITE = {
       theme: { bg: "#070316", fg: "#ffffff", mute: "#a29bb9", line: "#39304d", panel: "#120b28", accent: "#e900d2" },
       tools: ["Adobe CC"],
       image: "images/popstar/neon.jpg",
+      coverVideo: { mp4: "images/popstar/opening.mp4", webm: "images/popstar/opening.webm" }, // v2: film-first cover (Nov 16 2026)
       hero: "bleed",
       heroAr: "16/9",
       summary: {
@@ -1175,6 +1145,7 @@ window.SITE = {
       tags: { en: ["TVOpening", "3D", "Motion"], pt: ["AberturaDeTV", "3D", "Motion"], es: ["AperturaDeTV", "3D", "Motion"] },
       tools: ["Adobe CC"],
       image: "images/tela-quente/render-branco.jpg",
+      coverVideo: { mp4: "images/tela-quente/abertura.mp4", webm: "images/tela-quente/abertura.webm" }, // v2: film-first cover (Nov 16 2026)
       summary: {
         en: "New opening for Tela Quente, one of Brazil's most classic movie slots, on Globo. The red and silver look gives way to Globo's white and 3D, and the coloured screens of the original logo come back as a rainbow.",
         pt: "Nova abertura da Tela Quente, uma das sessões de cinema mais clássicas do Brasil, na Globo. Sai o visual vermelho e prateado, entram o branco e o 3D da Globo, e as telas coloridas do logo original voltam em arco-íris.", es: "Nueva apertura de Tela Quente, una de las funciones de cine más clásicas de Brasil, en Globo. Sale el look rojo y plateado, entran el blanco y el 3D de Globo, y las pantallas de colores del logo original vuelven en arcoíris.",
@@ -1195,14 +1166,7 @@ window.SITE = {
           head: { en: "Glass, light and the logo *floating in the studio.*", pt: "Vidro, luz e o logo *flutuando no estúdio.*", es: "Vidrio, luz y el logo *flotando en el estudio.*" },
           text: { en: "In the final opening, glass shards swirl through a concrete studio, form a crystal car that shatters into light, and the logo settles, floating in the middle of the room.", pt: "Na abertura final, cacos de vidro giram por um estúdio de concreto, formam um carro de cristal que se desfaz em luz, e o logo pousa, flutuando no meio da sala.", es: "En la apertura final, fragmentos de vidrio giran por un estudio de concreto, forman un auto de cristal que se deshace en luz, y el logo se posa, flotando en medio de la sala." } },
         { video: "images/tela-quente/abertura.mp4", webm: "images/tela-quente/abertura.webm", poster: "images/tela-quente/abertura-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Opening — 7s", pt: "Abertura — 7s", es: "Apertura — 7s" } },
-        { flip: [
-          { src: "images/tela-quente/frame-01.jpg", ar: "16/9", caption: { en: "Opening — 01/06", pt: "Abertura — 01/06", es: "Apertura — 01/06" } },
-          { src: "images/tela-quente/frame-02.jpg", ar: "16/9", caption: { en: "Opening — 02/06", pt: "Abertura — 02/06", es: "Apertura — 02/06" } },
-          { src: "images/tela-quente/frame-03.jpg", ar: "16/9", caption: { en: "Opening — 03/06", pt: "Abertura — 03/06", es: "Apertura — 03/06" } },
-          { src: "images/tela-quente/frame-04.jpg", ar: "16/9", caption: { en: "Opening — 04/06", pt: "Abertura — 04/06", es: "Apertura — 04/06" } },
-          { src: "images/tela-quente/frame-05.jpg", ar: "16/9", caption: { en: "Opening — 05/06", pt: "Abertura — 05/06", es: "Apertura — 05/06" } },
-          { src: "images/tela-quente/frame-06.jpg", ar: "16/9", caption: { en: "Opening — 06/06", pt: "Abertura — 06/06", es: "Apertura — 06/06" } }
-        ], cols: 6, col: 1, span: 12 },
+        { loop: { frames: ["images/tela-quente/frame-01.jpg", "images/tela-quente/frame-02.jpg", "images/tela-quente/frame-03.jpg", "images/tela-quente/frame-04.jpg", "images/tela-quente/frame-05.jpg", "images/tela-quente/frame-06.jpg"], fps: 2, ar: "16/9" }, caption: { en: "Opening", pt: "Abertura", es: "Apertura" }, col: 1, span: 12 }, // v2: was a flip of these frames (Nov 16 2026)
         { chapter: { en: "04 · One opening per film", pt: "04 · Uma abertura para cada filme", es: "04 · Una apertura para cada película" }, kicker: { en: "The film of the night", pt: "O filme da noite", es: "La película de la noche" },
           head: { en: "The studio stays, *the film comes in.*", pt: "O estúdio fica, *o filme entra.*", es: "El estudio se queda, *la película entra.*" },
           text: { en: "As in Cinema Especial, the idea was for the opening to always link to the film. The studio and the logo stay, and the night's film takes over the room: the wave floods it, Maleficent walks in, the tornado passes through.", pt: "Como no Cinema Especial, a ideia era a abertura conversar sempre com o filme. O estúdio e o logo ficam, e o filme da noite toma conta da sala: a onda invade, a Malévola entra, o tornado passa.", es: "Como en Cinema Especial, la idea era que la apertura siempre dialogara con la película. El estudio y el logo se quedan, y la película de la noche se adueña de la sala: la ola la inunda, entra Maléfica, pasa el tornado." } },
@@ -1352,6 +1316,7 @@ window.SITE = {
     },
     {
       title: "DJ Shadow",
+      fold: 4, // v2: shorter case, the rest behind "See the full case" (Nov 16 2026)
       // Approved by Felipe on the preview and published (Oct 29 2026). The hands poster was rejected at the time
       // (Felipe): only the silhouette line is shown, the black & white one first.
       track: { id: "1a9maLxqpx3cxjY1lTj62B", name: "Midnight In A Perfect World", by: "DJ Shadow" },
@@ -1556,6 +1521,7 @@ window.SITE = {
     },
     {
       title: "DMA",
+      fold: 4, // v2: shorter case, the rest behind "See the full case" (Nov 16 2026)
       track: { id: "2VEZx7NWsZ1D0eJ4uv5Fym", name: "Digital Love", by: "Daft Punk" },
       type: "branding",
       client: "JBS",

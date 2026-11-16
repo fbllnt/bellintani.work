@@ -1,0 +1,18 @@
+/* Statement word reveal (v2), paired with js/v2/reveal.js.
+   Words are plain inline spans (.rv-w) so the text, its wrapping and its selection stay exactly as before.
+   A word not yet reached (.rv-off) is the same ink at 22%, mixed from currentColor, so it reads right on white
+   sections and on the black About section alike. .rv-still sits on the block only for its first frame, so the
+   starting state appears without a fade. */
+.rv-w{transition:color .25s var(--ease)}
+.rv-w.rv-off{color:color-mix(in srgb,currentColor 22%,transparent)}
+.rv-still .rv-w{transition:none}
+/* Browsers without color-mix: fade the word instead (still the same ink, still selectable). */
+@supports not (color:color-mix(in srgb,red 50%,transparent)){
+  .rv-w{transition:opacity .25s var(--ease)}
+  .rv-w.rv-off{opacity:.22}
+}
+/* Belt and braces: the script does nothing under reduced motion, but if words are ever left split, show them whole. */
+@media (prefers-reduced-motion:reduce){
+  .rv-w{transition:none}
+  .rv-w.rv-off{color:inherit;opacity:1}
+}

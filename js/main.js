@@ -101,6 +101,10 @@
     });
   };
   if (S.showMissing === false && !q.has("missing")) S.projects.forEach(trimMissing);
+  // v2 devices: a framed piece takes the device's proportions in rows and pairs; the screen keeps the content's own ratio
+  if (window.V2Devices) (function walk(o) { if (!o || typeof o !== "object") return; if (Array.isArray(o)) return o.forEach(walk);
+    if (o.device && !o._car && window.V2Devices.ratio(o.device)) { o._car = o.ar; o.ar = String(window.V2Devices.ratio(o.device)); }
+    for (const k in o) if (k !== "_car") walk(o[k]); })(S.projects);
 
   // Work order (Felipe, Oct 28 2026): fixed, exactly the order of `projects` in content.js (no shuffle).
 
@@ -418,6 +422,38 @@
   $("replay").onclick = () => { scrollTo({ top: 0 }); reduced ? finish() : play(); };
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---------- v2 motion (Nov 16 2026; references: buck.co, santalarch.com, dennypratama.com) ----------
+  // Each piece is its own file in js/v2/ and only runs if it loaded; with reduced motion they stay still.
+  const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  // Smooth wheel scroll (vendored Lenis): desktop only, never on touch or with reduced motion. Panels that scroll
+  // on their own (music list, film rolls, dialogs) keep their native scroll.
+  if (window.Lenis && fine && !reduced) {
+    try { window.v2Lenis = new window.Lenis({ autoRaf: true, lerp: .12, smoothWheel: true,
+      prevent: node => !!node.closest?.(".music, .roll-track, .rooms, dialog, [data-lenis-prevent], .cb-view") }); } catch (e) {}
+  }
+  // Work list: a silent loop (or the cover and first pieces) follows the pointer over each row, as on BUCK's index
+  if (window.V2Preview) {
+    const firstFilm = p => (p.gallery || []).concat(...(p.cases || []).map(c => c.gallery || [])).find(it => it.video);
+    const stills = p => [p.image].concat((p.gallery || []).filter(it => it.src && !/\.svg$/.test(it.src)).slice(0, 2).map(it => it.src)).filter(Boolean);
+    window.V2Preview.init({ list: index, reduced, items: S.projects.map(p => {
+      const film = p.preview || (p.coverVideo && { video: p.coverVideo.mp4, webm: p.coverVideo.webm }) || (f => f && { video: f.video, webm: f.webm, poster: f.poster })(firstFilm(p));
+      return { title: L(p.title), video: film?.video, webm: film?.webm, poster: film?.poster || p.image, images: stills(p) };
+    }) });
+  }
+  // The tagline and the About intro fill in word by word as they scroll through the screen (Santal)
+  if (window.V2Reveal) window.V2Reveal.init([...document.querySelectorAll('[data-bind="tagline"], #credits-intro')], { reduced });
+  // The B® turns with the first screen's scroll, with its degree counter (Denny Pratama); flat mark without WebGL
+  const m3 = $("mono3d");
+  if (m3 && !reduced) {
+    const host = m3.querySelector(".m3-canvas"), deg = m3.querySelector(".m3-deg");
+    const start = () => import("./v2/monogram.js?v=202611162100").then(({ createMonogram }) => {
+      const m = createMonogram(host, { progress: () => Math.min(1, Math.max(0, scrollY / Math.max(1, innerHeight * .9))),
+        onDegrees: d => { deg.textContent = `${String(d).padStart(3, "0")}°`; } });
+      if (m) m3.classList.add("on");
+    }).catch(() => {});
+    "requestIdleCallback" in window ? requestIdleCallback(start, { timeout: 2500 }) : setTimeout(start, 1200);
+  }
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
   // corners (all four since Nov 11 2026), scrolling up or reaching the top brings them back, so they never sit on the work
   let lastY = scrollY;
@@ -474,7 +510,7 @@
   //   cartaz   the chapter headline runs huge across all 12 columns; pieces keep the fluxo rows
   function looseGallery(p) {
     const ratio = ar => { const [w, h] = String(ar || "16/9").split("/").map(Number); return w / (h || 1); };
-    const isMedia = it => ((it.src || it.video || it.tunnel) && !it.scrub && !it.spin) || (it.todo && it.span < 12);
+    const isMedia = it => ((it.src || it.video || it.tunnel || it.loop) && !it.scrub && !it.spin) || (it.todo && it.span < 12);
     const GRIDS = ["fluxo", "destaque", "trilho", "modulos", "cartaz"];
     const pick = g => GRIDS.includes(g) ? g : null;
     let grid = pick(p.grid) || "fluxo", mod = {};
@@ -547,11 +583,14 @@
     };
     const closePend = () => { if (pend) { out(pend.cz ? `<div class="pair cz solo"><div class="pair-text">${pend.html}</div></div>` : pend.solo); pend = null; } };
     const closeSide = () => { if (side !== null) { html += `<div class="trilho"><div class="tr-side">${side}</div><div class="tr-main">${main}</div></div>`; side = null; main = ""; } };
+    let chapN = 0, folded = false;
     p.gallery.forEach(it => {
       if (isMedia(it)) { run.push(it); return; }
       flushRun();
       if (it.chapter) {
         closePend(); closeSide();
+        // v2 (Nov 16 2026): shorter cases. Chapters after `fold` wait behind one control, in place, nothing removed
+        if (+p.fold && ++chapN === +p.fold + 1) { html += `<div class="case-fold" hidden>`; folded = true; }
         grid = pick(it.grid) || grid; mod = { cols: it.cols, cell: it.cell, bare: it.bare };
         const ch = block(it, p);
         if (grid === "trilho") { side = ch.replace('class="chap"', 'class="chap tr"'); return; }
@@ -571,6 +610,8 @@
       out(block(it, p));
     });
     flushRun(); closePend(); closeSide();
+    if (folded) { const rest = p.gallery.filter(it => it.chapter).length - +p.fold;
+      html += `</div><button type="button" class="case-fold-btn mono" aria-expanded="false"><span>${esc(T("fullCase"))}</span><span class="muted">${esc(T("moreChapters").replace("{n}", rest))}</span><span aria-hidden="true">↓</span></button>`; }
     return `<div class="loose g-${pick(p.grid) || "fluxo"}">${html}</div>`;
   }
 
@@ -683,6 +724,8 @@
   }
 
   function fig(it, p, style = "", speed = "") {
+    // v2 (Nov 16 2026): `loop: { frames, fps, ar }` plays an image sequence as a silent loop (js/v2/loops.js)
+    if (it.loop && window.V2Loops) return window.V2Loops.render(it, { esc, L, labelPlay: T("play"), labelPause: T("pause"), title: L(p.title), style });
     // Scroll-played sequence: the frame sticks on screen and steps through the frames as the page scrolls
     if (it.scrub) {
       const n = +it.scrub.count, src = k => esc(it.scrub.frames.replace(/#+/, m => String(k + 1).padStart(m.length, "0")));
@@ -702,7 +745,7 @@
         ${it.poster ? `<img src="${esc(it.poster)}" alt="" loading="lazy">` : ""}
         <canvas data-tunnel="${esc(it.tunnel.word)}" data-bg="${esc(it.tunnel.bg || "#000")}" role="img" aria-label="${esc(L(it.caption) || L(p.title))}"></canvas>
       </div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
-    return `<figure class="fig ${it.size || "full"}${it.popstarInvert ? " popstar-invert" : ""}${it.corehiInteractive ? " corehi-interactive" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${
+    return `<figure class="fig ${it.size || "full"}${it.popstarInvert ? " popstar-invert" : ""}${it.corehiInteractive ? " corehi-interactive" : ""}${it.device && window.V2Devices ? " has-device" : ""}" style="${it.ar ? `--ar:${esc(it.ar)};` : ""}${it.mar ? `--mar:${esc(it.mar)};` : ""}${style}"${speed}><div class="ph">${devWrap(it,
       it.video ? `<video${it.poster ? ` poster="${esc(it.poster)}"` : ""}${it.offset ? ` data-offset="${+it.offset}"` : ""} muted loop playsinline preload="none" aria-label="${esc(L(it.caption) || L(p.title))}">
           ${it.webm ? `<source src="${esc(it.webm)}" type="video/webm">` : ""}<source src="${esc(it.video)}" type="video/mp4"></video>
         <div class="vctl mono"><button class="playpause" type="button">${esc(T("play"))}</button><button class="sound" type="button" aria-pressed="false">${esc(T("soundOff"))}</button><button class="fsbtn" type="button" aria-label="${esc(T("fullscreen"))} — ${esc(L(it.caption) || L(p.title))}" title="${esc(T("fullscreen"))}">
@@ -711,9 +754,12 @@
       : it.src && it.href ? `<a class="fig-link" href="${esc(it.href)}" target="_blank" rel="noopener"><img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy"><span class="fig-open mono">${esc(T("openSite"))} ↗</span></a>`
       // `msrc` + `mar`: a version drawn for phones (e.g. a wide diagram stacked into one column)
       : it.src && it.msrc ? `<picture><source media="(max-width:760px)" srcset="${esc(it.msrc)}"><img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy"></picture>`
-      : it.src ? `<img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy">` : cover(it.art, p)
+      : it.src ? `<img src="${esc(it.src)}" alt="${esc(L(it.caption) || L(p.title))}" loading="lazy">` : cover(it.art, p))
     }${it.coverFlow && p.coverFlow && !reduced ? coverFlow(p.coverFlow) : ""}</div>${it.caption ? `<figcaption class="mono muted">${esc(L(it.caption))}</figcaption>` : ""}</figure>`;
   }
+
+  // v2 (Nov 16 2026): `device: "iphone" | "macbook"` draws the screen work inside a CSS device frame (js/v2/devices.js), never cropped
+  const devWrap = (it, h) => it.device && window.V2Devices ? window.V2Devices.wrap(h, it.device, { ar: it._car || it.ar }) : h;
 
   // Logo wall: every mark sits black on white so thirty clients read as one body of work.
   // One-colour files are used as masks, so the same file turns black, white or the brand colour.
@@ -1465,6 +1511,13 @@
     syncPageMeta(p);
     observe();
     setupVideos();
+    if (window.V2Loops) { const lp = window.V2Loops.setup(caseEl, { reduced, signal: caseAbort.signal, labelPlay: T("play"), labelPause: T("pause") }); if (lp) caseCleanups.push(() => lp.destroy()); }
+    caseEl.querySelectorAll(".case-fold-btn").forEach(b => caseListen(b, "click", () => {
+      const rest = b.previousElementSibling; if (!rest || !rest.classList.contains("case-fold")) return;
+      rest.hidden = false; b.setAttribute("aria-expanded", "true"); b.remove();
+      rest.querySelector("h2, .chap-h")?.setAttribute("tabindex", "-1"); rest.querySelector("h2, .chap-h")?.focus({ preventScroll: true });
+      window.dispatchEvent(new Event("resize"));
+    }));
     setupControlColors();
     setupEmbeds();
     caseEl.querySelectorAll("canvas[data-frames]").forEach(setupSpin);

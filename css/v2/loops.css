@@ -1,0 +1,23 @@
+/* Frame loops (js/v2/loops.js): an image sequence played as a silent loop.
+   Every frame is stacked in the .ph and sits whole inside it (the base .fig .ph > img rule gives position, the
+   --breathe inset and object-fit: contain); only the frame with .on shows. Never cropped, never zoomed in.
+   The Play / Pause button is the same tag as the film buttons (.vctl): hanging from the top edge, --tag-x in,
+   same colours, same hover. */
+.loop .ph > img{object-fit:contain;opacity:0}
+.loop .ph > img.on{opacity:1}
+
+.loop-ctl{all:unset;position:absolute;left:var(--tag-x,10px);top:0;z-index:1;cursor:pointer;padding:6px 9px;
+  background:var(--fg);color:var(--bg);font:400 11px/1 var(--mono);text-transform:uppercase}
+.loop-ctl:hover{background:var(--blue)}
+.loop-ctl:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.loop-ctl[hidden]{display:none}
+.loop.loading .loop-ctl{cursor:progress}
+
+/* Progress: a thin line under the frames that fills in steps as they turn. It never sits on the picture:
+   with a --breathe margin (4px or more) it lies inside that white margin; in loose galleries, where --breathe is 0,
+   it drops just below the frame into the gap before the caption. The frame is not clipped for that (overflow
+   visible), which is safe here because the frames are inset and never larger than the .ph. */
+.fig.loop .ph{overflow:visible}
+.loop-bar{position:absolute;left:var(--breathe,0px);right:var(--breathe,0px);bottom:min(0px,calc(var(--breathe,0px) - 4px));height:2px;
+  background:var(--line);pointer-events:none}
+.loop-bar i{position:absolute;inset:0;background:var(--fg);transform:scaleX(calc(1 / var(--n,1)));transform-origin:0 50%}
