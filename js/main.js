@@ -1182,46 +1182,59 @@
     const d = S.disorder, t = key => esc(L(d.copy[key]));
     const cards = d.posts.map((post, i) => `<button type="button" class="dis-post" data-post="${i}" data-kind="${post.kind}" aria-label="${esc(L(d.copy.open))}: ${esc(post.title)}"><img src="${post.src}" alt="${esc(post.title)}" loading="lazy" width="800" height="800"><span>${esc(post.title)}<small>${esc(post.by)}</small></span></button>`).join('');
     return `<section class="dis-experience" aria-label="DISORD/AIR">
-      <div class="dis-brand"><img src="images/disorder/symbol-cream.png" width="600" height="600" alt="DISORD/AIR — ${t('symbol')}"></div>
+      <div class="dis-brand"><div class="dis-logo-loop" role="img" aria-label="DISORD/AIR — ${t('symbol')}"><span class="dis-logo-half dis-logo-top" aria-hidden="true"></span><span class="dis-logo-half dis-logo-bottom" aria-hidden="true"></span></div><button class="dis-logo-motion mono" type="button" aria-pressed="false">${t('pauseLoop')}</button></div>
       <div class="dis-lead"><div class="dis-intro"><p class="mono">01 / ${t('feed')}</p><h2>${t('headline')}</h2><p class="body">${t('intro')}</p><a class="dis-jump mono" href="#dis-archive">${t('explore')} ↓</a><span class="dis-index mono">@DISORDAIR / MUSIC & CULTURE</span></div>
-      <div class="dis-hand"><img class="dis-hand-image" src="images/disorder/hand-phone.jpg" width="1500" height="2000" alt="${t('mockup')}"><div class="dis-screen"><div class="dis-status">9:41 <span>● ▰</span></div><div class="dis-island" aria-hidden="true"></div><div class="dis-phone-title">disordair</div><div class="dis-profile"><img src="images/disorder/symbol-cream.png" alt="DISORD/AIR"><div><b>DISORD/AIR</b><p>${t('bio')}</p></div></div><p class="dis-phone-hint">${t('tap')}</p><div class="dis-phone-grid">${d.posts.map((post,i)=>`<button type="button" data-post="${i}" aria-label="${t('open')}: ${esc(post.title)}"><img src="${post.src}" alt="${esc(post.title)}" loading="lazy"></button>`).join('')}</div><button type="button" class="dis-phone-story" data-story><small>${t('story')}</small><strong>UMA CRÍTICA<br>DE MERD*.</strong><span>DAFT PUNK →</span></button><div class="dis-phone-bottom" aria-hidden="true">⌂　⌕　⊞　♡</div></div></div></div>
-      <section class="dis-archive" id="dis-archive"><div class="dis-section-head"><p class="mono">02 / ${t('archive')}</p><span class="mono">${t('curated')}</span></div><div class="dis-filters" role="group" aria-label="${t('filter')}"><button type="button" data-filter="all" aria-pressed="true">${t('all')}</button><button type="button" data-filter="discovery" aria-pressed="false">${t('discoveries')}</button><button type="button" data-filter="brasil" aria-pressed="false">Brasil</button><button type="button" data-story>${t('story')} ↗</button></div><div class="dis-grid">${cards}</div><p class="dis-count mono" aria-live="polite">6 / 6</p></section>
-      <section class="dis-voice"><p class="mono">03 / ${t('voice')}</p><blockquote>${t('quote')}</blockquote><p class="mono">DISORD/AIR — ${t('source')}</p></section>
+      <div class="dis-hand"><img class="dis-hand-image" src="images/disorder/hand-phone-transparent.png" width="1086" height="1448" alt="${t('mockup')}"><div class="dis-screen"><div class="dis-status">9:41 <span>● ▰</span></div><div class="dis-island" aria-hidden="true"></div><div class="dis-phone-title">disordair</div><div class="dis-profile"><img src="images/disorder/symbol-cream.png" alt="DISORD/AIR"><div><b>DISORD/AIR</b><p>${t('bio')}</p></div></div><p class="dis-phone-hint">${t('tap')}</p><div class="dis-phone-grid">${d.posts.map((post,i)=>`<button type="button" data-post="${i}" aria-label="${t('open')}: ${esc(post.title)}"><img src="${post.src}" alt="${esc(post.title)}" loading="lazy"></button>`).join('')}</div><button type="button" class="dis-phone-story" data-story><small>${t('story')}</small><strong>UMA CRÍTICA<br>DE MERD*.</strong><span>DAFT PUNK →</span></button><div class="dis-phone-bottom" aria-hidden="true">⌂　⌕　⊞　♡</div></div></div></div>
+      <section class="dis-deck" tabindex="-1" aria-label="${t('story')}"><div class="dis-deck-copy"><p class="mono">${t('sideB')}</p><h2>${t('readStory')}</h2><p class="body">${t('deckIntro')}</p><label class="dis-mix-label mono"><input class="dis-mix" type="checkbox" checked> ${t('mix')}</label><p class="dis-deck-title"></p><div class="dis-deck-controls"><button class="dis-deck-prev" type="button" aria-label="${t('prev')}">←</button><span class="dis-deck-count mono" aria-live="polite"></span><button class="dis-deck-next" type="button" aria-label="${t('next')}">→</button></div><div class="dis-pages" role="group" aria-label="${t('page')}">${d.story.map((slide,i)=>`<button type="button" class="dis-page" data-page="${i}" aria-current="${i===0}" aria-label="${t('page')} ${i+1}: ${esc(slide.title)}">${String(i+1).padStart(2,'0')}</button>`).join('')}</div><p class="mono dis-swipe-hint">${t('swipe')}</p></div><div class="dis-deck-art"><div class="dis-frame-stack"><img src="${d.story[0].src}" width="1080" height="1350" alt="${esc(d.story[0].title)}"></div><button type="button" class="dis-full-art mono">${t('fullArt')} ↗</button></div></section>
+      <section class="dis-archive" id="dis-archive"><div class="dis-section-head"><p class="mono">03 / ${t('archive')}</p><span class="mono">${t('curated')}</span></div><div class="dis-filters" role="group" aria-label="${t('filter')}"><button type="button" data-filter="all" aria-pressed="true">${t('all')}</button><button type="button" data-filter="discovery" aria-pressed="false">${t('discoveries')}</button><button type="button" data-filter="brasil" aria-pressed="false">Brasil</button><button type="button" data-story>${t('story')} ↗</button></div><div class="dis-grid">${cards}</div><p class="dis-count mono" aria-live="polite">6 / 6</p></section>
+      <section class="dis-voice"><p class="mono">04 / ${t('voice')}</p><blockquote>${t('quote')}</blockquote><p class="mono">DISORD/AIR — ${t('source')}</p></section>
       <dialog class="dis-dialog" aria-label="${t('viewer')}"><div class="dis-dialog-head"><span class="mono">DISORD/AIR</span><button type="button" class="dis-close" aria-label="${t('close')}">×</button></div><div class="dis-dialog-content"></div><div class="dis-dialog-nav"><button type="button" class="dis-prev" aria-label="${t('prev')}">←</button><span class="mono dis-position" aria-live="polite"></span><button type="button" class="dis-next" aria-label="${t('next')}">→</button></div></dialog>
     </section>`;
   }
   function setupDisorder() {
-    const el = caseEl.querySelector('.dis-experience'); if (!el) return;
-    const d = S.disorder, dialog = el.querySelector('dialog'), content = el.querySelector('.dis-dialog-content');
-    const tr = key => L(d.copy[key]);
-    let selected = 0, story = false, opener;
-    const paint = () => {
-      const post = d.posts[selected];
-      content.innerHTML = story ? `<article class="dis-story" lang="pt-BR"><p class="mono">${esc(d.story[selected].label)}</p><h2>${esc(d.story[selected].title)}</h2><p>${esc(d.story[selected].text)}</p><small>Texto: @fbellintani · Fonte: @patrickhicksmusicstories · Agradecimento: @dehnunes</small></article>` : `<img src="${post.src}" alt="${esc(post.title)}"><div class="dis-record"><h2>${esc(post.title)}</h2><p>${esc(post.by)}</p><a class="mono" href="https://open.spotify.com/search/${encodeURIComponent(post.title+' '+post.by)}" target="_blank" rel="noopener noreferrer">${esc(tr('listen'))} ↗</a></div>`;
-      const total = story ? d.story.length : d.posts.length;
-      el.querySelector('.dis-position').textContent = `${String(selected + 1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
-      el.querySelector('.dis-prev').disabled = selected === 0;
-      el.querySelector('.dis-next').disabled = selected === total - 1;
+    const el=caseEl.querySelector('.dis-experience');if(!el)return;
+    const d=S.disorder,dialog=el.querySelector('dialog'),content=el.querySelector('.dis-dialog-content'),tr=key=>L(d.copy[key]);
+    let selected=0,story=false,opener,deckIndex=0,animations=[],ghost=null;
+    const deck=el.querySelector('.dis-deck'),stack=el.querySelector('.dis-frame-stack'),art=stack.querySelector('img');
+    const paintDeck=(index,animate=true)=>{
+      const next=Math.max(0,Math.min(d.story.length-1,index));if(next===deckIndex&&animate)return;
+      animations.forEach(a=>a.cancel());animations=[];ghost?.remove();ghost=null;
+      if(animate&&!reduced&&el.querySelector('.dis-mix').checked){
+        ghost=art.cloneNode();ghost.removeAttribute('id');ghost.alt='';ghost.setAttribute('aria-hidden','true');stack.prepend(ghost);
+        animations.push(ghost.animate([{opacity:1,filter:'blur(0)'},{opacity:0,filter:'blur(4px)'}],{duration:480,fill:'forwards'}));
+        const outgoing=ghost;animations[0].finished.then(()=>outgoing.remove()).catch(()=>{});
+        animations.push(art.animate([{opacity:0,filter:'blur(4px)',transform:'translateX(12px)'},{opacity:1,filter:'blur(0)',transform:'translateX(0)'}],{duration:480,fill:'none'}));
+      }
+      deckIndex=next;const slide=d.story[next];art.src=slide.src;art.alt=slide.text;art.dataset.page=String(next+1);
+      el.querySelector('.dis-deck-title').textContent=slide.title;
+      el.querySelector('.dis-deck-count').textContent=`${String(next+1).padStart(2,'0')} / ${String(d.story.length).padStart(2,'0')}`;
+      el.querySelectorAll('.dis-page').forEach((b,i)=>{b.setAttribute('aria-current',String(i===next));});
+      el.querySelector('.dis-deck-prev').disabled=next===0;el.querySelector('.dis-deck-next').disabled=next===d.story.length-1;
     };
-    const open = (button, isStory) => { opener = button; story = isStory; selected = isStory ? 0 : +button.dataset.post; paint(); dialog.showModal(); };
-    el.querySelectorAll('[data-post]').forEach(b => caseListen(b,'click',()=>open(b,false)));
-    el.querySelectorAll('[data-story]').forEach(b => caseListen(b,'click',()=>open(b,true)));
-    const step = n => { selected = Math.max(0, Math.min((story ? d.story.length : d.posts.length)-1, selected+n)); paint(); };
-    caseListen(el.querySelector('.dis-prev'),'click',()=>step(-1));
-    caseListen(el.querySelector('.dis-next'),'click',()=>step(1));
-    caseListen(el.querySelector('.dis-close'),'click',()=>dialog.close());
-    caseListen(dialog,'close',()=>opener?.focus({preventScroll:true}));
+    const paint=()=>{
+      const post=d.posts[selected],slide=d.story[selected];dialog.classList.toggle('dis-dialog-story',story);
+      content.innerHTML=story?`<img class="dis-original-page" src="${slide.src}" alt="${esc(slide.title)}"><details class="dis-transcript" lang="pt-BR"><summary>${esc(tr('readText'))}</summary><p>${esc(slide.text)}</p></details>`:`<img src="${post.src}" alt="${esc(post.title)}"><div class="dis-record"><h2>${esc(post.title)}</h2><p>${esc(post.by)}</p><a class="mono" href="https://open.spotify.com/search/${encodeURIComponent(post.title+' '+post.by)}" target="_blank" rel="noopener noreferrer">${esc(tr('listen'))} ↗</a></div>`;
+      const total=story?d.story.length:d.posts.length;
+      el.querySelector('.dis-position').textContent=`${String(selected+1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+      el.querySelector('.dis-prev').disabled=selected===0;el.querySelector('.dis-next').disabled=selected===total-1;
+    };
+    const open=(button,isStory)=>{opener=button;story=isStory;selected=isStory?deckIndex:+button.dataset.post;paint();dialog.showModal();};
+    el.querySelectorAll('[data-post]').forEach(b=>caseListen(b,'click',()=>open(b,false)));
+    el.querySelectorAll('[data-story]').forEach(b=>caseListen(b,'click',()=>{deck.scrollIntoView({behavior:reduced?'instant':'smooth',block:'start'});deck.focus({preventScroll:true});}));
+    caseListen(el.querySelector('.dis-full-art'),'click',e=>open(e.currentTarget,true));
+    const step=n=>{selected=Math.max(0,Math.min((story?d.story.length:d.posts.length)-1,selected+n));paint();};
+    caseListen(el.querySelector('.dis-prev'),'click',()=>step(-1));caseListen(el.querySelector('.dis-next'),'click',()=>step(1));
+    caseListen(el.querySelector('.dis-close'),'click',()=>dialog.close());caseListen(dialog,'close',()=>opener?.focus({preventScroll:true}));
     caseListen(dialog,'click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
     caseListen(dialog,'keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();e.stopPropagation();step(e.key==='ArrowRight'?1:-1);}});
-    let touchX;
-    caseListen(content,'touchstart',e=>{touchX=e.changedTouches[0].clientX;},{passive:true});
-    caseListen(content,'touchend',e=>{const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>55)step(dx<0?1:-1);},{passive:true});
-    el.querySelectorAll('[data-filter]').forEach(button=>caseListen(button,'click',()=>{
-      el.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
-      let count=0;el.querySelectorAll('.dis-grid .dis-post').forEach(card=>{card.hidden=button.dataset.filter!=='all'&&card.dataset.kind!==button.dataset.filter;if(!card.hidden)count++;});
-      el.querySelector('.dis-count').textContent=`${count} / ${d.posts.length}`;
-    }));
-    caseCleanups.push(()=>{if(dialog.open)dialog.close();});
+    caseListen(el.querySelector('.dis-deck-prev'),'click',()=>paintDeck(deckIndex-1));caseListen(el.querySelector('.dis-deck-next'),'click',()=>paintDeck(deckIndex+1));
+    el.querySelectorAll('.dis-page').forEach(b=>caseListen(b,'click',()=>paintDeck(+b.dataset.page)));
+    caseListen(deck,'keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();e.stopPropagation();paintDeck(deckIndex+(e.key==='ArrowRight'?1:-1));}});
+    const swipe=(target,callback)=>{let x=0,y=0;caseListen(target,'touchstart',e=>{x=e.changedTouches[0].clientX;y=e.changedTouches[0].clientY;},{passive:true});caseListen(target,'touchend',e=>{const dx=e.changedTouches[0].clientX-x,dy=e.changedTouches[0].clientY-y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4)callback(dx<0?1:-1);},{passive:true});};
+    swipe(stack,n=>paintDeck(deckIndex+n));swipe(content,step);
+    el.querySelectorAll('[data-filter]').forEach(button=>caseListen(button,'click',()=>{el.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let count=0;el.querySelectorAll('.dis-grid .dis-post').forEach(card=>{card.hidden=button.dataset.filter!=='all'&&card.dataset.kind!==button.dataset.filter;if(!card.hidden)count++;});el.querySelector('.dis-count').textContent=`${count} / ${d.posts.length}`;}));
+    const motion=el.querySelector('.dis-logo-motion');caseListen(motion,'click',()=>{const paused=motion.getAttribute('aria-pressed')==='true';motion.setAttribute('aria-pressed',String(!paused));el.querySelector('.dis-brand').classList.toggle('is-paused',!paused);motion.textContent=tr(paused?'pauseLoop':'playLoop');});
+    paintDeck(0,false);caseCleanups.push(()=>{animations.forEach(a=>a.cancel());if(dialog.open)dialog.close();});
   }
 
   function gallery(i, p) {

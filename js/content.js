@@ -1437,11 +1437,12 @@ window.SITE = {
     {
   "title": "DISORD/AIR",
   "slug": "disorder",
+  "track": {"id":"3SKH53SPQbEnZR4cJPVaz2", "name":"Messy", "by":"Lola Young"},
   "hidden": true,
   "draft": true,
   "type": "branding",
   "year": "2024",
-  "client": "DISORD/AIR",
+  "client": {"en":"Personal digital project","pt":"Projeto pessoal digital","es":"Proyecto personal digital"},
   "scope": {
     "en": "Music, culture & editorial identity",
     "pt": "Música, cultura e identidade editorial",
@@ -1479,11 +1480,11 @@ window.SITE = {
   },
   "image": "images/disorder/manifesto.jpg",
   "theme": {
-    "bg": "#f1dabb",
+    "bg": "#f1d9bd",
     "fg": "#12110f",
     "mute": "#625445",
     "line": "#bca58a",
-    "panel": "#f1dabb",
+    "panel": "#f1d9bd",
     "accent": "#ff4e23",
     "accentText": "#a6260a"
   },
@@ -1847,7 +1848,11 @@ window.SITE = {
 
 window.SITE.disorder = {
   "copy": {
-    "symbol": {"en":"two stacked D forms", "pt":"símbolo com dois D sobrepostos", "es":"símbolo con dos D superpuestas"},
+    "symbol": {
+      "en": "original symbol",
+      "pt": "símbolo original",
+      "es": "símbolo original"
+    },
     "feed": {
       "en": "The feed",
       "pt": "O feed",
@@ -1957,6 +1962,48 @@ window.SITE.disorder = {
       "en": "Find on Spotify",
       "pt": "Buscar no Spotify",
       "es": "Buscar en Spotify"
+    },
+    "pauseLoop": {"en":"Pause loop", "pt":"Pausar loop", "es":"Pausar loop"},
+    "playLoop": {"en":"Play loop", "pt":"Reproduzir loop", "es":"Reproducir loop"},
+    "sideB": {
+      "en": "02 / SIDE B",
+      "pt": "02 / LADO B",
+      "es": "02 / LADO B"
+    },
+    "readStory": {
+      "en": "Behind the helmets.",
+      "pt": "Por trás dos capacetes.",
+      "es": "Detrás de los cascos."
+    },
+    "deckIntro": {
+      "en": "A bad review. A new name. Nine original pages. Move through the story, one sleeve at a time.",
+      "pt": "Uma crítica ruim. Um novo nome. Nove páginas originais. Passe pela história como quem escolhe o próximo disco.",
+      "es": "Una mala crítica. Un nuevo nombre. Nueve páginas originales. Recorre la historia como quien elige el siguiente disco."
+    },
+    "mix": {
+      "en": "Mix transitions",
+      "pt": "Misturar transições",
+      "es": "Mezclar transiciones"
+    },
+    "readText": {
+      "en": "Read the text",
+      "pt": "Ler o texto",
+      "es": "Leer el texto"
+    },
+    "swipe": {
+      "en": "ARROWS / SWIPE / CHOOSE A PAGE",
+      "pt": "SETAS / ARRASTE / ESCOLHA UMA PÁGINA",
+      "es": "FLECHAS / DESLIZA / ELIGE UNA PÁGINA"
+    },
+    "page": {
+      "en": "Page",
+      "pt": "Página",
+      "es": "Página"
+    },
+    "fullArt": {
+      "en": "Open artwork",
+      "pt": "Abrir arte",
+      "es": "Abrir arte"
     }
   },
   "posts": [
@@ -1999,34 +2046,58 @@ window.SITE.disorder = {
   ],
   "story": [
     {
+      "src": "images/disorder/daft-punk/01.jpg",
+      "title": "Uma crítica de merd*.",
       "label": "DAFT PUNK / 01",
-      "title": "UMA CRÍTICA DE MERD*.",
-      "text": "A história por trás do nome (e da formação) do Daft Punk. Texto original em português, adaptado para leitura na web."
+      "text": "UMA CRÍTICA\u0003DE MERD*."
     },
     {
+      "src": "images/disorder/daft-punk/02.jpg",
+      "title": "Antes do Daft Punk",
       "label": "DAFT PUNK / 02",
-      "title": "Antes dos capacetes.",
-      "text": "Nos anos 80 havia uma banda de pop chamada McCarthy. Tim conhece Letícia em um show em Paris. Ela se muda para Londres e canta no álbum seguinte da banda. Depois, os dois montam uma banda de indie pop chamada Stereolab."
+      "text": "@disordair"
     },
     {
+      "src": "images/disorder/daft-punk/03.jpg",
+      "title": "Duophonic",
       "label": "DAFT PUNK / 03",
-      "title": "Uma fita. Duas músicas.",
-      "text": "Tim e Letícia criam um selo, Duophonic. Em 1993, Letícia ouve uma demo de adolescentes franceses chamados Darlin’. Como eles só têm duas músicas, ela reúne as faixas com outras bandas na coletânea Shimmies in Super 8."
+      "text": "@disordair"
     },
     {
+      "src": "images/disorder/daft-punk/04.jpg",
+      "title": "Shimmies in Super 8",
       "label": "DAFT PUNK / 04",
-      "title": "Uma crítica muda tudo.",
-      "text": "A coletânea recebe críticas ruins. Uma delas, escrita por Dave Jennings na Melody Maker, dá origem à expressão que mais tarde inspiraria o nome Daft Punk. Os três integrantes do Darlin’ eram amigos da escola: Guy-Manuel, Thomas e Laurent."
+      "text": "@disordair"
     },
     {
+      "src": "images/disorder/daft-punk/05.jpg",
+      "title": "Uma crítica muda tudo",
       "label": "DAFT PUNK / 05",
-      "title": "Daft Punk nasce.",
-      "text": "Depois da separação, Laurent começa a banda Phoenix. Guy-Manuel e Thomas passam a se interessar pela música eletrônica e pela cena house francesa. Formam um duo e voltam à crítica sobre o Darlin’ para escolher o nome."
+      "text": "@disordair"
     },
     {
+      "src": "images/disorder/daft-punk/06.jpg",
+      "title": "Nasce o duo",
       "label": "DAFT PUNK / 06",
-      "title": "O foco é a música.",
-      "text": "Em setembro de 1993, os dois conhecem Stuart McMillan, do Slam e do selo Soma. Ele lança o primeiro single do Daft Punk, The New Wave. Em 1994 vem Da Funk. As máscaras passam a esconder as identidades e colocar o foco na música."
+      "text": "@disordair"
+    },
+    {
+      "src": "images/disorder/daft-punk/07.jpg",
+      "title": "The New Wave / Da Funk",
+      "label": "DAFT PUNK / 07",
+      "text": "@disordair"
+    },
+    {
+      "src": "images/disorder/daft-punk/08.jpg",
+      "title": "Daft Punk",
+      "label": "DAFT PUNK / 08",
+      "text": "Daft Punk se torna então \u0003um dos artistas de maior \u0003influência e sucesso da \u0003história da música eletrônica.\n\n@disordair"
+    },
+    {
+      "src": "images/disorder/daft-punk/09.jpg",
+      "title": "Créditos",
+      "label": "DAFT PUNK / 09",
+      "text": ""
     }
   ]
 };
