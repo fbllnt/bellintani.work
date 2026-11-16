@@ -59,6 +59,9 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 ## Navigation and interaction (Felipe, Oct 29-30 2026)
 
+- Cursor rule (Felipe, Nov 16 2026): the dot and its trail are ALWAYS the same colour. They share one layer (`.cursor-layer`), so any blend
+  treats them as one shape. In Ramón's case only, that layer inverts (white on black, black on white) so the cursor never disappears;
+  everywhere else it keeps its own colour.
 - Cursor: the trailing ball is one fixed size, 11px (no dot/big switch, no change on hover; Felipe found the switch
   strange). Over a work-list row a small "View" / "Ver" chip (`.ball-tag`, `ui.viewProject`) rides next to it, filled
   with the ball colour. Over rolls and the 360° viewer the ball stays 11px and the chip reads "← Drag →" (Nov 1 2026).

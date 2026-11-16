@@ -1318,8 +1318,9 @@ body.in-case:has(.rv-case) .corners>*{color:#fff}
 
 /* Cursor in Ramón's case only (Felipe, Nov 16 2026): its black and white sections could hide the ball, so there it is
    always the inverse of what is under it (white on black, black on white). Everywhere else the cursor keeps its own colour. */
-body.in-case:has(#case.ramon-case) .ball,body.in-case:has(#case.ramon-case) .ball.white{background:#fff!important;mix-blend-mode:difference}
-body.in-case:has(#case.ramon-case) .trail{mix-blend-mode:difference}
+.cursor-layer{position:fixed;inset:0;z-index:81;pointer-events:none}
+body.in-case:has(#case.ramon-case) .cursor-layer{mix-blend-mode:difference}
+body.in-case:has(#case.ramon-case) .ball,body.in-case:has(#case.ramon-case) .ball.white{background:#fff!important}
 body.in-case:has(#case.ramon-case) .ball-tag{background:#fff!important;color:#000!important;mix-blend-mode:difference}
 
 /* Grid check (Nov 16 2026): word specimens split their own width in whole columns (--wc, --ws set by main.js), and a

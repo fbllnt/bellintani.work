@@ -2128,7 +2128,10 @@
   const ball = document.createElement("div"), trail = document.createElement("canvas"), tag = document.createElement("span");
   const cursorOn = matchMedia("(hover: hover) and (pointer: fine)").matches && !reduced;
   let onBlue = false;
-  const cursorTo = (host, light = host !== document.body) => { if (cursorOn) { host.append(trail, ball, tag); onBlue = light; } };
+  // The dot and its trail live in one layer, so any blend (Ramón's inverted cursor) treats them as one shape: they are
+  // ALWAYS the same colour (Felipe, Nov 16 2026), never a hollow dot where the two overlap
+  const cursorLayer = document.createElement("span"); cursorLayer.className = "cursor-layer"; cursorLayer.setAttribute("aria-hidden", "true");
+  const cursorTo = (host, light = host !== document.body) => { if (cursorOn) { cursorLayer.append(trail, ball); host.append(cursorLayer, tag); onBlue = light; } };
   if (cursorOn) {
     ball.className = "ball"; trail.className = "trail"; tag.className = "ball-tag mono";
     ball.setAttribute("aria-hidden", "true"); trail.setAttribute("aria-hidden", "true"); tag.setAttribute("aria-hidden", "true");
