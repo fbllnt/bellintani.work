@@ -1,0 +1,16 @@
+/* Hero flash (js/v2/flash.js). Full bleed by Felipe's request (the one place images fill the frame); a glow layer
+   (the same frame blurred and screened), a dark veil so the white type reads, and a fine grain. */
+.stage > .flash{inset:0;z-index:0;opacity:0;pointer-events:none;overflow:hidden;background:#0a0a0a}
+.stage > .flash.on{transition:opacity .25s linear}
+.flash img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.flash .fl-img{filter:saturate(1.25) contrast(1.12)}
+.flash .fl-glow{filter:blur(28px) brightness(1.35) saturate(1.6);mix-blend-mode:screen;opacity:.6;transform:scale(1.08)}
+.flash .fl-shade{position:absolute;inset:0;background:radial-gradient(120% 90% at 30% 35%,rgba(0,0,0,.18),rgba(0,0,0,.55)),linear-gradient(rgba(0,0,0,.32),rgba(0,0,0,.42))}
+.flash .fl-grain{position:absolute;inset:-50%;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:fl-grain .9s steps(6) infinite}
+@keyframes fl-grain{0%{transform:translate(0,0)}20%{transform:translate(-6%,4%)}40%{transform:translate(5%,-3%)}60%{transform:translate(-3%,-6%)}80%{transform:translate(4%,5%)}100%{transform:translate(0,0)}}
+/* White type over the flash: the first screen and the corner menu take inverted tokens while it shows */
+html.flash-on .stage,html.flash-on .corners{--fg:#fff;--bg:#0a0a0a;--mute:rgba(255,255,255,.72);--line:rgba(255,255,255,.35);color:var(--fg)}
+html.flash-on .stage .head{position:absolute;z-index:1;text-shadow:0 0 28px rgba(0,0,0,.25)}
+html.flash-on .stage > :not(.flash):not(.panel):not(.loader){z-index:1}
+.corners,.stage .head,.stage .tag,.stage .cue,.stage .skip{transition:color .35s var(--ease)}
+@media (prefers-reduced-motion:reduce){ .flash .fl-grain{animation:none} .stage > .flash.on{transition:none} }

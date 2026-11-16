@@ -5,3 +5,8 @@
 .case-fold-btn:hover > span:first-child,.case-fold-btn:focus-visible > span:first-child{color:var(--ai-t,var(--ai,var(--blue)))}
 .case-fold-btn:hover > span:last-child{translate:0 4px}
 .case-fold[hidden]{display:none}
+/* Opened fold: its chapters join the gallery's own column again (flex items of .loose), so spacing and rules match */
+.case-fold:not([hidden]){display:contents}
+/* Cover films get the same tag as every other film: Pause / Play (they also stop when off screen) */
+.cover-ctl{all:unset;position:absolute;left:var(--tag-x);top:0;z-index:1;cursor:pointer;padding:6px 9px;background:var(--fg);color:var(--bg);font:400 11px/1 var(--mono);text-transform:uppercase}
+.cover-ctl:focus-visible{outline:2px solid var(--ai,var(--blue));outline-offset:2px}

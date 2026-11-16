@@ -19,9 +19,9 @@
   const store = (k, v) => { try { v === undefined ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} };
   const read = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
   const LANGS = { en: "en-US", pt: "pt-BR" };
-  const geo = (document.cookie.match(/(?:^|; )geo=([A-Z]{2})/) || [])[1];
+  // English first, always (Felipe, Nov 16 2026): the country and the browser language no longer pick PT; only the visitor's own EN / PT choice is kept
   let lang = read("lang");
-  if (!LANGS[lang]) lang = geo ? (geo === "BR" ? "pt" : "en") : /^pt\b/i.test(navigator.language || "") ? "pt" : "en";
+  if (!LANGS[lang]) lang = "en";
   const L = v => (v && typeof v === "object" && !Array.isArray(v) && ("en" in v || "pt" in v)) ? (v[lang] ?? v.en) : v;
   const T = k => S.ui[lang][k] ?? S.ui.en[k] ?? "";
   document.documentElement.lang = LANGS[lang];
@@ -76,6 +76,8 @@
   try { resumeY = sessionStorage.getItem("resume"); resumeFilter = sessionStorage.getItem("resumeFilter"); sessionStorage.removeItem("resume"); sessionStorage.removeItem("resumeFilter"); } catch (e) {}
 
   const q = new URLSearchParams(location.search);
+  // v2: after an instant jump (opening or closing a case, sub-cases, hash links) the smooth-scroll glide must not pull the page back
+  const lenisSync = () => { try { window.v2Lenis?.scrollTo(scrollY, { immediate: true, force: true }); } catch (e) {} };
 
   // Projects with `hidden: true` in content.js stay off the site in every view (?full included), files untouched.
   // A draft (`hidden: true, draft: true`) shows only on the hidden preview hosts (*.workers.dev, local), so Felipe can
@@ -102,8 +104,9 @@
   };
   if (S.showMissing === false && !q.has("missing")) S.projects.forEach(trimMissing);
   // v2 devices: a framed piece takes the device's proportions in rows and pairs; the screen keeps the content's own ratio
-  if (window.V2Devices) (function walk(o) { if (!o || typeof o !== "object") return; if (Array.isArray(o)) return o.forEach(walk);
-    if (o.device && !o._car && window.V2Devices.ratio(o.device)) { o._car = o.ar; o.ar = String(window.V2Devices.ratio(o.device)); }
+  (function walk(o) { if (!o || typeof o !== "object") return; if (Array.isArray(o)) return o.forEach(walk);
+    if (o.device && !o._car && window.V2Devices?.ratio(o.device)) { o._car = o.ar; o.ar = String(window.V2Devices.ratio(o.device)); }
+    if (o.loop && !o.ar && o.loop.ar) o.ar = o.loop.ar;
     for (const k in o) if (k !== "_car") walk(o[k]); })(S.projects);
 
   // Work order (Felipe, Oct 28 2026): fixed, exactly the order of `projects` in content.js (no shuffle).
@@ -300,7 +303,7 @@
     e.preventDefault();
     const to = document.body.classList.contains("in-case") ? $("case").querySelector(".case-title, .cb-brand") : works;
     if (!to) return;
-    to.setAttribute("tabindex", "-1"); to.scrollIntoView({ behavior: "instant" }); to.focus({ preventScroll: true });
+    to.setAttribute("tabindex", "-1"); to.scrollIntoView({ behavior: "instant" }); lenisSync(); to.focus({ preventScroll: true });
   });
 
   // ---------- Optical left edge ----------
@@ -430,18 +433,21 @@
   // on their own (music list, film rolls, dialogs) keep their native scroll.
   if (window.Lenis && fine && !reduced) {
     try { window.v2Lenis = new window.Lenis({ autoRaf: true, lerp: .12, smoothWheel: true,
-      prevent: node => !!node.closest?.(".music, .roll-track, .rooms, dialog, [data-lenis-prevent], .cb-view") }); } catch (e) {}
+      prevent: node => !!node.closest?.(".music, dialog, [data-lenis-prevent]") }); } catch (e) {}
   }
   // Work list: a silent loop (or the cover and first pieces) follows the pointer over each row, as on BUCK's index
   if (window.V2Preview) {
     const firstFilm = p => (p.gallery || []).concat(...(p.cases || []).map(c => c.gallery || [])).find(it => it.video);
     const stills = p => [p.image].concat((p.gallery || []).filter(it => it.src && !/\.svg$/.test(it.src)).slice(0, 2).map(it => it.src)).filter(Boolean);
     window.V2Preview.init({ list: index, reduced, items: S.projects.map(p => {
+      if (!fine) return { title: L(p.title), images: stills(p).slice(0, 1) };
       const film = p.preview || (p.coverVideo && { video: p.coverVideo.mp4, webm: p.coverVideo.webm }) || (f => f && { video: f.video, webm: f.webm, poster: f.poster })(firstFilm(p));
       return { title: L(p.title), video: film?.video, webm: film?.webm, poster: film?.poster || p.image, images: stills(p) };
     }) });
   }
   // (The turning B® and the word-by-word tagline were tried on Nov 16 2026 and taken out: Felipe kept the v1 home.)
+  // Hero flash: the whole portfolio flickers full bleed behind white type, then fades with the scroll (js/v2/flash.js)
+  if (window.V2Flash && S.flash) window.V2Flash.init({ stage, frames: S.flash, reduced });
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
   // corners (all four since Nov 11 2026), scrolling up or reaching the top brings them back, so they never sit on the work
   let lastY = scrollY;
@@ -1426,7 +1432,7 @@
       li.querySelector(".sub-open").setAttribute("aria-expanded", String(on));
       li.querySelector(".sub-body").hidden = !on;
     };
-    const top = el => scrollTo({ top: el.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0), behavior: "instant" });
+    const top = el => scrollTo({ top: el.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0), behavior: "instant" }) || lenisSync();
     // Open the case named in the address (or none), and bring it (or the list) into view
     syncSub = (move = true) => {
       const slug = decodeURIComponent(location.hash.slice(1));
@@ -1441,7 +1447,7 @@
       // A case with its own colours (Globo On's cream) takes the page over while it is open
       applyTheme((c && c.theme) || p.theme);
       if (li) { // (after the re-layout settles: rows above can change height on the resize)
-        const land = () => { if (move) scrollTo({ top: li.getBoundingClientRect().top + scrollY + 2, behavior: "instant" }); stuckCheck(); };
+        const land = () => { if (move) { scrollTo({ top: li.getBoundingClientRect().top + scrollY + 2, behavior: "instant" }); lenisSync(); } stuckCheck(); };
         requestAnimationFrame(() => { inkAlign?.(); land(); setTimeout(land, 120); }); li.querySelector(".sub-open").focus({ preventScroll: true }); }
       else if (was && move) { top(was); was.querySelector(".sub-open").focus({ preventScroll: true }); }
       if (!li) stuckCheck();
@@ -1500,6 +1506,17 @@
     syncPageMeta(p);
     observe();
     setupVideos();
+    caseEl.querySelectorAll("video.cover-vid").forEach(v => {
+      const ph = v.closest(".ph") || v.parentElement; if (!ph || ph.querySelector(".cover-ctl")) return;
+      let userPaused = false;
+      const btn = document.createElement("button"); btn.type = "button"; btn.className = "cover-ctl mono"; btn.textContent = T("pause");
+      const sync = () => { btn.textContent = v.paused ? T("play") : T("pause"); btn.setAttribute("aria-pressed", String(v.paused)); };
+      caseListen(btn, "click", e => { e.stopPropagation(); userPaused = !v.paused; userPaused ? v.pause() : v.play().catch(() => {}); });
+      caseListen(v, "play", sync); caseListen(v, "pause", sync);
+      ph.appendChild(btn); sync();
+      const seen = ownObserver(new IntersectionObserver(([en]) => { if (!en.isIntersecting) v.pause(); else if (!userPaused) v.play().catch(() => {}); }, { threshold: .15 }));
+      seen.observe(v);
+    });
     if (window.V2Loops) { const lp = window.V2Loops.setup(caseEl, { reduced, signal: caseAbort.signal, labelPlay: T("play"), labelPause: T("pause") }); if (lp) caseCleanups.push(() => lp.destroy()); }
     caseEl.querySelectorAll(".case-fold-btn").forEach(b => caseListen(b, "click", () => {
       const rest = b.previousElementSibling; if (!rest || !rest.classList.contains("case-fold")) return;
@@ -1945,7 +1962,7 @@
       renderCase(i);
       document.body.classList.add("in-case");
       syncSkipLink(true);
-      scrollTo({ top: 0, behavior: "instant" });
+      scrollTo({ top: 0, behavior: "instant" }); lenisSync();
       caseEl.querySelector(".case-title, .cb-brand").focus({ preventScroll: true });
     };
     if (grown) { grown = false; go(); return; }
@@ -1963,7 +1980,7 @@
     const row = (!target || target === "work") && openIdx >= 0 ? index.querySelector(`a[data-i="${openIdx}"]`) : null;
     openIdx = -1;
     if (row && row.offsetParent) {
-      row.scrollIntoView({ behavior: "instant", block: "center" });
+      row.scrollIntoView({ behavior: "instant", block: "center" }); lenisSync();
       row.focus({ preventScroll: true });
       if (!reduced) {
         row.style.setProperty("--flash", accentOf(S.projects[+row.dataset.i]));
@@ -1972,7 +1989,7 @@
       }
       return;
     }
-    ($(target) || $("work")).scrollIntoView({ behavior: "instant" });
+    ($(target) || $("work")).scrollIntoView({ behavior: "instant" }); lenisSync();
   });
   const route = () => {
     const i = projectFromLocation();
@@ -1980,7 +1997,7 @@
     if (i >= 0 && i === openIdx && document.body.classList.contains("in-case") && S.projects[i].cases) { syncSub(); return; }
     if (i >= 0) openCase(i);
     else if (document.body.classList.contains("in-case")) closeCase(location.hash.slice(1));
-    else { const target = $(location.hash.slice(1)); target?.scrollIntoView({ behavior: "instant" }); }
+    else { const target = $(location.hash.slice(1)); target?.scrollIntoView({ behavior: "instant" }); lenisSync(); }
     capQueue(); syncMusic();
   };
   const navigate = url => { history.pushState(null, "", url); route(); };
@@ -2312,7 +2329,7 @@
   store("introSeen", String(Date.now()));
   if (resumeY !== null) {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    const back = () => requestAnimationFrame(() => scrollTo({ top: +resumeY, behavior: "instant" }));
+    const back = () => requestAnimationFrame(() => { scrollTo({ top: +resumeY, behavior: "instant" }); lenisSync(); });
     document.readyState === "complete" ? back() : addEventListener("load", back, { once: true });
   }
 })();
