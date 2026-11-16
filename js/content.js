@@ -1004,7 +1004,7 @@ window.SITE = {
       theme: { bg: "#070316", fg: "#ffffff", mute: "#a29bb9", line: "#39304d", panel: "#120b28", accent: "#e900d2" },
       tools: ["Adobe CC"],
       image: "images/popstar/neon.jpg",
-      coverVideo: { mp4: "images/popstar/opening.mp4", webm: "images/popstar/opening.webm" }, // v2: film-first cover (Nov 16 2026)
+      coverVideo: { mp4: "images/popstar/opening-v2.mp4", webm: "images/popstar/opening.webm" }, // v2: film-first cover (Nov 16 2026)
       hero: "bleed",
       heroAr: "16/9",
       summary: {
@@ -1023,7 +1023,7 @@ window.SITE = {
           { src: "images/popstar/symbol-tight.jpg", popstarInvert: true, ar: "16/9", caption: { en: "Symbol study", pt: "Estudo do símbolo", es: "Estudio del símbolo" } },
           { src: "images/popstar/logo-tight.jpg", popstarInvert: true, ar: "16/9", caption: { en: "Wordmark construction", pt: "Construção do logotipo", es: "Construcción del logotipo" } }
         ], col: 1, span: 12 },
-        { video: "images/popstar/opening.mp4", webm: "images/popstar/opening.webm", poster: "images/popstar/neon.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Original PopStar opening · TV Globo · 2017", pt: "Abertura original do PopStar · TV Globo · 2017", es: "Apertura original de PopStar · TV Globo · 2017" } },
+        { video: "images/popstar/opening-v2.mp4", webm: "images/popstar/opening.webm", poster: "images/popstar/neon.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Original PopStar opening · TV Globo · 2017", pt: "Abertura original do PopStar · TV Globo · 2017", es: "Apertura original de PopStar · TV Globo · 2017" } },
         { chapter: { en: "03 · Showtime", pt: "03 · Hora do show", es: "03 · Hora del show" }, kicker: { en: "The on-screen expression", pt: "A identidade na tela", es: "La identidad en pantalla" },
           head: { en: "From black lines to *neon lights.*", pt: "Do traço preto às *luzes de neon.*", es: "Del trazo negro a las *luces de neón.*" },
           text: { en: "The restrained graphic foundation transforms into a bright stage-world of glowing lines, saturated colour and showtime spectacle.", pt: "A base gráfica contida vira um universo de palco: linhas luminosas, cores saturadas e clima de grande show.", es: "La base gráfica contenida se convierte en un universo de escenario: líneas luminosas, colores saturados y clima de gran show." } },
