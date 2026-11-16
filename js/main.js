@@ -435,16 +435,7 @@
     try { window.v2Lenis = new window.Lenis({ autoRaf: true, lerp: .12, smoothWheel: true,
       prevent: node => !!node.closest?.(".music, dialog, [data-lenis-prevent]") }); } catch (e) {}
   }
-  // Work list: a silent loop (or the cover and first pieces) follows the pointer over each row, as on BUCK's index
-  if (window.V2Preview) {
-    const firstFilm = p => (p.gallery || []).concat(...(p.cases || []).map(c => c.gallery || [])).find(it => it.video);
-    const stills = p => [p.image].concat((p.gallery || []).filter(it => it.src && !/\.svg$/.test(it.src)).slice(0, 2).map(it => it.src)).filter(Boolean);
-    window.V2Preview.init({ list: index, reduced, items: S.projects.map(p => {
-      if (!fine) return { title: L(p.title), images: stills(p).slice(0, 1) };
-      const film = p.preview || (p.coverVideo && { video: p.coverVideo.mp4, webm: p.coverVideo.webm }) || (f => f && { video: f.video, webm: f.webm, poster: f.poster })(firstFilm(p));
-      return { title: L(p.title), video: film?.video, webm: film?.webm, poster: film?.poster || p.image, images: stills(p) };
-    }) });
-  }
+  // (A preview that followed the pointer over the work list was tried on Nov 16 2026 and removed: Felipe.)
   // (A turning 3D B®, a word-by-word tagline and a full-bleed image flash with glitch treatments were tried on Nov 16 2026
   // and taken out: Felipe kept the v1 home.)
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
@@ -1306,15 +1297,14 @@
     caseListen(motion,'click',()=>{const paused=motion.getAttribute('aria-pressed')==='true';motion.setAttribute('aria-pressed',String(!paused));logo3d?.setPaused(!paused);motion.textContent=tr(paused?'pauseLoop':'playLoop');});
     if(!reduced){
       const logoSignal=caseAbort.signal;
-      const loader=ownObserver(new IntersectionObserver(entries=>{
-        if(!entries.some(entry=>entry.isIntersecting))return;
-        loader.disconnect();
-        import('./disorder-logo-3d.js?v=20261116disorder07').then(({createLogo})=>{
+      // Loads at once when the case opens (Felipe, Nov 16 2026: the movement can start sooner)
+      const loader={disconnect(){},observe(){}};(()=>{
+        import('./disorder-logo-3d.js?v=20261116disorder08').then(({createLogo})=>{
           if(logoSignal.aborted)return;
           logo3d=createLogo(logoHost,{signal:logoSignal,onFailure:()=>{motion.hidden=true;}});
           if(logo3d)motion.hidden=false;
         }).catch(()=>{motion.hidden=true;});
-      },{rootMargin:'300px'}));
+      })();
       loader.observe(logoHost);
     }
     caseCleanups.push(()=>logo3d?.dispose());

@@ -38,7 +38,7 @@ export function createLogo(host, { signal, onFailure } = {}) {
     path.closePath();
     return path;
   };
-  const fronts = new THREE.MeshBasicMaterial({ color: '#f1d9bd' });
+  const fronts = new THREE.MeshBasicMaterial({ color: '#faf1e6' }); // the page cream (lighter since Nov 16 2026)
   const sides = new THREE.MeshStandardMaterial({ color: '#cfab87', roughness: .48, metalness: .12 });
   scene.add(new THREE.HemisphereLight(0xfff6e8, 0x8c4d29, 2.2));
   const key = new THREE.DirectionalLight(0xfff2dc, 3);
@@ -59,9 +59,8 @@ export function createLogo(host, { signal, onFailure } = {}) {
   }
   let disposed = false, paused = false, visible = false, lost = false;
   let frame = 0, last = 0, elapsed = 0;
-  // Alternating coin-like turns: 2.45s per piece, 150ms between turns.
-  // The active piece starts briskly and slows to rest; the other stays front-facing.
-  // Disjoint windows prevent simultaneous motion, including across the loop seam.
+  // Coin-like turns: 2.45s per piece. The second starts at 1.0s, while the first is still turning
+  // (Felipe, Nov 16 2026: "can start sooner"; it used to wait until 2.6s). Each starts briskly and slows to rest.
   const turn = (time, start) => {
     const t = THREE.MathUtils.clamp((time - start) / 2.45, 0, 1);
     return (1 - Math.pow(1 - t, 3)) * Math.PI * 2;
@@ -69,7 +68,7 @@ export function createLogo(host, { signal, onFailure } = {}) {
   const render = () => {
     const time = elapsed % 5.2;
     meshes[0].rotation.y = turn(time, 0);
-    meshes[1].rotation.y = turn(time, 2.6);
+    meshes[1].rotation.y = turn(time, 1.0);
     renderer.render(scene, camera);
   };
   const resize = () => {

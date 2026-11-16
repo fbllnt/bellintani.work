@@ -1443,11 +1443,11 @@ window.SITE = {
   },
   "image": "images/disorder/manifesto.jpg",
   "theme": {
-    "bg": "#f1d9bd",
+    "bg": "#faf1e6",
     "fg": "#12110f",
     "mute": "#625445",
     "line": "#bca58a",
-    "panel": "#f1d9bd",
+    "panel": "#faf1e6",
     "accent": "#ff4e23",
     "accentText": "#a6260a"
   },
@@ -1871,7 +1871,7 @@ window.SITE = {
         {"src":"images/carbono/clean-12.jpg","ar":"2000/1125","caption":{"en":"A palette drawn from the product","pt":"Uma paleta que vem do produto","es":"Una paleta que nace del producto"},"span":4},
         {"chapter":{"en":"03 · Social","pt":"03 · Social","es":"03 · Redes"},"head":{"en":"A grid with *room to breathe.*","pt":"Um grid com *espaço para respirar.*","es":"Una cuadrícula con *espacio para respirar.*"},"text":{"en":"Products, people and typography share the same language. Change the view to compare the original feed and the two visual directions.","pt":"Produtos, pessoas e tipografia passam a falar a mesma língua. Alterne a visualização para comparar o feed original e os dois caminhos visuais.","es":"Productos, personas y tipografía comparten un mismo lenguaje. Cambia la vista para comparar el feed original y las dos propuestas visuales."}},
         {"cbFeed":true},
-        {"src":"images/carbono/clean-14.jpg","ar":"2000/1125","caption":{"en":"Instagram · communication direction","pt":"Instagram · direção da comunicação","es":"Instagram · dirección de comunicación"},"col":1,"span":12},
+        {"src":"images/carbono/clean-14-new.jpg","ar":"2000/1125","caption":{"en":"Instagram · communication direction","pt":"Instagram · direção da comunicação","es":"Instagram · dirección de comunicación"},"col":1,"span":12},
         {"src":"images/carbono/clean-15.jpg","ar":"2000/1125","caption":{"en":"Feed 01 · before and after","pt":"Feed 01 · antes e depois","es":"Feed 01 · antes y después"},"col":1,"span":6},
         {"src":"images/carbono/clean-21.jpg","ar":"2000/1125","caption":{"en":"Feed 02 · before and after","pt":"Feed 02 · antes e depois","es":"Feed 02 · antes y después"},"span":6},
         {"src":"images/carbono/clean-16.jpg","ar":"2000/1125","caption":{"en":"Feed 01 · paired posts","pt":"Feed 01 · posts casados","es":"Feed 01 · publicaciones conectadas"},"col":1,"span":6},
@@ -2437,12 +2437,12 @@ window.SITE.ramon = {
       "images/ramon/mockup-1.jpg",
       "images/ramon/mockup-2.jpg",
       "images/ramon/mockup-3.jpg"
-    ],
-    "gif": "images/ramon/photography-loop.gif"
+    ]
   },
   "copy": {
     "boardsLabel": { "en": "Boards", "pt": "Pranchas", "es": "Láminas" },
-    "boardsHint": { "en": "boards on view · select any image to enlarge", "pt": "pranchas abertas · clique em qualquer imagem para ampliar", "es": "láminas a la vista · selecciona una imagen para ampliarla" },
+    "boardsHint": { "en": "boards · select any image to enlarge", "pt": "pranchas · clica em qualquer imagem pra ampliar", "es": "láminas · selecciona una imagen para ampliarla" },
+    "openBoards": { "en": "See the boards", "pt": "Ver as pranchas", "es": "Ver las láminas" },
     "viewBoard": { "en": "Enlarge", "pt": "Ampliar", "es": "Ampliar" },
     "openHint": { "en": "Select a photo to enlarge", "pt": "Clica na foto pra ampliar", "es": "Selecciona una foto para ampliarla" },
     "photoInvite": { "en": "Select any photograph to see it up close, browse the sequence or visit Ramón’s portfolio.", "pt": "Clica em qualquer fotografia pra ver de perto, navegar pela sequência ou visitar o portfólio do Ramón.", "es": "Selecciona una fotografía para verla de cerca, recorrer la secuencia o visitar el portafolio de Ramón." },
@@ -2566,11 +2566,6 @@ window.SITE.ramon = {
       "en": "Play sequence",
       "pt": "Reproduzir sequência",
       "es": "Reproducir secuencia"
-    },
-    "gif": {
-      "en": "Download the GIF",
-      "pt": "Baixar o GIF",
-      "es": "Descargar el GIF"
     },
     "visit": {
       "en": "Explore Ramón’s photography",
@@ -2737,7 +2732,7 @@ window.SITE.carbono = {
       }
     },
     {
-      "src": "images/carbono/clean-14.jpg",
+      "src": "images/carbono/clean-14-new.jpg",
       "ar": "16/9",
       "caption": {
         "en": "Instagram · communication direction",

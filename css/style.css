@@ -1181,7 +1181,7 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 }
 
 /* DISORD/AIR — editorial feed and accessible post reader. All original artwork stays whole. */
-.dis-experience{--dis-orange:#ff4e23;--dis-cream:#f1d9bd;color:#12110f}
+.dis-experience{--dis-orange:#ff4e23;--dis-cream:#faf1e6;color:#12110f}
 .dis-lead{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);border-top:1px solid currentColor}
 .dis-intro{grid-column:1/6;padding:32px 0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
 .dis-intro h2{font-family:Georgia,serif;font-size:clamp(42px,6.8vw,116px);font-weight:700;line-height:.96;letter-spacing:-.065em;white-space:pre-line;margin:40px 0 28px}
@@ -1191,7 +1191,7 @@ body:has(#corners.on:not(.calm)) .sub.open > .sub-row{top:var(--cnr-h,0px)}
 .dis-status{display:flex;justify-content:space-between;font-size:2cqw;padding:0 6%;font-weight:bold}.dis-island{position:absolute;top:1.4%;left:37%;width:27%;height:3.1%;border-radius:100px;background:#0b0b0b}.dis-phone-title{text-align:center;font-size:3cqw;font-weight:bold;padding:9% 0 5%}.dis-profile{display:flex;align-items:center;gap:8%;padding:3% 4%}.dis-profile>img{width:19%;object-fit:contain}.dis-profile b{font-size:2.6cqw}.dis-profile p{font-size:1.8cqw;line-height:1.4;margin:5% 0}.dis-phone-hint{font-size:1.4cqw;letter-spacing:.03em;margin:5% 0 3%;text-align:center}.dis-phone-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}.dis-phone-grid button{border:0;padding:0;background:transparent;cursor:pointer;min-width:0}.dis-phone-grid img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain}.dis-phone-story{background:var(--dis-orange);border:0;font-size:2cqw;line-height:1.3;text-align:left;padding:7% 5%;margin-top:5%;cursor:pointer;font-weight:bold;color:#12110f}.dis-phone-bottom{text-align:center;margin-top:auto;font-size:3.2cqw;padding:3%}.dis-screen button:hover{outline:2px solid #12110f;outline-offset:-2px}
 .dis-archive{padding:70px 0 50px;scroll-margin-top:90px}.dis-section-head{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid;padding:18px 0}.dis-section-head>span{font-size:10px}.dis-filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 24px}.dis-filters button{font:inherit;font-size:13px;background:transparent;border:1px solid #12110f;color:inherit;padding:10px 16px;cursor:pointer}.dis-filters button[aria-pressed=true],.dis-filters button:hover{background:#12110f;color:var(--dis-cream)}
 .dis-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap)}.dis-post{grid-column:span 4;min-width:0;background:none;color:inherit;border:0;padding:0;text-align:left;cursor:pointer}.dis-post[hidden]{display:none}.dis-post img{display:block;width:100%;height:auto;object-fit:contain}.dis-post>span{display:block;font-size:clamp(15px,1.8vw,26px);font-weight:700;padding:12px 0 24px;line-height:1.2}.dis-post small{display:block;font-size:12px;font-weight:400;margin-top:6px}.dis-post:hover>span{text-decoration:underline;text-decoration-color:var(--dis-orange);text-underline-offset:5px}.dis-count{text-align:right;font-size:11px}
-.dis-voice{border-top:1px solid;padding:25px 0 70px}.dis-voice blockquote{font:bold italic clamp(34px,5.5vw,86px)/1.1 Georgia,serif;letter-spacing:-.035em;max-width:24ch;margin:50px 0;color:#a6260a}.dis-voice>.mono:last-child{font-size:10px}
+.dis-voice{border-top:1px solid;padding:25px 0 70px}.dis-voice blockquote{font:bold italic clamp(34px,5.5vw,86px)/1.1 Georgia,serif;letter-spacing:-.035em;max-width:24ch;margin:50px 0;color:var(--fg)}.dis-voice>.mono:last-child{font-size:10px}
 .dis-dialog{position:fixed;inset:0;margin:auto;width:min(960px,94vw);max-height:92dvh;padding:20px 24px;background:var(--dis-cream);color:#12110f;border:1px solid;overscroll-behavior:contain;overflow:auto}.dis-dialog::backdrop{background:rgb(0 0 0 / .8)}.dis-dialog-head,.dis-dialog-nav{display:flex;align-items:center;justify-content:space-between;gap:12px}.dis-dialog-head{border-bottom:1px solid;padding-bottom:10px}.dis-dialog-head button,.dis-dialog-nav button{font:inherit;font-size:32px;border:0;background:transparent;color:inherit;cursor:pointer;min-width:44px;min-height:44px}.dis-dialog-nav{border-top:1px solid;margin-top:16px;padding-top:8px}.dis-dialog-nav button:disabled{opacity:.25;cursor:default}.dis-dialog-content{padding:18px 0}.dis-dialog-content>img{display:block;max-width:100%;width:auto;height:auto;max-height:60dvh;object-fit:contain;margin:auto}.dis-record{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 20px;margin-top:16px}.dis-record h2{font-size:24px;margin:0}.dis-record p{margin:0}.dis-record a{font-size:11px;border-bottom:1px solid}.dis-story{max-width:680px;padding:20px 0;margin:auto}.dis-story>h2{font:bold clamp(32px,5vw,70px)/1 Georgia,serif;letter-spacing:-.045em;margin:25px 0;color:#a6260a}.dis-story>p:not(.mono){font:clamp(20px,2.5vw,30px)/1.45 Georgia,serif;margin:24px 0}.dis-story small{display:block;font:11px/1.6 'JetBrains Mono',monospace;margin-top:30px}.dis-experience button:focus-visible,.dis-experience a:focus-visible{outline:3px solid #12110f;outline-offset:4px}
 @media(max-width:700px){.dis-intro{grid-column:1/13;padding-top:20px}.dis-intro h2{font-size:clamp(48px,12vw,80px);margin:20px 0}.dis-index{padding-top:10px}.dis-hand{grid-column:1/13}.dis-lead{row-gap:0}.dis-archive{padding-top:40px}.dis-grid .dis-post{grid-column:span 6}.dis-section-head{align-items:flex-start;flex-direction:column;gap:8px}.dis-voice blockquote{margin:30px 0}.dis-dialog{padding:12px 16px}.dis-record{display:block}.dis-record p{margin:8px 0}.dis-story{padding:0}.dis-story>p:not(.mono){font-size:21px}}
 
@@ -1302,3 +1302,22 @@ body.in-case:has(.rv-case) .corners>*{color:#fff}
   .rv-section-heading h2{font-size:clamp(30px,8vw,44px)}
   .rv-jump button{padding:12px 4px;font-size:9px}
 }
+
+/* Ramón's original boards (Felipe, Nov 16 2026: "make smaller or like previously, closed"): closed by default behind one
+   line in the fold-button style; opened, small thumbnails, 4 per row (2 on phones), still enlarge on click */
+.rv-boards{grid-column:1/13}
+.rv-boards > summary{list-style:none;display:flex;align-items:baseline;gap:16px;padding:18px 0;border-top:var(--rule-w) solid var(--fg);border-bottom:var(--rule-w) solid var(--fg);font:400 13px/1.2 var(--mono);text-transform:uppercase;cursor:pointer}
+.rv-boards > summary::-webkit-details-marker{display:none}
+.rv-boards > summary > span:last-child{margin-left:auto;transition:rotate .3s var(--ease)}
+.rv-boards[open] > summary > span:last-child{rotate:180deg}
+.rv-boards > summary:hover > span:first-child,.rv-boards > summary:focus-visible > span:first-child{color:var(--ai-t,var(--ai,var(--blue)))}
+.rv-boards-hint{margin:16px 0}
+.rv-boards .rv-board-grid button{grid-column:span 3;margin-bottom:var(--gap)}
+.rv-boards .rv-board-grid button > span{font-size:10px;margin-top:6px}
+@media (max-width:760px){ .rv-boards .rv-board-grid button{grid-column:span 6} }
+
+/* Cursor (Felipe, Nov 16 2026): always the inverse of what is under it, white on black and black on white */
+.ball,.ball.white{background:#fff!important;mix-blend-mode:difference}
+.trail{mix-blend-mode:difference}
+.ball-tag{background:#fff!important;color:#000!important;mix-blend-mode:difference}
+
