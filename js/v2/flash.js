@@ -12,7 +12,7 @@
   const STEP = 55; // ms per frame (Felipe: faster)
 
   // Treatments to compare (Felipe, Nov 16 2026: "give me options"): ?flash=chaos | dither | ascii | mosh
-  const MODES = ["chaos", "dither", "ascii", "mosh"];
+  const MODES = ["chaos", "dither", "ascii", "mosh", "mosh-blue"];
   const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(v => (v + .5) * 16);
   const RAMP = " .:-=+*#%@";
 
@@ -24,7 +24,7 @@
     const root = document.documentElement;
     const box = document.createElement("div");
     box.className = "flash"; box.setAttribute("aria-hidden", "true");
-    box.innerHTML = still ? `<img class="fl-img" alt="" decoding="async">` : `<canvas class="fl-tv fl-${mode}"></canvas>`;
+    box.innerHTML = still ? `<img class="fl-img" alt="" decoding="async">` : `<canvas class="fl-tv fl-${mode.split("-")[0]}"></canvas>`;
     root.classList.toggle("flash-ink", mode === "dither");
     stage.prepend(box);
     const img = box.querySelector(".fl-img"), cv = box.querySelector(".fl-tv"), g = cv && cv.getContext("2d", { willReadFrequently: true });
@@ -36,7 +36,7 @@
       if (!cv) return; const phone = (innerWidth || 1024) < 760, ar = (innerHeight || 9) / (innerWidth || 16);
       if (mode === "ascii") { cols = phone ? 64 : 132; rows = Math.max(20, Math.round(cols * ar * 8 / 14)); W = cols * 8; H = rows * 14;
         cell = cell || document.createElement("canvas"); cell.width = cols; cell.height = rows; }
-      else { W = mode === "dither" ? (phone ? 220 : 380) : mode === "mosh" ? (phone ? 320 : 480) : (phone ? 400 : 640); H = Math.max(140, Math.round(W * ar)); }
+      else { W = mode === "dither" ? (phone ? 220 : 380) : mode.startsWith("mosh") ? (phone ? 320 : 480) : (phone ? 400 : 640); H = Math.max(140, Math.round(W * ar)); }
       if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; buf = null; prev = null; }
     };
     let prev = null;
@@ -47,7 +47,7 @@
       if (!g) return;
       if (mode === "dither") return drawDither(im, burst);
       if (mode === "ascii") return drawAscii(im, burst);
-      if (mode === "mosh") return drawMosh(im, burst);
+      if (mode.startsWith("mosh")) return drawMosh(im, burst);
       if (burst || !im) { // pure static between cuts
         const d = g.createImageData(W, H), a = d.data;
         for (let i = 0; i < a.length; i += 4) { const v = Math.random() * 255 | 0; a[i] = a[i + 1] = a[i + 2] = v; a[i + 3] = 255; }
@@ -98,7 +98,10 @@
         g.fillText(burst ? RAMP[Math.random() * RAMP.length | 0] : RAMP[Math.min(RAMP.length - 1, l * RAMP.length | 0)], x * 8, y * 14);
       }
     }
-    // MOSH (pin 2): red and black, horizontal smears, block artefacts, the last frame bleeding into the next
+    // MOSH (pin 2), in the site blue (Felipe, Nov 16 2026): blue and black, horizontal smears, block artefacts,
+    // the last frame bleeding into the next. The tint is read from --blue so it follows the palette.
+    // ?flash=mosh is the red of the reference; ?flash=mosh-blue takes the site blue (--blue)
+    const blue = mode === "mosh-blue" ? (() => { const m = (getComputedStyle(root).getPropertyValue("--blue").trim().match(/^#?([0-9a-f]{6})$/i) || [, "1a2bff"])[1]; return [0, 2, 4].map(i => parseInt(m.slice(i, i + 2), 16) / 255); })() : [1, .055, .09];
     function drawMosh(im, burst) {
       if (!im) return; cover(g, im, W, H);
       const d = g.getImageData(0, 0, W, H), s2 = d.data;
@@ -110,8 +113,10 @@
         let cr = 0, cg2 = 0, cb = 0;
         for (let x = 0; x < W; x++) {
           const i = (y * W + x) * 4; let l = (s2[i] * .299 + s2[i + 1] * .587 + s2[i + 2] * .114) / 255; l = Math.pow(l, 1.7);
-          let r = l * 330, gg = l * 18, b = l * 30;
-          if (Math.random() < .002) { gg = 160 * l + 40; b = 170 * l + 40; } // cyan specks
+          // the frame's light becomes the site blue; the brightest parts lift toward white so the image still reads
+          const hi = Math.max(0, l - .72) * 3.2;
+          let r = (blue[0] * l * 1.25 + hi) * 255, gg = (blue[1] * l * 1.25 + hi) * 255, b = (blue[2] * l * 1.35 + hi * .6) * 255;
+          if (Math.random() < .002) { r = gg = b = 200 * l + 55; } // white specks
           if (band && x >= band[2]) { cr = cr * .93 + r * .07; cg2 = cg2 * .93 + gg * .07; cb = cb * .93 + b * .07; r = cr; gg = cg2; b = cb; } else { cr = r; cg2 = gg; cb = b; }
           if (keep && Math.random() < .35) { r = r * .5 + prev[i] * .5; gg = gg * .5 + prev[i + 1] * .5; b = b * .5 + prev[i + 2] * .5; }
           o[i] = r; o[i + 1] = gg; o[i + 2] = b; o[i + 3] = 255;
@@ -145,7 +150,7 @@
         last = t;
         // chaos: most ticks cut to the next frame, some hold it with fresh interference, some flash pure static
         const roll = Math.random();
-        if (roll < (mode === "chaos" ? .12 : mode === "mosh" ? .06 : .03)) show(ready[k], true);
+        if (roll < (mode === "chaos" ? .12 : mode.startsWith("mosh") ? .06 : .03)) show(ready[k], true);
         else { if (roll < .82 && ready.length > 1) k = (k + 1) % ready.length; show(ready[k]); }
       }
       raf = requestAnimationFrame(tick);
