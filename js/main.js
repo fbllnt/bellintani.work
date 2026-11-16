@@ -1507,6 +1507,18 @@
       seen.observe(v);
     });
     if (window.V2Loops) { const lp = window.V2Loops.setup(caseEl, { reduced, signal: caseAbort.signal, labelPlay: T("play"), labelPause: T("pause") }); if (lp) caseCleanups.push(() => lp.destroy()); }
+    // Word specimens (DMA "pixel", SCRV, Globo On): the big word and its entry split the block's own columns in whole
+    // columns, so the entry starts on a column line whatever the block's width (was 4fr / 8fr, off the grid in 7-column blocks)
+    const wordCol = d => {
+      if (!d.getBoundingClientRect().width) return; // hidden (a closed sub-case): measured when it appears
+      const gap = parseFloat(getComputedStyle(caseEl).getPropertyValue("--gap")) || 16, cs = getComputedStyle(caseEl);
+      const inner = caseEl.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight), col = (inner - 11 * gap) / 12;
+      const n = Math.max(1, Math.min(12, Math.round((d.getBoundingClientRect().width + gap) / (col + gap))));
+      d.style.setProperty("--wc", n); d.style.setProperty("--ws", Math.max(1, Math.round(n / 3)));
+    };
+    // measured on render and whenever a block changes size (window resize, a sub-case or fold opening)
+    const wordRO = ownObserver(new ResizeObserver(es => es.forEach(e => wordCol(e.target))));
+    caseEl.querySelectorAll(".word-def").forEach(d => { wordCol(d); wordRO.observe(d); });
     caseEl.querySelectorAll(".case-fold-btn").forEach(b => caseListen(b, "click", () => {
       const rest = b.previousElementSibling; if (!rest || !rest.classList.contains("case-fold")) return;
       rest.hidden = false; b.setAttribute("aria-expanded", "true"); b.remove();

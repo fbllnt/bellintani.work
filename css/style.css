@@ -1321,3 +1321,12 @@ body.in-case:has(.rv-case) .corners>*{color:#fff}
 .trail{mix-blend-mode:difference}
 .ball-tag{background:#fff!important;color:#000!important;mix-blend-mode:difference}
 
+/* Grid check (Nov 16 2026): word specimens split their own width in whole columns (--wc, --ws set by main.js), and a
+   device narrower than its slot sits flush left on the column line instead of centred */
+@media (min-width:761px){
+  .word-def{grid-template-columns:repeat(var(--wc,12),minmax(0,1fr))}
+  .word-def > .word-big{grid-column:1 / span var(--ws,4)}
+  .word-def > .word-entry{grid-column:calc(var(--ws,4) + 1) / -1}
+  :is(.jrow, .pair-fig, .side-row) .device{margin-inline:0}
+}
+
