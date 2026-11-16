@@ -185,6 +185,10 @@ css/v2/ and stays still with reduced motion.
   clean, sexy look (texture, light, close details); the exception is where the mark itself is the motion (SCRV's asterisk,
   DISORD/AIR's symbol, Logofolio's marks). Source windows used are in the commit that added them.
   The card's still is that loop's first frame at 1280x720 (images/cards/<slug>.jpg), so covers follow the same rule.
+- Grid open (Nov 16 2026, after Motto): clicking a Grid card grows its picture (or the hovered loop's current frame)
+  from the card to the full screen, 900ms cubic-bezier(.87,0,.13,1), then the case renders under it and it fades
+  (growCard in main.js; Logofolio uses the list's panel grow). Back from a case lands on that card. Loops play on mouse
+  over and keyboard focus only, never on a script focus, never with reduced motion.
 
 
 - Never cut any part of an image, anywhere on the site (galleries, home cards, sequences, photo tiles,

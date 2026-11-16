@@ -239,12 +239,13 @@
   // Card motion (Felipe, Nov 16 2026): every card has a loop that stays still and only moves on mouse over; leaving
   // pauses it back on its first frame. Touch screens and reduced motion keep the still.
   if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    const playCard = c => { const v = c?.querySelector("video.card-film"); if (!v || !v.paused) return; v.onplaying = () => c.classList.add("moving"); v.play().catch(() => {}); };
+    const playCard = c => { const v = c?.querySelector("video.card-film"); if (!v || !v.paused || matchMedia("(prefers-reduced-motion: reduce)").matches) return; v.onplaying = () => c.classList.add("moving"); v.play().catch(() => {}); };
     const stopCard = c => { const v = c?.querySelector("video.card-film"); c?.classList.remove("moving"); if (v) { v.pause(); v.currentTime = 0; } };
     grid.addEventListener("pointerover", e => playCard(e.target.closest(".card")));
     grid.addEventListener("pointerout", e => { const c = e.target.closest(".card"); if (!c || c.contains(e.relatedTarget)) return;
       stopCard(c); });
-    grid.addEventListener("focusin", e => playCard(e.target.closest(".card")));
+    // keyboard focus only: a script focus (back from a case lands on the card) must not start a loop with no hover
+    grid.addEventListener("focusin", e => { const c = e.target.closest(".card"); if (c && c.matches(":focus-visible")) playCard(c); });
     grid.addEventListener("focusout", e => stopCard(e.target.closest(".card")));
   }
   const worksSec = document.querySelector(".works"), vList = $("view-list"), vGrid = $("view-grid");
@@ -2013,6 +2014,7 @@
     // Back to the list (browser back or Work): land on the row of the project just left, its title flashing in that
     // project's colour (Felipe, Oct 30 2026); any other target (#about…) goes where it says
     const row = (!target || target === "work") && openIdx >= 0 ? index.querySelector(`a[data-i="${openIdx}"]`) : null;
+    const i0 = openIdx;
     openIdx = -1;
     if (row && row.offsetParent) {
       row.scrollIntoView({ behavior: "instant", block: "center" }); lenisSync();
@@ -2024,6 +2026,9 @@
       }
       return;
     }
+    // Grid view: land on the card of the project just left
+    const card = (!target || target === "work") && i0 >= 0 ? grid.querySelector(`.card[data-i="${i0}"]`) : null;
+    if (card && card.offsetParent) { card.scrollIntoView({ behavior: "instant", block: "center" }); lenisSync(); card.focus({ preventScroll: true }); return; }
     ($(target) || $("work")).scrollIntoView({ behavior: "instant" }); lenisSync();
   });
   const route = () => {
@@ -2125,13 +2130,48 @@
       .catch(() => {})
       .finally(() => { veil.remove(); growing = false; grown = false; });
   };
+  // 3b. Grid open (Felipe, Nov 16 2026, after Motto): the clicked card's picture lifts out of the grid and grows to fill
+  // the screen on an expo curve; the case renders underneath and the picture fades away. Mid-hover it carries the loop's
+  // current frame, so the motion never jumps back to the still. Logofolio's mosaic (no picture) grows its panel instead.
+  const growCard = (card, i) => {
+    if (growing) return;
+    const ph = card.querySelector(".ph"), v = ph.querySelector("video.card-film"), still = ph.querySelector(":scope > img");
+    if (!still) { grow(ph, i); return; }
+    growing = true;
+    const p = S.projects[i], r = ph.getBoundingClientRect();
+    const layer = document.createElement("div");
+    layer.className = "card-grow";
+    layer.style.background = (p.theme && p.theme.bg) || "#fff";
+    let media;
+    if (card.classList.contains("moving") && v && v.readyState >= 2 && v.videoWidth) {
+      media = document.createElement("canvas");
+      media.width = v.videoWidth; media.height = v.videoHeight;
+      try { media.getContext("2d").drawImage(v, 0, 0); } catch { media = null; }
+    }
+    if (!media) { media = new Image(); media.src = still.currentSrc || still.src; media.alt = ""; }
+    layer.append(media);
+    document.body.append(layer);
+    const box = (x, y, w, h) => ({ left: x + "px", top: y + "px", width: w + "px", height: h + "px" });
+    const a = layer.animate([box(r.left, r.top, r.width, r.height), box(0, 0, innerWidth, innerHeight)],
+      { duration: 900, easing: "cubic-bezier(.87,0,.13,1)", fill: "forwards" });
+    a.finished
+      .then(() => {
+        grown = true;
+        navigate(href(p));
+        return layer.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 420, delay: 80, easing: "ease-out", fill: "forwards" }).finished;
+      })
+      .catch(() => {})
+      .finally(() => { layer.remove(); growing = false; grown = false; });
+  };
   works.addEventListener("click", e => {
-    const a = e.target.closest(".index a");
-    if (!a || !fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
-    const i = S.projects.findIndex(p => a.getAttribute("href") === href(p));
+    if (!fxOn || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    const a = e.target.closest(".index a"), card = !a && e.target.closest(".grid .card");
+    const link = a || card;
+    if (!link) return;
+    const i = S.projects.findIndex(p => link.getAttribute("href") === href(p));
     if (i < 0) return;
     e.preventDefault();
-    grow(a, i);
+    a ? grow(a, i) : growCard(card, i);
   });
 
 
