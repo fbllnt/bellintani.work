@@ -20,7 +20,7 @@
 .grid .card{display:grid;gap:10px;min-width:0;color:var(--fg);text-decoration:none}
 .grid .card[hidden]{display:none}
 .grid .card .ph{position:relative;aspect-ratio:16/9;background:var(--panel);overflow:hidden}
-.grid .card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.grid .card .ph img,.grid .card .ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
 .grid .card .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .grid .card .row b{font:900 clamp(18px,1.6vw,26px)/.95 var(--sans);letter-spacing:-.045em;text-transform:uppercase;transition:color .25s}
 .grid .card .row .mono{font-size:11px;white-space:nowrap}

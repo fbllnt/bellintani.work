@@ -226,7 +226,12 @@
   // medium 16:9 cards, 3 per row, cover contained on the panel colour (never cropped), title and year. The visitor's
   // choice is remembered; the filters drive both views.
   const grid = $("grid");
-  grid.innerHTML = S.projects.map((p, i) => `<a class="card" href="${href(p)}" data-i="${i}"><div class="ph">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" decoding="async">`
+  // `cardImage` / `cardVideo` (optional, Nov 16 2026): a cover made for the grid; the video loops silently, the image
+  // is what shows with reduced motion (DISORD/AIR: the 3D symbol turning)
+  const cardMedia = p => p.cardVideo && !matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? `<video muted loop playsinline autoplay preload="metadata" poster="${esc(p.cardVideo.poster || p.cardImage || p.image)}" aria-hidden="true">${p.cardVideo.webm ? `<source src="${esc(p.cardVideo.webm)}" type="video/webm">` : ""}<source src="${esc(p.cardVideo.mp4)}" type="video/mp4"></video>`
+    : p.cardImage || p.image ? `<img src="${esc(p.cardImage || p.image)}" alt="" loading="lazy" decoding="async">` : "";
+  grid.innerHTML = S.projects.map((p, i) => `<a class="card" href="${href(p)}" data-i="${i}"><div class="ph">${p.cardVideo || p.cardImage || p.image ? cardMedia(p)
       : p.logos ? `<span class="card-logos">${p.logos.slice(0, 6).map(l => `<img src="${esc(l.src)}" alt="" loading="lazy" decoding="async">`).join("")}</span>` : ""}</div>
     <div class="row"><b>${esc(L(p.title))}</b>${p.year ? `<span class="mono muted">${esc(p.year)}</span>` : ""}</div></a>`).join("");
   const worksSec = document.querySelector(".works"), vList = $("view-list"), vGrid = $("view-grid");
