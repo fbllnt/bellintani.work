@@ -1489,10 +1489,10 @@ window.SITE = {
     "accentText": "#a6260a"
   },
   "summary": {
-    "en": "An Instagram about music. Daily discoveries, stories behind the artists and a voice of its own. DISORD/AIR brings an editorial identity to the feed: orange, cream, emphatic serif type and music worth sharing.",
-    "pt": "Um Instagram sobre música. Descobertas do dia, histórias por trás dos artistas e uma voz própria. DISORD/AIR leva uma identidade editorial para o feed: laranja, creme, serifas marcantes e música que vale compartilhar.",
-    "es": "Un Instagram sobre música. Descubrimientos diarios, historias de los artistas y una voz propia. DISORD/AIR lleva una identidad editorial al feed: naranja, crema, tipografía con carácter y música para compartir."
-  },
+    "en": "DISORD/AIR was a personal digital project I launched and ran for a while. Discovering things and telling stories is one of my favourite things in life. Music is another passion, so I put them together on Instagram: discoveries, stories behind the artists and little oddities worth sharing. The project is on pause and should return soon, in a different format.",
+    "pt": "DISORD/AIR foi um projeto pessoal digital que coloquei no ar e toquei durante um tempo. Descobrir coisas e contar histórias é um dos grandes baratos da minha vida. Como música é outra paixão, juntei tudo num Instagram: descobertas, histórias por trás dos artistas e umas doideirinhas que mereciam ser compartilhadas. O projeto está em pausa e deve voltar em breve, em outro formato.",
+    "es": "DISORD/AIR fue un proyecto personal digital que lancé y llevé durante un tiempo. Descubrir cosas y contar historias es una de las cosas que más disfruto en la vida. La música es otra pasión, así que lo junté todo en Instagram: descubrimientos, historias de los artistas y pequeñas rarezas para compartir. El proyecto está en pausa y debería volver pronto, en otro formato."
+},
   "layout": "disorder",
   "gallery": []
 },
@@ -1864,9 +1864,9 @@ window.SITE.disorder = {
       "es": "Música.\nCon opinión."
     },
     "intro": {
-      "en": "A daily discovery. A story you didn’t know. Explore an Instagram made for people who really listen.",
-      "pt": "Uma descoberta do dia. Uma história que você não conhecia. Explore um Instagram feito para quem gosta de ouvir.",
-      "es": "Un descubrimiento diario. Una historia que no conocías. Explora un Instagram para quienes disfrutan escuchar."
+      "en": "A place to share music, discover little oddities and tell the stories I find along the way.",
+      "pt": "Um espaço para dividir músicas, descobrir doideirinhas e contar as histórias que encontro pelo caminho.",
+      "es": "Un espacio para compartir música, descubrir rarezas y contar las historias que encuentro en el camino."
     },
     "explore": {
       "en": "Explore the archive",
@@ -1963,8 +1963,16 @@ window.SITE.disorder = {
       "pt": "Buscar no Spotify",
       "es": "Buscar en Spotify"
     },
-    "pauseLoop": {"en":"Pause loop", "pt":"Pausar loop", "es":"Pausar loop"},
-    "playLoop": {"en":"Play loop", "pt":"Reproduzir loop", "es":"Reproducir loop"},
+    "pauseLoop": {
+      "en": "Pause loop",
+      "pt": "Pausar loop",
+      "es": "Pausar loop"
+    },
+    "playLoop": {
+      "en": "Play loop",
+      "pt": "Reproduzir loop",
+      "es": "Reproducir loop"
+    },
     "sideB": {
       "en": "02 / SIDE B",
       "pt": "02 / LADO B",
@@ -2004,6 +2012,26 @@ window.SITE.disorder = {
       "en": "Open artwork",
       "pt": "Abrir arte",
       "es": "Abrir arte"
+    },
+    "storyCta": {
+      "en": "OPEN THE FULL STORY",
+      "pt": "ABRIR A HISTÓRIA COMPLETA",
+      "es": "ABRIR LA HISTORIA COMPLETA"
+    },
+    "storyInvite": {
+      "en": "Take the story out of the phone.",
+      "pt": "Tire a história de dentro do celular.",
+      "es": "Saca la historia del teléfono."
+    },
+    "storyHelp": {
+      "en": "Tap the Daft Punk cover on the phone, or open it here.",
+      "pt": "Clique na capa do Daft Punk no celular ou abra por aqui.",
+      "es": "Toca la portada de Daft Punk en el teléfono o ábrela aquí."
+    },
+    "returnNote": {
+      "en": "On pause. Back soon, in a different format.",
+      "pt": "Em pausa. Deve voltar em breve, em outro formato.",
+      "es": "En pausa. Debería volver pronto, en otro formato."
     }
   },
   "posts": [
