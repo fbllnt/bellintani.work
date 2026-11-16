@@ -1980,9 +1980,6 @@ window.SITE = {
   ],
 };
 
-// Hero flash frames (Felipe, Nov 16 2026): one to three per public project, 960 px, shuffled so neighbours differ
-window.SITE.flash = ["images/flash/f01.jpg", "images/flash/f02.jpg", "images/flash/f03.jpg", "images/flash/f04.jpg", "images/flash/f05.jpg", "images/flash/f06.jpg", "images/flash/f07.jpg", "images/flash/f08.jpg", "images/flash/f09.jpg", "images/flash/f10.jpg", "images/flash/f11.jpg", "images/flash/f12.jpg", "images/flash/f13.jpg", "images/flash/f14.jpg", "images/flash/f15.jpg", "images/flash/f16.jpg", "images/flash/f17.jpg", "images/flash/f18.jpg", "images/flash/f19.jpg", "images/flash/f20.jpg", "images/flash/f21.jpg", "images/flash/f22.jpg", "images/flash/f23.jpg", "images/flash/f24.jpg", "images/flash/f25.jpg", "images/flash/f26.jpg", "images/flash/f27.jpg", "images/flash/f28.jpg", "images/flash/f29.jpg", "images/flash/f30.jpg", "images/flash/f31.jpg", "images/flash/f32.jpg", "images/flash/f33.jpg", "images/flash/f34.jpg", "images/flash/f35.jpg", "images/flash/f36.jpg", "images/flash/f37.jpg", "images/flash/f38.jpg", "images/flash/f39.jpg", "images/flash/f40.jpg"];
-
 window.SITE.disorder = {
   "copy": {
     "symbol": {

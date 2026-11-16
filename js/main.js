@@ -445,10 +445,8 @@
       return { title: L(p.title), video: film?.video, webm: film?.webm, poster: film?.poster || p.image, images: stills(p) };
     }) });
   }
-  // (The turning B® and the word-by-word tagline were tried on Nov 16 2026 and taken out: Felipe kept the v1 home.)
-  // Hero flash: the whole portfolio flickers full bleed behind white type, then fades with the scroll (js/v2/flash.js)
-  // Treatment: chaos by default while Felipe decides; ?flash=mosh | mosh-blue | dither | ascii switch it for comparison
-  if (window.V2Flash && S.flash) window.V2Flash.init({ stage, frames: S.flash, reduced, mode: q.get("flash") || S.flashMode || "chaos" });
+  // (A turning 3D B®, a word-by-word tagline and a full-bleed image flash with glitch treatments were tried on Nov 16 2026
+  // and taken out: Felipe kept the v1 home.)
   // Corners step aside while reading (Oct 27 2026 review): scrolling down past the first screen hides the bottom
   // corners (all four since Nov 11 2026), scrolling up or reaching the top brings them back, so they never sit on the work
   let lastY = scrollY;

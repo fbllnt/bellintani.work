@@ -166,15 +166,14 @@ css/v2/ and stays still with reduced motion.
   removed). Used on the longest cases (Rebranding, Globo On, DMA, DJ Shadow at 4; Carbono at 3).
 - `preview: { video, webm, poster }` (optional) on a project: the loop shown beside the pointer on the work list;
   without it the list uses `coverVideo`, then the first gallery film, then the cover and first two stills.
-- Home: hero flash (see "Images: never crop" for its exception) and smooth wheel scroll on desktop (vendored Lenis 1.1.20). A turning 3D B® on the first screen and a word-by-word
+- Home: smooth wheel scroll on desktop (vendored Lenis 1.1.20). A turning 3D B® on the first screen and a word-by-word
   tagline reveal were tried on Nov 16 2026 and removed: Felipe kept the v1 home ("não gosto dessa home assim"; the rest
-  of v2 approved). Don't bring them back unless he asks.
+  of v2 approved). A full-bleed flash of every project behind white type (with chaos, mosh, dither and ASCII treatments) was
+  also tried that day and set aside for now ("we were better off without it", "not for now"); the full version with all
+  treatments is in commit c33b0b3 (js/v2/flash.js, css/v2/flash.css, images/flash/) if he wants it back. Don't bring these back unless he asks.
 
 ## Images: never crop (Felipe, Oct 24 2026)
 
-- One exception, by Felipe's explicit request (Nov 16 2026): the home hero flash (js/v2/flash.js, images/flash/) fills
-  the first screen full bleed (object-fit: cover) with fast-changing frames from every project, behind white type; it fades
-  out on scroll. Frames are 960 px JPEGs, one to three per public project. Nowhere else.
 
 - Never cut any part of an image, anywhere on the site (galleries, home cards, sequences, photo tiles,
   thumbnails, full screen; desktop and phone). Use `object-fit: contain`, never `cover`, and no zoom-in
