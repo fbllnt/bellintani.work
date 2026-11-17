@@ -1413,8 +1413,8 @@ window.SITE = {
     ]
   },
   "image": "images/disorder/manifesto.jpg",
-  "cardImage": "images/disorder/grid-cover.jpg",
-  "cardVideo": { "mp4": "images/disorder/grid-loop.mp4", "webm": "images/disorder/grid-loop.webm", "poster": "images/disorder/grid-loop-poster.jpg" },
+  "cardImage": "images/disorder/grid-cover.jpg?v=20261117",
+  "cardVideo": { "mp4": "images/disorder/grid-loop.mp4?v=20261117", "webm": "images/disorder/grid-loop.webm?v=20261117", "poster": "images/disorder/grid-loop-poster.jpg" },
   "theme": {
     "bg": "#faf1e6",
     "fg": "#12110f",

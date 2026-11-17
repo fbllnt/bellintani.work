@@ -180,8 +180,10 @@ css/v2/ and stays still with reduced motion.
 - One exception, by Felipe (Nov 16 2026): the home Grid view cards fill their 16:9 mask (object-fit: cover, ratio kept, no
   leftover bands); the full image stays uncropped inside the case. Logofolio's card (six marks) is unaffected.
 - Card motion (Felipe, Nov 16 2026): every Grid card has a silent loop in images/cards/<slug>.mp4/.webm (640x360, or the
-  project's own `cardVideo`) that stays hidden on the still and plays only on mouse over (and keyboard focus); it resets on
-  leave, loads only when hovered, and never shows on touch or with reduced motion. Loops avoid logos and text and keep a
+  project's own `cardVideo`) that stays hidden on the still and plays only on mouse over (and keyboard focus); it ends on
+  leave by pausing where it is (Nov 17 2026: no snap back to the cover; the next hover carries on), loads only when
+  hovered, and never shows on touch or with reduced motion. Film loops crossfade their last 0.4s into the start (no
+  seam); photo loops are hard cuts at 4 frames per photo (about 8 a second, like Ramón). Loops avoid logos and text and keep a
   clean, sexy look (texture, light, close details); the exception is where the mark itself is the motion (SCRV's asterisk,
   DISORD/AIR's symbol, Logofolio's marks). Source windows used are in the commit that added them.
   The card's still is that loop's first frame at 1280x720 (images/cards/<slug>.jpg), so covers follow the same rule.
