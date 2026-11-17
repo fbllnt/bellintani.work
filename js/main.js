@@ -229,10 +229,10 @@
   // Card covers (Felipe, Nov 16 2026): the still (cardImage, the cover, or Logofolio's six marks) always shows; every card also
   // has a silent loop (cardVideo, else images/cards/<slug>.mp4/.webm) stacked on top, invisible until the mouse is over it
   const cardSlug = p => href(p).split("/").filter(Boolean).pop();
-  const CARDV = "?v=20261117"; // bump when the card loops or stills are rebuilt (images are cached for a day)
+  const CARDV = "?v=20261118"; // bump when the card loops or stills are rebuilt (images are cached for a day)
   // the still is the loop's own first frame (images/cards/<slug>.jpg, no logos or text) unless a project sets cardImage
   const cardStill = p => p.cardImage || !p.logos ? `<img src="${esc(p.cardImage || `images/cards/${cardSlug(p)}.jpg${CARDV}`)}" alt="" loading="lazy" decoding="async">`
-    : p.logos ? `<span class="card-logos">${p.logos.slice(0, 6).map(l => `<img src="${esc(l.src)}" alt="" loading="lazy" decoding="async">`).join("")}</span>` : "";
+    : `<span class="card-word" aria-hidden="true">${esc(L(p.title))}</span>`; // Logofolio (Felipe, Nov 17 2026): its name, set like the section headings; the marks roll on hover
   const cardFilm = p => { const v = p.cardVideo || { mp4: `images/cards/${cardSlug(p)}.mp4${CARDV}`, webm: `images/cards/${cardSlug(p)}.webm${CARDV}` };
     return `<video class="card-film" muted loop playsinline preload="none" aria-hidden="true">${v.webm ? `<source src="${esc(v.webm)}" type="video/webm">` : ""}<source src="${esc(v.mp4)}" type="video/mp4"></video>`; };
   grid.innerHTML = S.projects.map((p, i) => `<a class="card" href="${href(p)}" data-i="${i}"><div class="ph">${cardStill(p)}${cardFilm(p)}</div>

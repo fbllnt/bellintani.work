@@ -19,7 +19,7 @@
 .works.as-grid .index{display:none}
 .grid .card{display:grid;gap:10px;min-width:0;color:var(--fg);text-decoration:none}
 .grid .card[hidden]{display:none}
-.grid .card .ph{position:relative;aspect-ratio:16/9;background:var(--panel);overflow:hidden}
+.grid .card .ph{position:relative;aspect-ratio:16/9;background:var(--panel);overflow:hidden;container-type:inline-size}
 /* Felipe, Nov 16 2026: no leftover bands on the cards; the cover scales up, keeping its ratio, until it fills the 16:9 mask
    (horizontally or vertically). The only place where a cover is trimmed: the full image is in the case. */
 .grid .card .ph img,.grid .card .ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
@@ -39,4 +39,6 @@
 /* Grid open: the card's picture grows to fill the screen (see growCard in main.js); filled edge to edge, never banded */
 .card-grow{position:fixed;z-index:70;overflow:hidden;pointer-events:none;will-change:left,top,width,height}
 .card-grow>img,.card-grow>canvas{display:block;width:100%;height:100%;object-fit:cover}
+/* Logofolio's still: its name in the section-heading type (.h2: Figtree 900, -.045em, uppercase), centred on the panel */
+.grid .card .card-word{position:absolute;inset:0;display:grid;place-items:center;font:900 11.5cqw/.84 var(--sans);letter-spacing:-.045em;text-transform:uppercase;color:var(--fg);white-space:nowrap}
 

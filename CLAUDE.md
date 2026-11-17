@@ -187,6 +187,11 @@ css/v2/ and stays still with reduced motion.
   clean, sexy look (texture, light, close details); the exception is where the mark itself is the motion (SCRV's asterisk,
   DISORD/AIR's symbol, Logofolio's marks). Source windows used are in the commit that added them.
   The card's still is that loop's first frame at 1280x720 (images/cards/<slug>.jpg), so covers follow the same rule.
+  Picks by Felipe (Nov 17 2026), which override the no-logos rule for these cards: Seja Anti = the four skeletons, then
+  only the B&W film scenes at 1.6x; XP = the five natacao compositions as a fast loop; Globo = the nave-mae cover film
+  whole; HCP = the "everything" stop-motion, still on its finished frame, replaying the build; Carbono = the sofa cutout
+  centred on #39452D (images/carbono/card-green.jpg) before its cuts; Logofolio = its name in the .h2 type on the panel
+  (no image), the marks roll on hover.
 - Grid open (Nov 16 2026, after Motto): clicking a Grid card grows its picture (or the hovered loop's current frame)
   from the card to the full screen, 900ms cubic-bezier(.87,0,.13,1), then the case renders under it and it fades
   (growCard in main.js; Logofolio uses the list's panel grow). Back from a case lands on that card. Loops play on mouse
