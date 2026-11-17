@@ -1,0 +1,41 @@
+/* Pop quiz (Felipe, Nov 17 2026): first-pass look in the site's own language (white, black, the blue, Figtree +
+   JetBrains Mono, thin lines). To be redesigned from Felipe's references; keep the class names. */
+.ask-open{display:inline-block;margin-top:14px;padding:8px 12px;border:1px solid currentColor;border-radius:999px;background:none;color:inherit;cursor:pointer}
+.ask-open:hover,.ask-open:focus-visible{background:var(--blue);border-color:var(--blue);color:#fff}
+.ask{position:fixed;z-index:75;top:0;right:0;bottom:0;width:min(460px,100vw);box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:calc(18px + env(safe-area-inset-top,0px)) 20px calc(16px + env(safe-area-inset-bottom,0px));background:var(--bg);color:var(--fg);border-left:1px solid var(--line);animation:askIn .45s var(--ease)}
+.ask[hidden]{display:none}
+@keyframes askIn{from{translate:100% 0}}
+.ask-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--fg)}
+.ask-head #ask-title{font-weight:500}
+.ask-tools{display:flex;gap:10px;align-items:center}
+.ask-tools button{background:none;border:0;padding:6px;color:inherit;cursor:pointer;font:inherit}
+.ask-voice{border:1px solid var(--line)!important;border-radius:999px;padding:5px 10px!important}
+.ask-voice[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)!important}
+.ask-close svg{width:18px;height:18px}
+.ask-intro{margin:0;font:700 clamp(22px,2.2vw,28px)/1.05 var(--sans);letter-spacing:-.03em;text-wrap:balance}
+.ask-modes{display:flex;gap:6px}
+.ask-modes button{flex:1;padding:9px 10px;border:1px solid var(--fg);border-radius:999px;background:none;color:inherit;cursor:pointer;font:inherit}
+.ask-modes button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.ask-log{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:14px;overscroll-behavior:contain;padding-right:4px}
+.ask-msg span{display:block;color:var(--mute);font-size:11px;margin-bottom:4px}
+.ask-msg p{margin:0;font:500 16px/1.4 var(--sans);letter-spacing:-.01em}
+.ask-msg.q p{font-weight:700}
+.ask-msg.a p a{color:var(--blue);text-decoration:underline;text-underline-offset:2px}
+.ask-msg.wait p{color:var(--mute);animation:askWait 1s ease-in-out infinite alternate}
+.ask-msg.err p{color:var(--mute)}
+@keyframes askWait{to{opacity:.35}}
+.ask-starters{display:flex;flex-wrap:wrap;gap:6px}
+.ask-starters[hidden]{display:none}
+.ask-starters button{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:none;color:inherit;cursor:pointer;text-align:left;font-size:12px}
+.ask-starters button:hover,.ask-starters button:focus-visible{border-color:var(--blue);color:var(--blue)}
+.ask-form{display:flex;gap:6px;align-items:center;border:1px solid var(--fg);border-radius:999px;padding:4px 4px 4px 16px}
+.ask-form input{flex:1;min-width:0;border:0;background:none;color:inherit;font:500 16px/1.2 var(--sans);padding:8px 0;outline:none}
+.ask-form button{flex:none;width:40px;height:40px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--fg);color:var(--bg);cursor:pointer}
+.ask-form button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6}
+.ask-form .ask-mic{background:none;color:var(--fg);border:1px solid var(--line)}
+.ask-form .ask-mic.on{background:var(--blue);color:#fff;border-color:var(--blue);animation:askPulse 1.1s ease-in-out infinite}
+@keyframes askPulse{50%{box-shadow:0 0 0 6px rgba(26,43,255,.18)}}
+.ask-form:focus-within{border-color:var(--blue)}
+.ask-note{margin:0;color:var(--mute);font-size:10px}
+.ask-note a{color:inherit}
+@media (prefers-reduced-motion:reduce){.ask,.ask-msg.wait p,.ask-form .ask-mic.on{animation:none}}

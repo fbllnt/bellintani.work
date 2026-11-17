@@ -4,3 +4,4 @@ Thumbs.db
 /p/
 /.audit-preview/
 /.openai/
+/worker/facts-site.js

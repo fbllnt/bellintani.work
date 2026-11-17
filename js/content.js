@@ -80,6 +80,17 @@ window.SITE = {
     end: { en: "No pixels were harmed in the making of this portfolio.", pt: "Nenhum pixel foi ferido durante a produção deste portfólio.", es: "Ningún píxel salió herido durante la producción de este portafolio." },
   },
 
+  // Pop quiz (Felipe, Nov 17 2026): a side panel where visitors ask anything about Felipe, by voice or typing.
+  // The answers come from worker/index.js (Workers AI) using this site's facts plus worker/facts-felipe.js.
+  ask: {
+    en: { open: "( Pop quiz )", title: "Pop quiz", intro: "Ask anything about Felipe. His AI buddy answers from what he's shared.", professional: "Professional", personal: "Personal", placeholder: "Type or tap the mic", send: "Send", mic: "Ask by voice", stop: "Stop listening", listening: "Listening…", voiceOn: "Voice on", voiceOff: "Voice off", close: "Close", thinking: "Thinking…", you: "You", buddy: "Buddy", error: "Hmm, my line dropped. Try again?", slow: "Whoa, easy! Give me a second and ask again.", noVoice: "Voice input isn't available in this browser. Typing works great.", note: "AI answers can slip. The real Felipe: felipe@bellintani.work",
+      starters: { professional: ["Have you worked with banks?", "Which agencies have you worked at?", "Do you use AI in your work?", "What do you do best?"], personal: ["Do you have kids?", "What music do you like?", "Where did you study?", "What's the craziest thing you've done?"] } },
+    pt: { open: "( Pop quiz )", title: "Pop quiz", intro: "Pergunte qualquer coisa sobre o Felipe. O parceiro de IA dele responde com o que ele contou.", professional: "Profissional", personal: "Pessoal", placeholder: "Escreva ou toque no microfone", send: "Enviar", mic: "Perguntar por voz", stop: "Parar de ouvir", listening: "Ouvindo…", voiceOn: "Voz ligada", voiceOff: "Voz desligada", close: "Fechar", thinking: "Pensando…", you: "Você", buddy: "Parceiro", error: "Hmm, caiu a linha. Tenta de novo?", slow: "Calma! Me dá um segundo e pergunta de novo.", noVoice: "Este navegador não aceita voz. Escrevendo funciona muito bem.", note: "A IA pode escorregar. O Felipe de verdade: felipe@bellintani.work",
+      starters: { professional: ["Você já trabalhou com bancos?", "Em quais agências você trabalhou?", "Você usa IA no trabalho?", "No que você é melhor?"], personal: ["Você tem filhos?", "Que música você curte?", "Onde você estudou?", "Qual a maior loucura que você já fez?"] } },
+    es: { open: "( Pop quiz )", title: "Pop quiz", intro: "Pregunta lo que quieras sobre Felipe. Su compañero de IA responde con lo que él contó.", professional: "Profesional", personal: "Personal", placeholder: "Escribe o toca el micrófono", send: "Enviar", mic: "Preguntar por voz", stop: "Dejar de escuchar", listening: "Escuchando…", voiceOn: "Voz activada", voiceOff: "Voz desactivada", close: "Cerrar", thinking: "Pensando…", you: "Tú", buddy: "Compañero", error: "Hmm, se cortó la línea. ¿Lo intentas de nuevo?", slow: "¡Calma! Dame un segundo y vuelve a preguntar.", noVoice: "Este navegador no acepta voz. Escribiendo funciona muy bien.", note: "La IA puede equivocarse. El Felipe de verdad: felipe@bellintani.work",
+      starters: { professional: ["¿Has trabajado con bancos?", "¿En qué agencias has trabajado?", "¿Usas IA en tu trabajo?", "¿En qué eres mejor?"], personal: ["¿Tienes hijos?", "¿Qué música te gusta?", "¿Dónde estudiaste?", "¿Qué es lo más loco que has hecho?"] } },
+  },
+
   // Interface labels
   ui: {
     en: {
