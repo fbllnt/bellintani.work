@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Pop quiz · study 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Josefin+Sans:wght@400;600;700&family=Figtree:wght@500;700&display=swap">
+<style>
+/* Study 2 (Nov 17 2026), from Anvil (woodblock type) and Liberty Warehouse (warehouse signage): cream paper,
+   solid black condensed letters, red printed over like a second ink pass, wide-tracked caps between rules,
+   a few strong frames, a round red stamp. Texture only in the paper, never inside the letters. */
+:root{--cream:#f3e7cc;--cream2:#efe2c3;--ink:#161412;--red:#e0463e;--track:.24em}
+*{box-sizing:border-box}
+body{margin:0;background:#2a2723;color:var(--cream);font-family:Figtree,sans-serif}
+.intro{max-width:1240px;margin:0 auto;padding:40px 24px 6px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font:600 11px/1.6 "Josefin Sans";letter-spacing:var(--track);text-transform:uppercase}
+.intro b{display:block;font:400 64px/.86 "League Gothic";letter-spacing:.01em;margin-bottom:6px}
+.row{max-width:1240px;margin:0 auto;padding:22px 24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+@media (max-width:980px){.row{grid-template-columns:1fr;max-width:500px}}
+.cap{font:600 11px/1.5 "Josefin Sans";letter-spacing:var(--track);text-transform:uppercase;margin:0 0 10px;display:flex;justify-content:space-between;gap:10px}
+.panel{position:relative;height:860px;overflow:hidden;display:flex;flex-direction:column;background:var(--cream);color:var(--ink);padding:24px 26px 20px}
+/* soft paper: warm blotches + fine fibre, under everything; letters stay clean */
+.panel::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:
+ radial-gradient(120% 80% at 20% 10%,rgba(255,250,235,.55),transparent 60%),
+ radial-gradient(90% 70% at 90% 90%,rgba(196,160,100,.18),transparent 60%),
+ url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .27  0 0 0 0 .15  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.panel>*{position:relative;z-index:1}
+.tr{font:600 11px/1.5 "Josefin Sans";letter-spacing:var(--track);text-transform:uppercase}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9}
+.over{mix-blend-mode:multiply}
+
+/* ---------- A · Warehouse: black sign type, red overprint, framed labels ---------- */
+.a .top{display:flex;justify-content:space-between;align-items:center}
+.a .top .x{font:400 30px/1 "League Gothic"}
+.a .title{position:relative;margin:26px 0 0;height:236px}
+.a .title h2{margin:0;font:400 232px/.8 "League Gothic";letter-spacing:.005em;text-transform:uppercase;white-space:nowrap}
+.a .title .no{position:absolute;right:6px;top:-18px;color:var(--red);font:400 150px/.8 "League Gothic";letter-spacing:-.01em}
+.a .title .no sup{font-size:.42em;vertical-align:.95em;margin-right:2px;border-bottom:7px solid var(--red);line-height:.8}
+.a .ruled{display:flex;align-items:center;gap:12px;margin:14px 0 4px}
+.a .ruled::before,.a .ruled::after{content:"";flex:1;border-top:3px solid var(--ink)}
+.a .ruled span{font:700 22px/1 "Josefin Sans";letter-spacing:.18em;text-transform:uppercase;padding-top:3px}
+.a .lede{text-align:center;margin:8px auto 18px;max-width:34ch}
+.a .modes{display:flex;justify-content:center;gap:10px;margin-bottom:18px}
+.a .modes button{padding:9px 16px 7px;border:2px solid var(--ink)}
+.a .modes .on{background:var(--ink);color:var(--cream)}
+.a .log{flex:1;display:flex;flex-direction:column;gap:16px}
+.a .q{font:400 34px/.95 "League Gothic";text-transform:uppercase;letter-spacing:.01em}
+.a .q small{display:block;color:var(--red);margin-bottom:4px}
+.a .ans{border:2px solid var(--ink);padding:14px 16px 15px;font:500 16px/1.42 Figtree;position:relative}
+.a .ans .tr{position:absolute;top:-9px;left:12px;background:var(--cream);padding:0 6px;font-size:10px}
+.a .ans a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:3px}
+.a .chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 12px}
+.a .chips button{border-bottom:2px solid var(--ink);padding:3px 0 2px;font-size:10px}
+.a form{display:flex;align-items:center;gap:12px;border-top:3px solid var(--ink);padding-top:12px}
+.a input{flex:1;min-width:0;border:0;background:none;font:400 30px "League Gothic";text-transform:uppercase;letter-spacing:.02em;color:var(--ink);outline:none}
+.a input::placeholder{color:rgba(22,20,18,.38)}
+.a .mic{width:52px;height:52px;border-radius:50%;background:var(--red);color:var(--cream);display:grid;place-items:center}
+.a .note{margin:10px 0 0;font-size:9px;opacity:.6}
+.stamp{position:absolute;width:132px;height:132px;color:var(--red)}
+.stamp text{font:700 13px "Josefin Sans";letter-spacing:.32em;text-transform:uppercase;fill:currentColor}
+
+/* ---------- B · Woodblock: giant red letters on cream, black small type, one strong frame ---------- */
+.b{padding-top:20px}
+.b .top{display:flex;justify-content:space-between;align-items:center}
+.b .intro2{display:flex;justify-content:center;margin:22px 0 2px;color:var(--red)}
+.b h2{margin:0 -4px;text-align:center;font:400 276px/.78 "League Gothic";color:var(--red);text-transform:uppercase;letter-spacing:.01em}
+.b .side{display:flex;justify-content:space-between;align-items:center;margin-top:-118px;padding:0 2px;color:var(--red);font:400 28px/1 "League Gothic";letter-spacing:.06em}
+.b .sub{text-align:center;color:var(--red);margin:96px 0 16px}
+.b .frame{border:3px solid var(--ink);display:grid;grid-template-columns:auto 1fr}
+.b .frame .L{font:400 92px/.8 "League Gothic";padding:10px 14px 4px;border-right:3px solid var(--ink);display:flex;align-items:center}
+.b .frame .modes{display:grid}
+.b .frame .modes button{text-align:left;padding:10px 14px 8px;font:700 15px/1 "Josefin Sans";letter-spacing:.18em;text-transform:uppercase}
+.b .frame .modes button+button{border-top:3px solid var(--ink)}
+.b .frame .modes .on{background:var(--ink);color:var(--cream)}
+.b .log{flex:1;display:flex;flex-direction:column;gap:14px;margin-top:20px}
+.b .q{font:400 32px/.95 "League Gothic";text-transform:uppercase;text-align:center}
+.b .ans{font:500 16px/1.45 Figtree;text-align:center;max-width:38ch;margin:0 auto}
+.b .ans .tr{display:block;color:var(--red);font-size:10px;margin-bottom:6px}
+.b .ans a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:3px}
+.b .div{display:flex;align-items:center;gap:10px;color:var(--ink)}
+.b .div::before,.b .div::after{content:"";flex:1;border-top:2px solid var(--ink)}
+.b .chips{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 14px;margin:12px 0}
+.b .chips button{font-size:10px}
+.b .chips button::before{content:"→ ";color:var(--red)}
+.b form{display:flex;gap:0;border:3px solid var(--ink)}
+.b input{flex:1;min-width:0;border:0;background:none;padding:10px 14px;font:400 28px "League Gothic";text-transform:uppercase;color:var(--ink);outline:none}
+.b input::placeholder{color:rgba(22,20,18,.38)}
+.b .mic{width:58px;background:var(--ink);color:var(--cream);display:grid;place-items:center}
+.b .note{margin:10px 0 0;font-size:9px;opacity:.6;text-align:center}
+
+.openers{max-width:1240px;margin:0 auto;padding:6px 24px 60px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+@media (max-width:980px){.openers{grid-template-columns:1fr;max-width:500px}}
+.op{background:#fff;color:var(--ink);padding:28px;display:flex;align-items:center;gap:22px;min-height:120px}
+.op .tr{color:#777}
+.op-a{display:inline-flex;align-items:center;gap:10px;border:2px solid var(--ink);padding:9px 14px 6px;font:400 30px/1 "League Gothic";text-transform:uppercase;letter-spacing:.02em}
+.op-a b{color:var(--red);font-weight:400}
+.op-b{display:inline-block;background:var(--red);color:var(--cream);padding:10px 16px 6px;font:400 30px/1 "League Gothic";text-transform:uppercase;letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="intro">
+  <div><b>Pop quiz · study 2</b>From Anvil + Liberty Warehouse. Clean letters, texture only in the paper.</div>
+  <div>A · Warehouse &nbsp;&nbsp; B · Woodblock<br>Type: League Gothic (wood type) + Josefin Sans (signage caps) + Figtree (site)<br>Cream #F3E7CC · ink #161412 · red #E0463E</div>
+</div>
+
+<div class="row">
+  <!-- A -->
+  <div>
+    <p class="cap"><span>A · Warehouse</span><span>black sign type, red overprint, framed answers</span></p>
+    <div class="panel a">
+      <div class="top"><span class="tr">Bellintani — est. 2002</span><button class="x">×</button></div>
+      <svg class="stamp over" style="right:22px;top:250px" viewBox="0 0 132 132" aria-hidden="true">
+        <defs><path id="c1" d="M66 66m-50 0a50 50 0 1 1 100 0a50 50 0 1 1-100 0"/></defs>
+        <circle cx="66" cy="66" r="62" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="66" cy="66" r="34" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text><textPath href="#c1">Ask me · anything · ask me · anything ·</textPath></text>
+      </svg>
+      <div class="title"><h2>Pop quiz</h2><span class="no over"><sup>N°</sup>27</span></div>
+      <div class="ruled"><span>Ask anything</span></div>
+      <p class="lede tr">About Felipe. His buddy answers, from what he's shared</p>
+      <div class="modes tr"><button class="on">Professional</button><button>Personal</button></div>
+      <div class="log">
+        <div class="q"><small class="tr">You asked</small>Have you worked in finance?</div>
+        <div class="ans"><span class="tr">Buddy says</span>Yep. He made <a href="#">Seja ANTI</a> for ANTI Creative Finance, skeletons still waiting to get paid. Banco do Brasil is on his client list too.</div>
+        <div class="q"><small class="tr">You asked</small>Craziest thing he's done?</div>
+        <div class="ans"><span class="tr">Buddy says</span>Ha! Nice try. My lips are sealed. Mostly.</div>
+      </div>
+      <div class="chips tr"><button>Do you have kids?</button><button>What music?</button><button>Where did you study?</button></div>
+      <form onsubmit="return false"><input placeholder="Type or tap the mic"><button class="mic" type="button" aria-label="Ask by voice"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></form>
+      <p class="note tr">AI answers can slip · felipe@bellintani.work</p>
+    </div>
+  </div>
+
+  <!-- B -->
+  <div>
+    <p class="cap"><span>B · Woodblock</span><span>giant red letters, black small type, one strong frame</span></p>
+    <div class="panel b">
+      <div class="top"><span class="tr">Bellintani — 27</span><button style="font:400 30px/1 'League Gothic'">×</button></div>
+      <div class="intro2 tr">Introducing</div>
+      <h2>Pop quiz</h2>
+      <div class="side"><span>Ask</span><span>Me</span></div>
+      <p class="sub tr">Anything about Felipe · his buddy answers</p>
+      <div class="frame"><span class="L">?</span><div class="modes"><button class="on">Professional</button><button>Personal</button></div></div>
+      <div class="log">
+        <div class="q">Have you worked in finance?</div>
+        <div class="ans"><span class="tr">Buddy says</span>Yep. He made <a href="#">Seja ANTI</a> for ANTI Creative Finance, skeletons still waiting to get paid. Banco do Brasil is on his client list too.</div>
+        <div class="div tr">★</div>
+        <div class="q">Craziest thing he's done?</div>
+        <div class="ans"><span class="tr">Buddy says</span>Ha! Nice try. My lips are sealed. Mostly.</div>
+      </div>
+      <div class="chips tr"><button>Do you have kids?</button><button>What music?</button><button>Where did you study?</button></div>
+      <form onsubmit="return false"><input placeholder="Type or tap the mic"><button class="mic" type="button" aria-label="Ask by voice"><svg class="i" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></form>
+      <p class="note tr">AI answers can slip · felipe@bellintani.work</p>
+    </div>
+  </div>
+</div>
+
+<div class="openers">
+  <div class="op"><span class="op-a">Pop quiz <b>?</b></span><span class="tr">Home button, A</span></div>
+  <div class="op"><span class="op-b">Pop quiz</span><span class="tr">Home button, B</span></div>
+</div>
+</body>
+</html>

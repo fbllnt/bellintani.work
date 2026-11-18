@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Pop quiz · type options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,500;62..125,900&family=Barlow+Condensed:wght@500;800&family=Big+Shoulders+Display:wght@900&family=Bebas+Neue&family=Oswald:wght@700&family=Inter+Tight:wght@500;600&family=JetBrains+Mono:wght@400&family=Figtree:wght@500;700&display=swap">
+<style>
+/* Type options for the Pop quiz cover (Nov 17 2026): same layout, cream / red / black, only the type changes. */
+:root{--cream:#f3e7cc;--ink:#161412;--red:#e0463e}
+*{box-sizing:border-box}
+body{margin:0;background:#2a2723;color:var(--cream);font-family:Figtree,sans-serif}
+h1{max-width:1500px;margin:0 auto;padding:36px 24px 0;font:500 13px/1.5 "JetBrains Mono";text-transform:uppercase}
+.grid{max-width:1500px;margin:0 auto;padding:20px 24px 60px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media (max-width:1000px){.grid{grid-template-columns:1fr}}
+.opt p{margin:0 0 8px;font:400 12px/1.4 "JetBrains Mono";text-transform:uppercase;display:flex;justify-content:space-between}
+.cover{position:relative;aspect-ratio:16/9;background:var(--cream);color:var(--ink);overflow:hidden;container-type:inline-size}
+.cover::before{content:"";position:absolute;inset:0;background:url("images/explosions-in-the-sky/show/show-07.jpg") center/cover;filter:grayscale(1) contrast(1.05);opacity:.16;mix-blend-mode:multiply}
+.cover>*{position:absolute}
+.top{left:4cqw;right:4cqw;top:3.4cqw;display:flex;justify-content:space-between}
+.title{left:0;right:0;top:50%;translate:0 -54%;text-align:center;color:var(--red);text-transform:uppercase;line-height:.8;white-space:nowrap}
+.side{left:4cqw;right:4cqw;top:50%;display:flex;justify-content:space-between;translate:0 -50%}
+.sub{left:0;right:0;bottom:12cqw;text-align:center}
+.bot{left:4cqw;right:4cqw;bottom:3.4cqw;display:flex;justify-content:space-between;align-items:flex-end}
+.start{border:2px solid var(--ink);padding:.9cqw 1.6cqw .7cqw}
+.small{font-size:1.15cqw;letter-spacing:.14em;text-transform:uppercase}
+
+/* the six pairings */
+.t1 .title{font:400 25cqw/.8 Anton;letter-spacing:-.005em}
+.t1 .small{font-family:"Inter Tight";font-weight:600}
+.t1 .side{font:400 3cqw Anton;letter-spacing:.06em;color:var(--red)}
+
+.t2 .title{font:900 27cqw/.78 Archivo;font-stretch:62%;letter-spacing:-.01em}
+.t2 .small{font-family:Archivo;font-weight:500;font-stretch:125%;letter-spacing:.18em}
+.t2 .side{font:900 3cqw Archivo;font-stretch:62%;color:var(--red)}
+
+.t3 .title{font:800 27cqw/.8 "Barlow Condensed";letter-spacing:-.01em}
+.t3 .small{font-family:"Barlow Condensed";font-weight:500;font-size:1.5cqw;letter-spacing:.2em}
+.t3 .side{font:800 3.2cqw "Barlow Condensed";color:var(--red)}
+
+.t4 .title{font:900 27cqw/.78 "Big Shoulders Display";letter-spacing:-.01em}
+.t4 .small{font-family:"JetBrains Mono";letter-spacing:.04em}
+.t4 .side{font:900 3.2cqw "Big Shoulders Display";color:var(--red)}
+
+.t5 .title{font:400 30cqw/.8 "Bebas Neue";letter-spacing:.01em}
+.t5 .small{font-family:Figtree;font-weight:700;letter-spacing:.16em}
+.t5 .side{font:400 3.4cqw "Bebas Neue";color:var(--red);letter-spacing:.06em}
+
+.t6 .title{font:700 25cqw/.82 Oswald;letter-spacing:-.02em}
+.t6 .small{font-family:"Inter Tight";font-weight:500;letter-spacing:.12em}
+.t6 .side{font:700 3cqw Oswald;color:var(--red)}
+</style>
+</head>
+<body>
+<h1>Pop quiz · type options. Same cover, six pairings. Point at one (or mix: display from one, small type from another).</h1>
+<div class="grid">
+  <div class="opt t1"><p><span>1 · Anton + Inter Tight</span><span>heavy, punchy, poster</span></p><div class="cover">
+    <div class="top small"><span>Bellintani — 27</span><span>← Portfolio</span></div>
+    <div class="title">Pop quiz</div><div class="side"><span>Ask</span><span>Me</span></div>
+    <div class="sub small">Anything about Felipe · his buddy answers</div>
+    <div class="bot small"><span>Professional / Personal</span><span class="start">Start →</span></div></div></div>
+  <div class="opt t2"><p><span>2 · Archivo Condensed + Archivo Expanded</span><span>one family, two widths</span></p><div class="cover">
+    <div class="top small"><span>Bellintani — 27</span><span>← Portfolio</span></div>
+    <div class="title">Pop quiz</div><div class="side"><span>Ask</span><span>Me</span></div>
+    <div class="sub small">Anything about Felipe · his buddy answers</div>
+    <div class="bot small"><span>Professional / Personal</span><span class="start">Start →</span></div></div></div>
+  <div class="opt t3"><p><span>3 · Barlow Condensed</span><span>closest to woodblock wood type</span></p><div class="cover">
+    <div class="top small"><span>Bellintani — 27</span><span>← Portfolio</span></div>
+    <div class="title">Pop quiz</div><div class="side"><span>Ask</span><span>Me</span></div>
+    <div class="sub small">Anything about Felipe · his buddy answers</div>
+    <div class="bot small"><span>Professional / Personal</span><span class="start">Start →</span></div></div></div>
+  <div class="opt t4"><p><span>4 · Big Shoulders + JetBrains Mono</span><span>industrial signage, ties to the site mono</span></p><div class="cover">
+    <div class="top small"><span>Bellintani — 27</span><span>← Portfolio</span></div>
+    <div class="title">Pop quiz</div><div class="side"><span>Ask</span><span>Me</span></div>
+    <div class="sub small">Anything about Felipe · his buddy answers</div>
+    <div class="bot small"><span>Professional / Personal</span><span class="start">Start →</span></div></div></div>
+  <div class="opt t5"><p><span>5 · Bebas Neue + Figtree</span><span>cleanest, ties to the site</span></p><div class="cover">
+    <div class="top small"><span>Bellintani — 27</span><span>← Portfolio</span></div>
+    <div class="title">Pop quiz</div><div class="side"><span>Ask</span><span>Me</span></div>
+    <div class="sub small">Anything about Felipe · his buddy answers</div>
+    <div class="bot small"><span>Professional / Personal</span><span class="start">Start →</span></div></div></div>
+  <div class="opt t6"><p><span>6 · Oswald + Inter Tight</span><span>classic gothic, softer</span></p><div class="cover">
+    <div class="top small"><span>Bellintani — 27</span><span>← Portfolio</span></div>
+    <div class="title">Pop quiz</div><div class="side"><span>Ask</span><span>Me</span></div>
+    <div class="sub small">Anything about Felipe · his buddy answers</div>
+    <div class="bot small"><span>Professional / Personal</span><span class="start">Start →</span></div></div></div>
+</div>
+</body>
+</html>

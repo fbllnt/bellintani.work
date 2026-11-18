@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Pop quiz · study 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&display=swap">
+<style>
+/* Study 4 (Nov 17 2026): Felipe's type pick (Helvetica Now Display; Inter Tight stands in, a local Helvetica Now wins)
+   and motion pick (kinetic type: letters peel off, tumble on arcs and land in new places, "Energy in Motion").
+   Clean, red / black / off-white, 16:9. */
+:root{--paper:#f2efe8;--ink:#111;--red:#e3312b;--sans:"Helvetica Now Display","Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#1d1c1b;color:var(--paper);font-family:var(--sans)}
+.lab{max-width:1500px;margin:0 auto;padding:30px 24px 10px;font:600 12px/1.5 var(--sans);display:flex;justify-content:space-between}
+.screen{position:relative;max-width:1500px;margin:0 auto 18px;aspect-ratio:16/9;background:var(--paper);color:var(--ink);overflow:hidden;container-type:inline-size}
+.screen>*{position:absolute}
+.sm{font:600 .95cqw/1.25 var(--sans);letter-spacing:-.005em}
+.kin{position:absolute;left:0;right:0;font:800 15.5cqw/.86 var(--sans);letter-spacing:-.045em;text-transform:uppercase;text-align:center;white-space:nowrap}
+.kin .ln{display:block}
+.kin .k{display:inline-block;will-change:transform}
+.ghost{position:absolute;pointer-events:none;will-change:transform,opacity}
+.controls{max-width:1500px;margin:0 auto 34px;padding:0 24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.controls button{font:600 13px var(--sans);padding:10px 14px;border:1px solid var(--paper);background:none;color:var(--paper);cursor:pointer;border-radius:999px}
+.controls span{font:500 13px var(--sans);opacity:.6}
+
+/* cover */
+.c-top{left:2.6cqw;right:2.6cqw;top:2.2cqw;display:flex;justify-content:space-between}
+.c-kin{top:8.2cqw}
+.c-info{top:27.4cqw;left:7cqw;right:7cqw;display:flex;justify-content:space-between;pointer-events:none}
+.c-info .r{text-align:right}
+.c-bot{left:2.6cqw;right:2.6cqw;bottom:2.2cqw;display:flex;justify-content:space-between;align-items:flex-end}
+.c-start{font:700 1.6cqw/1 var(--sans);letter-spacing:-.02em;background:var(--red);color:var(--paper);padding:1.1cqw 1.8cqw;border-radius:999px;border:0;cursor:pointer}
+.c-dot{display:inline-block;width:.7cqw;height:.7cqw;border-radius:50%;background:var(--red);margin-right:.5cqw;vertical-align:.05cqw}
+
+/* quiz */
+.q-top{left:2.6cqw;right:2.6cqw;top:2.2cqw;display:flex;justify-content:space-between;align-items:center}
+.q-modes{display:flex;gap:.5cqw}
+.q-modes button{font:600 .95cqw var(--sans);padding:.55cqw 1cqw;border-radius:999px;border:1px solid var(--ink);background:none;color:var(--ink);cursor:pointer}
+.q-modes .on{background:var(--ink);color:var(--paper)}
+.q-kin{top:6cqw;color:var(--red);font-size:12.5cqw}
+.q-ask{left:2.6cqw;top:20.4cqw;width:48cqw}
+.q-ask .sm{color:var(--red);margin-bottom:.8cqw}
+.q-ask b{display:block;font:700 3.7cqw/.98 var(--sans);letter-spacing:-.035em}
+.q-ans{left:52cqw;top:20.4cqw;width:45cqw}
+.q-ans .sm{color:var(--red);margin-bottom:.8cqw}
+.q-ans p{margin:0;font:500 2.05cqw/1.22 var(--sans);letter-spacing:-.02em}
+.q-ans p a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:.18cqw;text-underline-offset:.3cqw}
+.q-line{left:2.6cqw;right:2.6cqw;top:18.6cqw;border-top:.12cqw solid var(--ink)}
+.q-chips{left:2.6cqw;bottom:7.4cqw;display:flex;gap:.5cqw;flex-wrap:wrap;width:60cqw}
+.q-chips button{font:600 .95cqw var(--sans);padding:.55cqw 1cqw;border-radius:999px;border:1px solid rgba(17,17,17,.3);background:none;color:var(--ink);cursor:pointer}
+.q-chips button:hover{border-color:var(--red);color:var(--red)}
+.q-form{left:2.6cqw;right:2.6cqw;bottom:2.2cqw;display:flex;align-items:center;gap:1cqw;border-top:.12cqw solid var(--ink);padding-top:1cqw}
+.q-form .in{flex:1;font:700 2.4cqw/1 var(--sans);letter-spacing:-.03em;color:rgba(17,17,17,.3)}
+.q-form .mic{width:3.6cqw;height:3.6cqw;border-radius:50%;background:var(--red);display:grid;place-items:center;color:var(--paper)}
+.q-form .mic svg{width:1.5cqw;height:1.5cqw;fill:none;stroke:currentColor;stroke-width:2}
+.q-ans p .ln2{display:block;overflow:hidden}
+.fade{animation:fade .6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes fade{from{opacity:0;transform:translateY(.6em)}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+</style>
+</head>
+<body>
+<p class="lab"><span>Study 4 · cover · 16:9</span><span>Helvetica Now Display (Inter Tight stands in) · kinetic letters</span></p>
+<section class="screen" id="cover">
+  <div class="c-top sm"><span>Felipe Bellintani — Pop quiz</span><span>← Back to the portfolio</span></div>
+  <div class="kin c-kin" id="ckin"></div>
+  <div class="c-info sm"><span>Pop quiz #1<br>About Felipe<br>Voice or type</span><span class="r">Work, life, music<br>His buddy answers<br>EN / PT / ES</span></div>
+  <div class="c-bot sm"><span><span class="c-dot"></span>Some answers are secrets. Most aren't.</span><button class="c-start">Start the quiz →</button></div>
+</section>
+<div class="controls"><button id="loop">Pause loop</button><span>The cover swaps its words every few seconds: each letter finds its new place.</span></div>
+
+<p class="lab"><span>Study 4 · the quiz · 16:9</span><span>the red word reacts to some answers (not every one)</span></p>
+<section class="screen" id="quiz">
+  <div class="q-top"><span class="sm">Felipe Bellintani — Pop quiz</span><span class="q-modes"><button class="on">Professional</button><button>Personal</button></span><span class="sm">Voice on · ← Portfolio</span></div>
+  <div class="kin q-kin" id="qkin"></div>
+  <div class="q-line"></div>
+  <div class="q-ask"><div class="sm">You asked</div><b id="qtext">Have you ever worked in finance?</b></div>
+  <div class="q-ans"><div class="sm">His buddy</div><p id="atext"></p></div>
+  <div class="q-chips"><button>Do you have kids?</button><button>What music do you like?</button><button>Where did you study?</button><button>Craziest thing you've done?</button></div>
+  <div class="q-form"><span class="in">Ask anything, or tap the mic</span><span class="sm" style="opacity:.55">AI answers can slip · felipe@bellintani.work</span><span class="mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span></div>
+</section>
+<div class="controls"><button id="next">Next question (demo) →</button><span>Or click a question. A dodge turns the red word into NICE TRY. or OH MAN.; plain answers mostly leave it alone.</span></div>
+
+<script>
+// Kinetic type, no library. morph(el, lines): every letter that exists in the new text travels from where it is to its
+// new place on an arc, turning as it goes; letters with no match scatter away; new letters tumble in. Any text to any text.
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rnd = (a, b) => a + Math.random() * (b - a);
+function render(el, lines) {
+  el.innerHTML = lines.map(l => `<span class="ln">${[...l].map(c => c === " " ? `<span class="k" style="width:.24em"> </span>` : `<span class="k">${c}</span>`).join("")}</span>`).join("");
+  return [...el.querySelectorAll(".k")].filter(k => k.textContent.trim());
+}
+function morph(el, lines) {
+  if (reduced || !el.children.length) { render(el, lines); return; }
+  const box = el.getBoundingClientRect();
+  const old = [...el.querySelectorAll(".k")].filter(k => k.textContent.trim()).map(k => ({ c: k.textContent.toUpperCase(), r: k.getBoundingClientRect(), html: k.outerHTML }));
+  const fresh = render(el, lines);
+  const used = new Set();
+  const dur = 1150;
+  fresh.forEach((k, i) => {
+    const r = k.getBoundingClientRect();
+    const j = old.findIndex((o, n) => !used.has(n) && o.c === k.textContent.toUpperCase());
+    let from;
+    if (j >= 0) { used.add(j); from = { x: old[j].r.left - r.left, y: old[j].r.top - r.top }; }
+    else from = { x: rnd(-.25, .25) * box.width, y: (Math.random() < .5 ? -1 : 1) * rnd(.25, .6) * box.height, o: 0 };
+    const mid = { x: from.x * .45, y: from.y * .45 + rnd(-.18, .18) * box.height };
+    const rot = rnd(-55, 55);
+    k.animate([
+      { transform: `translate(${from.x}px,${from.y}px) rotate(0deg)`, opacity: from.o ?? 1 },
+      { transform: `translate(${mid.x}px,${mid.y}px) rotate(${rot}deg)`, opacity: 1, offset: .5 },
+      { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+    ], { duration: dur + rnd(-150, 250), delay: rnd(0, 180), easing: "cubic-bezier(.7,0,.2,1)", fill: "backwards" });
+  });
+  // letters that have no place in the new text fly off
+  old.forEach((o, n) => {
+    if (used.has(n)) return;
+    const g = document.createElement("span");
+    g.className = "ghost"; g.textContent = o.c;
+    Object.assign(g.style, { left: o.r.left - box.left + "px", top: o.r.top - box.top + "px", font: getComputedStyle(el).font, letterSpacing: getComputedStyle(el).letterSpacing, color: getComputedStyle(el).color });
+    el.append(g);
+    g.animate([{ transform: "none", opacity: 1 }, { transform: `translate(${rnd(-.3, .3) * box.width}px,${(Math.random() < .5 ? -1 : 1) * rnd(.3, .7) * box.height}px) rotate(${rnd(-90, 90)}deg)`, opacity: 0 }],
+      { duration: 900, delay: rnd(0, 150), easing: "cubic-bezier(.6,0,.8,.4)", fill: "forwards" }).finished.then(() => g.remove());
+  });
+}
+
+// cover: two arrangements of the same words, swapping like "Energy in Motion / Motion in Energy"
+const ckin = document.getElementById("ckin");
+const A = ["Ask me", "anything"], B = ["Anything", "ask me"], C = ["Pop", "quiz."];
+const seq = [A, C, B, C];
+let s = 0, timer = null;
+render(ckin, A);
+const tick = () => { s = (s + 1) % seq.length; morph(ckin, seq[s]); };
+const play = () => { if (!reduced) timer = setInterval(tick, 3200); };
+play();
+document.getElementById("loop").onclick = e => { if (timer) { clearInterval(timer); timer = null; e.target.textContent = "Play loop"; } else { play(); e.target.textContent = "Pause loop"; } };
+
+// quiz: the red word changes on dodges and every few answers; answers fade up line by line
+const qkin = document.getElementById("qkin"), qtext = document.getElementById("qtext"), atext = document.getElementById("atext");
+render(qkin, ["Pop quiz."]);
+const DEMO = [
+  { q: "Have you ever worked in finance?", a: 'Yep. He made <a href="#">Seja ANTI</a> for ANTI Creative Finance, skeletons still waiting to get paid. Banco do Brasil is on his client list too.' },
+  { q: "Craziest thing you've done?", a: "Oh man, he told me not to tell you that. Ask him over coffee: felipe@bellintani.work", word: "Nice try." },
+  { q: "What music do you like?", a: "Daft Punk, Kraftwerk, Talking Heads, Tim Maia. Every project on his site has its own soundtrack song.", word: "True story." },
+  { q: "Do you have kids?", a: "A 7-year-old princess. She runs the house; he just designs in it." },
+  { q: "How old are you?", a: "Hmm, that's complicated. Old enough to remember Flash websites.", word: "Oh man." },
+  { q: "Where did you study?", a: "Advertising at FAAP in São Paulo, design in Barcelona, a branding master's at ESPM, and now an MBA in data and AI.", word: "Pop quiz." },
+];
+let k = 0;
+const show = item => {
+  qtext.textContent = item.q; qtext.classList.remove("fade"); void qtext.offsetWidth; qtext.classList.add("fade");
+  atext.innerHTML = item.a; atext.classList.remove("fade"); void atext.offsetWidth; atext.style.animationDelay = ".35s"; atext.classList.add("fade");
+  if (item.word) morph(qkin, [item.word]);
+};
+show(DEMO[0]);
+document.getElementById("next").onclick = () => { k = (k + 1) % DEMO.length; show(DEMO[k]); };
+document.querySelectorAll(".q-chips button").forEach((b, i) => b.onclick = () => { k = [3, 2, 5, 1][i]; show(DEMO[k]); });
+</script>
+</body>
+</html>

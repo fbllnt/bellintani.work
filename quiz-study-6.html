@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Pop quiz · study 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Study 6 (Nov 17 2026): a blend of Felipe's three references. The trainer site (grainy off-white paper, paint-roller
+   black bands, ultra-condensed headlines stacked right, tiny justified caps in [ brackets ], a ⟶ arrow, an Ilford
+   contact strip), the red poster (giant red condensed rows bleeding off a black page, small white labels on top) and
+   the stamp file (chewed ink, only where ink hits paper: the roller bands and the giant red rows). */
+:root{--paper:#e9e7e2;--ink:#0e0e0e;--red:#ff2a1a;--bone:#efede8;--big:"Anton",sans-serif;--cond:"Bebas Neue",sans-serif;--sm:"Inter Tight",sans-serif;--mono:"JetBrains Mono",monospace}
+*{box-sizing:border-box}
+body{margin:0;background:#cfccc6;color:var(--ink);font-family:var(--sm)}
+.lab{max-width:1500px;margin:0 auto;padding:28px 24px 10px;font:600 11px/1.4 var(--sm);letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;color:#3a3936}
+.row{max-width:1500px;margin:0 auto 34px;padding:0 24px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}
+@media (max-width:1100px){.row{grid-template-columns:1fr}}
+.screen{position:relative;aspect-ratio:16/9;overflow:hidden;container-type:inline-size}
+.screen>*{position:absolute}
+.phone{position:relative;width:300px;height:620px;overflow:hidden;container-type:inline-size;background:var(--paper)}
+.phone>*{position:absolute}
+/* grain on everything */
+.grain::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");mix-blend-mode:overlay;opacity:.38}
+.paper{background:var(--paper)}
+.black{background:var(--ink);color:var(--bone)}
+/* paint-roller band: a black slab whose edges are smeared by the "roller" filter */
+.roller{background:var(--ink);filter:url(#roller)}
+.stamp{filter:url(#stamp)}
+.tiny{font:600 .78cqw/1.3 var(--sm);letter-spacing:.02em;text-transform:uppercase}
+.just{text-align:justify;text-align-last:left;hyphens:none}
+.uline{border-bottom:.22cqw solid currentColor;padding-bottom:.15cqw}
+
+/* ---------- cover (red poster on black) ---------- */
+.cv-rows{left:-2cqw;top:-2.4cqw;font:400 21.5cqw/.86 var(--cond);color:var(--red);white-space:nowrap;letter-spacing:-.005em}
+.cv-rows div{margin-left:var(--x,0)}
+.cv-top{left:2.4cqw;right:2.4cqw;top:2cqw;display:flex;justify-content:space-between;z-index:3}
+.cv-mid{left:0;right:0;top:9.4cqw;text-align:center;font:400 2.2cqw/1 var(--cond);letter-spacing:.02em;color:var(--bone);z-index:3}
+.cv-pick{left:18cqw;right:18cqw;top:20cqw;display:flex;justify-content:space-between;z-index:3}
+.cv-pick button{background:none;border:0;padding:0;text-align:left;color:var(--bone);cursor:pointer;font:400 4.6cqw/.95 var(--cond);letter-spacing:.01em}
+.cv-pick button:last-child{text-align:right}
+.cv-pick small{display:block;margin-top:1.4cqw;font:400 1.35cqw/1 var(--cond);letter-spacing:.04em}
+.cv-pick button:hover{color:var(--red);text-shadow:none}
+.cv-vert{left:1.2cqw;bottom:2cqw;writing-mode:vertical-rl;rotate:180deg;font:400 1.2cqw/1 var(--cond);letter-spacing:.06em;color:var(--bone);z-index:3}
+.cv-bot{right:2.4cqw;bottom:2cqw;z-index:3;color:var(--bone)}
+
+/* ---------- quiz (trainer site on paper) ---------- */
+.qz-band{left:-3cqw;right:-3cqw;top:-4cqw;height:24cqw}
+.qz-nav{left:2.4cqw;right:2.4cqw;top:1.8cqw;display:flex;justify-content:space-between;color:var(--bone);z-index:3}
+.film{left:0;right:0;top:4.6cqw;z-index:3;color:#bdbab3}
+.film .edge{display:flex;justify-content:space-between;padding:0 2cqw;font:500 .72cqw/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;height:1.6cqw;align-items:center}
+.film .frames{display:grid;grid-template-columns:repeat(5,1fr);gap:.5cqw;padding:0 .6cqw}
+.film .fr{position:relative;aspect-ratio:3/2;overflow:hidden;cursor:pointer;background:#222}
+.film .fr img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.9);display:block;transition:filter .3s}
+.film .fr span{position:absolute;left:.5cqw;bottom:.4cqw;font:400 1.3cqw/1 var(--cond);letter-spacing:.04em;color:var(--bone)}
+.film .fr:hover img,.film .fr.on img{filter:grayscale(1) contrast(1.3) brightness(1.15)}
+.film .fr.on{outline:.2cqw solid var(--red);outline-offset:-.2cqw}
+.film .sprk{height:1.1cqw;margin:0 .6cqw;background:repeating-linear-gradient(90deg,transparent 0 .9cqw,#d9d6cf .9cqw 1.9cqw,transparent 1.9cqw 2.6cqw);opacity:.75;-webkit-mask:linear-gradient(#000 0 0) center/100% 55% no-repeat;mask:linear-gradient(#000 0 0) center/100% 55% no-repeat}
+.qz-label{left:2.4cqw;top:27.6cqw}
+.qz-q{right:2.4cqw;top:25.4cqw;width:62cqw;text-align:right;font:400 5.2cqw/.92 var(--big);text-transform:uppercase;letter-spacing:-.01em}
+.qz-a{left:36cqw;top:41cqw;width:30cqw;font:600 1.15cqw/1.32 var(--sm);text-transform:uppercase}
+.qz-a .sig{display:flex;justify-content:space-between;margin-top:1cqw}
+.qz-a a{color:var(--ink)}
+.qz-more{left:74cqw;top:41.2cqw;width:24cqw}
+.qz-more .tiny{display:block;margin-top:.6cqw;opacity:.85}
+.qz-arrow{left:2.4cqw;top:43cqw;display:flex;align-items:center;gap:6cqw;cursor:pointer}
+.qz-arrow svg{width:7cqw;height:2.4cqw;fill:none;stroke:var(--ink);stroke-width:.3cqw}
+.qz-arrow b{font:400 2.1cqw/1 var(--big);text-transform:uppercase}
+.qz-bot{left:-3cqw;right:-3cqw;bottom:-5cqw;height:10.4cqw}
+.qz-in{left:2.4cqw;right:2.4cqw;bottom:.6cqw;z-index:3;display:flex;align-items:flex-end;gap:2cqw}
+.qz-in input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--bone);font:400 4.4cqw/1 var(--big);text-transform:uppercase;letter-spacing:-.005em}
+.qz-in input::placeholder{color:rgba(239,237,232,.32)}
+.qz-in .mic{flex:none;width:4.2cqw;height:4.2cqw;border-radius:50%;background:var(--red);border:0;display:grid;place-items:center;cursor:pointer;margin-bottom:.4cqw}
+.qz-in .mic svg{width:1.7cqw;height:1.7cqw;fill:none;stroke:var(--bone);stroke-width:2}
+
+/* ---------- closing band (trainer footer) ---------- */
+.end-band{left:-3cqw;right:-3cqw;top:12cqw;bottom:-4cqw}
+.end-top{left:2.4cqw;right:2.4cqw;top:18cqw;display:flex;justify-content:space-between;align-items:flex-start;color:var(--bone);z-index:3}
+.end-top .quote{width:24cqw;text-align:justify;text-align-last:left}
+.end-big{left:1.6cqw;right:1.6cqw;bottom:4.6cqw;z-index:3;color:var(--bone);font:400 12.2cqw/.84 var(--big);text-transform:uppercase;letter-spacing:-.01em;white-space:nowrap;text-align:center}
+.end-foot{left:2.4cqw;right:2.4cqw;bottom:1.6cqw;z-index:3;color:#9c9a95;display:flex;justify-content:space-between;border-top:1px solid #333;padding-top:.9cqw}
+
+/* ---------- phone ---------- */
+.ph-band{left:-20px;right:-20px;top:-20px;height:330px}
+.ph-nav{left:16px;right:16px;top:14px;display:flex;justify-content:space-between;color:var(--bone);z-index:3;font:600 9px/1 var(--sm);letter-spacing:.06em;text-transform:uppercase}
+.ph-title{left:0;right:0;top:44px;text-align:center;color:var(--bone);z-index:3;font:400 46px/.9 var(--big);text-transform:uppercase}
+.ph-film{left:0;right:0;top:118px;z-index:3;color:#bdbab3}
+.ph-film .edge{display:flex;justify-content:space-between;padding:0 10px;font:500 6px/1 var(--mono);text-transform:uppercase;height:12px;align-items:center}
+.ph-film .frames{display:grid;grid-template-columns:.5fr 1fr .5fr;gap:4px}
+.ph-film img{width:100%;aspect-ratio:3/2;object-fit:cover;filter:grayscale(1) contrast(1.15);display:block}
+.ph-q{left:16px;right:16px;top:232px;z-index:3;color:var(--bone);text-align:center;font:400 22px/.95 var(--big);text-transform:uppercase}
+.ph-a{left:22px;right:22px;top:340px;font:600 10px/1.35 var(--sm);text-transform:uppercase;text-align:justify;text-align-last:left}
+.ph-bot{left:-20px;right:-20px;bottom:-20px;height:120px}
+.ph-in{left:16px;right:16px;bottom:18px;z-index:3;display:flex;gap:10px;align-items:flex-end;color:rgba(239,237,232,.35);font:400 26px/1 var(--big);text-transform:uppercase}
+.ph-in i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--red)}
+.ph-in span{flex:1}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- paint roller: smeared, wavy, soft edges with a little dry-brush texture -->
+  <filter id="roller" x="-10%" y="-25%" width="120%" height="150%">
+    <feTurbulence type="fractalNoise" baseFrequency=".0035 .022" numOctaves="5" seed="11" result="w"/>
+    <feDisplacementMap in="SourceGraphic" in2="w" scale="46" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feGaussianBlur in="d" stdDeviation="2.4"/>
+  </filter>
+  <!-- stamp: chewed edges, a few dots of missing ink (the stamp file, kept light) -->
+  <filter id="stamp" x="-3%" y="-3%" width="106%" height="106%">
+    <feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="3" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="3" xChannelSelector="R" yChannelSelector="G" result="edge"/>
+    <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="8" result="speck"/>
+    <feColorMatrix in="speck" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -8 5.7" result="holes"/>
+    <feComposite in="edge" in2="holes" operator="in"/>
+  </filter>
+</svg>
+
+<p class="lab"><span>Study 6 · cover · 16:9</span><span>red poster on black + stamp ink</span></p>
+<div class="row">
+  <section class="screen black grain">
+    <div class="cv-rows stamp"><div>Pop quiz—pop q</div><div style="--x:-12cqw">uiz. ask me any</div><div style="--x:-4cqw">thing—pop quiz</div></div>
+    <div class="cv-top tiny"><span>Felipe Bellintani</span><span>⟶ Back to the portfolio</span></div>
+    <div class="cv-mid">Pick a side</div>
+    <div class="cv-pick"><button>Professional —<br>work stuff<small>20+ years</small></button><button>— Personal<br>life stuff<small>a few secrets</small></button></div>
+    <div class="cv-vert">Voice or type · EN / PT / ES</div>
+    <div class="cv-bot tiny">[ His buddy answers ]</div>
+  </section>
+  <section class="phone black grain" style="background:var(--ink)">
+    <div class="cv-rows stamp" style="font-size:118px;left:-14px;top:-10px"><div>Pop q</div><div style="--x:-40px">uiz. a</div><div style="--x:-10px">sk me</div><div style="--x:-60px">anyth</div></div>
+    <div class="ph-nav" style="z-index:3"><span>Menu +</span><span>⟶ Portfolio</span></div>
+    <div style="left:16px;right:16px;bottom:120px;z-index:3;display:flex;flex-direction:column;gap:18px;color:var(--bone);font:400 30px/.95 var(--cond)"><span>Professional —<br>work stuff</span><span style="text-align:right">— Personal<br>life stuff</span></div>
+    <div class="tiny" style="left:16px;bottom:24px;z-index:3;color:var(--bone);font-size:9px">[ His buddy answers ]</div>
+  </section>
+</div>
+
+<p class="lab"><span>Study 6 · the quiz · 16:9</span><span>roller bands, contact strip = the starter questions, question stacked right</span></p>
+<div class="row">
+  <section class="screen paper grain" id="quiz">
+    <div class="qz-band roller"></div>
+    <div class="qz-nav tiny"><span>Menu +</span><span>Voice on · ⟶ Portfolio</span></div>
+    <div class="film">
+      <div class="edge"><span>Bellintani 27</span><span>Professional</span><span>Pop quiz</span><span>⟶ 12A</span><span>Bellintani 27</span><span>Personal</span><span>Pop quiz</span></div>
+      <div class="frames">
+        <div class="fr" data-q="Have you ever worked in finance?"><img src="images/anti/skeletons.jpg" alt=""><span>Work</span></div>
+        <div class="fr" data-q="What music do you like?"><img src="images/dj-shadow/show/show-04.jpg" alt=""><span>Music</span></div>
+        <div class="fr on" data-q="Do you have kids?"><img src="images/ramon/photo-04.jpg" alt=""><span>Family</span></div>
+        <div class="fr" data-q="Where did you study?"><img src="images/explosions-in-the-sky/show/show-09.jpg" alt=""><span>Studies</span></div>
+        <div class="fr" data-q="What's the craziest thing you've done?"><img src="images/xp/design-03.jpg" alt=""><span>Secrets</span></div>
+      </div>
+      <div class="sprk"></div>
+      <div class="edge"><span>3 ▸ 3A</span><span>4 ▸ 4A</span><span>5 ▸ 5A</span><span>6 ▸ 6A</span><span>7 ▸ 7A</span></div>
+    </div>
+    <div class="qz-label tiny">[ You asked</div>
+    <div class="qz-q" id="q">Do you have<br>kids? who runs<br>the house?</div>
+    <div class="qz-a just"><span id="a">A 7-year-old princess. She runs the house; he just designs in it. Most likely he is drawing something for her right now.</span><div class="sig"><span>Respectfully, his buddy</span><span>]</span></div></div>
+    <div class="qz-more"><b class="tiny" style="font-size:1cqw">Connect with me</b><span class="tiny">Email: felipe@bellintani.work</span><span class="tiny">Insta: @bllnt_</span></div>
+    <div class="qz-arrow"><svg viewBox="0 0 70 24"><path d="M2 2v14h62M54 8l10 8-10 8"/></svg><b class="uline">Ask another</b></div>
+    <div class="qz-bot roller"></div>
+    <div class="qz-in"><input placeholder="Ask Felipe anything" aria-label="Ask Felipe anything"><button class="mic" aria-label="Ask by voice"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button></div>
+  </section>
+  <section class="phone grain">
+    <div class="ph-band roller"></div>
+    <div class="ph-nav"><span>Menu +</span><span>⟶ Portfolio</span></div>
+    <div class="ph-title">Pop quiz</div>
+    <div class="ph-film"><div class="edge"><span>Bellintani 27</span><span>Pop quiz</span></div><div class="frames"><img src="images/anti/skeletons.jpg" alt=""><img src="images/ramon/photo-02.jpg" alt=""><img src="images/dj-shadow/show/show-04.jpg" alt=""></div></div>
+    <div class="ph-q">Do you have kids?</div>
+    <div class="ph-a">A 7-year-old princess. She runs the house; he just designs in it.<br><br>Respectfully, his buddy ]</div>
+    <div class="ph-bot roller"></div>
+    <div class="ph-in"><span>Ask anything</span><i></i></div>
+  </section>
+</div>
+
+<p class="lab"><span>Study 6 · closing · 16:9</span><span>the trainer footer: giant type in the black</span></p>
+<div class="row">
+  <section class="screen paper grain">
+    <div class="tiny" style="left:2.4cqw;top:3cqw">[ Pop quiz</div>
+    <div style="right:2.4cqw;top:3cqw;width:62cqw;text-align:right;font:400 5.4cqw/.92 'Anton';text-transform:uppercase">I'm a full-time designer<br>still designing every day</div>
+    <div class="end-band roller"></div>
+    <div class="end-top tiny"><span>Felipe Bellintani</span><span class="quote">[ &nbsp;Don't hire a man who does your work for money, but him who does it for love of it&nbsp; ]</span><span style="text-align:right">Instagram<br>LinkedIn</span></div>
+    <div class="end-big">Ask Felipe anything</div>
+    <div class="end-foot tiny"><span>All rights reserved</span><span>bellintani.work</span><span>felipe@bellintani.work</span><span>2027</span></div>
+  </section>
+</div>
+<script>
+// study only: clicking a film frame asks its question
+document.querySelectorAll(".fr").forEach(f => f.onclick = () => {
+  document.querySelectorAll(".fr").forEach(o => o.classList.toggle("on", o === f));
+  document.getElementById("q").textContent = f.dataset.q;
+});
+</script>
+</body>
+</html>

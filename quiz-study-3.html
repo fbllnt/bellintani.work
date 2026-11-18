@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Pop quiz · study 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Permanent+Marker&family=Inter+Tight:wght@500;700&display=swap">
+<style>
+/* Study 3 (Nov 17 2026), from Geração Livre / Cook Like a Pro / D&AD Hate Something, in red: giant condensed print
+   type broken across lines, marker handwriting over it, arrows, scribbles, a circled word, a red line image.
+   16:9 screens: the cover, then the quiz. */
+:root{--paper:#f1ede4;--ink:#141312;--red:#e3312b;--hand:"Caveat",cursive;--mark:"Permanent Marker",cursive}
+*{box-sizing:border-box}
+body{margin:0;background:#262422;color:var(--paper);font-family:"Inter Tight",sans-serif}
+.lab{max-width:1500px;margin:0 auto;padding:30px 24px 10px;font:500 12px/1.5 "Inter Tight";text-transform:uppercase;letter-spacing:.12em;display:flex;justify-content:space-between}
+.screen{position:relative;max-width:1500px;margin:0 auto 34px;aspect-ratio:16/9;background:var(--paper);color:var(--ink);overflow:hidden;container-type:inline-size}
+.screen>*{position:absolute}
+.press{filter:url(#press)}
+.mono{font:700 .82cqw/1.3 "Inter Tight";letter-spacing:.14em;text-transform:uppercase}
+.hand{font-family:var(--hand);font-weight:700;line-height:1}
+.mark{font-family:var(--mark);line-height:1}
+.red{color:var(--red)}
+svg.d{overflow:visible;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+/* the red line image: a black-and-white photo printed in red */
+.duo{background:var(--red);mix-blend-mode:multiply}
+.duo img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.35) brightness(1.15);mix-blend-mode:screen}
+
+/* ---------- 1 · cover ---------- */
+.c-top{left:3cqw;right:3cqw;top:2.6cqw;display:flex;justify-content:space-between;align-items:center}
+.c-big{left:2.4cqw;top:5.4cqw;font:400 30cqw/.78 Anton;text-transform:uppercase;color:var(--red);letter-spacing:-.01em}
+.c-big2{left:2.4cqw;top:29cqw;font:400 30cqw/.78 Anton;text-transform:uppercase;color:var(--ink);letter-spacing:-.01em}
+.c-photo{right:3cqw;bottom:3cqw;width:30cqw;height:21cqw}
+.c-side{left:62cqw;top:8.4cqw;width:34cqw}
+.c-side .hand{font-size:4.2cqw;rotate:-4deg}
+.c-note{left:63cqw;top:14.6cqw;font-size:2.2cqw;rotate:2deg;width:27cqw}
+.c-start{left:64cqw;top:25.2cqw;font:400 3.2cqw/1 Anton;text-transform:uppercase;letter-spacing:.02em;cursor:pointer}
+.c-start span{display:inline-block;background:var(--ink);color:var(--paper);padding:.6cqw 1.6cqw .4cqw}
+.c-vert{left:1.2cqw;bottom:3cqw;writing-mode:vertical-rl;rotate:180deg}
+
+/* ---------- 2 · quiz ---------- */
+.q-bg{left:-1cqw;top:-2cqw;font:400 25cqw/.8 Anton;color:var(--red);text-transform:uppercase;letter-spacing:-.01em;opacity:.95}
+.q-top{left:3cqw;right:3cqw;top:2.4cqw;display:flex;justify-content:space-between;align-items:center;z-index:2}
+.q-modes{left:3cqw;top:6cqw;display:flex;gap:2.4cqw;z-index:2;font-size:2.6cqw}
+.q-modes .on{position:relative}
+.q-ask{left:3cqw;top:13cqw;width:48cqw;z-index:2}
+.q-ask small{display:block;margin-bottom:.6cqw}
+.q-ask b{display:block;font:400 6.2cqw/.88 Anton;text-transform:uppercase;letter-spacing:.005em;color:var(--ink)}
+.q-ans{left:44cqw;top:22cqw;width:40cqw;z-index:2;rotate:-2deg}
+.q-ans p{margin:0;font:700 3.3cqw/1.02 var(--hand)}
+.q-ans p a{color:var(--ink);text-decoration:underline;text-decoration-thickness:.25cqw;text-decoration-color:var(--ink)}
+.q-ans .mono{display:block;margin-top:.9cqw;rotate:2deg}
+.q-ans2{left:6cqw;top:31.6cqw;width:32cqw;z-index:2;rotate:2.5deg}
+.q-ans2 p{margin:0;font:700 3cqw/1 var(--hand)}
+.q-chips{left:3cqw;bottom:9.4cqw;display:flex;gap:2cqw;z-index:2;font-size:1.9cqw}.q-chips span{cursor:pointer}.q-chips span:hover{color:var(--red)}
+.q-form{left:3cqw;right:3cqw;bottom:2.6cqw;z-index:2;display:flex;align-items:flex-end;gap:2cqw}
+.q-form .line{flex:1;border-bottom:.32cqw solid var(--ink);font:700 3cqw/1.2 var(--hand);color:rgba(20,19,18,.45);padding:0 0 .3cqw .4cqw}
+.q-form .mic{width:5.4cqw;height:5.4cqw;border-radius:50%;background:var(--red);color:var(--paper);display:grid;place-items:center;position:relative}
+.q-form .mic svg{width:2.2cqw;height:2.2cqw;stroke-width:2}
+.q-photo{right:3cqw;top:7cqw;width:17cqw;height:23cqw;z-index:1}
+.q-cap{right:3cqw;top:31cqw;width:17cqw;z-index:2;font-size:1.7cqw;rotate:-2deg;text-align:right}
+
+/* ---------- motion ---------- */
+.ltr{display:inline-block;transform-origin:50% 90%;transition:rotate .25s cubic-bezier(.3,1.8,.5,1)}
+.ltr.sp{width:.2em}
+.wrd{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .01em}
+@keyframes stamp{0%{opacity:0;transform:scale(1.9) rotate(var(--r,0deg))}55%{opacity:1;transform:scale(.94) rotate(calc(var(--r,0deg) * -.3))}100%{opacity:1;transform:none}}
+.stamping .ltr{animation:stamp .5s cubic-bezier(.2,.9,.3,1.2) both;animation-delay:calc(var(--i) * 85ms + var(--d,0ms))}
+@keyframes flipOut{to{transform:translateY(-105%);opacity:.2}}
+@keyframes flipIn{from{transform:translateY(105%)}}
+.ltr.out{animation:flipOut .22s cubic-bezier(.6,0,.9,.4) both;animation-delay:calc(var(--i) * 32ms)}
+.ltr.in{animation:flipIn .38s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(var(--i) * 32ms)}
+.draw path,.draw circle{stroke-dasharray:var(--len);stroke-dashoffset:var(--len)}
+.draw.go path,.draw.go circle{transition:stroke-dashoffset .7s cubic-bezier(.6,0,.2,1) var(--dl,0s);stroke-dashoffset:0}
+.w{display:inline-block;opacity:0;transform:translateY(.25em) rotate(-2deg)}
+.writing .w{animation:write .28s ease-out both;animation-delay:calc(var(--i) * 45ms + var(--d,0ms))}
+@keyframes write{to{opacity:1;transform:none}}
+.demo{position:static!important;max-width:1500px;margin:-22px auto 40px;padding:0 24px;display:flex;gap:10px}
+.demo button{font:700 12px "Inter Tight";letter-spacing:.12em;text-transform:uppercase;padding:10px 14px;border:1px solid var(--paper);background:none;color:var(--paper);cursor:pointer}
+@media (prefers-reduced-motion:reduce){.stamping .ltr,.ltr.out,.ltr.in,.writing .w{animation:none;opacity:1;transform:none}.draw path,.draw circle{stroke-dasharray:none}}
+</style>
+</head>
+<body>
+<!-- letterpress: uneven ink and soft worn edges, no holes punched through the letters -->
+<svg width="0" height="0" style="position:absolute">
+  <filter id="press" x="-3%" y="-3%" width="106%" height="106%">
+    <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="w"/>
+    <feDisplacementMap in="SourceGraphic" in2="w" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="e"/>
+    <feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="3" seed="9" result="mottle"/>
+    <feColorMatrix in="mottle" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.7 1.42" result="m"/>
+    <feComposite in="e" in2="m" operator="in"/>
+  </filter>
+</svg>
+
+<p class="lab"><span>Study 3 · cover · 16:9</span><span>giant print type in red + black, marker notes, a red photo</span></p>
+<section class="screen">
+  <div class="c-top mono"><span>Bellintani — 27</span><span>← Back to the portfolio</span></div>
+  <div class="c-big press" data-word="Pop"></div>
+  <div class="c-big2 press" data-word="Quiz."></div>
+  <div class="c-side"><div class="hand red">*ask me anything!</div></div>
+  <div class="c-note hand">about Felipe. work stuff, life stuff, music stuff. his buddy answers (and keeps a few secrets)</div>
+  <svg class="d draw" style="left:88cqw;top:19.6cqw;width:5cqw;height:6cqw;stroke-width:.3cqw" viewBox="0 0 50 60"><path d="M40 4c4 18-4 34-24 48M16 52l2-14M16 52l13-5"/></svg>
+  <div class="c-start"><span>Start the quiz →</span></div>
+  <svg class="d red draw" style="left:62.4cqw;top:23.2cqw;width:23cqw;height:7.6cqw;stroke-width:.3cqw" viewBox="0 0 240 94"><path d="M118 6C48 2 6 22 8 50s70 42 132 38 96-20 92-44S176 4 104 10"/></svg>
+  <div class="c-photo duo"><img src="images/explosions-in-the-sky/show/show-07.jpg" alt=""></div>
+  <svg class="d draw" style="right:4cqw;top:6.4cqw;width:6cqw;height:6cqw;stroke-width:.3cqw" viewBox="0 0 70 70"><circle cx="35" cy="35" r="29"/><path d="M24 27v4M46 27v4M20 42c8 12 22 12 30 0"/></svg>
+  <svg class="d draw" style="left:62cqw;top:3.6cqw;width:12cqw;height:4cqw;stroke-width:.5cqw" viewBox="0 0 120 40"><path d="M4 30c10-22 18-22 22 0s14 22 22 0 14-22 22 0 14 22 22 0 12-14 22-8"/></svg>
+  <span class="c-vert mono">Voice or type · EN / PT / ES</span>
+</section>
+
+<p class="lab"><span>Study 3 · the quiz · 16:9</span><span>answers arrive handwritten over the giant red type</span></p>
+<section class="screen">
+  <div class="q-bg press" data-word="Pop quiz pop quiz."></div>
+  <div class="q-top mono"><span>Bellintani — pop quiz</span><span>Voice on · ← Portfolio</span></div>
+  <div class="q-modes mark"><span class="on">Professional<svg class="d" style="position:absolute;left:-1.4cqw;top:-1.2cqw;width:calc(100% + 2.8cqw);height:5cqw;stroke-width:.25cqw" viewBox="0 0 300 50" preserveAspectRatio="none"><path d="M150 4C60 2 6 12 6 26s60 22 150 20 138-10 136-24S220 2 120 8"/></svg></span><span style="opacity:.45">Personal</span></div>
+  <div class="q-ask"><small class="mono">You asked</small><b class="press q-text">Have you ever worked in finance?</b></div>
+  <svg class="d draw q-arrow" style="left:36cqw;top:25cqw;width:8cqw;height:5cqw;stroke-width:.3cqw" viewBox="0 0 80 50"><path d="M4 10c20 2 40 14 58 32M62 42l-16 0M62 42l-2-15"/></svg>
+  <div class="q-ans"><p class="ans-1">"Yep! He made <a href="#">Seja ANTI</a> for ANTI Creative Finance, skeletons still waiting to get paid. And Banco do Brasil is on his client list."</p><span class="mono">— his buddy</span></div>
+  <div class="q-ans2"><p class="red ans-2">"Craziest thing he's done? Ha! Nice try. My lips are sealed. Mostly."</p></div>
+  <div class="q-photo duo"><img src="images/dj-shadow/show/show-04.jpg" alt=""></div>
+  <div class="q-cap hand">a night at work, sort of →</div>
+  <div class="q-chips mark"><span>do you have kids?</span><span>→ what music?</span><span>where did you study?</span></div>
+  <div class="q-form"><div class="line">ask here, or tap the mic...</div><div class="mic"><svg class="d" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><span class="mono">AI answers can slip · felipe@bellintani.work</span></div>
+  <svg class="d" style="right:21cqw;bottom:3cqw;width:9cqw;height:5cqw;stroke-width:.45cqw" viewBox="0 0 90 50"><path d="M4 40c6-30 12-30 16 0s10 30 16 0 10-30 16 0 10 30 16 0 10-20 18-10"/></svg>
+</section>
+
+<div class="demo"><button type="button" id="again">↺ Replay cover</button><button type="button" id="next">Next question (demo) →</button><span style="font:500 12px 'Inter Tight';letter-spacing:.12em;text-transform:uppercase;align-self:center;opacity:.6">Or click a question at the bottom. Hover the giant letters.</span></div>
+<script>
+// Study only: the motion ideas, with canned answers (the real quiz gets them from /api/ask)
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const letters = (el, text) => {
+  el.innerHTML = text.split(" ").map(w => `<span class="wrd">${[...w].map(c => `<span class="ltr">${c}</span>`).join("")}</span>`).join('<span class="ltr sp"> </span>');
+  el.querySelectorAll(".ltr").forEach((l, i) => { l.style.setProperty("--i", i); l.style.setProperty("--r", (Math.random() * 16 - 8).toFixed(1) + "deg"); });
+};
+// hover: letters jiggle
+document.addEventListener("pointerover", e => { const l = e.target.closest(".ltr"); if (!l || reduced) return; l.style.rotate = (Math.random() * 14 - 7).toFixed(1) + "deg"; setTimeout(() => l.style.rotate = "", 260); });
+const stampIn = (el, delay = 0) => { el.style.setProperty("--d", delay + "ms"); el.classList.remove("stamping"); void el.offsetWidth; el.classList.add("stamping"); };
+const draw = (svg, delay = 0) => { svg.querySelectorAll("path,circle").forEach(p => p.style.setProperty("--len", Math.ceil(p.getTotalLength()) + 1)); svg.style.setProperty("--dl", delay + "s"); svg.classList.remove("go"); void svg.getBoundingClientRect(); requestAnimationFrame(() => svg.classList.add("go")); };
+// flip-board swap of a giant word
+const flip = (el, text) => {
+  if (reduced) { letters(el, text); return; }
+  el.querySelectorAll(".ltr").forEach(l => l.classList.add("out"));
+  const n = el.querySelectorAll(".ltr").length;
+  setTimeout(() => { letters(el, text); el.querySelectorAll(".ltr").forEach(l => l.classList.add("in")); }, 220 + n * 32);
+};
+const write = (p, html, delay = 0) => {
+  p.innerHTML = html.split(/(\s+)/).map(t => /^\s+$/.test(t) ? t : `<span class="w">${t}</span>`).join("");
+  p.querySelectorAll(".w").forEach((w, i) => w.style.setProperty("--i", i));
+  p.style.setProperty("--d", delay + "ms"); p.classList.remove("writing"); void p.offsetWidth; p.classList.add("writing");
+};
+const cover = () => {
+  const [a, b] = document.querySelectorAll(".c-big,.c-big2");
+  letters(a, "Pop"); letters(b, "Quiz."); stampIn(a, 0); stampIn(b, 280);
+  document.querySelectorAll(".screen:first-of-type .draw").forEach((s, i) => draw(s, .9 + i * .25));
+};
+const bg = document.querySelector(".q-bg"); letters(bg, "Pop quiz pop quiz.");
+const qText = document.querySelector(".q-text"), a1 = document.querySelector(".ans-1"), a2 = document.querySelector(".ans-2");
+// mood words: a dodge flips the background to a reaction; otherwise only every few answers
+const DEMO = [
+  { q: "Have you ever worked in finance?", a: '"Yep! He made <a href="#">Seja ANTI</a> for ANTI Creative Finance, skeletons still waiting to get paid. And Banco do Brasil is on his client list."', word: null },
+  { q: "What's the craziest thing you've done?", a: '"Oh man, he told me not to tell you that. Ask him over coffee."', word: "Nice try. nice try." },
+  { q: "What music do you like?", a: '"Everything from Daft Punk and Kraftwerk to Tim Maia. Every project on his site has its own song."', word: "True story." },
+  { q: "Do you have kids?", a: '"A 7-year-old princess. She runs the house. He just designs in it."', word: null },
+  { q: "How old are you?", a: '"Hmm, that\'s complicated. Old enough to remember Flash websites."', word: "Hmm..." },
+  { q: "Where did you study?", a: '"FAAP in São Paulo, design in Barcelona, then a branding master\'s at ESPM. Now an MBA in data and AI."', word: "Pop quiz pop quiz." },
+];
+let k = 0;
+const ask = (item) => {
+  qText.textContent = item.q;
+  write(a1, item.a, 250);
+  draw(document.querySelector(".q-arrow"), .05);
+  if (item.word) flip(bg, item.word);
+};
+document.getElementById("next").onclick = () => { k = (k + 1) % DEMO.length; ask(DEMO[k]); };
+document.getElementById("again").onclick = cover;
+document.querySelectorAll(".q-chips span").forEach((c, i) => c.onclick = () => { k = [3, 2, 5][i]; ask(DEMO[k]); });
+cover();
+document.querySelectorAll(".screen:last-of-type .draw").forEach((s, i) => draw(s, .3 + i * .2));
+write(a1, DEMO[0].a, 400); write(a2, a2.innerHTML, 1400);
+</script>
+</body>
+</html>
