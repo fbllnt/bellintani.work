@@ -69,7 +69,7 @@ async function ask(request, env) {
 //    salted fingerprint lives here (the repo is public): the code is stretched once at unlock (PBKDF2), the result goes
 //    to the browser as an HttpOnly cookie, and each visit checks that cookie with one cheap SHA-256 against LOCK.
 //    It keeps casual visitors out; it is not strong security for a 6-digit code.
-const LOCK = "33df3bd535fda89946d8dcc9f0a03660dcb3bd62bbcaeb951cc485a197fa387a";
+const LOCK = "ff4b453cb03bce373cec91880e66a951fb5545546c5b23981c167aabd3197e2a";
 const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
 const sha = async s => hex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)));
 const stretch = async code => {
