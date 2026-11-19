@@ -84,6 +84,12 @@
   // review it before it goes live (CLAUDE.md, new projects stay draft until approved).
   const previewHost = /\.workers\.dev$|^localhost$|^127\./.test(location.hostname);
   S.projects = S.projects.filter(p => !p.hidden || (p.draft && previewHost));
+  // A finished case waiting for its release date (`comingSoon: true` on a brand's case; Felipe, Nov 19 2026, Black Friday &
+  // the Holidays): the public site shows only its row, locked, tagged "Coming soon". The preview hosts and ?soon on the live
+  // site open the full case so Felipe can review it; ?locked on a preview shows the public row. Release = delete `comingSoon`.
+  const openSoon = (previewHost || q.has("soon")) && !q.has("locked");
+  S.projects.forEach(p => { if (Array.isArray(p.cases)) p.cases = p.cases.map(c => c.comingSoon && !openSoon
+    ? { soon: c.title, soonTag: { en: "Coming soon", pt: "Em breve", es: "Próximamente" } } : c); });
 
   // ---------- Missing material kept off the site (Felipe, Oct 27 2026) ----------
   // With `showMissing: false` in content.js, the "Falta" placeholders don't show: "?" meta values, todo boxes and a
@@ -1420,7 +1426,7 @@
     return `<section class="subs" aria-label="${esc(T("brandCases"))}">
       <p class="subs-k mono"><span>${esc(L(p.title))}</span><span class="subs-sl" aria-hidden="true">/</span><span>${esc(T("brandCases"))}</span><span class="muted">(${pad(p.cases.length)})</span></p>
       <ol class="sub-list">${p.cases.map((c, k) => {
-        if (c.soon) return `<li class="sub soon"><div class="sub-row"><span class="mono">(${pad(k + 1)})</span><span class="sub-t">${esc(L(c.soon))}</span><span class="sub-soon mono">${esc(T("soon"))}</span></div></li>`;
+        if (c.soon) return `<li class="sub soon"><div class="sub-row"><span class="mono">(${pad(k + 1)})</span><span class="sub-t">${esc(L(c.soon))}</span><span class="sub-soon mono">${esc(c.soonTag ? L(c.soonTag) : T("soon"))}</span></div></li>`;
         const sp = Object.assign({}, c, { theme: c.theme || p.theme }), slug = caseSlug(c);
         // A case can wear its own material's colours (Felipe, Nov 13 2026: "seguir o padrão de identidade visual do
         // material dentro do case"): `theme` on the case paints only that case while it is open (.sub.own in style.css)

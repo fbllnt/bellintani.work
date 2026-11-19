@@ -75,7 +75,7 @@ for (const p of projects) {
 
 const today = new Date().toISOString().slice(0, 10);
 // A case that lives inside a brand (`cases`) keeps its own old address as a redirect to /p/<brand>/#<case>
-for (const p of projects) for (const c of (p.cases || []).filter(c => !c.soon)) {
+for (const p of projects) for (const c of (p.cases || []).filter(c => !c.soon && !c.comingSoon)) { // coming-soon cases get their address on release
   const cs = slugOf(c), to = `/p/${slugOf(p)}/#${cs}`;
   if (projects.some(q => slugOf(q) === cs)) continue;
   fs.mkdirSync(`${root}p/${cs}`, { recursive: true });
