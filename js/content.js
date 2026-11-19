@@ -896,12 +896,13 @@ window.SITE = {
           ],
         },
         {
-          // Black Friday & the Holidays: the 2026 end-of-year promo (Felipe, Nov 19 2026). Built while it is still running, so
+          // Black Friday & More (renamed from "Black Friday & the Holidays", Felipe Nov 19 2026): the 2026 end-of-year promo (Felipe, Nov 19 2026). Built while it is still running, so
           // `comingSoon` keeps it locked on the public site ("Coming soon" row) until Felipe releases it, likely on Black Friday.
           // Everything here comes from the approved set (shared Final folder, approved Nov 13 2026) and the project's own rounds.
           slug: "holidays",
-          title: "Black Friday & the Holidays",
-          comingSoon: true,
+          title: "Black Friday & More",
+          // Unlocks by itself on Thursday Nov 26 2026, 00:00 São Paulo, the day before Black Friday (Felipe, Nov 19 2026)
+          comingSoon: "2026-11-26T00:00:00-03:00",
           type: "campaign",
           year: "2026",
           // The set's own look: Carbon page, Satin Finish type, Golden Hour accent

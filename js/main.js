@@ -84,11 +84,13 @@
   // review it before it goes live (CLAUDE.md, new projects stay draft until approved).
   const previewHost = /\.workers\.dev$|^localhost$|^127\./.test(location.hostname);
   S.projects = S.projects.filter(p => !p.hidden || (p.draft && previewHost));
-  // A finished case waiting for its release date (`comingSoon: true` on a brand's case; Felipe, Nov 19 2026, Black Friday &
-  // the Holidays): the public site shows only its row, locked, tagged "Coming soon". The preview hosts and ?soon on the live
-  // site open the full case so Felipe can review it; ?locked on a preview shows the public row. Release = delete `comingSoon`.
+  // A finished case waiting for its release date (`comingSoon` on a brand's case; Felipe, Nov 19 2026, Black Friday &
+  // the Holidays): the public site shows only its row, locked, tagged "Coming soon". `comingSoon: true` locks it until the
+  // line is deleted; a date string ("2026-11-26T00:00:00-03:00") unlocks it by itself at that moment, no deploy needed.
+  // The preview hosts and ?soon on the live site open the full case for review; ?locked shows the public row.
   const openSoon = (previewHost || q.has("soon")) && !q.has("locked");
-  S.projects.forEach(p => { if (Array.isArray(p.cases)) p.cases = p.cases.map(c => c.comingSoon && !openSoon
+  const stillLocked = c => c.comingSoon === true || (typeof c.comingSoon === "string" && Date.now() < Date.parse(c.comingSoon));
+  S.projects.forEach(p => { if (Array.isArray(p.cases)) p.cases = p.cases.map(c => stillLocked(c) && (!openSoon || q.has("locked"))
     ? { soon: c.title, soonTag: { en: "Coming soon", pt: "Em breve", es: "Próximamente" } } : c); });
 
   // ---------- Missing material kept off the site (Felipe, Oct 27 2026) ----------
