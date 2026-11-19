@@ -217,14 +217,14 @@
     return b;
   };
 
-  // ---------- Work: index (the only view; Felipe dropped the Grid view, Oct 28 2026) ----------
+  // ---------- Work: index (the List, always the first view on arrival; Felipe, Nov 19 2026) ----------
   const index = $("index");
   index.innerHTML = S.projects.map((p, i) => `<li><a href="${href(p)}" data-i="${i}">
     <span class="bar" aria-hidden="true"></span><span class="mono">(${i + 1})</span><span class="t"><span class="ti">${esc(L(p.title))}</span></span><span class="k mono"><span class="k-top">${p.year ? `<span class="k-year">${esc(p.year)}</span>` : ""}${Array.isArray(p.tools) && p.tools.some(tool => typeof tool === "string" && tool.startsWith("*")) ? `<span class="k-ai" aria-label="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}" title="${esc(L({ en: "AI-assisted project", pt: "Projeto feito com IA", es: "Proyecto hecho con IA" }))}">${esc(T("aiMark"))}</span>` : ""}</span><span class="k-scope">${esc(L(p.scope))}</span>${tagFor(p)}</span></a></li>`).join("");
 
   // Grid view (Felipe, Nov 16 2026: "bring back the grid option for the home, 16:9 medium size"; removed Oct 28 2026):
-  // medium 16:9 cards, 3 per row, cover contained on the panel colour (never cropped), title and year. The visitor's
-  // choice is remembered; the filters drive both views.
+  // medium 16:9 cards, 3 per row, cover contained on the panel colour (never cropped), title and year. Every visit opens
+  // on the List (Felipe, Nov 19 2026: "always List"); Grid lasts only for that visit. The filters drive both views.
   const grid = $("grid");
   // Card covers (Felipe, Nov 16 2026): the still (cardImage, the cover, or Logofolio's six marks) always shows; every card also
   // has a silent loop (cardVideo, else images/cards/<slug>.mp4/.webm) stacked on top, invisible until the mouse is over it
@@ -254,10 +254,9 @@
   const setView = asGrid => {
     worksSec.classList.toggle("as-grid", asGrid);
     vList.setAttribute("aria-pressed", String(!asGrid)); vGrid.setAttribute("aria-pressed", String(asGrid));
-    try { localStorage.setItem("view", asGrid ? "grid" : "list"); } catch (e) {}
   };
   vList.onclick = () => setView(false); vGrid.onclick = () => setView(true);
-  try { if (localStorage.getItem("view") === "grid") setView(true); } catch (e) {}
+  try { localStorage.removeItem("view"); } catch (e) {} // drop the old remembered choice (until Nov 19 2026)
 
   // Curated, multi-discipline work filters. AI is based on the explicit *tool
   // convention in content.js, never on a project's year or aesthetic.
