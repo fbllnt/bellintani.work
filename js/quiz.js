@@ -74,12 +74,20 @@
   // ---------- mode + the contact strip ----------
   let mode = read("quizMode") === "personal" ? "personal" : "professional";
   const frames = $("frames");
+  // Photos (Felipe, Nov 20 2026): bands he likes, shuffled on every visit (js/quiz-bands.js, free-licence photos from
+  // Wikimedia Commons, credited on quiz-credits.html). Without that file the strip falls back to his work photos.
+  const BANDS = (window.QUIZ_BANDS || []).slice();
+  for (let i = BANDS.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [BANDS[i], BANDS[j]] = [BANDS[j], BANDS[i]]; }
+  const roll = BANDS.length >= 10
+    ? { professional: BANDS.slice(0, 5), personal: BANDS.slice(5, 10) }
+    : { professional: Q.photos.professional.map(src => ({ src })), personal: Q.photos.personal.map(src => ({ src })) };
   const drawFrames = () => {
     // slivers of the other side's photos at both ends: the roll keeps going past the cut
-    const other = Q.photos[mode === "personal" ? "professional" : "personal"];
-    const sl = src => `<span class="sl" aria-hidden="true"><img src="${esc(src)}" alt="" loading="lazy" decoding="async"></span>`;
-    frames.innerHTML = sl(other[4]) + C.frames[mode].map(([label, q], i) =>
-      `<button type="button" class="fr" data-q="${esc(q)}" aria-label="${esc(q)}"><img src="${esc(Q.photos[mode][i])}" alt="" loading="lazy" decoding="async"><span>${esc(label)}</span></button>`).join("") + sl(other[0]);
+    const other = roll[mode === "personal" ? "professional" : "personal"];
+    const credit = b => b.artist ? `${b.artist}. Photo: ${b.by}, ${b.lic}` : "";
+    const sl = b => `<span class="sl" aria-hidden="true"><img src="${esc(b.src)}" alt="" loading="lazy" decoding="async"></span>`;
+    frames.innerHTML = sl(other[4]) + C.frames[mode].map(([label, q], i) => { const b = roll[mode][i];
+      return `<button type="button" class="fr" data-q="${esc(q)}" aria-label="${esc(q)}" title="${esc(credit(b))}"><img src="${esc(b.src)}" alt="" loading="lazy" decoding="async">${b.artist ? `<em>${esc(b.artist)}</em>` : ""}<span>${esc(label)}</span></button>`; }).join("") + sl(other[0]);
     document.querySelectorAll(".qz-modes button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
     $("edge-mode").textContent = mode === "personal" ? C.menuPer : C.menuPro;
   };
