@@ -166,7 +166,7 @@ css/v2/ and stays still with reduced motion.
   for real screen work (stories, feeds, Reels, sites, apps). `ar` stays the content's ratio; main.js swaps in the device
   ratio for the layout.
 - `fold: N` on a project or sub-case: the first N chapters show, the rest opens with "See the full case" (nothing is
-  removed). Used on the longest cases (Rebranding, Globo On, DMA, DJ Shadow at 4; Carbono at 3).
+  removed). Used on the longest cases (Rebranding, Globo On, DJ Shadow at 4; Carbono at 3). DMA has no fold: every chapter stays open (Felipe, Nov 20 2026).
 - `preview: { video, webm, poster }` (optional) on a project: the loop shown beside the pointer on the work list;
   without it the list uses `coverVideo`, then the first gallery film, then the cover and first two stills.
 - Home: smooth wheel scroll on desktop (vendored Lenis 1.1.20). A turning 3D B® on the first screen and a word-by-word

@@ -1115,7 +1115,6 @@ window.SITE = {
     },
     {
       title: "DMA",
-      fold: 4, // v2: shorter case, the rest behind "See the full case" (Nov 16 2026)
       track: { id: "2VEZx7NWsZ1D0eJ4uv5Fym", name: "Digital Love", by: "Daft Punk" },
       type: "branding",
       client: "JBS",
