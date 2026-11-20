@@ -22,6 +22,6 @@
     "not_found_handling": "404-page",
     "binding": "ASSETS",
     // The worker runs for the pages only, not for images, scripts or styles
-    "run_worker_first": ["/", "/p/*", "!/p/*/*.*", "/api/*", "/quiz*"]
+    "run_worker_first": ["/", "/p/*", "!/p/*/*.*", "/api/*", "/quiz*", "/popquiz*"]
   }
 }

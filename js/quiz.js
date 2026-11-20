@@ -1,4 +1,5 @@
 // Pop quiz page (Felipe, Nov 17 2026). Copy: SITE.quiz in content.js. Answers: POST /api/ask (worker/index.js).
+// Music match (Nov 20 2026): quick picks + the visitor's artists, scored against his Last.fm by POST /api/match.
 // Motion: kinetic letters (each letter travels on an arc to its place in the new words; the rest scatter or tumble in)
 // on the cover rows, the question and the red reaction word. Voice in/out through the browser's own speech.
 (() => {
@@ -6,8 +7,8 @@
   if (!Q) return;
   const read = k => { try { return localStorage.getItem(k); } catch { return null; } };
   const save = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
-  const qp = new URLSearchParams(location.search).get("lang");
-  const lang = ["en", "pt", "es"].includes(qp) ? qp : (["en", "pt"].includes(read("lang")) ? read("lang") : "en");
+  // English only (Felipe, Nov 20 2026: "Just english, forget the other languages")
+  const lang = "en";
   const C = Q[lang] || Q.en, LOCALE = { en: "en-US", pt: "pt-BR", es: "es-ES" }[lang];
   document.documentElement.lang = LOCALE;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -78,7 +79,7 @@
   drawFrames();
   frames.addEventListener("click", e => { const f = e.target.closest(".fr"); if (!f) return; frames.querySelectorAll(".fr").forEach(o => o.classList.toggle("on", o === f)); ask(f.dataset.q); });
   document.querySelectorAll(".qz-modes button").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
-  document.querySelectorAll(".cv-pick button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".cv-pick button[data-mode]").forEach(b => b.addEventListener("click", () => {
     setMode(b.dataset.mode);
     $("quiz").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
     setTimeout(() => $("input").focus({ preventScroll: true }), reduced ? 0 : 700);
@@ -160,4 +161,94 @@
     rec.onerror = () => {};
     rec.start();
   });
+  // ---------- Music match: six picks, then the visitor's artists; the score comes from his Last.fm (/api/match) ----------
+  const MT = C.match, big = $("mt-big"), sub = $("mt-sub"), stage = $("mt-stage");
+  if (MT && big) {
+    const two = n => String(n).padStart(2, "0"), total = MT.qs.length + 1;
+    let step = -1, picks = [], artists = [], mBusy = false, last = null;
+    const paint = html => { stage.innerHTML = html; stage.classList.remove("fade"); void stage.offsetWidth; stage.classList.add("fade"); };
+    const counter = n => { morph(big, [two(n)]); sub.textContent = `${MT.step} ${two(n)} ${MT.of} ${two(total)}`; };
+    const intro = () => {
+      step = -1; picks = []; artists = []; last = null;
+      morph(big, ["??%"]); sub.textContent = C.mTitle.replace(/^\[\s*/, "");
+      paint(`<p class="mt-p">${esc(MT.intro)}</p><button type="button" class="mt-go" data-act="start"><svg viewBox="0 0 70 24" aria-hidden="true"><path d="M2 2v14h62M54 8l10 8-10 8"/></svg><b>${esc(MT.start)}</b></button>`);
+    };
+    const question = () => {
+      const [q, opts] = MT.qs[step];
+      counter(step + 1);
+      paint(`<h2 class="mt-q">${esc(q)}</h2><div class="mt-opts">${opts.map(([label], i) =>
+        `<button type="button" data-i="${i}"><small>${two(i + 1)}</small>${esc(label)}</button>`).join("")}</div>${step ? `<button type="button" class="mt-back tiny" data-act="back">${esc(MT.undo)}</button>` : ""}`);
+    };
+    const chips = () => artists.map((a, i) => `<button type="button" class="mt-chip" data-x="${i}" aria-label="${esc(a)} ✕">${esc(a)}<i aria-hidden="true">✕</i></button>`).join("");
+    const artistStep = () => {
+      counter(total);
+      paint(`<h2 class="mt-q">${esc(MT.artistsQ)}</h2><div class="mt-chips" id="mt-chips">${chips()}</div>
+        <form class="mt-in" id="mt-form"><input id="mt-input" maxlength="60" autocomplete="off" enterkeyhint="done" placeholder="${esc(MT.artistsPh)}" aria-label="${esc(MT.artistsQ)}"></form>
+        <div class="mt-row"><button type="button" class="mt-back tiny" data-act="back">${esc(MT.undo)}</button><span class="tiny mt-hint">${esc(MT.artistsHint)}</span>
+        <button type="button" class="mt-go" data-act="result"><svg viewBox="0 0 70 24" aria-hidden="true"><path d="M2 2v14h62M54 8l10 8-10 8"/></svg><b>${esc(artists.length ? MT.next : MT.skip)}</b></button></div>`);
+      const input = $("mt-input");
+      $("mt-form").addEventListener("submit", e => { e.preventDefault(); addArtist(input.value); });
+      if (matchMedia("(hover:hover)").matches) input.focus({ preventScroll: true });
+    };
+    const addArtist = v => {
+      const a = String(v || "").trim().slice(0, 60);
+      if (a && artists.length < 5 && !artists.some(x => x.toLowerCase() === a.toLowerCase())) artists.push(a);
+      $("mt-chips").innerHTML = chips(); $("mt-input").value = "";
+      stage.querySelector('[data-act="result"] b').textContent = artists.length ? MT.next : MT.skip;
+      $("mt-input").disabled = artists.length >= 5;
+    };
+    const tierOf = n => MT.tiers.find(([min]) => n >= min)[1];
+    async function result() {
+      if (mBusy) return;
+      const pending = $("mt-input") && $("mt-input").value.trim();
+      if (pending) addArtist(pending);
+      mBusy = true;
+      morph(big, ["…"]); sub.textContent = MT.thinking;
+      paint(`<p class="mt-p wait">${esc(MT.thinking)}</p>`);
+      try {
+        const res = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" },
+          body: JSON.stringify({ lang, artists, picks: picks.map(([label, w, tag]) => ({ label, w, tag })) }) });
+        const d = await res.json().catch(() => ({}));
+        if (res.status === 401) { location.reload(); return; }
+        if (!res.ok || !d.score) throw new Error(res.status === 429 ? "slow" : "error");
+        last = d;
+        const song = `${d.song.by} – ${d.song.title}`;
+        const verdict = d.verdict || MT.fallback.replace("{n}", d.score).replace("{song}", song);
+        morph(big, [`${d.score}%`]); sub.textContent = C.mTitle.replace(/^\[\s*/, "");
+        const shared = d.shared.length ? `<ul>${d.shared.map(a => `<li><span>${esc(a.name)}</span><em>${a.plays ? `${a.plays.toLocaleString(LOCALE)} ${esc(MT.plays)}` : esc(MT.inLib)}</em></li>`).join("")}</ul>` : `<p class="mt-none">${esc(MT.noShared)}</p>`;
+        paint(`<h2 class="mt-q mt-tier">${esc(tierOf(d.score))}</h2>
+          <p class="mt-verdict">${esc(verdict)}</p>
+          <div class="mt-res"><div class="mt-shared"><b class="tiny">[ ${esc(MT.youBoth)}</b>${shared}</div>
+          <div class="mt-song"><b class="tiny">[ ${esc(MT.send)}</b><a href="https://open.spotify.com/search/${encodeURIComponent(d.song.by + " " + d.song.title)}" target="_blank" rel="noopener"><span>${esc(d.song.title)}</span><small>${esc(d.song.by)} · ${esc(MT.listen)}</small></a></div></div>
+          <div class="mt-acts"><button type="button" data-act="again">${esc(MT.again)}</button><button type="button" data-act="share">${esc(MT.share)}</button><button type="button" data-act="askmusic">${esc(MT.askMore)}</button></div>`);
+        say(verdict);
+      } catch (e) {
+        morph(big, ["??%"]);
+        paint(`<p class="mt-p">${esc(e.message === "slow" ? MT.slow : MT.error)}</p><button type="button" class="mt-go" data-act="result"><svg viewBox="0 0 70 24" aria-hidden="true"><path d="M2 2v14h62M54 8l10 8-10 8"/></svg><b>${esc(MT.again)}</b></button>`);
+      } finally { mBusy = false; }
+    }
+    const goQuiz = q => { setMode("personal"); $("quiz").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); setTimeout(() => ask(q), reduced ? 0 : 600); };
+    stage.addEventListener("click", async e => {
+      const opt = e.target.closest(".mt-opts button");
+      if (opt) { picks[step] = MT.qs[step][1][+opt.dataset.i]; step++; step < MT.qs.length ? question() : artistStep(); return; }
+      const x = e.target.closest(".mt-chip");
+      if (x) { artists.splice(+x.dataset.x, 1); addArtist(""); return; }
+      const act = e.target.closest("[data-act]")?.dataset.act;
+      if (act === "start") { step = 0; question(); }
+      else if (act === "back") { step = Math.max(0, step - 1); picks.length = step; question(); }
+      else if (act === "result") result();
+      else if (act === "again") { intro(); step = 0; question(); }
+      else if (act === "askmusic") goQuiz(MT.asks[0]);
+      else if (act === "share" && last) {
+        const text = MT.shareText.replace("{n}", last.score), url = location.origin + "/popquiz";
+        const btn = e.target.closest("button");
+        try { if (navigator.share) await navigator.share({ text, url }); else { await navigator.clipboard.writeText(`${text} ${url}`); btn.textContent = MT.copied; } } catch {}
+      }
+    });
+    $("mt-asks").innerHTML = MT.asks.map(q => `<button type="button">${esc(q)}</button>`).join("");
+    $("mt-asks").addEventListener("click", e => { const b = e.target.closest("button"); if (b) goQuiz(b.textContent); });
+    document.querySelector('.cv-pick [data-go="match"]')?.addEventListener("click", () => $("match").scrollIntoView({ behavior: reduced ? "auto" : "smooth" }));
+    render(big, ["??%"]);
+    intro();
+  }
 })();

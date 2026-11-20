@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/quiz.css?v=202611180210">
+<link rel="stylesheet" href="css/quiz.css?v=202611201500">
 </head>
 <!-- Pop quiz (Felipe, Nov 17 2026): a separate personal page, locked by the worker until launch; look = quiz-study-6.html.
      Copy in content.js (SITE.quiz); answers from POST /api/ask (worker/index.js). No link to it from the portfolio yet. -->
@@ -37,6 +37,7 @@
       <h1 class="cv-mid" data-k="pick"></h1>
       <div class="cv-pick">
         <button type="button" data-mode="professional"><span data-k="pro"></span><small data-k="proSmall"></small></button>
+        <button type="button" data-go="match"><span data-k="mus"></span><small data-k="musSmall"></small></button>
         <button type="button" data-mode="personal"><span data-k="per"></span><small data-k="perSmall"></small></button>
       </div>
       <div class="cv-vert" data-k="side"></div>
@@ -50,7 +51,7 @@
       <div class="qz-band" aria-hidden="true"></div>
       <div class="qz-nav tiny">
         <span class="qz-modes" role="group"><button type="button" data-mode="professional" data-k="menuPro"></button><button type="button" data-mode="personal" data-k="menuPer"></button></span>
-        <span class="qz-tools"><button type="button" id="voice" aria-pressed="true"></button><a href="/" data-k="back"></a></span>
+        <span class="qz-tools"><a href="#match" data-k="menuMus"></a><button type="button" id="voice" aria-pressed="true"></button><a href="/" data-k="back"></a></span>
       </div>
       <div class="film">
         <div class="edge" aria-hidden="true"><span>Bellintani 27</span><span id="edge-mode"></span><span>Pop quiz</span><span>⟶ 12A</span><span>Bellintani 27</span><span>Ilford-ish</span><span>Pop quiz</span></div>
@@ -71,6 +72,17 @@
     </div>
   </section>
 
+  <!-- 2b · Music match (Felipe, Nov 20 2026): quick picks + the visitor's artists against his Last.fm; POST /api/match -->
+  <section class="wrap black" id="match">
+    <div class="screen">
+      <div class="mt-top tiny"><span data-k="mTitle"></span><a href="https://www.last.fm/user/fbellintani" target="_blank" rel="noopener" data-k="mSource"></a></div>
+      <div class="mt-big stamp kin" id="mt-big" aria-hidden="true"></div>
+      <div class="mt-sub tiny" id="mt-sub" aria-live="polite"></div>
+      <div class="mt-stage" id="mt-stage" aria-live="polite"></div>
+      <div class="mt-ask tiny"><b data-k="mAsk"></b><span id="mt-asks"></span></div>
+    </div>
+  </section>
+
   <!-- 3 · closing: the trainer footer -->
   <section class="wrap paper" id="end">
     <div class="screen grain">
@@ -83,7 +95,7 @@
     </div>
   </section>
 </main>
-<script src="js/content.js?v=202611180210"></script>
-<script src="js/quiz.js?v=202611180210"></script>
+<script src="js/content.js?v=202611201500"></script>
+<script src="js/quiz.js?v=202611201500"></script>
 </body>
 </html>

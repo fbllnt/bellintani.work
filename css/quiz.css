@@ -87,6 +87,57 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .fade{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(.8em)}}
 
+/* ---------- 2b · Music match (Nov 20 2026): the cover's black poster; a giant red counter / score on the left,
+   the question and its picks stacked right in Anton, answers as bare Bebas words (no boxes) ---------- */
+.cv-pick button[data-go]{text-align:center}
+.mt-top{left:2.4cqw;right:2.4cqw;top:2cqw;display:flex;justify-content:space-between;z-index:3}
+.mt-big{left:1.4cqw;top:3.4cqw;font:400 27cqw/.8 var(--cond);color:var(--red);white-space:nowrap;letter-spacing:-.005em;z-index:1}
+.mt-sub{left:2.4cqw;top:27.4cqw;z-index:3;color:#9c9a95}
+.mt-stage{right:2.4cqw;top:6.4cqw;width:52cqw;z-index:3;display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:2cqw}
+.mt-q{margin:0;font:400 4.6cqw/.92 var(--big);text-transform:uppercase;letter-spacing:-.01em;color:var(--bone)}
+.mt-p{margin:0;max-width:34cqw;font:600 1.3cqw/1.32 var(--sm);text-transform:uppercase;text-align:justify;text-align-last:right}
+.mt-p.wait{opacity:.5;animation:qzWait 1s ease-in-out infinite alternate}
+.mt-opts{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:1.2cqw 2.6cqw}
+.mt-opts button{font:400 3.2cqw/1 var(--cond);letter-spacing:.01em;color:var(--bone);transition:color .2s;display:flex;align-items:flex-start;gap:.5cqw}
+.mt-opts button small{font:500 .72cqw/1 var(--mono);color:#9c9a95;margin-top:.3cqw}
+.mt-opts button:hover,.mt-opts button:focus-visible{color:var(--red);outline:0}
+.mt-back{color:#9c9a95}.mt-back:hover{color:var(--red)}
+.mt-go{display:flex;align-items:center;gap:3cqw;color:var(--bone)}
+.mt-go svg{width:6cqw;height:2cqw;fill:none;stroke:currentColor;stroke-width:.3cqw;transition:translate .3s}
+.mt-go:hover{color:var(--red)}.mt-go:hover svg{translate:.8cqw 0}
+.mt-go b{font:400 2.1cqw/1 var(--big);text-transform:uppercase;border-bottom:.22cqw solid currentColor}
+.mt-chips{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.6cqw 1.8cqw;min-height:2.6cqw}
+.mt-chip{font:400 2.6cqw/1 var(--cond);color:var(--red);display:flex;align-items:flex-start;gap:.4cqw}
+.mt-chip i{font:500 .8cqw/1 var(--mono);font-style:normal;color:#9c9a95;margin-top:.3cqw}
+.mt-chip:hover i{color:var(--bone)}
+.mt-in{width:100%}
+.mt-in input{width:100%;background:none;border:0;border-bottom:.15cqw solid #555;outline:none;color:var(--bone);font:400 3.4cqw/1.15 var(--big);text-transform:uppercase;text-align:right;padding:0 0 .4cqw}
+.mt-in input::placeholder{color:rgba(239,237,232,.3)}
+.mt-in input:focus{border-bottom-color:var(--bone)}
+.mt-row{display:flex;align-items:center;gap:2.4cqw;width:100%;justify-content:flex-end}
+.mt-hint{color:#6f6d69;margin-right:auto}
+.mt-tier{font-size:5.4cqw}
+.mt-verdict{margin:0;max-width:36cqw;font:600 1.2cqw/1.34 var(--sm);text-transform:uppercase;text-align:justify;text-align-last:right}
+.mt-res{display:flex;gap:4cqw;justify-content:flex-end;align-items:flex-start;width:100%}
+.mt-res b{display:block;margin-bottom:.8cqw;color:#9c9a95;font-weight:600}
+.mt-shared ul{list-style:none;margin:0;padding:0}
+.mt-shared li{display:flex;justify-content:flex-end;align-items:baseline;gap:1cqw;font:400 2.2cqw/1.08 var(--cond);letter-spacing:.01em}
+.mt-shared em{font:500 .78cqw/1 var(--mono);font-style:normal;color:var(--red);text-transform:uppercase}
+.mt-none{margin:0;font:400 1.8cqw/1 var(--cond);color:#9c9a95}
+.mt-song a{display:block}
+.mt-song span{display:block;font:400 3.4cqw/.9 var(--cond);color:var(--red);transition:color .2s}
+.mt-song small{display:block;margin-top:.5cqw;font:600 .78cqw/1.2 var(--sm);text-transform:uppercase}
+.mt-song a:hover span{color:var(--bone)}
+.mt-acts{display:flex;gap:2.4cqw}
+.mt-acts button{font:400 1.6cqw/1 var(--big);text-transform:uppercase;border-bottom:.18cqw solid currentColor;color:var(--bone)}
+.mt-acts button:hover{color:var(--red)}
+.mt-ask{left:2.4cqw;right:2.4cqw;bottom:2cqw;z-index:3;display:flex;gap:1.6cqw;align-items:baseline;color:#9c9a95;border-top:1px solid #333;padding-top:.9cqw}
+.mt-ask b{font-weight:600;color:var(--bone);flex:none}
+#mt-asks{display:flex;flex-wrap:wrap;gap:.4cqw 2cqw}
+#mt-asks button{font:inherit;text-transform:inherit;color:#9c9a95}
+#mt-asks button:hover{color:var(--red)}
+.qz-tools a[href="#match"]{color:var(--red)}
+
 /* ---------- 3 · closing ---------- */
 .en-label{left:2.4cqw;top:3cqw}
 .en-head{right:2.4cqw;top:3cqw;width:62cqw;text-align:right;font:400 5.4cqw/.92 var(--big);text-transform:uppercase}
@@ -142,6 +193,34 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .qz-in input{font-size:28px;font-size:max(28px,16px)}
   .qz-in .mic{width:42px;height:42px;margin:0}
   .qz-in .mic svg{width:18px;height:18px}
+  /* music match */
+  #match .screen{padding:16px 16px 22px}
+  .mt-top{order:0;z-index:3;gap:12px}
+  .mt-big{order:1;margin:18px 0 0 -4px;font-size:40vw;line-height:.82}
+  .mt-sub{order:2;margin:6px 0 22px}
+  .mt-stage{order:3;align-items:flex-start;text-align:left;gap:18px}
+  .mt-q{font-size:36px}
+  .mt-p,.mt-verdict{max-width:none;font-size:13px;line-height:1.4;text-align-last:left}
+  .mt-opts{flex-direction:column;justify-content:flex-start;gap:12px}
+  .mt-opts button{font-size:30px;gap:8px}
+  .mt-opts button small{font-size:9px;margin-top:4px}
+  .mt-go{gap:20px}.mt-go svg{width:46px;height:16px;stroke-width:2}.mt-go b{font-size:20px;border-bottom-width:2px}
+  .mt-chips{justify-content:flex-start;gap:6px 16px;min-height:0}
+  .mt-chip{font-size:26px;gap:4px}.mt-chip i{font-size:9px;margin-top:3px}
+  .mt-in input{font-size:24px;text-align:left;border-bottom-width:2px;padding-bottom:4px;font-size:max(24px,16px)}
+  .mt-row{flex-wrap:wrap;gap:14px}.mt-hint{display:none}
+  .mt-tier{font-size:40px}
+  .mt-res{flex-direction:column;gap:20px}
+  .mt-res b{margin-bottom:8px}
+  .mt-shared li{justify-content:flex-start;font-size:24px;gap:10px}
+  .mt-shared em{font-size:9px}
+  .mt-none{font-size:20px}
+  .mt-song span{font-size:38px}.mt-song small{font-size:10px;margin-top:6px}
+  .mt-acts{flex-wrap:wrap;gap:14px 20px}.mt-acts button{font-size:18px;border-bottom-width:2px}
+  .mt-ask{order:4;margin-top:36px;flex-direction:column;gap:10px;padding-top:12px}
+  #mt-asks{flex-direction:column;gap:10px}
+  #mt-asks button{text-align:left}
+  .cv-pick button[data-go]{text-align:left}
   /* closing */
   #end .screen{padding:16px 16px 0;min-height:auto}
   .en-label{order:0}
@@ -153,4 +232,4 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .en-big{order:3;margin:40px 0 18px;font-size:15.5vw;white-space:normal;text-align:left;line-height:.88}
   .en-foot{order:4;flex-wrap:wrap;gap:8px 16px;padding:12px 0 18px}
 }
-@media (prefers-reduced-motion:reduce){.fade,.qz-a p.wait,.qz-in .mic.on{animation:none}.film .fr img{transition:none}}
+@media (prefers-reduced-motion:reduce){.fade,.qz-a p.wait,.mt-p.wait,.qz-in .mic.on{animation:none}.film .fr img{transition:none}}
