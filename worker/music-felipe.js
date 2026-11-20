@@ -1,6 +1,7 @@
-// Felipe's listening, from his public Last.fm (https://www.last.fm/user/fbellintani), snapshot of Nov 20 2026.
-// Used by the Pop quiz (worker/index.js): MUSIC_TEXT goes into the buddy's facts, and ARTISTS / BRIDGE drive the
-// Music match (POST /api/match). To refresh: copy the new numbers from his Last.fm library pages into the lists below.
+// Felipe's listening, from his public Last.fm (https://www.last.fm/user/fbellintani).
+// The lists below are the snapshot of Nov 20 2026. The worker refreshes them once a week from the Last.fm API
+// (worker/lastfm.js, needs the LASTFM_KEY secret) and falls back to this snapshot when there is no key or the API fails.
+// musicText() turns either into the buddy's facts; BRIDGE (hand-picked songs) drives the Music match's song pick.
 
 export const PROFILE = { since: "21 Nov 2006", scrobbles: 283802, artists: 11742, loved: 3218 };
 
@@ -70,16 +71,18 @@ export const TAGS = ["indie", "rock", "electronica", "alternative", "pop", "elec
 
 export const YEARS = "2006: 1,767 · 2007: 24,907 · 2008: 39,216 (his record year) · 2009: 26,641 · 2010: 19,931 · 2011: 13,900 · 2012: 9,944 · 2013: 6,047 · 2014: 13,150";
 
-// The buddy's music facts, as plain text
-export const MUSIC_TEXT = `FROM HIS LAST.FM (public profile last.fm/user/fbellintani, scrobbling since ${PROFILE.since}; snapshot Nov 20 2026):
-- ${PROFILE.scrobbles.toLocaleString("en-US")} scrobbles (songs played and logged), ${PROFILE.artists.toLocaleString("en-US")} different artists, ${PROFILE.loved.toLocaleString("en-US")} loved tracks.
-- Most played artists of all time (plays): ${TOP_ARTISTS.map(([n, c]) => `${n} ${c.toLocaleString("en-US")}`).join(", ")}.
-- Most played tracks: ${TOP_TRACKS.join("; ")}. Fun fact: his number one track is a rain sound he plays to focus and sleep.
-- Most played albums: ${TOP_ALBUMS.join("; ")}.
-- On repeat lately (Nov 2026): ${LATELY.join("; ")}.
-- Scrobbles per year: ${YEARS}.
+export const SNAPSHOT = { asOf: "Nov 20 2026", profile: PROFILE, topArtists: TOP_ARTISTS, topTracks: TOP_TRACKS, topAlbums: TOP_ALBUMS, lately: LATELY, more: MORE_ARTISTS, years: YEARS };
+
+const n = v => Number(v).toLocaleString("en-US");
+// The buddy's music facts, as plain text (from the weekly Last.fm data or the snapshot)
+export const musicText = d => `FROM HIS LAST.FM (public profile last.fm/user/fbellintani, scrobbling since ${d.profile.since}; data as of ${d.asOf}):
+- ${n(d.profile.scrobbles)} scrobbles (songs played and logged), ${n(d.profile.artists)} different artists, ${n(d.profile.loved)} loved tracks.
+- Most played artists of all time (plays): ${d.topArtists.map(([a, c]) => `${a} ${n(c)}`).join(", ")}.
+- Most played tracks: ${d.topTracks.join("; ")}.${d.topTracks.some(t => /rain/i.test(t)) ? " Fun fact: his top tracks include rain sounds he plays to focus and sleep." : ""}
+- Most played albums: ${d.topAlbums.join("; ")}.
+- On repeat lately (last 30 days): ${d.lately.join("; ")}.${d.yearArtists ? `\n- Most played artists in the last 12 months: ${d.yearArtists.map(([a, c]) => `${a} ${n(c)}`).join(", ")}.` : ""}${d.years ? `\n- Scrobbles per year: ${d.years}.` : ""}
 - Genres he tags most: ${TAGS.join(", ")}.
-- Also in his library and loved tracks: ${MORE_ARTISTS.slice(0, 60).join(", ")}.
+- Also in his library and loved tracks: ${d.more.slice(0, 60).join(", ")}.
 - His taste in one line: indie rock from the 2000s, skate punk and ska punk (NOFX, The Interrupters, Big D And The Kids Table), synth and indie dance (New Order, M83, Hot Chip, LCD Soundsystem, Rex the Dog), Scandinavian softness (Kings of Convenience, The Radio Dept.), The Beatles and Bob Marley forever, and rain sounds for focus.`;
 
 // Music match: the picks' song suggestions. Each sound maps to songs he really plays a lot.

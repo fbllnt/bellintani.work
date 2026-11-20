@@ -6,12 +6,13 @@
 //    (Felipe's own answers), and dodges playfully when the answer is not there.
 import FACTS_SITE from "./facts-site.js";
 import FACTS_FELIPE from "./facts-felipe.js";
-import { MUSIC_TEXT, TOP_ARTISTS, MORE_ARTISTS, BRIDGE } from "./music-felipe.js";
+import { musicText, BRIDGE } from "./music-felipe.js";
+import { getMusic } from "./lastfm.js";
 
 const MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
 const LANG_NAME = { en: "English", pt: "Brazilian Portuguese", es: "Spanish" };
 
-const system = (lang, mode) => `You are the host of the Pop quiz on Felipe Bellintani's portfolio site: his playful, loyal buddy who knows him well. Visitors (often potential clients) ask you about him.
+const system = (lang, mode, music) => `You are the host of the Pop quiz on Felipe Bellintani's portfolio site: his playful, loyal buddy who knows him well. Visitors (often potential clients) ask you about him.
 
 VOICE: warm, witty, a bit cheeky, never corporate. Talk about Felipe in the third person ("he", "Felipe"). Keep answers short: one to three sentences, under 60 words, no lists, no headings, no emojis. Your answers are shown as text and may be read aloud, so write them the way a person talks.
 LANGUAGE: answer in ${LANG_NAME[lang] || "English"}, unless the visitor clearly writes in another language; then use theirs.
@@ -29,13 +30,13 @@ FACTS FROM FELIPE HIMSELF:
 ${FACTS_FELIPE}
 
 HIS MUSIC (from his Last.fm; use it freely for any music question: top artists, play counts, albums, what he plays lately):
-${MUSIC_TEXT}`;
+${musicText(music)}`;
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), {
   status, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
 });
 
-async function ask(request, env) {
+async function ask(request, env, ctx) {
   if (request.method !== "POST") return json({ error: "method" }, 405);
   // Only this site (and its preview links) may call it
   const origin = request.headers.get("origin");
@@ -58,8 +59,9 @@ async function ask(request, env) {
     .map(m => ({ role: m.role, content: m.content.slice(0, 400) }));
   if (!env.AI) return json({ error: "ai" }, 503);
   try {
+    const music = await getMusic(env, ctx);
     const out = await env.AI.run(MODEL, {
-      messages: [{ role: "system", content: system(lang, body.mode) }, ...history, { role: "user", content: q }],
+      messages: [{ role: "system", content: system(lang, body.mode, music) }, ...history, { role: "user", content: q }],
       max_tokens: 220, temperature: 0.7,
     });
     const answer = String(out.response || "").trim();
@@ -76,18 +78,26 @@ async function ask(request, env) {
 const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&/g, " and ")
   .replace(/^the\s+/, "").replace(/[^a-z0-9]+/g, "");
 const ALIAS = { rhcp: "Red Hot Chili Peppers", chili: "Red Hot Chili Peppers", rem: "R.E.M.", lcd: "LCD Soundsystem", marley: "Bob Marley & The Wailers", bobmarley: "Bob Marley & The Wailers" };
-const LIB = [
-  ...TOP_ARTISTS.map(([name, plays], i) => ({ name, plays, rank: i + 1, w: Math.max(.82, 1 - i * .0036) })),
-  ...MORE_ARTISTS.map(name => ({ name, plays: null, rank: null, w: .78 })),
-].map(a => ({ ...a, key: norm(a.name) }));
+// his library for matching: top artists (with plays) first, then everything else he has; rebuilt when the data changes
+let libFor = null, LIB = [];
+const libOf = music => {
+  if (libFor === music) return LIB;
+  const top = new Set(music.topArtists.map(([a]) => a));
+  LIB = [
+    ...music.topArtists.map(([name, plays], i) => ({ name, plays, rank: i + 1, w: Math.max(.82, 1 - i * .0036) })),
+    ...music.more.filter(a => !top.has(a)).map(name => ({ name, plays: null, rank: null, w: .78 })),
+  ].map(a => ({ ...a, key: norm(a.name) }));
+  libFor = music;
+  return LIB;
+};
 const findArtist = input => {
   const k = norm(input);
   if (!k) return null;
   if (ALIAS[k]) return LIB.find(a => a.name === ALIAS[k]);
   return LIB.find(a => a.key === k) || (k.length >= 5 && LIB.find(a => a.key.startsWith(k) || (a.key.length >= 5 && k.startsWith(a.key)))) || null;
 };
-const TASTE = "Indie rock from the 2000s, skate punk and ska punk, synth-pop and indie dance, soft Scandinavian indie, The Beatles, Bob Marley, 90s alternative. Top artists: " +
-  TOP_ARTISTS.slice(0, 30).map(([n]) => n).join(", ");
+const tasteOf = music => "Indie rock from the 2000s, skate punk and ska punk, synth-pop and indie dance, soft Scandinavian indie, The Beatles, Bob Marley, 90s alternative. Top artists: " +
+  music.topArtists.slice(0, 30).map(([n]) => n).join(", ");
 const pickOne = a => a[Math.floor(Math.random() * a.length)];
 
 async function aiText(env, messages, max_tokens, temperature) {
@@ -96,7 +106,7 @@ async function aiText(env, messages, max_tokens, temperature) {
   catch { return ""; }
 }
 
-async function match(request, env) {
+async function match(request, env, ctx) {
   if (request.method !== "POST") return json({ error: "method" }, 405);
   if (env.ASK_LIMIT) {
     const { success } = await env.ASK_LIMIT.limit({ key: request.headers.get("cf-connecting-ip") || "x" });
@@ -110,6 +120,8 @@ async function match(request, env) {
   const typed = [...new Set((Array.isArray(body.artists) ? body.artists : []).map(a => String(a || "").trim().slice(0, 60)).filter(Boolean))].slice(0, 5);
   if (!picks.length && !typed.length) return json({ error: "empty" }, 400);
 
+  const music = await getMusic(env, ctx);
+  libOf(music);
   // artists he plays vs. artists he doesn't have
   const shared = [], unknown = [];
   for (const t of typed) {
@@ -119,7 +131,7 @@ async function match(request, env) {
   let sims = {};
   if (unknown.length) {
     const raw = await aiText(env, [
-      { role: "system", content: `You rate music taste overlap. Felipe's taste: ${TASTE}. For each artist the user gives, answer how likely someone with Felipe's taste would also love that artist, 0 to 100 (same scene or clear influence 70-95, adjacent genre 40-70, far apart 5-35). Reply with ONLY a JSON object like {"Artist": 55}. No other text.` },
+      { role: "system", content: `You rate music taste overlap. Felipe's taste: ${tasteOf(music)}. For each artist the user gives, answer how likely someone with Felipe's taste would also love that artist, 0 to 100 (same scene or clear influence 70-95, adjacent genre 40-70, far apart 5-35). Reply with ONLY a JSON object like {"Artist": 55}. No other text.` },
       { role: "user", content: JSON.stringify(unknown) },
     ], 120, 0.1);
     try { sims = JSON.parse((raw.match(/\{[\s\S]*\}/) || ["{}"])[0]); } catch { sims = {}; }
@@ -162,7 +174,7 @@ const stretch = async code => {
 };
 const quizCookie = req => (req.headers.get("cookie") || "").match(/(?:^|;\s*)pq=([a-f0-9]{64})/)?.[1];
 const unlocked = async req => { const c = quizCookie(req); return !!c && (await sha(c)) === LOCK; };
-const isQuizPath = p => p === "/quiz" || p === "/quiz/" || /^\/quiz[-.]/.test(p) || p === "/api/ask" || p === "/api/match";
+const isQuizPath = p => p === "/quiz" || p === "/quiz/" || /^\/quiz[-.]/.test(p) || p === "/api/ask" || p === "/api/match" || p === "/api/music";
 const lockPage = (bad, next) => new Response(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Pop quiz</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter+Tight:wght@600&display=swap">
 <style>body{margin:0;min-height:100svh;display:grid;place-items:center;background:#0e0e0e;color:#efede8;font-family:"Inter Tight",sans-serif;overflow:hidden}
@@ -183,7 +195,7 @@ async function unlock(request) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     // bellintani.work/popquiz is the friendly address of the quiz
     if (/^\/popquiz\/?$/i.test(url.pathname)) return Response.redirect(new URL("/quiz" + url.search, url), 302);
@@ -193,8 +205,10 @@ export default {
       if (url.pathname.startsWith("/api/")) return json({ error: "locked" }, 401);
       return lockPage(false, url.pathname);
     }
-    if (url.pathname === "/api/ask") return ask(request, env);
-    if (url.pathname === "/api/match") return match(request, env);
+    if (url.pathname === "/api/ask") return ask(request, env, ctx);
+    if (url.pathname === "/api/match") return match(request, env, ctx);
+    // the numbers the quiz page shows (scrobbles), from the same weekly data
+    if (url.pathname === "/api/music") { const m = await getMusic(env, ctx); return json({ scrobbles: m.profile.scrobbles, since: m.profile.since, asOf: m.asOf, live: !!m.live }); }
     let res = await env.ASSETS.fetch(request);
     // Draft cases have no public HTML page yet. Reloading their in-app URL on
     // a preview host must still load the client router and its draft content.

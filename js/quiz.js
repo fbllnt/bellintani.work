@@ -16,8 +16,16 @@
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const rnd = (a, b) => a + Math.random() * (b - a);
 
-  // static copy
-  document.querySelectorAll("[data-k]").forEach(el => { const v = C[el.dataset.k]; if (v != null) el.textContent = Array.isArray(v) ? v.join("\n") : v; });
+  // static copy; "{n}" = his Last.fm scrobbles, refreshed weekly by the worker (GET /api/music)
+  let SCROBBLES = "283,802";
+  const N = t => String(t).replace(/\{n\}/g, SCROBBLES);
+  const fillCopy = () => document.querySelectorAll("[data-k]").forEach(el => { const v = C[el.dataset.k]; if (v != null) el.textContent = N(Array.isArray(v) ? v.join("\n") : v); });
+  fillCopy();
+  fetch("/api/music").then(r => r.ok ? r.json() : null).then(d => {
+    if (!d || !d.scrobbles) return;
+    SCROBBLES = Number(d.scrobbles).toLocaleString(LOCALE); fillCopy();
+    const p = document.querySelector("#mt-stage .mt-p:not(.wait)"); if (p && C.match) p.textContent = N(C.match.intro);
+  }).catch(() => {});
   $("input").placeholder = matchMedia("(max-width:760px)").matches ? C.inputShort : C.input;
   $("input").setAttribute("aria-label", C.input);
 
@@ -171,7 +179,7 @@
     const intro = () => {
       step = -1; picks = []; artists = []; last = null;
       morph(big, ["??%"]); sub.textContent = C.mTitle.replace(/^\[\s*/, "");
-      paint(`<p class="mt-p">${esc(MT.intro)}</p><button type="button" class="mt-go" data-act="start"><svg viewBox="0 0 70 24" aria-hidden="true"><path d="M2 2v14h62M54 8l10 8-10 8"/></svg><b>${esc(MT.start)}</b></button>`);
+      paint(`<p class="mt-p">${esc(N(MT.intro))}</p><button type="button" class="mt-go" data-act="start"><svg viewBox="0 0 70 24" aria-hidden="true"><path d="M2 2v14h62M54 8l10 8-10 8"/></svg><b>${esc(MT.start)}</b></button>`);
     };
     const question = () => {
       const [q, opts] = MT.qs[step];
@@ -203,8 +211,8 @@
       const pending = $("mt-input") && $("mt-input").value.trim();
       if (pending) addArtist(pending);
       mBusy = true;
-      morph(big, ["…"]); sub.textContent = MT.thinking;
-      paint(`<p class="mt-p wait">${esc(MT.thinking)}</p>`);
+      morph(big, ["…"]); sub.textContent = N(MT.thinking);
+      paint(`<p class="mt-p wait">${esc(N(MT.thinking))}</p>`);
       try {
         const res = await fetch("/api/match", { method: "POST", headers: { "content-type": "application/json" },
           body: JSON.stringify({ lang, artists, picks: picks.map(([label, w, tag]) => ({ label, w, tag })) }) });
