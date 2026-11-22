@@ -37,25 +37,30 @@ window.SITE = {
   // value; `flow: true` runs single values as one line of text. `placeholder: true` marks unfinished blocks.
   about: {
     intro: {
-      en: "I build brands, design systems and creative operations that scale. For over 20 years I've led branding, design and creative work across Latin America, Europe and North America.",
-      pt: "Crio marcas, sistemas de design e operações criativas que crescem junto com a empresa. Faz mais de 20 anos que lidero branding, design e criação na América Latina, na Europa e na América do Norte.", es: "Creo marcas, sistemas de diseño y operaciones creativas que crecen junto con la empresa. Hace más de 20 años que lidero branding, diseño y creación en América Latina, Europa y Norteamérica.",
+      en: "I build brands, design systems and creative operations that scale. Multidisciplinary designer and Adobe Insider, with over 20 years leading branding, design and creative work across Latin America, Europe and North America. Today I design B2B Tech/SaaS campaigns and build AI-powered workflows with Claude, Flora and Higgsfield to speed up ideation and production.",
+      pt: "Crio marcas, sistemas de design e operações criativas que crescem junto com a empresa. Designer multidisciplinar e Adobe Insider, há mais de 20 anos lidero branding, design e criação na América Latina, na Europa e na América do Norte. Hoje desenho campanhas B2B de Tech/SaaS e monto workflows com IA usando Claude, Flora e Higgsfield pra acelerar a ideação e a produção.", es: "Creo marcas, sistemas de diseño y operaciones creativas que crecen junto con la empresa. Diseñador multidisciplinario y Adobe Insider, hace más de 20 años que lidero branding, diseño y creación en América Latina, Europa y Norteamérica. Hoy diseño campañas B2B de Tech/SaaS y armo workflows con IA usando Claude, Flora y Higgsfield para acelerar la ideación y la producción.",
     },
     credits: [
       { head: { en: "Experience", pt: "Experiência", es: "Experiencia" }, rows: [
         { role: "Senior Visual Designer", name: "Housecall Pro", years: { en: "2026 — now", pt: "2026 — hoje", es: "2026 — hoy" } },
         { role: "Creative Director", name: "500 Designs", years: "2026" },
-        { role: "Owner / Design Director", name: "Haute Rift", years: "2018 — 2025" },
-        { role: "Brand Design Specialist", name: "JBS", years: "2021 — 2023" },
+        { role: "Design Studio Owner", name: "Haute Rift", years: "2018 — 2025" },
+        { role: "Brand Designer", name: "JBS", years: "2021 — 2023" },
         { role: "Senior Art Director", name: "VML", years: "2020 — 2022" },
         { role: "Lead Designer", name: "Globo", years: "2014 — 2018" },
-        { role: "Senior Art Director", name: "Lew'Lara\\TBWA", years: "2012 — 2014" },
-        { role: "Head of Art", name: "Havas (EuroRSCG 4D)", years: "2010 — 2011" },
-        { role: "Interactive Art Director / Team Lead", name: "AgênciaClick", years: "2008 — 2010" },
+        { role: "Senior Integrated Art Director", name: "Lew'Lara\\TBWA", years: "2012 — 2014" },
+        { role: "Senior Integrated Art Director", name: "BETC Havas (EuroRSCG 4D)", years: "2010 — 2011" },
+        { role: "Interactive Art Director", name: "AgênciaClick", years: "2008 — 2010" },
         { role: "Interactive Art Director / Team Lead", name: "Wunderman Thompson", years: "2006 — 2008" },
       ] },
       { head: { en: "Clients", pt: "Clientes", es: "Clientes" }, flow: true, rows: [
-        "Adidas", "Globo", "Meta", "Pernod Ricard", "Diageo", "Absolut", "Gatorade", "Nissan", "Land Rover", "Nokia", "Philips",
-        "FIAT", "TIM", "Banco do Brasil", "Velo / Vuse", "Qiddiya", "JBS", "Housecall Pro", "ANTI Creative Finance", "SCRV.ag",
+        "Adidas", "PepsiCo", "Unilever", "General Mills", "Globo", "Meta", "Pernod Ricard", "Diageo", "Absolut", "Gatorade", "Nissan",
+        "Land Rover", "Nokia", "Philips", "FIAT", "TIM", "Banco do Brasil", "Velo / Vuse", "Qiddiya", "JBS", "Seara", "Friboi",
+        "Housecall Pro", "The Home Depot", "ANTI Creative Finance", "SCRV.ag",
+      ] },
+      // Tools (from the CV, Nov 22 2026)
+      { head: { en: "Tools", pt: "Ferramentas", es: "Herramientas" }, flow: true, rows: [
+        "Adobe CC", "Figma", "Flora.ai", "Higgsfield", "Claude (Code)", "ChatGPT (Codex)", "ExtendScript",
       ] },
       { head: { en: "Education", pt: "Formação", es: "Formación" }, rows: [
         { role: { en: "MBA, Data-Driven Marketing and AI", pt: "MBA, Marketing Orientado a Dados e IA", es: "MBA, Marketing Basado en Datos e IA" }, name: "USP / Esalq", years: "2026 — 2027" },
