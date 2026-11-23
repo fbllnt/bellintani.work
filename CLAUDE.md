@@ -129,6 +129,12 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 - Logofolio sizing (Nov 16 2026): `markWidth()` in main.js balances each mark by its measured ink box and density; the weight
   correction applies after the size cap (heavy marks down to 70%, light up to 130%, never past capW/capH), so wide heavy
   wordmarks like GBR no longer read too big. Use `scale` only as a last correction by eye.
+- Logofolio quality pass (Nov 22 2026, Felipe: "upscale the low res and rework/correct based on what was uploaded"): 31 marks
+  replaced by `*-hd` files about 2600 px wide (never trace small files again; the old auto-traced SVGs had lumpy, cracked edges).
+  Cut from the original files on the PERSONAL drive where they exist (CoreHi, GBR, Top Fifty, Dirty Projectors, Join, Ink,
+  Las Movidas, Space Lab, Hora Um, DMA brandbook p.6 turned into the solid monogram); the ō redrawn as exact circles and bar
+  (SVG); the rest rebuilt from the site files with a smooth high-res upscale, keeping the uploaded design (Swift keeps its filled 4).
+  Supawvisor (fine engraving) left as it was.
 - Logos project (`layout: "logos"`): every logo file must be pure black #000000 on a transparent background
   (PNG or SVG, trimmed). Check each upload and correct off-blacks such as #231F20 before adding it.
 - Typefaces: Figtree (display) and JetBrains Mono (small copy / body). White page, black type, blue accents.
