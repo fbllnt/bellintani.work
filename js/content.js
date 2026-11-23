@@ -60,7 +60,7 @@ window.SITE = {
       ] },
       // Tools (from the CV, Nov 22 2026)
       { head: { en: "Tools", pt: "Ferramentas", es: "Herramientas" }, flow: true, rows: [
-        "Adobe CC", "Figma", "Flora.ai", "Higgsfield", "Claude (Code)", "ChatGPT (Codex)", "ExtendScript",
+        "Adobe CC", "Figma", "Flora.ai", "Higgsfield", "Claude (Code)", "ChatGPT (Codex)", "ExtendScript", "ElevenLabs", "Midjourney", "Gemini", "GitHub", "Cloudflare",
       ] },
       { head: { en: "Education", pt: "Formação", es: "Formación" }, rows: [
         { role: { en: "MBA, Data-Driven Marketing and AI", pt: "MBA, Marketing Orientado a Dados e IA", es: "MBA, Marketing Basado en Datos e IA" }, name: "USP / Esalq", years: "2026 — 2027" },
