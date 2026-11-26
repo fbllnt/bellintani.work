@@ -43,6 +43,12 @@ Limits: 25 MB per file, 20,000 files, free builds a month are limited. Still bat
 
 - Oct 29 2026: a text on how he works with AI and the tools he uses (likely near the AI filter or the "Vibe Coding & AI
   Workflows" service). He is still thinking it through: don't write it unprompted, and the copy/tools must come from him.
+  DONE, approved and LIVE Nov 26 2026 as "AI in my workflow" in the About (`workflow` block in content.js, `renderWorkflow`
+  in main.js, `.ab-workflow*` / `.ab-kit*` in style.css): title and the 2x2 stages always visible, the lit stage in the
+  site blue following the pointer (it replaced a lime first card), FLORA named as his node-based canvas, and only a small
+  "Full toolkit" row opens (6 areas, 24 models, main picks bright, "also" models muted). The copy and the model list are
+  Felipe's: he chose to keep every model, including ones not found in his reachable FLORA history (Ideogram 3.0, Meshy 6,
+  SAM 3D, MMAudio v2, Mirelo SFX 1.5), so don't remove or swap any without asking.
 - Nov 1 2026 answers (Felipe): keep "Work" in the top menu (don't remove it). Service 04 = "Video, Content & TV" (Felipe, Nov 1 15:45Z; was "Video & TV") in all three
   languages. HCP Top 50 Names cites only Flora.AI and Claude Code as AI tools (Nano Banana Pro, Topaz, Seedance taken out
   of the text; the step-strip images still show those names baked in, asked him). Globo has a ficha técnica: Type design =
