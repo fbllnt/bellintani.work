@@ -498,6 +498,22 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Short items (clients, disciplines, languages) run in columns; rows have no hairlines, only the section rule on top (Felipe, Nov 9 2026) */
 .ab-list.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap)}
 .ab-list.flow .ab-row.solo:nth-child(-n+3){padding-top:0}
+.ab-workflow{grid-column:5 / 13;min-width:0}
+.ab-workflow summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;font:700 clamp(21px,3vw,40px)/1.12 var(--sans);letter-spacing:-.04em}
+.ab-workflow summary::-webkit-details-marker{display:none}
+.ab-workflow summary::after{content:"+";display:grid;place-items:center;flex:0 0 36px;height:36px;border:1px solid currentColor;border-radius:50%;font:500 24px/1 var(--sans)}
+.ab-workflow[open] summary::after{content:"−"}
+.ab-workflow summary:focus-visible,.ab-workflow-case:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+.ab-workflow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid currentColor;border-left:1px solid currentColor;margin-top:20px}
+.ab-workflow-step{padding:clamp(14px,2vw,24px);border-right:1px solid currentColor;border-bottom:1px solid currentColor}
+.ab-workflow-step:first-child{background:#d9f76a;color:#171714}
+.ab-workflow-step h4{font:700 clamp(19px,2vw,28px)/1.1 var(--sans);letter-spacing:-.025em;margin:0 0 10px}
+.ab-workflow-step p{margin:0 0 14px;line-height:1.45}
+.ab-workflow-step ul{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0}
+.ab-workflow-step li{padding:3px 7px;border:1px solid currentColor;border-radius:20px;font-size:11px}
+.ab-workflow-case{display:inline-block;margin-top:16px;text-underline-offset:4px}
+@media(max-width:760px){.ab-workflow{grid-column:1 / -1}}
+@media(max-width:520px){.ab-workflow-grid{grid-template-columns:1fr}}
 .ab-end{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:var(--rule-w) solid var(--fg);padding-top:14px;margin:0}
 .ab-clock time{font-variant-numeric:tabular-nums}
 @media (max-width:760px){

@@ -62,6 +62,24 @@ window.SITE = {
       { head: { en: "Tools", pt: "Ferramentas", es: "Herramientas" }, flow: true, rows: [
         "Adobe CC", "Figma", "Flora.ai", "Higgsfield", "Claude (Code)", "ChatGPT (Codex)", "ExtendScript", "ElevenLabs", "Midjourney", "Gemini", "GitHub", "Cloudflare",
       ] },
+      { head: { en: "AI in my workflow", pt: "IA no meu processo", es: "IA en mi proceso" }, workflow: {
+        toggle: { en: "From brief to final artwork", pt: "Do briefing à arte final", es: "Del brief al arte final" },
+        steps: [
+          { title: { en: "Develop the brief", pt: "Desenvolvo o briefing", es: "Desarrollo el brief" },
+            description: { en: "Claude Code is where I turn the brief into creative directions, write prompts, and build brand rules into reusable workflows.", pt: "No Claude Code, transformo o briefing em rotas criativas, escrevo prompts e incorporo as regras da marca a fluxos reutilizáveis.", es: "En Claude Code, convierto el brief en rutas creativas, escribo prompts e incorporo las reglas de marca a flujos reutilizables." },
+            tools: ["Claude Opus 5.5", "Claude Sonnet 5", "Claude Opus 5"] },
+          { title: { en: "Make the stills", pt: "Crio as imagens", es: "Creo las imágenes" },
+            description: { en: "I send the brief to FLORA from Claude Code. In FLORA, I use Gemini 3 Pro for key visuals, Flash Image to explore variations quickly, and GPT Image 2.6 Sunburst for targeted edits.", pt: "Envio o briefing do Claude Code para o FLORA. Uso Gemini 3 Pro para os visuais principais, Flash Image para explorar variações rápido e GPT Image 2.6 Sunburst para ajustes pontuais.", es: "Envío el brief de Claude Code a FLORA. Uso Gemini 3 Pro para las imágenes principales, Flash Image para explorar variantes rápidamente y GPT Image 2.6 Sunburst para ajustes puntuales." },
+            tools: ["Gemini 3 Pro", "Gemini 3.1 Flash Image", "GPT Image 2.6 Sunburst"] },
+          { title: { en: "Build motion", pt: "Dou movimento", es: "Doy movimiento" },
+            description: { en: "I take selected stills into motion, testing how the camera moves and how the scene holds together before choosing a take.", pt: "Animo as imagens selecionadas e testo o movimento de câmera e a continuidade da cena antes de escolher uma tomada.", es: "Animo las imágenes seleccionadas y pruebo el movimiento de cámara y la continuidad de la escena antes de elegir una toma." },
+            tools: ["Gemini Omni 1.1 Flash", "Kling 3.0 Pro", "Seedance 2.5"] },
+          { title: { en: "Finish the assets", pt: "Finalizo as peças", es: "Finalizo las piezas" },
+            description: { en: "I use Topaz to upscale, Magnific when a still needs detail refinement, and Recraft to turn selected graphics into editable SVGs.", pt: "Uso Topaz para ampliar, Magnific para refinar os detalhes das imagens e Recraft para transformar grafismos em SVGs editáveis.", es: "Uso Topaz para ampliar, Magnific para refinar detalles y Recraft para convertir gráficos en SVG editables." },
+            tools: ["Topaz Wonder 4", "Magnific Precision V2", "Recraft SVG"] },
+        ],
+        caseLabel: { en: "See the Seja ANTI case study", pt: "Veja o case Seja ANTI", es: "Ver el caso Seja ANTI" },
+      } },
       { head: { en: "Education", pt: "Formação", es: "Formación" }, rows: [
         { role: { en: "MBA, Data-Driven Marketing and AI", pt: "MBA, Marketing Orientado a Dados e IA", es: "MBA, Marketing Basado en Datos e IA" }, name: "USP / Esalq", years: "2026 — 2027" },
         { role: { en: "Master's, Branding", pt: "Mestrado, Branding", es: "Maestría, Branding" }, name: "ESPM", years: "2022 — 2024" },

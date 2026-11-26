@@ -198,7 +198,19 @@
   const cell = (v, url) => url ? `<a class="swap" href="${esc(url)}"${/^https?:/.test(url) ? ` target="_blank" rel="noopener"` : ""}><span>${esc(L(v))}</span><span aria-hidden="true">${esc(L(v))}</span></a>` : esc(L(v));
   const isRow = r => r && typeof r === "object" && "name" in r;
   const pad = n => String(n).padStart(2, "0");
-  $("credits").innerHTML = A.credits.map(b => `<div class="ab"><h3 class="ab-k mono">${esc(L(b.head))}<span class="muted">(${pad(b.rows.length)})</span>${tagFor(b)}</h3><ul class="ab-list${b.flow ? " flow" : ""}">${b.rows.map(r =>
+  const renderWorkflow = ({ head, workflow }) => `<div class="ab">
+    <h3 class="ab-k mono">${esc(L(head))}</h3>
+    <details class="ab-workflow">
+      <summary>${esc(L(workflow.toggle))}</summary>
+      <div class="ab-workflow-grid">${workflow.steps.map(step => `<div class="ab-workflow-step">
+        <h4>${esc(L(step.title))}</h4>
+        <p>${esc(L(step.description))}</p>
+        <ul>${step.tools.map(tool => `<li class="mono">${esc(tool)}</li>`).join("")}</ul>
+      </div>`).join("")}</div>
+      <a class="ab-workflow-case mono" href="/p/seja-anti/">${esc(L(workflow.caseLabel))} <span aria-hidden="true">↗</span></a>
+    </details>
+  </div>`;
+  $("credits").innerHTML = A.credits.map(b => b.workflow ? renderWorkflow(b) : `<div class="ab"><h3 class="ab-k mono">${esc(L(b.head))}<span class="muted">(${pad(b.rows.length)})</span>${tagFor(b)}</h3><ul class="ab-list${b.flow ? " flow" : ""}">${b.rows.map(r =>
     isRow(r) ? `<li class="ab-row"><b>${cell(r.name, r.url)}</b><span class="mono">${esc(L(r.role))}</span><span class="mono muted">${r.years ? esc(L(r.years)) : ""}</span></li>`
       : `<li class="ab-row solo">${cell(r)}</li>`).join("")}</ul></div>`).join("")
     + `<p class="ab-end mono"><span>©20${esc(S.year)} ${esc(S.name)}</span><span class="ab-clock">São Paulo · <time></time></span><span class="muted">${esc(L(A.end))}</span></p>`;
