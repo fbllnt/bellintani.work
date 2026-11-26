@@ -198,22 +198,42 @@
   const cell = (v, url) => url ? `<a class="swap" href="${esc(url)}"${/^https?:/.test(url) ? ` target="_blank" rel="noopener"` : ""}><span>${esc(L(v))}</span><span aria-hidden="true">${esc(L(v))}</span></a>` : esc(L(v));
   const isRow = r => r && typeof r === "object" && "name" in r;
   const pad = n => String(n).padStart(2, "0");
-  const renderWorkflow = ({ head, workflow }) => `<div class="ab">
+  // AI in my workflow (Felipe, Nov 26 2026): title and 2x2 stages always visible, the first lit in the site blue and the
+  // highlight following the pointer; only the small "Full toolkit" row opens (native <details>).
+  const renderWorkflow = ({ head, workflow: w }) => {
+    const kit = w.toolkit, nModels = kit.areas.reduce((n, a) => n + a.main.length + a.also.length, 0);
+    const count = L(kit.count).replace("{a}", kit.areas.length).replace("{m}", nModels);
+    return `<div class="ab ab-wf">
     <h3 class="ab-k mono">${esc(L(head))}</h3>
-    <details class="ab-workflow">
-      <summary>${esc(L(workflow.toggle))}</summary>
-      <div class="ab-workflow-grid">${workflow.steps.map(step => `<div class="ab-workflow-step">
-        <h4>${esc(L(step.title))}</h4>
+    <div class="ab-workflow">
+      <h4 class="ab-workflow-title">${esc(L(w.title))}</h4>
+      <p class="ab-workflow-lede">${esc(L(w.lede))}</p>
+      <div class="ab-workflow-grid">${w.steps.map((step, i) => `<div class="ab-workflow-step${i ? "" : " is-on"}">
+        <h5>${esc(L(step.title))}</h5>
         <p>${esc(L(step.description))}</p>
         <ul>${step.tools.map(tool => `<li class="mono">${esc(tool)}</li>`).join("")}</ul>
       </div>`).join("")}</div>
-      <a class="ab-workflow-case mono" href="/p/seja-anti/">${esc(L(workflow.caseLabel))} <span aria-hidden="true">↗</span></a>
-    </details>
+      <details class="ab-kit">
+        <summary><span class="mono">${esc(L(kit.label))}</span><span class="mono muted">${esc(count)}</span></summary>
+        <ol class="ab-kit-list">${kit.areas.map((a, i) => `<li>
+          <span class="mono muted">${pad(i + 1)}</span>
+          <div class="ab-kit-area"><b>${esc(L(a.title))}</b><span class="mono muted">${esc(a.where)}</span></div>
+          <div><p>${esc(L(a.use))}</p><p class="ab-kit-models mono">${a.main.map(m => `<span>${esc(m)}</span>`).concat(a.also.map(m => `<span class="muted">${esc(m)}</span>`)).join(" · ")}</p></div>
+        </li>`).join("")}</ol>
+      </details>
+      <a class="ab-workflow-case mono" href="/p/seja-anti/">${esc(L(w.caseLabel))} <span aria-hidden="true">↗</span></a>
+    </div>
   </div>`;
+  };
   $("credits").innerHTML = A.credits.map(b => b.workflow ? renderWorkflow(b) : `<div class="ab"><h3 class="ab-k mono">${esc(L(b.head))}<span class="muted">(${pad(b.rows.length)})</span>${tagFor(b)}</h3><ul class="ab-list${b.flow ? " flow" : ""}">${b.rows.map(r =>
     isRow(r) ? `<li class="ab-row"><b>${cell(r.name, r.url)}</b><span class="mono">${esc(L(r.role))}</span><span class="mono muted">${r.years ? esc(L(r.years)) : ""}</span></li>`
       : `<li class="ab-row solo">${cell(r)}</li>`).join("")}</ul></div>`).join("")
     + `<p class="ab-end mono"><span>©20${esc(S.year)} ${esc(S.name)}</span><span class="ab-clock">São Paulo · <time></time></span><span class="muted">${esc(L(A.end))}</span></p>`;
+  $("credits").onmouseover = e => {
+    const step = e.target.closest(".ab-workflow-step");
+    if (!step || step.classList.contains("is-on")) return;
+    step.parentNode.querySelectorAll(".ab-workflow-step").forEach(s => s.classList.toggle("is-on", s === step));
+  };
   // Local time in São Paulo, ticking each minute (Felipe, Oct 29 2026, from the minimal-sites research)
   const clockEl = document.querySelector(".ab-clock time");
   const tick = () => {

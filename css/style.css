@@ -498,22 +498,37 @@ main,.case{background:var(--bg);position:relative;z-index:3}
 /* Short items (clients, disciplines, languages) run in columns; rows have no hairlines, only the section rule on top (Felipe, Nov 9 2026) */
 .ab-list.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap)}
 .ab-list.flow .ab-row.solo:nth-child(-n+3){padding-top:0}
+/* AI in my workflow (Felipe, Nov 26 2026): 2x2 stages, the lit one in the site blue; only the toolkit row opens */
 .ab-workflow{grid-column:5 / 13;min-width:0}
-.ab-workflow summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;font:700 clamp(21px,3vw,40px)/1.12 var(--sans);letter-spacing:-.04em}
-.ab-workflow summary::-webkit-details-marker{display:none}
-.ab-workflow summary::after{content:"+";display:grid;place-items:center;flex:0 0 36px;height:36px;border:1px solid currentColor;border-radius:50%;font:500 24px/1 var(--sans)}
-.ab-workflow[open] summary::after{content:"−"}
-.ab-workflow summary:focus-visible,.ab-workflow-case:focus-visible{outline:2px solid currentColor;outline-offset:5px}
-.ab-workflow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid currentColor;border-left:1px solid currentColor;margin-top:20px}
-.ab-workflow-step{padding:clamp(14px,2vw,24px);border-right:1px solid currentColor;border-bottom:1px solid currentColor}
-.ab-workflow-step:first-child{background:#d9f76a;color:#171714}
-.ab-workflow-step h4{font:700 clamp(19px,2vw,28px)/1.1 var(--sans);letter-spacing:-.025em;margin:0 0 10px}
+.ab-workflow-title{font:700 clamp(21px,3vw,40px)/1.12 var(--sans);letter-spacing:-.04em;margin:0 0 10px;text-wrap:balance}
+.ab-workflow-lede{font:500 clamp(15px,1.2vw,17px)/1.5 var(--sans);letter-spacing:-.01em;color:var(--mute);max-width:62ch;margin:0 0 22px;text-wrap:pretty}
+.ab-workflow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:var(--rule-w) solid var(--fg);border-left:var(--rule-w) solid var(--fg)}
+.ab-workflow-step{min-width:0;padding:clamp(14px,2vw,24px);border-right:var(--rule-w) solid var(--fg);border-bottom:var(--rule-w) solid var(--fg);transition:background .25s,color .25s}
+.ab-workflow-step.is-on{background:var(--blue);color:#fff}
+.ab-workflow-step h5{font:700 clamp(19px,2vw,28px)/1.1 var(--sans);letter-spacing:-.025em;margin:0 0 10px}
 .ab-workflow-step p{margin:0 0 14px;line-height:1.45}
 .ab-workflow-step ul{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0}
 .ab-workflow-step li{padding:3px 7px;border:1px solid currentColor;border-radius:20px;font-size:11px}
+.ab-kit{margin-top:20px;border-top:var(--rule-w) solid var(--fg);border-bottom:var(--rule-w) solid var(--fg)}
+.ab-kit summary{display:flex;align-items:center;gap:14px;padding:12px 0;cursor:pointer;list-style:none;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.ab-kit summary::-webkit-details-marker{display:none}
+.ab-kit summary::before{content:"+";display:grid;place-items:center;flex:0 0 28px;height:28px;border:1px solid currentColor;border-radius:50%;font:500 18px/1 var(--sans);letter-spacing:0;transition:background .2s,border-color .2s,color .2s}
+.ab-kit[open] summary::before{content:"−"}
+.ab-kit summary:hover::before{background:var(--blue);border-color:var(--blue);color:#fff}
+.ab-kit summary > span:last-child{margin-left:auto}
+.ab-kit summary:focus-visible,.ab-workflow-case:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+.ab-kit-list{list-style:none;margin:0;padding:0}
+.ab-kit-list li{display:grid;grid-template-columns:32px minmax(0,4fr) minmax(0,7fr);gap:4px var(--gap);padding:14px 0;border-top:var(--rule-w) solid var(--fg)}
+.ab-kit-list li > div{min-width:0}
+.ab-kit-area b{display:block;font:700 clamp(16px,1.4vw,19px)/1.25 var(--sans);letter-spacing:-.02em}
+.ab-kit-area span{display:block;margin-top:4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.ab-kit-list p{margin:0 0 6px;line-height:1.45}
+.ab-kit-models{font-size:12px;line-height:1.6}
+.ab-kit-models span{white-space:nowrap}
 .ab-workflow-case{display:inline-block;margin-top:16px;text-underline-offset:4px}
 @media(max-width:760px){.ab-workflow{grid-column:1 / -1}}
-@media(max-width:520px){.ab-workflow-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.ab-workflow-grid{grid-template-columns:1fr}.ab-kit-list li{grid-template-columns:28px minmax(0,1fr)}.ab-kit-list li > div:last-child{grid-column:2}}
+@media(prefers-reduced-motion:reduce){.ab-workflow-step,.ab-kit summary::before{transition:none}}
 .ab-end{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:var(--rule-w) solid var(--fg);padding-top:14px;margin:0}
 .ab-clock time{font-variant-numeric:tabular-nums}
 @media (max-width:760px){
