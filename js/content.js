@@ -82,7 +82,7 @@ window.SITE = {
         // The small part that opens: every area and model, main picks first ("also" ones shown lighter)
         toolkit: {
           label: { en: "Full toolkit", pt: "Todas as ferramentas", es: "Todas las herramientas" },
-          count: { en: "{a} areas · {m} models", pt: "{a} áreas · {m} modelos", es: "{a} áreas · {m} modelos" },
+          count: { en: "{a} areas · {m} models · +60 models tested", pt: "{a} áreas · {m} modelos · +60 modelos testados", es: "{a} áreas · {m} modelos · +60 modelos probados" },
           areas: [
             { title: { en: "Creative direction and planning", pt: "Direção criativa e planejamento", es: "Dirección creativa y planificación" }, where: "Claude Code",
               use: { en: "Turning briefs into creative routes, developing prompts, and building brand guidelines into reusable workflows.", pt: "Transformo briefings em rotas criativas, desenvolvo prompts e incorporo as diretrizes da marca a fluxos reutilizáveis.", es: "Convierto briefs en rutas creativas, desarrollo prompts e incorporo las directrices de marca a flujos reutilizables." },
