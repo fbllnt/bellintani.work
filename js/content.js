@@ -1027,48 +1027,6 @@ window.SITE = {
               ], col: 1, span: 12, caption: { en: "Original styleframes — Globo On on air, 2016", pt: "Styleframes originais — on air do Globo On, 2016", es: "Styleframes originales — on air de Globo On, 2016" } },
           ],
         },
-        {
-          // Globoplay, 2015 (own project until Nov 13 2026)
-          slug: "globoplay",
-          title: "Globoplay",
-          type: "branding",
-          client: "Globo",
-          credits: [
-            { role: { en: "Animation", pt: "Animação", es: "Animación" }, name: "Bild" },
-            { role: "Type design", name: "Plau" },
-            { role: { en: "Globo team", pt: "Time Globo", es: "Equipo Globo" }, name: "Mariana Sá, Sérgio Valente, Cristiano Calvé" },
-          ],
-          year: "2015",
-          role: { en: "Lead Designer / Illustrator", pt: "Lead Designer / Ilustrador", es: "Lead Designer / Ilustrador" },
-          scope: { en: "Visual identity // Vignette // Motion", pt: "Identidade visual // Vinheta // Motion", es: "Identidad visual // Viñeta // Motion" },
-          sector: { en: "Streaming · TV", pt: "Streaming · TV", es: "Streaming · TV" },
-          deliverables: { en: "Logo and symbol, vignette, sign-off of the launch film", pt: "Logo e símbolo, vinheta, assinatura do filme de lançamento", es: "Logo y símbolo, viñeta, firma del comercial de lanzamiento" },
-          tags: { en: ["Branding", "Streaming", "Motion"], pt: ["Branding", "Streaming", "Motion"], es: ["Branding", "Streaming", "Motion"] },
-          tools: ["Adobe CC"],
-          image: "images/globoplay/vinheta-poster.jpg",
-          coverVideo: { mp4: "images/globoplay/vinheta.mp4" },
-          summary: {
-            en: "Visual identity for Globoplay, Globo's streaming platform, and direction of its vignette. This is where Globotipo, Globo's own typeface, was born.",
-            pt: "Identidade visual do Globoplay, o streaming da Globo, e direção da vinheta. Foi nesse projeto que nasceu a Globotipo, a fonte própria da casa.", es: "Identidad visual de Globoplay, el streaming de Globo, y dirección de la viñeta. En este proyecto nació Globotipo, la tipografía propia de la casa.",
-          },
-          layout: "loose", grid: "destaque",
-          gallery: [
-            { chapter: { en: "02 · Type", pt: "02 · Tipografia", es: "02 · Tipografía" }, kicker: { en: "Where Globotipo was born", pt: "Onde nasceu a Globotipo", es: "Donde nació Globotipo" },
-              head: { en: "A more modern *Futura.*", pt: "Uma Futura *mais moderna.*", es: "Una Futura *más moderna.*" },
-              text: { en: "Globo still mixed Swiss, Avant Garde and Futura. Globoplay is when we decided on our own typeface: my idea was a more modern Futura with rounded corners.", pt: "A Globo ainda misturava Swiss, Avant Garde e Futura. Foi no Globoplay que a gente decidiu ter uma fonte própria: minha ideia era uma Futura mais moderna, com cantos arredondados.", es: "Globo todavía mezclaba Swiss, Avant Garde y Futura. Con Globoplay decidimos tener una tipografía propia: mi idea era una Futura más moderna, de esquinas redondeadas." },
-              pills: ["Swiss", "Avant Garde", "Futura", "*Globotipo"] },
-            { src: "images/globoplay/logo-05.jpg", ar: "1920/480", col: 1, span: 12, caption: { en: "The logo, already with the rounded letters", pt: "O logo, já com as letras arredondadas", es: "El logo, ya con las letras redondeadas" } },
-            { src: "images/globo/globotipo-familia.jpg", ar: "1901/1028", col: 1, span: 12, caption: { en: "Globotipo, the family that grew out of it", pt: "Globotipo, a família que saiu daqui", es: "Globotipo, la familia que salió de aquí" } },
-            { chapter: { en: "03 · Brand", pt: "03 · Marca", es: "03 · Marca" }, kicker: { en: "Logo and symbol", pt: "Logo e símbolo", es: "Logo y símbolo" },
-              head: { en: "Globo's circle *hits play.*", pt: "O círculo da Globo *aperta o play.*", es: "El círculo de Globo *le da play.*" },
-              text: { en: "The symbol joins the Globo circle to a play button. In the vignette, strokes and colour build the full name, which then folds into the symbol.", pt: "O símbolo junta o círculo da Globo com o botão de play. Na vinheta, traços e cor vão montando o nome inteiro, que depois se fecha no símbolo.", es: "El símbolo junta el círculo de Globo con el botón de play. En la viñeta, trazos y color van armando el nombre completo, que después se cierra en el símbolo." } },
-            { loop: { frames: ["images/globoplay/logo-01.jpg", "images/globoplay/logo-02.jpg", "images/globoplay/logo-03.jpg", "images/globoplay/logo-04.jpg", "images/globoplay/logo-05.jpg", "images/globoplay/logo-06.jpg"], fps: 4, ar: "1920/480" }, caption: { en: "Vignette", pt: "Vinheta", es: "Viñeta" }, col: 1, span: 12 }, // v2: was a flip of these frames (Nov 16 2026)
-            { chapter: { en: "04 · Launch", pt: "04 · Lançamento", es: "04 · Lanzamiento" }, kicker: { en: "Launch film", pt: "Filme de lançamento", es: "Comercial de lanzamiento" },
-              head: { en: "Globo's faces, *in the palm of your hand.*", pt: "Os rostos da Globo *na palma da mão.*", es: "Los rostros de Globo, *en la palma de tu mano.*" },
-              text: { en: "In the launch film the network's faces jump onto phones, tablets and laptops, and the Globoplay sign-off closes it.", pt: "No filme de lançamento, os rostos da casa pulam pro celular, pro tablet e pro notebook, e a assinatura do Globoplay fecha o filme.", es: "En el comercial de lanzamiento, los rostros de la casa saltan al celular, a la tablet y a la laptop, y la firma de Globoplay cierra el comercial." } },
-            { video: "images/globoplay/filme.mp4", webm: "images/globoplay/filme.webm", poster: "images/globoplay/filme-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Launch film — 30s", pt: "Filme de lançamento — 30s", es: "Comercial de lanzamiento — 30s" } },
-          ],
-        },
       // Globo cases moved in from the work list (Felipe, Nov 26 2026)
     {
       slug: "cinema-especial", // was its own project until Nov 26 2026 (Felipe: moved inside Globo); /p/cinema-especial/ redirects here
@@ -1163,6 +1121,48 @@ window.SITE = {
         { episodeLink: { url: "https://globoplay.globo.com/popstar/t/sDWCkghbGS/", title: { en: "Watch the grand final", pt: "Assistir à grande final", es: "Ver la gran final" }, detail: { en: "Episode 10 · 10 Sep 2017 · Globoplay", pt: "Episódio 10 · 10 set 2017 · Globoplay", es: "Episodio 10 · 10 sep 2017 · Globoplay" } } },
       ],
     },
+        {
+          // Globoplay, 2015 (own project until Nov 13 2026)
+          slug: "globoplay",
+          title: "Globoplay",
+          type: "branding",
+          client: "Globo",
+          credits: [
+            { role: { en: "Animation", pt: "Animação", es: "Animación" }, name: "Bild" },
+            { role: "Type design", name: "Plau" },
+            { role: { en: "Globo team", pt: "Time Globo", es: "Equipo Globo" }, name: "Mariana Sá, Sérgio Valente, Cristiano Calvé" },
+          ],
+          year: "2015",
+          role: { en: "Lead Designer / Illustrator", pt: "Lead Designer / Ilustrador", es: "Lead Designer / Ilustrador" },
+          scope: { en: "Visual identity // Vignette // Motion", pt: "Identidade visual // Vinheta // Motion", es: "Identidad visual // Viñeta // Motion" },
+          sector: { en: "Streaming · TV", pt: "Streaming · TV", es: "Streaming · TV" },
+          deliverables: { en: "Logo and symbol, vignette, sign-off of the launch film", pt: "Logo e símbolo, vinheta, assinatura do filme de lançamento", es: "Logo y símbolo, viñeta, firma del comercial de lanzamiento" },
+          tags: { en: ["Branding", "Streaming", "Motion"], pt: ["Branding", "Streaming", "Motion"], es: ["Branding", "Streaming", "Motion"] },
+          tools: ["Adobe CC"],
+          image: "images/globoplay/vinheta-poster.jpg",
+          coverVideo: { mp4: "images/globoplay/vinheta.mp4" },
+          summary: {
+            en: "Visual identity for Globoplay, Globo's streaming platform, and direction of its vignette. This is where Globotipo, Globo's own typeface, was born.",
+            pt: "Identidade visual do Globoplay, o streaming da Globo, e direção da vinheta. Foi nesse projeto que nasceu a Globotipo, a fonte própria da casa.", es: "Identidad visual de Globoplay, el streaming de Globo, y dirección de la viñeta. En este proyecto nació Globotipo, la tipografía propia de la casa.",
+          },
+          layout: "loose", grid: "destaque",
+          gallery: [
+            { chapter: { en: "02 · Type", pt: "02 · Tipografia", es: "02 · Tipografía" }, kicker: { en: "Where Globotipo was born", pt: "Onde nasceu a Globotipo", es: "Donde nació Globotipo" },
+              head: { en: "A more modern *Futura.*", pt: "Uma Futura *mais moderna.*", es: "Una Futura *más moderna.*" },
+              text: { en: "Globo still mixed Swiss, Avant Garde and Futura. Globoplay is when we decided on our own typeface: my idea was a more modern Futura with rounded corners.", pt: "A Globo ainda misturava Swiss, Avant Garde e Futura. Foi no Globoplay que a gente decidiu ter uma fonte própria: minha ideia era uma Futura mais moderna, com cantos arredondados.", es: "Globo todavía mezclaba Swiss, Avant Garde y Futura. Con Globoplay decidimos tener una tipografía propia: mi idea era una Futura más moderna, de esquinas redondeadas." },
+              pills: ["Swiss", "Avant Garde", "Futura", "*Globotipo"] },
+            { src: "images/globoplay/logo-05.jpg", ar: "1920/480", col: 1, span: 12, caption: { en: "The logo, already with the rounded letters", pt: "O logo, já com as letras arredondadas", es: "El logo, ya con las letras redondeadas" } },
+            { src: "images/globo/globotipo-familia.jpg", ar: "1901/1028", col: 1, span: 12, caption: { en: "Globotipo, the family that grew out of it", pt: "Globotipo, a família que saiu daqui", es: "Globotipo, la familia que salió de aquí" } },
+            { chapter: { en: "03 · Brand", pt: "03 · Marca", es: "03 · Marca" }, kicker: { en: "Logo and symbol", pt: "Logo e símbolo", es: "Logo y símbolo" },
+              head: { en: "Globo's circle *hits play.*", pt: "O círculo da Globo *aperta o play.*", es: "El círculo de Globo *le da play.*" },
+              text: { en: "The symbol joins the Globo circle to a play button. In the vignette, strokes and colour build the full name, which then folds into the symbol.", pt: "O símbolo junta o círculo da Globo com o botão de play. Na vinheta, traços e cor vão montando o nome inteiro, que depois se fecha no símbolo.", es: "El símbolo junta el círculo de Globo con el botón de play. En la viñeta, trazos y color van armando el nombre completo, que después se cierra en el símbolo." } },
+            { loop: { frames: ["images/globoplay/logo-01.jpg", "images/globoplay/logo-02.jpg", "images/globoplay/logo-03.jpg", "images/globoplay/logo-04.jpg", "images/globoplay/logo-05.jpg", "images/globoplay/logo-06.jpg"], fps: 4, ar: "1920/480" }, caption: { en: "Vignette", pt: "Vinheta", es: "Viñeta" }, col: 1, span: 12 }, // v2: was a flip of these frames (Nov 16 2026)
+            { chapter: { en: "04 · Launch", pt: "04 · Lançamento", es: "04 · Lanzamiento" }, kicker: { en: "Launch film", pt: "Filme de lançamento", es: "Comercial de lanzamiento" },
+              head: { en: "Globo's faces, *in the palm of your hand.*", pt: "Os rostos da Globo *na palma da mão.*", es: "Los rostros de Globo, *en la palma de tu mano.*" },
+              text: { en: "In the launch film the network's faces jump onto phones, tablets and laptops, and the Globoplay sign-off closes it.", pt: "No filme de lançamento, os rostos da casa pulam pro celular, pro tablet e pro notebook, e a assinatura do Globoplay fecha o filme.", es: "En el comercial de lanzamiento, los rostros de la casa saltan al celular, a la tablet y a la laptop, y la firma de Globoplay cierra el comercial." } },
+            { video: "images/globoplay/filme.mp4", webm: "images/globoplay/filme.webm", poster: "images/globoplay/filme-poster.jpg", ar: "16/9", col: 1, span: 12, caption: { en: "Launch film — 30s", pt: "Filme de lançamento — 30s", es: "Comercial de lanzamiento — 30s" } },
+          ],
+        },
     {
       slug: "tela-quente", // was its own project until Nov 26 2026 (Felipe: moved inside Globo); /p/tela-quente/ redirects here
       title: "Tela Quente",
