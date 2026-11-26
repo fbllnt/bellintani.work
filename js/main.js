@@ -296,6 +296,7 @@
     "Globoplay": ["branding", "film", "digital"],
     "Lomography": ["digital"],
     "Logofolio": ["branding"],
+    "DISORD/AIR": ["digital"], "Carbono": ["digital"], // Felipe, Nov 26 2026: both count as social media
     "PopStar": ["branding", "film"],
     "Popstar": ["branding", "film"],
   };
@@ -2374,7 +2375,8 @@
 
   // Curated listening queue from the existing project soundtrack. Choosing a track is explicit:
   // Spotify embeds control playback and may require the listener to press Play / sign in.
-  const soundtrack = [{ project: { en: "Home", pt: "Início", es: "Inicio" }, track: S.homeTrack }, ...S.projects.filter(p => p.track).map(p => ({ project: p.title, track: p.track }))];
+  // cases inside a brand keep their songs (Globo, Nov 26 2026)
+  const soundtrack = [{ project: { en: "Home", pt: "Início", es: "Inicio" }, track: S.homeTrack }, ...S.projects.flatMap(p => [p, ...(p.cases || []).filter(c => !c.soon)]).filter(p => p.track).map(p => ({ project: p.title, track: p.track }))];
   const listEl = $("music-tracklist");
   $("music-list-count").textContent = String(soundtrack.length).padStart(2, "0") + " " + L({ en: "TRACKS", pt: "FAIXAS", es: "CANCIONES" });
   $("music-list-label").textContent = L({ en: "PORTFOLIO SOUNDTRACK", pt: "TRILHA DO PORTFÓLIO", es: "BANDA SONORA DEL PORTAFOLIO" });
